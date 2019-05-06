@@ -22,7 +22,7 @@
   color: #6c757d;
 }
 
-#accountDropdown > a > i{
+#accountDropdown > a > i {
   margin-right: 0.5em;
 }
 
@@ -39,7 +39,7 @@
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
-.navbar-brand:hover, .nav-link:hover {
+.navbar-brand:hover {
   color: #606ddd !important;
 }
 
