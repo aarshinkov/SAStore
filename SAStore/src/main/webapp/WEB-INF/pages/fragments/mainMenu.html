@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <body>
+
+    <div id="mainMenu">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fab fa-shopware"></i>
+            <span>SAStore</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0">
+              <div class="input-group">
+                <input id="searchInput" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchButton"/>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <!--              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            </form>
+            <ul class="navbar-nav ml-auto">
+<!--              <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+              </li>-->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="far fa-user"></i>
+                  <span>Hi, User</span>
+                </a>
+                <div id="accountDropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>My orders</span>
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="far fa-heart"></i>
+                    <span>Wishlist</span>
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cog"></i>
+                    <span>Account settings</span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-danger" href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </li>
+<!--              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>

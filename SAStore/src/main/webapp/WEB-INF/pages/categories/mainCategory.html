@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/contentTemplate}">
+  <head>
+    <title th:text="${categoryTitle}">Category Title</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="card border-0 mb-3">
+        <img th:src="@{'/resources/theme/img/categories/category_' + ${category} + '.jpg'}" src="#" alt="" class="card-img"/>
+        <div class="card-img-overlay">
+          <h2 class="card-title text-white title">Card title</h2>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
