@@ -31,7 +31,7 @@
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 
         <!-- For testing -->
-        <property name="url" value="jdbc:oracle:thin:@127.0.01:1521/SASTORE"/>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521/SASTORE"/>
         <property name="username" value="sastore"/>
         <property name="password" value="sastore-1234"/>
     </bean>
