@@ -48,10 +48,6 @@ public class User implements Serializable
 
   @Column(name = "created_on")
   private Date createdOn;
-
-//  @OneToOne(cascade = CascadeTy pe.ALL)
-//  @JoinColumn(name = "user_detail_id")
-//  private UserDetail userDetail;
   
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
