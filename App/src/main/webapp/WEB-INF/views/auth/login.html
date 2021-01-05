@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 m-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h3 class="modal-title">Login</h3>
+                        <em>to your account</em>
+                        <hr/>
+                    </div>
+
+                    <form>
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <i class="material-icons">mail_outline</i>
+                                <input type="email" class="form-control" placeholder="Email" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <i class="material-icons">lock_open</i>
+                                <input type="password" class="form-control" placeholder="Password" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                            <u>
+                                <a th:href="@{/forgotPassword}" href="#" class="text-primary small">Forgot password?</a>
+                            </u>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span>Login</span>
+                        </button>
+                    </form>
+                    <hr>
+                    <p class="font-italic">
+                        <span>Don't have an account ?</span>
+                        <u>
+                            <a th:href="@{/signup}" href="#">Signup</a>
+                        </u>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

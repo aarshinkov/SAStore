@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+<head>
+    <title>Signup</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 m-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h3 class="modal-title">Signup</h3>
+                        <em>Create your account and start shopping</em>
+                        <hr/>
+                    </div>
+
+                    <form>
+                        <div class="form-row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>First name</label>
+                                    <div class="input-icon">
+                                        <i class="material-icons">person_outline</i>
+                                        <input type="text" class="form-control" placeholder="ex. John" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Last name</label>
+                                    <div class="input-icon">
+                                        <i class="material-icons">person_outline</i>
+                                        <input type="text" class="form-control" placeholder="ex. Doe" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-icon">
+                                <i class="material-icons">mail_outline</i>
+                                <input type="password" class="form-control" placeholder="john.doe@gmail.com" required="required"/>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="input-icon">
+                                        <i class="material-icons">lock_open</i>
+                                        <input type="password" class="form-control" placeholder="" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Confirm password</label>
+                                    <div class="input-icon">
+                                        <i class="material-icons">lock</i>
+                                        <input type="password" class="form-control" placeholder="" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <span>Signup</span>
+                        </button>
+                    </form>
+                    <hr/>
+                    <p class="font-italic">
+                        <span>Already have an account?</span>
+                        <u>
+                            <a th:href="@{/login}" href="#">Login</a>
+                        </u>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

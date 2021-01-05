@@ -1,0 +1,16 @@
+{
+  "name": "sastore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Atanas Yordanov Arshinkov",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "metismenu": "^3.0.6",
+    "noty": "^3.2.0-beta"
+  }
+}
