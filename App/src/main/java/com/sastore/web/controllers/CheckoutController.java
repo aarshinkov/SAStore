@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * @author Atanas Yordanov Arshinkov
+ * @since 1.0.0
+ */
 @Controller
 public class CheckoutController extends Base {
 

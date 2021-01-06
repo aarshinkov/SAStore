@@ -20,14 +20,16 @@
                         <hr/>
                     </div>
 
-                    <form>
+                    <form th:action="@{/signup}" method="post" th:object="${signupModel}">
                         <div class="form-row">
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label>First name</label>
                                     <div class="input-icon">
                                         <i class="material-icons">person_outline</i>
-                                        <input type="text" class="form-control" placeholder="ex. John" required="required"/>
+                                        <input type="text" class="form-control" th:field="*{firstName}" placeholder="ex. John"
+                                               th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
+                                        <span class="invalid-feedback" th:errors="*{firstName}">Error</span>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +38,9 @@
                                     <label>Last name</label>
                                     <div class="input-icon">
                                         <i class="material-icons">person_outline</i>
-                                        <input type="text" class="form-control" placeholder="ex. Doe" required="required"/>
+                                        <input type="text" class="form-control" th:field="*{lastName}" placeholder="ex. Doe"
+                                               th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
+                                        <span class="invalid-feedback" th:errors="*{lastName}">Error</span>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +50,9 @@
                             <label>Email</label>
                             <div class="input-icon">
                                 <i class="material-icons">mail_outline</i>
-                                <input type="password" class="form-control" placeholder="john.doe@gmail.com" required="required"/>
+                                <input type="email" class="form-control" th:field="*{email}" placeholder="john.doe@gmail.com"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+                                <span class="invalid-feedback" th:errors="*{email}">Error</span>
                             </div>
                         </div>
 
@@ -56,7 +62,9 @@
                                     <label>Password</label>
                                     <div class="input-icon">
                                         <i class="material-icons">lock_open</i>
-                                        <input type="password" class="form-control" placeholder="" required="required"/>
+                                        <input type="password" class="form-control" th:field="*{password}" placeholder=""
+                                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+                                        <span class="invalid-feedback" th:errors="*{password}">Error</span>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +73,9 @@
                                     <label>Confirm password</label>
                                     <div class="input-icon">
                                         <i class="material-icons">lock</i>
-                                        <input type="password" class="form-control" placeholder="" required="required"/>
+                                        <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder=""
+                                               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"/>
+                                        <span class="invalid-feedback" th:errors="*{confirmPassword}">Error</span>
                                     </div>
                                 </div>
                             </div>

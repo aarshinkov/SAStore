@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <div id="mainMenu" th:remove="tag">
     <!-- TOP BAR -->
@@ -30,15 +31,6 @@
                 </a>
             </nav>
 
-            <div class="btn-group btn-group-toggle btn-group-sm ml-auto mr-1" data-toggle="buttons" hidden>
-                <label class="btn btn-text-primary active">
-                    <input type="radio" name="lang" checked> EN
-                </label>
-                <label class="btn btn-text-primary">
-                    <input type="radio" name="lang"> RU
-                </label>
-            </div>
-
             <nav class="nav nav-gap-x-1 ml-auto mr-1">
                 <!--                <div class="nav-item nav-pills dropdown">-->
                 <!--                    <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="currencyDropdown"-->
@@ -60,59 +52,65 @@
                 <div class="nav-item nav-pills dropdown">
                     <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="langDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <span class="flag-icon flag-icon-bg icon-width-2"></span>
+                        <span class="flag-icon icon-width-2" th:classappend="'flag-icon-' + #{flag.curr}"></span>
                         <!--                        <span>Language</span>-->
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="langDropdown">
-                        <a class="dropdown-item" href="#">
+                    <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="langDropdown" th:with="lang=#{lang.curr}">
+                        <a class="dropdown-item" href="?lang=en" th:classappend="${lang eq 'en'} ? 'active'">
                             <span class="flag-icon flag-icon-gb icon-width-2"></span>
-                            <span>English</span>
+                            <span th:text="#{nav.lang.en}">English</span>
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="?lang=bg" th:classappend="${lang eq 'bg'} ? 'active'">
                             <span class="flag-icon flag-icon-bg icon-width-2"></span>
-                            <span>Bulgarian</span>
+                            <span th:text="#{nav.lang.bg}">Bulgarian</span>
                         </a>
                     </div>
                 </div>
             </nav>
 
-            <nav class="nav d-none">
+            <nav class="nav" sec:authorize="isAuthenticated()">
                 <div class="nav-item nav-pills dropdown dropdown-hover">
                     <a class="nav-link nav-link-sm dropdown-toggle has-icon hover" href="#" id="userDropdown"
                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                         <i class="material-icons mr-1">person</i>
-                        <span>Hi, John</span>
+                        <span th:text="${session.user.fullName}">Hi, John</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="userDropdown">
-                        <a class="dropdown-item has-icon pr-5" href="account-orders.html">
-                            <i class="material-icons mr-2">shopping_cart</i>
-                            <span>My Orders</span>
+                        <a class="dropdown-item has-icon pr-5" th:href="@{/account}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
+                            <i class="material-icons mr-2">person</i>
+                            <span>My account</span>
                         </a>
-                        <a class="dropdown-item has-icon pr-5" href="account-wishlist.html">
+                        <a class="dropdown-item has-icon pr-5" th:href="@{/account/orders}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'orders'} ? 'active'">
+                            <i class="material-icons mr-2">shopping_cart</i>
+                            <span>My orders</span>
+                        </a>
+                        <a class="dropdown-item has-icon pr-5" th:href="@{/account/wishlist}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'wishlist'} ? 'active'">
                             <i class="material-icons mr-2">favorite_border</i>
                             <span>Wishlist</span>
                         </a>
-                        <a class="dropdown-item has-icon pr-5" href="account-profile.html">
-                            <i class="material-icons mr-2">person</i>
-                            <span>Account Setting</span>
-                        </a>
+<!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/account/settings}" href="#">-->
+<!--                            <i class="material-icons mr-2">settings</i>-->
+<!--                            <span>Settings</span>-->
+<!--                        </a>-->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item has-icon pr-5 text-danger" href="account-signin.html">
+                        <a class="dropdown-item has-icon pr-5 text-danger" th:href="@{/logout}" href="#">
                             <i class="material-icons mr-2">exit_to_app</i>
-                            <span>Sign Out</span>
+                            <span>Logout</span>
                         </a>
                     </div>
                 </div>
             </nav>
 
-            <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
-                <i class="material-icons mr-1">login</i>
-                <span>Login</span>
-            </a>
-            <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
-                <i class="material-icons mr-1">person_add</i>
-                <span>Signup</span>
-            </a>
+            <div sec:authorize="!isAuthenticated()" th:remove="tag">
+                <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
+                    <i class="material-icons mr-1">login</i>
+                    <span>Login</span>
+                </a>
+                <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
+                    <i class="material-icons mr-1">person_add</i>
+                    <span>Signup</span>
+                </a>
+            </div>
         </div>
     </div>
     <!-- /TOP BAR -->
@@ -133,7 +131,7 @@
 
             <nav class="nav nav-main nav-gap-x-1 nav-pills ml-3 d-none d-lg-flex">
                 <a class="nav-item nav-link" th:href="@{/}" href="#">
-                    <span>Home</span>
+                    <span th:text="#{nav.home}">Home</span>
                 </a>
                 <div class="nav-item dropdown dropdown-hover dropdown-mega">
                     <a class="nav-link dropdown-toggle no-caret" href="#" id="megaDropdown" role="button"
