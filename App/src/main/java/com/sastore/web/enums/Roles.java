@@ -6,7 +6,8 @@ package com.sastore.web.enums;
  */
 public enum Roles {
     ADMIN("ADMIN"),
-    USER("USER");
+    USER("USER"),
+    SALES("SALES");
 
     private final String role;
 

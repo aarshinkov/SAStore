@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="error403" th:remove="tag">
+    <div class="row justify-content-center text-center">
+        <div class="col-8 col-lg-6 col-xl-5">
+            <img th:src="@{/resources/img/errors/505.svg}" src="../../resources/img/errors/505.svg" class="img-fluid" alt="Forbidden Access">
+        </div>
+        <div class="col-12 my-3">
+            <h2>505 Forbidden Access</h2>
+            <p class="lead text-dark">Oopps. Forbidden page.</p>
+            <p class="lead small text-secondary">You don't have rights to view this page.</p>
+            <button class="btn btn-light" type="button" onclick="history.back()">Go Back</button>
+        </div>
+    </div>
+</div>
+
+<div id="error404" th:remove="tag">
+    <div class="container-fluid my-4 text-center" th:if="${errorCode eq '404'}">
+
+        <img th:src="@{/resources/img/errors/404.jpg}" src="../../resources/img/errors/404.jpg"
+             alt="404" width="250" class="img-fluid rounded-circle mb-3 img-thumbnail border-info"/>
+        <h2>
+            <span class="text-primary">Oops!</span>
+            <span>Error 404 page not found</span>
+        </h2>
+        <p>The page you were looking for doesn't exist.</p>
+        <a href="javascript:history.back()" class="btn btn-primary has-icon">
+            <i class="material-icons">chevron_left</i>
+            <span>Go back</span>
+        </a>
+    </div>
+</div>
+<div id="error500" th:remove="tag">
+    <div class="container-fluid my-4 text-center" th:if="${errorCode eq '500'}">
+
+        <img th:src="@{/resources/img/errors/404.jpg}" src="../../resources/img/errors/404.jpg"
+             alt="404" width="250" class="img-fluid rounded-circle mb-3 img-thumbnail border-info"/>
+        <h2>
+            <span class="text-primary">Oops!</span>
+            <span>Error 500. Internal server error</span>
+        </h2>
+        <!--        <p>The page you were looking for doesn't exist.</p>-->
+        <a href="javascript:history.back()" class="btn btn-primary has-icon">
+            <i class="material-icons">chevron_left</i>
+            <span>Go back</span>
+        </a>
+    </div>
+</div>
+</body>
+</html>

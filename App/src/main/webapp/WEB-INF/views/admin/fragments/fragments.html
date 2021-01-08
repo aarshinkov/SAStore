@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div id="mainMenu" th:remove="tag">
+    <!-- Main header -->
+    <div class="main-header">
+        <a class="nav-link nav-link-faded rounded-circle nav-icon" href="#" data-toggle="sidebar"><i class="material-icons">menu</i></a>
+        <form class="form-inline ml-3 d-none d-md-flex">
+        <span class="input-icon">
+          <i class="material-icons">search</i>
+          <input type="text" placeholder="Search..." class="form-control bg-gray-200 border-gray-200 rounded-lg"/>
+        </span>
+        </form>
+        <ul class="nav nav-circle ml-auto">
+            <li class="nav-item d-md-none"><a class="nav-link nav-link-faded nav-icon" data-toggle="modal" href="#searchModal"><i class="material-icons">search</i></a></li>
+            <li class="nav-item d-none d-sm-block"><a class="nav-link nav-link-faded nav-icon" href="" id="refreshPage"><i class="material-icons">refresh</i></a></li>
+            <li class="nav-item dropdown nav-notif">
+                <a class="nav-link nav-link-faded nav-icon has-badge dropdown-toggle no-caret" href="#" data-toggle="dropdown" data-display="static">
+                    <i data-feather="bell"></i>
+                    <span class="badge badge-pill badge-danger">6</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i data-feather="bell" class="mr-2"></i>4 notifications
+                        </div>
+                        <div class="card-body p-0 pt-1">
+                            <div class="list-group list-group-sm list-group-flush">
+                                <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                                    <div class="media">
+                                        <span class="bg-primary text-white btn-icon rounded-circle"><i data-feather="user-plus"></i></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0">5 New members joined today</p>
+                                            <small class="text-secondary">
+                                                <i class="material-icons icon-inline mr-1">access_time</i>5 minutes ago
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                                    <div class="media">
+                                        <span class="bg-info text-white btn-icon rounded-circle"><i data-feather="message-square"></i></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0">2 New comments</p>
+                                            <small class="text-secondary">
+                                                <i class="material-icons icon-inline mr-1">access_time</i>10 minutes ago
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                                    <div class="media">
+                                        <span class="bg-success text-white btn-icon rounded-circle"><i data-feather="shopping-bag"></i></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0">10+ New orders</p>
+                                            <small class="text-secondary">
+                                                <i class="material-icons icon-inline mr-1">access_time</i>15 minutes ago
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                                    <div class="media">
+                                        <span class="bg-warning text-white btn-icon rounded-circle"><i data-feather="user-check"></i></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0">Complete your account details</p>
+                                            <small class="text-secondary">
+                                                <i class="material-icons icon-inline mr-1">access_time</i>20 minutes ago
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-footer justify-content-center">
+                            <a href="javascript:void(0)">View more &rsaquo;</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-2" sec:authorize="isAuthenticated()">
+                <a class="nav-link nav-link-faded rounded nav-link-img dropdown-toggle px-2" href="#" data-toggle="dropdown" data-display="static">
+                    <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2">
+                    <span class="d-none d-sm-block">Атанас</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right pt-0 overflow-hidden">
+                    <div class="media align-items-center bg-primary text-white px-4 py-3 mb-2">
+                        <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50">
+                        <div class="media-body ml-2 text-nowrap">
+                            <h6 class="mb-0">Атанас Аршинков</h6>
+                            <span class="text-gray-400 font-size-sm">Administrator</span>
+                        </div>
+                    </div>
+                    <a class="dropdown-item has-icon" th:href="@{/account}" href="#">
+                        <i class="mr-2" data-feather="user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a class="dropdown-item has-icon" href="#">
+                        <i class="mr-2" data-feather="settings"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a class="dropdown-item has-icon text-danger" th:href="@{/logout}" href="#">
+                        <i class="mr-2" data-feather="log-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- /Main header -->
+</div>
+
+<div id="sidebar" th:remove="tag">
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <!-- Sidebar header -->
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">
+                <img th:src="@{/resources/img/logo-white.svg}" src="../../resources/img/logo-white.svg" alt="Logo" id="main-logo">
+                <span>SA Store</span>
+            </a>
+            <a href="#" class="nav-link nav-icon rounded-circle ml-auto" data-toggle="sidebar">
+                <i class="material-icons">close</i>
+            </a>
+        </div>
+        <!-- /Sidebar header -->
+
+        <!-- Sidebar body -->
+        <div class="sidebar-body">
+            <ul class="nav treeview mb-4" data-accordion>
+                <li class="nav-label">DASHBOARD</li>
+                <li class="nav-item">
+                    <a class="nav-link has-icon" th:href="@{/dashboard}" href="#" th:classappend="${globalMenu eq 'dashboard'} ? 'active'">
+                        <i data-feather="globe"></i>
+                        <span>General</span>
+                    </a>
+                </li>
+                <div sec:authorize="hasAnyRole('ADMIN', 'SALES')" th:remove="tag">
+                    <li class="nav-label">SALES</li>
+                    <li class="nav-item">
+                        <a class="nav-link has-icon" th:href="@{/sales}" href="#" th:classappend="${globalMenu eq 'sales'} ? 'active'">
+                            <i data-feather="shopping-bag"></i>
+                            <span>Sales</span>
+                        </a>
+                    </li>
+                </div>
+                <li class="nav-label">Users</li>
+                <li class="nav-item">
+                    <a class="nav-link has-icon" th:href="@{/users}" href="#" th:classappend="${globalMenu eq 'users'} ? 'active'">
+                        <i data-feather="users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link has-icon treeview-toggle" href="#"><i class="material-icons">folder_open</i>Submenu</a>-->
+                <!--                    <ul class="nav">-->
+                <!--                        <li class="nav-item">-->
+                <!--                            <a href="#" class="nav-link">-->
+                <!--                                <span>Menu 1</span>-->
+                <!--                            </a>-->
+                <!--                        </li>-->
+                <!--                        <li class="nav-item">-->
+                <!--                            <a href="#" class="nav-link">-->
+                <!--                                <span>Menu 2</span>-->
+                <!--                            </a>-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
+            </ul>
+        </div>
+        <!-- /Sidebar body -->
+    </div>
+    <!-- /Sidebar -->
+</div>
+</body>
+</html>

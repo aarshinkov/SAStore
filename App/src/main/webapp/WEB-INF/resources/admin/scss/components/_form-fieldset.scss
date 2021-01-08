@@ -1,0 +1,11 @@
+.form-fieldset {
+  padding: 1rem;
+  border: 1px solid $input-border-color;
+  border-radius: $border-radius;
+  margin-bottom: $form-group-margin-bottom;
+  > legend {
+    width: auto;
+    padding: 0 .5rem;
+    margin-bottom: 0;
+  }
+}

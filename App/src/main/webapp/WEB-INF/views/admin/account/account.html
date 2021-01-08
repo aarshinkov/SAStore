@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+<head>
+    <title th:text="#{app.title('Account')}">Home</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <div class="row gutters-3">
+        <div class="col-md-4 col-lg-3">
+            <div th:insert="account/fragments :: #accountFragment"></div>
+        </div>
+        <div class="col mt-3 mt-md-0">
+            <div class="card card-style1">
+                <div class="card-body">
+                    <h4>My Profile</h4>
+                    <hr>
+                    <form class="form-style-1">
+                        <div class="form-row">
+                            <div class="form-group col-12 col-sm-6">
+                                <label for="profileFirstName">First Name</label>
+                                <input type="text" class="form-control" id="profileFirstName" th:value="${session.user.firstName}">
+                            </div>
+                            <div class="form-group col-12 col-sm-6">
+                                <label for="profileLastName">Last Name</label>
+                                <input type="text" class="form-control" id="profileLastName" th:value="${session.user.lastName}">
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="profileEmail">Email address</label>
+                                <input type="email" class="form-control" id="profileEmail" th:value="${session.user.email}">
+                            </div>
+                            <div class="form-group col-12 col-sm-6">
+                                <label for="profileNewPassword">New Password</label>
+                                <input type="password" class="form-control" id="profileNewPassword">
+                            </div>
+                            <div class="form-group col-12 col-sm-6">
+                                <label for="profileConfirmPassword">Confirm Password</label>
+                                <input type="password" class="form-control" id="profileConfirmPassword">
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="button" class="btn btn-primary">Update profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -80,14 +80,18 @@
         </div>
     </div>
 
+    <div th:insert="fragments/footer :: #copyright"></div>
+    <!-- /FOOTER -->
+</div>
+
+<div id="copyright" th:remove="tag">
     <div class="copyright">
         <span>Copyright</span>
         <span>&copy;</span>
         <span th:text="${#dates.year(#dates.createNow())}">2019</span>
         <span>S&A Store.</span>
-        <span>All right reserved</span>
+        <span>All right reserved.</span>
     </div>
-    <!-- /FOOTER -->
 </div>
 </body>
 </html>

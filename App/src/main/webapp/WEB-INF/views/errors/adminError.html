@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+<head>
+    <title th:text="#{app.title('Error page')}">Home</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <div th:insert="errors/fragments :: #error403" th:if="${errorCode eq '403'}"></div>
+    <div th:insert="errors/fragments :: #error404" th:if="${errorCode eq '404'}"></div>
+    <div th:insert="errors/fragments :: #error500" th:if="${errorCode eq '500'}"></div>
+</div>
+</body>
+</html>

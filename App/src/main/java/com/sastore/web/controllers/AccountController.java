@@ -1,12 +1,18 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
+import com.sastore.web.enums.Roles;
+import com.sastore.web.utils.Breadcrumb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -19,6 +25,15 @@ public class AccountController extends Base {
 
     @GetMapping("/account")
     public String account(Model model) {
+
+        List<Breadcrumb> breadcrumbs = new ArrayList<>();
+        breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+        breadcrumbs.add(new Breadcrumb("Profile", null));
+        model.addAttribute("breadcrumbs", breadcrumbs);
+
+        if (sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole())) {
+            return "admin/account/account";
+        }
 
         model.addAttribute("globalMenu", "account");
         model.addAttribute("submenu", "account");

@@ -9,6 +9,8 @@ CREATE TABLE users(
 	edited_on timestamp
 );
 
+INSERT INTO users VALUES ('36c0d878-5504-4ba7-9379-a0d38f7b31fe', 'admin@sastore.com', '$2a$12$Hr1XAgIGOmQ.KRwxz5dvK.HVVVSXQ/ceMTljbus1rcW4qgy.ax5.K', 'Админ', null, true, NOW(), null);
+
 CREATE TABLE roles(
 	rolename varchar(50) not null primary key
 );
@@ -30,3 +32,5 @@ CREATE TABLE user_roles(
 	rolename varchar(50) not null references roles(rolename),
 	created_on timestamp not null default NOW()
 );
+
+INSERT INTO user_roles (user_id, rolename) VALUES ('36c0d878-5504-4ba7-9379-a0d38f7b31fe', 'ADMIN');
