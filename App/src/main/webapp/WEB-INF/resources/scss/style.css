@@ -14676,7 +14676,7 @@ header > .container-xl {
   top: calc(50% - 2px);
   left: -5px;
   width: calc(100% + 10px);
-  height: 4px;
+  height: 3px;
   content: "";
   border-top: 1px solid #adb5bd;
   border-bottom: 1px solid #adb5bd;

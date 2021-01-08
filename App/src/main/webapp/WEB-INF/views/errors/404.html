@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+<head>
+    <title th:text="#{app.title('Not found')}">Home</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <div class="container-fluid my-4 text-center">
+
+        <img th:src="@{/resources/img/errors/404.jpg}" src="../../resources/img/errors/404.jpg"
+             alt="404" width="250" class="img-fluid rounded-circle mb-3 img-thumbnail border-info"/>
+        <h2>
+            <span class="text-primary">Oops!</span>
+            <span>Error 404 page not found</span>
+        </h2>
+        <p>The page you were looking for doesn't exist.</p>
+        <a href="javascript:history.back()" class="btn btn-primary has-icon">
+            <i class="material-icons">chevron_left</i>
+            <span>Go back</span>
+        </a>
+    </div>
+</div>
+</body>
+</html>

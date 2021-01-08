@@ -8,6 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @author Atanas Yordanov Arshinkov
+ * @since 1.0.0
+ */
 @Controller
 public class AccountController extends Base {
 
@@ -47,5 +51,14 @@ public class AccountController extends Base {
         model.addAttribute("submenu", "wishlist");
 
         return "account/wishlist";
+    }
+
+    @GetMapping("/account/addresses")
+    public String addresses(Model model) {
+
+        model.addAttribute("globalMenu", "account");
+        model.addAttribute("submenu", "addresses");
+
+        return "account/addresses";
     }
 }

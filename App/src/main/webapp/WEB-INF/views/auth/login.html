@@ -14,11 +14,15 @@
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 m-auto">
             <div class="card shadow-sm">
                 <div class="card-body">
+
                     <div class="text-center">
                         <h3 class="modal-title">Login</h3>
                         <em>to your account</em>
                         <hr/>
                     </div>
+
+                    <div th:if="${badCredentials}" class="alert alert-danger">Invalid email/password!</div>
+                    <div th:if="${invalidEmail}" class="alert alert-danger">There is no user registered with this email!</div>
 
                     <form action="authentication" method="post">
                         <div class="form-group">

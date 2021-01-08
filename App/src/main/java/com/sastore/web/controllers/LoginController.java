@@ -1,6 +1,7 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
+import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.models.SignupModel;
 import com.sastore.web.security.WebSecurityConfig;
@@ -25,6 +26,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -41,20 +43,23 @@ public class LoginController extends Base {
     private UserService userService;
 
     @Autowired
+    private PasswordValidator passwordValidator;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private WebSecurityConfig webSecurityConfig;
 
     @GetMapping("/login")
-    public String prepareLogin() {
-        log.debug("here");
+    public String prepareLogin(HttpServletRequest request, Model model) {
+
         return "auth/login";
     }
 
     @PostMapping("/authentication")
     public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password, HttpSession session, Model model) {
+                        @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
 
         log.debug("email: " + email);
         UserEntity user = userService.getUserByEmail(email);
@@ -91,11 +96,14 @@ public class LoginController extends Base {
             }
             // Bad credentials
             log.debug("Bad credentials");
+            redirectAttributes.addFlashAttribute("badCredentials", true);
+            return "redirect:/login";
         }
         // Invalid email
         log.debug("Invalid email");
+        redirectAttributes.addFlashAttribute("invalidEmail", true);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/signup")
@@ -118,11 +126,16 @@ public class LoginController extends Base {
             bindingResult.rejectValue("confirmPassword", "signup.password.nomatch");
         }
 
+        if (!passwordValidator.isPasswordValid(signupModel.getPassword())) {
+            bindingResult.rejectValue("password", "signup.password.requirements");
+            bindingResult.rejectValue("confirmPassword", "signup.password.requirements");
+        }
+
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
 
-        UserEntity createdUser = userService.createUser(signupModel);
+//        UserEntity createdUser = userService.createUser(signupModel);
 
         return "redirect:/login";
     }

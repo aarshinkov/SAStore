@@ -7,6 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * @author Atanas Yordanov Arshinkov
+ * @since 1.0.0
+ */
 @Getter
 @Setter
 @NoArgsConstructor

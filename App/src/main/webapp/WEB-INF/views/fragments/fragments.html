@@ -19,10 +19,10 @@
                         <li class="list-group-item px-0" th:each="i : ${#numbers.sequence(0, 4)}">
                             <div class="media">
                                 <a href="#" class="mr-2">
-                                    <img src="#" width="50" height="50" alt="Product"/>
+                                    <img src="https://www.artofbrilliance.co.uk/wp-content/uploads/2019/02/happy-tshirt-1.jpg" width="50" height="50" alt="Product"/>
                                 </a>
                                 <div class="media-body">
-                                    <a href="shop-single.html" class="d-block text-body" title="Cotton Fleece Long Hoodie">
+                                    <a href="#" class="d-block text-body" title="Cotton Fleece Long Hoodie">
                                         <span>Cotton Fleece Long Hoodie</span>
                                     </a>
                                     <div th:remove="tag">
@@ -43,7 +43,7 @@
                         <h5 class="mb-0 text-dark font-weight-bold font-condensed" th:utext="#{cart.total(${#numbers.formatDecimal('34678.432', 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">235.32 lv.</h5>
                     </div>
                     <a th:href="@{/cart}" href="#" class="btn btn-faded-success">View Cart</a>
-                    <a href="shipping.html" class="btn btn-success">Checkout</a>
+                    <a th:href="@{/checkout}" href="#" class="btn btn-success">Checkout</a>
                 </div>
             </div>
         </div>

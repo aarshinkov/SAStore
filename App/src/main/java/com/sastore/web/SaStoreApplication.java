@@ -1,5 +1,7 @@
 package com.sastore.web;
 
+import com.sastore.web.beans.PasswordValidator;
+import com.sastore.web.beans.Version;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +20,17 @@ public class SaStoreApplication {
     }
 
     @Bean
+    public Version version() {
+        return new Version();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
+    }
+
+    @Bean
+    public PasswordValidator passwordValidator() {
+        return new PasswordValidator();
     }
 }

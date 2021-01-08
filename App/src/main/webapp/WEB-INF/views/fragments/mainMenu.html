@@ -19,36 +19,7 @@
                 </a>
             </nav>
 
-            <nav class="nav nav-circle d-none d-sm-flex">
-                <a class="nav-link nav-link-sm nav-icon p-0" href="#">
-                    <i class="custom-icon" data-icon="facebook" data-size="17x17"></i>
-                </a>
-                <a class="nav-link nav-link-sm nav-icon p-0" href="#">
-                    <i class="custom-icon" data-icon="twitter" data-size="17x17"></i>
-                </a>
-                <a class="nav-link nav-link-sm nav-icon p-0" href="#">
-                    <i class="custom-icon" data-icon="instagram" data-size="17x17"></i>
-                </a>
-            </nav>
-
             <nav class="nav nav-gap-x-1 ml-auto mr-1">
-                <!--                <div class="nav-item nav-pills dropdown">-->
-                <!--                    <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="currencyDropdown"-->
-                <!--                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">-->
-                <!--                        <i class="fas fa-money-bill-wave icon-width-1"></i>-->
-                <!--                        <span>BGN</span>-->
-                <!--                    </a>-->
-                <!--                    <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="currencyDropdown">-->
-                <!--                        <a href="#" class="dropdown-item">-->
-                <!--                            <span class="icon-width-2">BGN</span>-->
-                <!--                            <span>(лв.)</span>-->
-                <!--                        </a>-->
-                <!--                        <a href="#" class="dropdown-item">-->
-                <!--                            <span class="icon-width-2">EUR</span>-->
-                <!--                            <span>(&euro;)</span>-->
-                <!--                        </a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
                 <div class="nav-item nav-pills dropdown">
                     <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="langDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -125,7 +96,8 @@
             </nav>
             <nav class="nav ml-3 ml-lg-0">
                 <a th:href="@{/}" href="#" class="nav-link has-icon p-0 bg-white">
-                    <img src="#" alt="Logo" height="40">
+                    <!-- CALLING METHOD TWICE WHY? -->
+<!--                    <img src="#"/>-->
                 </a>
             </nav>
 
@@ -251,11 +223,12 @@
                     Components
                 </a>
             </nav>
+
             <nav class="nav nav-circle nav-gap-x-1 ml-auto">
                 <a class="nav-link nav-icon" data-toggle="modal" href="#searchModal">
                     <i class="material-icons">search</i>
                 </a>
-                <a class="nav-link nav-icon has-badge d-none d-sm-flex" href="account-wishlist.html">
+                <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/account/wishlist}" href="#">
                     <i class="material-icons">favorite_border</i>
                     <span class="badge badge-pill badge-danger">3</span>
                 </a>
@@ -273,9 +246,9 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header align-items-center border-bottom shadow-sm z-index-1">
-                    <a href="#">
-                        <img src="#" alt="Logo" height="40">
-                    </a>
+                    <!--                    <a href="#">-->
+                    <!--                        <img src="#" alt="Logo" height="40">-->
+                    <!--                    </a>-->
                     <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button" data-dismiss="modal">
                         <i class="material-icons">close</i>
                     </button>
