@@ -15,6 +15,7 @@ CREATE TABLE roles(
 
 INSERT INTO roles (rolename) VALUES ('ADMIN');
 INSERT INTO roles (rolename) VALUES ('USER');
+INSERT INTO roles (rolename) VALUES ('SALES');
 
 CREATE SEQUENCE public.s_user_roles
 	INCREMENT 1
