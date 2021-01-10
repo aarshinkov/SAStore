@@ -1,0 +1,18 @@
+@mixin width {
+  width: auto !important;
+}
+
+table {
+  &.table-fit {
+    @include width;
+    table-layout: auto !important;
+
+    thead th, tfoot th {
+      @include width;
+    }
+
+    tbody td, tfoot td {
+      @include width;
+    }
+  }
+}

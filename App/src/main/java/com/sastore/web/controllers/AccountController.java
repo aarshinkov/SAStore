@@ -31,12 +31,12 @@ public class AccountController extends Base {
         breadcrumbs.add(new Breadcrumb("Profile", null));
         model.addAttribute("breadcrumbs", breadcrumbs);
 
+        model.addAttribute("globalMenu", "account");
+        model.addAttribute("submenu", "account");
+
         if (sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole())) {
             return "admin/account/account";
         }
-
-        model.addAttribute("globalMenu", "account");
-        model.addAttribute("submenu", "account");
 
         return "account/account";
     }

@@ -18,6 +18,39 @@
             <li class="nav-item d-none d-sm-block"><a class="nav-link nav-link-faded nav-icon" href="" id="refreshPage"><i class="material-icons">refresh</i></a></li>
             <li class="nav-item dropdown nav-notif">
                 <a class="nav-link nav-link-faded nav-icon has-badge dropdown-toggle no-caret" href="#" data-toggle="dropdown" data-display="static">
+                    <span class="flag-icon icon-width-2" th:classappend="'flag-icon-' + #{flag.curr}"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0">
+                    <div class="card" th:with="currLang = #{lang.curr}">
+                        <div class="card-header bg-primary text-white">
+                            <span class="flag-icon icon-width-2 mr-2" th:classappend="'flag-icon-' + #{flag.curr}"></span>
+                            <span th:text="#{nav.lang. + #{lang.curr}}">Language</span>
+                        </div>
+                        <div class="card-body p-0 pt-1">
+                            <div class="list-group list-group-sm list-group-flush">
+                                <a href="?lang=en" class="list-group-item list-group-item-action" th:classappend="${currLang eq 'en'} ? 'active'">
+                                    <div class="media d-flex align-items-center">
+                                        <span class="flag-icon flag-icon-gb icon-width-2"></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0" th:text="#{nav.lang.en}">English</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="?lang=bg" class="list-group-item list-group-item-action" th:classappend="${currLang eq 'bg'} ? 'active'">
+                                    <div class="media d-flex align-items-center">
+                                        <span class="flag-icon flag-icon-bg icon-width-2"></span>
+                                        <div class="media-body ml-2">
+                                            <p class="mb-0" th:text="#{nav.lang.bg}">Bulgarian</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown nav-notif">
+                <a class="nav-link nav-link-faded nav-icon has-badge dropdown-toggle no-caret" href="#" data-toggle="dropdown" data-display="static">
                     <i data-feather="bell"></i>
                     <span class="badge badge-pill badge-danger">6</span>
                 </a>
@@ -83,17 +116,17 @@
             <li class="nav-item dropdown ml-2" sec:authorize="isAuthenticated()">
                 <a class="nav-link nav-link-faded rounded nav-link-img dropdown-toggle px-2" href="#" data-toggle="dropdown" data-display="static">
                     <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2">
-                    <span class="d-none d-sm-block">Атанас</span>
+                    <span class="d-none d-sm-block" th:text="${session.user.firstName}">John</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0 overflow-hidden">
                     <div class="media align-items-center bg-primary text-white px-4 py-3 mb-2">
                         <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50">
                         <div class="media-body ml-2 text-nowrap">
-                            <h6 class="mb-0">Атанас Аршинков</h6>
-                            <span class="text-gray-400 font-size-sm">Administrator</span>
+                            <h6 class="mb-0" th:text="${session.user.fullName}">John Doe</h6>
+                            <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.user.getRoles().toArray()[0].rolename}}">Administrator</span>
                         </div>
                     </div>
-                    <a class="dropdown-item has-icon" th:href="@{/account}" href="#">
+                    <a class="dropdown-item has-icon" th:href="@{/account}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
                         <i class="mr-2" data-feather="user"></i>
                         <span>Profile</span>
                     </a>
