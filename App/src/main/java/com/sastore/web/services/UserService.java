@@ -20,6 +20,8 @@ public interface UserService extends UserDetailsService {
 
     UserEntity createUser(SignupModel signupModel);
 
+    Long getUsersCountByRole(String rolename);
+
     boolean isUserExistByEmail(String email);
 
     boolean isPasswordMatch(String userId, String password);

@@ -17,7 +17,7 @@
         <!--            <hr/>-->
         <!--        </div>-->
 
-        <div class="col-12 col-md-4 mb-3">
+        <div class="col-12 col-md-3 mb-3">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title text-secondary font-size-sm">Total users</h6>
@@ -38,47 +38,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title text-secondary font-size-sm">Total customers</h6>
-                    <div class="d-flex align-items-center mb-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-user-plus mr-2">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="8.5" cy="7" r="4"></circle>
-                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                        </svg>
-                        <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(45, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
-                        <span class="small text-success">
-                            <span>2.4%</span>
-                            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-                        </span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-12 col-md-3 mb-3">
+            <div id="usersCountDiv" class="card"></div>
         </div>
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title text-secondary font-size-sm">Total admins</h6>
-                    <div class="d-flex align-items-center mb-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-user-plus mr-2">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="8.5" cy="7" r="4"></circle>
-                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                        </svg>
-                        <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(45, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
-                        <span class="small text-success">
-                            <span>2.4%</span>
-                            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-                        </span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-12 col-md-3 mb-3">
+            <div id="adminsCountDiv" class="card"></div>
+        </div>
+        <div class="col-12 col-md-3 mb-3">
+            <div id="salesCountDiv" class="card"></div>
         </div>
     </div>
 
@@ -88,60 +55,86 @@
                 <div class="card-body">
                     <h5>Search</h5>
                     <hr/>
-                    <form>
+                    <form th:action="@{/users}" action="#" method="GET" th:object="${filter}">
                         <div class="form-row">
-                            <div class="form-group col">
-                                <label>Email</label>
-                                <input type="text" class="form-control form-control-sm"/>
+                            <div class="form-group col-12 col-md-6 col-lg-3">
+                                <label>User ID</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                             </div>
-                            <div class="form-group col">
+                            <div class="form-group col-12 col-md-6 col-lg-3">
                                 <label>Email</label>
-                                <input type="text" class="form-control form-control-sm"/>
+                                <input type="email" class="form-control form-control-sm" th:field="*{email}"/>
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-lg-3">
+                                <label>First name</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-lg-3">
+                                <label>Last name</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Търси</button>
                     </form>
+                    <hr/>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover table-sm">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">First name</th>
-                                <th scope="col">Last name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Roles</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="u : ${users.collection}">
-                                <td>
-                                    <a class="text-decoration-underline" href="#" th:href="@{/user/} + ${u.userId}" th:text="${u.userId}">1</a>
-                                </td>
-                                <td th:text="${u.firstName}">John</td>
-                                <td>
-                                    <span th:if="${u.lastName ne null}" th:text="${u.lastName}">Doe</span>
-                                    <i th:if="${u.lastName eq null}" th:text="#{user.lastName.empty}">No last name</i>
-                                </td>
-                                <td th:text="${u.email}">joh.doe@gmail.com</td>
-                                <td>
-                                    <span class="badge" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
-                                </td>
-                                <td>
-                                    <div th:each="r : ${u.roles}">
+                    <h5 th:text="#{users.search.nofound}" th:if="${#lists.size(users.collection) eq 0}">No users found</h5>
+
+                    <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
+
+                        <div class="d-flex">
+                            <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Потребители</h5>
+
+                            <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.globalTotalElements ne 0}">
+                                <p class="mb--0" th:utext="#{page.found(${#lists.size(users.collection)})}">Found 2</p>
+                                <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                                <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">First name</th>
+                                    <th scope="col">Last name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Roles</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="u : ${users.collection}">
+                                    <td>
+                                        <a class="text-decoration-underline" href="#" th:href="@{/user/} + ${u.userId}" th:text="${u.userId}">1</a>
+                                    </td>
+                                    <td th:text="${u.firstName}">John</td>
+                                    <td>
+                                        <span th:if="${u.lastName ne null}" th:text="${u.lastName}">Doe</span>
+                                        <i th:if="${u.lastName eq null}" th:text="#{user.lastName.empty}">No last name</i>
+                                    </td>
+                                    <td th:text="${u.email}">joh.doe@gmail.com</td>
+                                    <td>
+                                        <span class="badge" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                                    </td>
+                                    <td>
+                                        <div th:each="r : ${u.roles}">
                                         <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
                                               th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary'))">Rolename</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
                     </div>
                 </div>
             </div>
@@ -194,12 +187,63 @@
     <!-- /Delete modal -->
 
     <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        let adminsCountUrl = /*[[@{/count/admins}]]*/;
+        let salesCountUrl = /*[[@{/count/sales}]]*/;
+        let usersCountUrl = /*[[@{/count/users}]]*/;
+
+        /*]]>*/
+
+        function getAdminsCount() {
+            $.ajax({
+                url: adminsCountUrl,
+                type: 'get',
+                success: function (data) {
+                    $("#adminsCountDiv").empty().append(data);
+                },
+                error: function (xhr, status, error) {
+                    alert("fail");
+                }
+            });
+        }
+
+        function getSalesCount() {
+            $.ajax({
+                url: salesCountUrl,
+                type: 'get',
+                success: function (data) {
+                    $("#salesCountDiv").empty().append(data);
+                },
+                error: function (xhr, status, error) {
+                    alert("fail");
+                }
+            });
+        }
+
+        function getUsersCount() {
+            $.ajax({
+                url: usersCountUrl,
+                type: 'get',
+                success: function (data) {
+                    $("#usersCountDiv").empty().append(data);
+                },
+                error: function (xhr, status, error) {
+                    alert("fail");
+                }
+            });
+        }
+
         $('#deleteModal').on('show.bs.modal', function (event) {
             let modal = $(event.relatedTarget);
             let userId = modal.data('user-id');
 
-            $('#commentDeleteId').val(comm - entId);
+            // $('#commentDeleteId').val(commentId);
         });
+
+        getAdminsCount();
+        getSalesCount();
+        getUsersCount();
     </script>
 </div>
 </body>

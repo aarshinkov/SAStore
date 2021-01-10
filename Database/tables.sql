@@ -34,3 +34,16 @@ CREATE TABLE user_roles(
 );
 
 INSERT INTO user_roles (user_id, rolename) VALUES ('36c0d878-5504-4ba7-9379-a0d38f7b31fe', 'ADMIN');
+
+CREATE SEQUENCE public.s_logs
+	INCREMENT 1
+	START 1;
+	
+ALTER SEQUENCE public.s_user_roles
+	OWNER TO sastore_user;
+
+CREATE TABLE logs(
+	log_id int not null primary key default nextval('s_logs'),
+	log_text text not null,
+	created_on timestamp not null default NOW()
+);

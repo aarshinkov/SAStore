@@ -17,7 +17,7 @@
                     <div class="d-flex flex-column align-items-center text-center">
                         <img th:src="@{/resources/img/user/user_default.svg}" src="../../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="150">
                         <div class="mt-3">
-                            <h4 th:text="${session.user.fullName}">John Doe</h4>
+                            <h4 th:text="${user.fullName}">John Doe</h4>
                             <!--                            <p class="text-secondary mb-1" th:text="#{user.roles. + ${user.getRoles().toArray()[0].rolename}}">User role</p>-->
                             <p class="text-muted font-size-sm" th:text="#{account.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
                             <p class="text-muted font-size-sm" th:if="${user.editedOn ne null}"
@@ -77,37 +77,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover table-sm">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <a class="text-decoration-underline" href="/SAStore/user/36c0d878-5504-4ba7-9379-a0d38f7b31fe">36c0d878-5504-4ba7-9379-a0d38f7b31fe</a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-user-id="36c0d878-5504-4ba7-9379-a0d38f7b31fe">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a class="text-decoration-underline" href="/SAStore/user/35c27cd7-73af-4ab9-af22-dcda546bb0c1">35c27cd7-73af-4ab9-af22-dcda546bb0c1</a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-user-id="35c27cd7-73af-4ab9-af22-dcda546bb0c1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
+                    <hr/>
+
+                    <div th:each="r : ${user.roles}">
+                        <div th:text="#{user.roles. + ${r.rolename}}">Role</div>
+                        <small class="text-muted" th:text="#{user.roles.descr. + ${r.rolename}}">Role description</small>
+                        <hr/>
                     </div>
                 </div>
             </div>

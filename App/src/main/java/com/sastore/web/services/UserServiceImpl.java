@@ -25,7 +25,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -49,11 +52,10 @@ public class UserServiceImpl implements UserService {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter userFilter) {
-
+    public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?)}");
+             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?)}");
              CallableStatement cstmtRoles = conn.prepareCall("{? = call get_user_roles(?)}")) {
 
             conn.setAutoCommit(false);
@@ -61,31 +63,39 @@ public class UserServiceImpl implements UserService {
             cstmt.setInt(1, page);
             cstmt.setInt(2, limit);
 
-            if (StringUtils.isEmpty(userFilter.getEmail())) {
+            if (StringUtils.isEmpty(filter.getUserId())) {
                 cstmt.setString(3, null);
             } else {
-                cstmt.setString(3, userFilter.getEmail());
+                cstmt.setString(3, filter.getUserId());
             }
 
-            if (StringUtils.isEmpty(userFilter.getFirstName())) {
+            if (StringUtils.isEmpty(filter.getEmail())) {
                 cstmt.setString(4, null);
             } else {
-                cstmt.setString(4, userFilter.getFirstName());
+                cstmt.setString(4, filter.getEmail());
             }
 
-            if (StringUtils.isEmpty(userFilter.getLastName())) {
+            if (StringUtils.isEmpty(filter.getFirstName())) {
                 cstmt.setString(5, null);
             } else {
-                cstmt.setString(5, userFilter.getLastName());
+                cstmt.setString(5, filter.getFirstName());
             }
 
-            cstmt.registerOutParameter(6, Types.BIGINT);
-            cstmt.registerOutParameter(7, Types.REF_CURSOR);
+            if (StringUtils.isEmpty(filter.getLastName())) {
+                cstmt.setString(6, null);
+            } else {
+                cstmt.setString(6, filter.getLastName());
+            }
+
+            cstmt.registerOutParameter(7, Types.BIGINT);
+            cstmt.registerOutParameter(8, Types.BIGINT);
+            cstmt.registerOutParameter(9, Types.REF_CURSOR);
 
             cstmt.execute();
 
-            Long globalCount = cstmt.getLong(6);
-            ResultSet rset = (ResultSet) cstmt.getObject(7);
+            Long globalCount = cstmt.getLong(7);
+            Long allRows = cstmt.getLong(8);
+            ResultSet rset = (ResultSet) cstmt.getObject(9);
 
             ObjCollection<UserEntity> collection = new UsersCollection<>();
 
@@ -179,6 +189,14 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
 
         return usersRepository.save(user);
+    }
+
+    @Override
+    public Long getUsersCountByRole(String rolename) {
+
+        String sql = "SELECT COUNT(*) FROM user_roles WHERE roleName = ?";
+
+        return jdbcTemplate.queryForObject(sql, Long.class, rolename);
     }
 
     @Override
