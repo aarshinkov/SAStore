@@ -19,7 +19,7 @@ public class UserFilter implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
-//    private Boolean isActive;
+    private Boolean isActive;
 
     public String getPagingParams() {
         String result = "";
@@ -38,6 +38,10 @@ public class UserFilter implements Serializable {
 
         if (lastName != null) {
             result += "&lastName=" + lastName;
+        }
+
+        if (isActive != null) {
+            result += "&active=" + isActive;
         }
 
         return result;

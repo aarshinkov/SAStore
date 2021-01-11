@@ -1,5 +1,5 @@
 -- Get users
-CREATE OR REPLACE FUNCTION get_users(ip_page_number IN int, ip_user_count IN int, ip_user_id IN varchar, ip_email IN varchar, ip_first_name IN varchar, ip_last_name IN varchar, op_all_users OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
+CREATE OR REPLACE FUNCTION get_users(ip_page_number IN int, ip_user_count IN int, ip_user_id IN varchar, ip_email IN varchar, ip_is_active IN boolean, ip_first_name IN varchar, ip_last_name IN varchar, op_all_users OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
 DECLARE
 	v_sql varchar;
 	v_where varchar;
@@ -20,6 +20,15 @@ BEGIN
 			v_where := v_where || 'AND email like ''%' || ip_email || '%'' ';
 		ELSE
 			v_where := v_where || 'email like ''%' || ip_email || '%'' ';
+			v_has_previous := 1;
+		END IF;
+	END IF;
+	
+	IF ip_is_active IS NOT NULL THEN
+		IF v_has_previous = 1 THEN
+			v_where := v_where || 'AND is_active = ' || ip_is_active || ' ';
+		ELSE
+			v_where := v_where || 'is_active = ' || ip_is_active || ' ';
 			v_has_previous := 1;
 		END IF;
 	END IF;

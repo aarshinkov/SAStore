@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?)}");
+             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
              CallableStatement cstmtRoles = conn.prepareCall("{? = call get_user_roles(?)}")) {
 
             conn.setAutoCommit(false);
@@ -75,27 +75,33 @@ public class UserServiceImpl implements UserService {
                 cstmt.setString(4, filter.getEmail());
             }
 
-            if (StringUtils.isEmpty(filter.getFirstName())) {
-                cstmt.setString(5, null);
+            if (filter.getIsActive() == null) {
+                cstmt.setNull(5, Types.BOOLEAN);
             } else {
-                cstmt.setString(5, filter.getFirstName());
+                cstmt.setBoolean(5, filter.getIsActive());
+            }
+
+            if (StringUtils.isEmpty(filter.getFirstName())) {
+                cstmt.setString(6, null);
+            } else {
+                cstmt.setString(6, filter.getFirstName());
             }
 
             if (StringUtils.isEmpty(filter.getLastName())) {
-                cstmt.setString(6, null);
+                cstmt.setString(7, null);
             } else {
-                cstmt.setString(6, filter.getLastName());
+                cstmt.setString(7, filter.getLastName());
             }
 
-            cstmt.registerOutParameter(7, Types.BIGINT);
             cstmt.registerOutParameter(8, Types.BIGINT);
-            cstmt.registerOutParameter(9, Types.REF_CURSOR);
+            cstmt.registerOutParameter(9, Types.BIGINT);
+            cstmt.registerOutParameter(10, Types.REF_CURSOR);
 
             cstmt.execute();
 
-            Long total = cstmt.getLong(7);
-            Long noPagedTotal = cstmt.getLong(8);
-            ResultSet rset = (ResultSet) cstmt.getObject(9);
+            Long total = cstmt.getLong(8);
+            Long noPagedTotal = cstmt.getLong(9);
+            ResultSet rset = (ResultSet) cstmt.getObject(10);
 
             ObjCollection<UserEntity> collection = new UsersCollection<>();
 

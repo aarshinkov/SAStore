@@ -57,13 +57,21 @@
                     <hr/>
                     <form th:action="@{/users}" action="#" method="GET" th:object="${filter}">
                         <div class="form-row">
-                            <div class="form-group col-12 col-md-6">
+                            <div class="form-group col-12 col-md-4">
                                 <label>User ID</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                             </div>
-                            <div class="form-group col-12 col-md-6">
+                            <div class="form-group col-12 col-md-4">
                                 <label>Email</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
+                            </div>
+                            <div class="form-group col-12 col-md-4">
+                                <label>Status</label>
+                                <select class="form-control form-control-sm" th:field="*{isActive}">
+                                    <option value="">- All -</option>
+                                    <option value="false">Inactive</option>
+                                    <option value="true">Active</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
