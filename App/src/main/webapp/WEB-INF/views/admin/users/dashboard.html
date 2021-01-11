@@ -29,7 +29,7 @@
                             <line x1="20" y1="8" x2="20" y2="14"></line>
                             <line x1="23" y1="11" x2="17" y2="11"></line>
                         </svg>
-                        <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.globalTotalElements, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
+                        <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
                         <span class="small text-danger">
                             <span>0.3%</span>
                             <i class="material-icons align-bottom">keyboard_arrow_down</i>
@@ -57,24 +57,35 @@
                     <hr/>
                     <form th:action="@{/users}" action="#" method="GET" th:object="${filter}">
                         <div class="form-row">
-                            <div class="form-group col-12 col-md-6 col-lg-3">
+                            <div class="form-group col-12 col-md-6">
                                 <label>User ID</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                             </div>
-                            <div class="form-group col-12 col-md-6 col-lg-3">
+                            <div class="form-group col-12 col-md-6">
                                 <label>Email</label>
-                                <input type="email" class="form-control form-control-sm" th:field="*{email}"/>
+                                <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
                             </div>
-                            <div class="form-group col-12 col-md-6 col-lg-3">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-4">
                                 <label>First name</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
                             </div>
-                            <div class="form-group col-12 col-md-6 col-lg-3">
+                            <div class="form-group col-12 col-md-4">
                                 <label>Last name</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
                             </div>
+                            <div class="form-group col-12 col-md-4">
+                                <label>Users per page</label>
+                                <select class="form-control form-control-sm" name="limit">
+                                    <option value="5" th:selected="${limit eq 5}">5</option>
+                                    <option value="10" th:selected="${limit eq 10}">10</option>
+                                    <option value="20" th:selected="${limit eq 20}">20</option>
+                                </select>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Търси</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                        <a th:href="@{/users}" href="#" class="btn btn-outline-dark btn-sm">Clear</a>
                     </form>
                     <hr/>
 
@@ -85,10 +96,13 @@
                         <div class="d-flex">
                             <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Потребители</h5>
 
-                            <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.globalTotalElements ne 0}">
-                                <p class="mb--0" th:utext="#{page.found(${#lists.size(users.collection)})}">Found 2</p>
-                                <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
-                                <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                            <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                                <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                                <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                                <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
+                                    <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                                    <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                                </div>
                             </div>
                         </div>
 

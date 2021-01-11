@@ -3,22 +3,71 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 <div id="pagination" th:remove="tag">
+
     <div class="row">
         <div class="col-sm-12 mt-4">
             <ul class="pagination pagination-circle pg-blue pagination-md justify-content-center">
-<!--                <div th:remove="tag" th:if="${pageWrapper.totalPages le maxPagesPerView and pageWrapper.totalPages ne 1}">-->
-<!--                    <li class="page-item one" th:classappend="${pageWrapper.currentPage eq i} ? 'active'"-->
-<!--                        th:each="i : ${#numbers.sequence(1, pageWrapper.totalPages, 1)}">-->
-<!--                        <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>-->
-<!--                    </li>-->
-<!--                </div>-->
-                <span th:text="${pageWrapper.localTotalElements}"></span>
+
+                <!-- Less than MaxPagesPerView and NOT only 1 page -->
+                <div th:remove="tag" th:if="${pageWrapper.totalPages le maxPagesPerView and pageWrapper.totalPages ne 1}">
+                    <li class="page-item" th:classappend="${pageWrapper.currentPage eq i} ? 'active'"
+                        th:each="i : ${#numbers.sequence(1, pageWrapper.totalPages, 1)}">
+                        <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
+                    </li>
+                </div>
+
+                <!-- More than MaxPagesPerView -->
+                <div th:remove="tag" th:if="${pageWrapper.totalPages gt maxPagesPerView}">
+
+                    <!-- ON first and second page -->
+                    <div th:remove="tag" th:if="${pageWrapper.currentPage ge 1 and pageWrapper.currentPage le 2}">
+                        <li class="page-item" th:classappend="${pageWrapper.currentPage eq i} ? 'active'"
+                            th:each="i : ${#numbers.sequence(1, maxPagesPerView, 1)}">
+                            <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="'?page=' + ${pageWrapper.totalPages} + ${otherParams ne null ? otherParams : ''}" href="#">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </div>
+
+                    <div th:remove="tag" th:if="${pageWrapper.currentPage ge maxPagesPerView and pageWrapper.currentPage lt pageWrapper.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="'?page=1' + ${otherParams ne null ? otherParams : ''}" href="#">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${pageWrapper.currentPage eq i} ? 'active'"
+                            th:each="i : ${#numbers.sequence(pageWrapper.currentPage - 1, pageWrapper.currentPage + 1, 1)}">
+                            <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${pageWrapper.currentPage + 1 lt pageWrapper.totalPages}">
+                            <a class="page-link" th:href="'?page=' + ${pageWrapper.totalPages} + ${otherParams ne null ? otherParams : ''}" href="#">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </div>
+
+                    <!-- ON last page -->
+                    <div th:remove="tag" th:if="${pageWrapper.currentPage eq pageWrapper.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="'?page=1' + ${otherParams ne null ? otherParams : ''}" href="#">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${pageWrapper.currentPage eq i} ? 'active'"
+                            th:each="i : ${#numbers.sequence(pageWrapper.totalPages - maxPagesPerView + 1, pageWrapper.totalPages, 1)}">
+                            <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
+                        </li>
+                    </div>
+                </div>
             </ul>
         </div>
     </div>
 </div>
 
-<div id="pagination2" th:remove="tag">
+<div id="pagination5" th:remove="tag">
     <div class="row">
         <div class="col-sm-12 mt-4">
             <nav>

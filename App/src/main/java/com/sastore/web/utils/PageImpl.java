@@ -11,14 +11,14 @@ public class PageImpl extends Page {
 
     @Override
     public Long getTotalPages() {
-        globalTotalElements = getGlobalTotalElements();
+        noPagedTotal = getNoPagedTotal();
         maxElementsPerPage = getMaxElementsPerPage();
 
-        if (globalTotalElements % maxElementsPerPage != 0) {
-            return (globalTotalElements / maxElementsPerPage) + 1;
+        if (noPagedTotal % maxElementsPerPage != 0) {
+            return (noPagedTotal / maxElementsPerPage) + 1;
         }
 
-        return globalTotalElements / maxElementsPerPage;
+        return noPagedTotal / maxElementsPerPage;
     }
 
     @Override

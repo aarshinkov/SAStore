@@ -47,8 +47,7 @@ public class AdminController extends Base {
 
         String otherParams = "";
 
-        if (limit != null && limit > 0)
-        {
+        if (limit != null && limit > 0) {
             otherParams = "&limit=" + limit;
         }
 
@@ -60,7 +59,9 @@ public class AdminController extends Base {
         model.addAttribute("otherParameters", otherParams);
 
         model.addAttribute("pageWrapper", users.getPage());
-        model.addAttribute("maxPagesPerView", 5);
+        model.addAttribute("maxPagesPerView", 3);
+
+        model.addAttribute("limit", limit);
 
         model.addAttribute("globalMenu", "users");
 

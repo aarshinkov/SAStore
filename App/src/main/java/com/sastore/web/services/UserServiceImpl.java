@@ -93,8 +93,8 @@ public class UserServiceImpl implements UserService {
 
             cstmt.execute();
 
-            Long globalCount = cstmt.getLong(7);
-            Long allRows = cstmt.getLong(8);
+            Long total = cstmt.getLong(7);
+            Long noPagedTotal = cstmt.getLong(8);
             ResultSet rset = (ResultSet) cstmt.getObject(9);
 
             ObjCollection<UserEntity> collection = new UsersCollection<>();
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
                 collection.getCollection().add(user);
             }
 
-            long collectionCount = collection.getCollection().size();
+            long pagedTotal = collection.getCollection().size();
 
             int start = (page - 1) * limit + 1;
             int end = start + collection.getCollection().size() - 1;
@@ -141,8 +141,9 @@ public class UserServiceImpl implements UserService {
             pageWrapper.setMaxElementsPerPage(limit);
             pageWrapper.setStartPage(start);
             pageWrapper.setEndPage(end);
-            pageWrapper.setLocalTotalElements(collectionCount);
-            pageWrapper.setGlobalTotalElements(globalCount);
+            pageWrapper.setNoPagedTotal(noPagedTotal);
+            pageWrapper.setPagedTotal(pagedTotal);
+            pageWrapper.setTotal(total);
 
             collection.setPage(pageWrapper);
 

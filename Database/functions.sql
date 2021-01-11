@@ -7,7 +7,7 @@ DECLARE
 	v_has_previous int := 0;
 BEGIN
 	v_sql := 'SELECT * FROM users u ';
-	v_sql_count := 'SELECT count(*) FROM user u ';
+	v_sql_count := 'SELECT count(*) FROM users u ';
 	v_where := 'WHERE ';
 
 	IF ip_user_id IS NOT NULL THEN
@@ -26,32 +26,34 @@ BEGIN
 	
 	IF ip_first_name IS NOT NULL THEN
 		IF v_has_previous = 1 THEN
-			v_where := v_where || 'AND first_name like ''%' || ip_first_name || '%'' ';
+			v_where := v_where || 'AND lower(first_name) like ''%' || lower(ip_first_name) || '%'' ';
 		ELSE
-			v_where := v_where || 'first_name like ''%' || ip_first_name || '%'' ';
+			v_where := v_where || 'lower(first_name) like ''%' || lower(ip_first_name) || '%'' ';
 			v_has_previous := 1;
 		END IF;
 	END IF;
 	
 	IF ip_last_name IS NOT NULL THEN
 		IF v_has_previous = 1 THEN
-			v_where := v_where || 'AND last_name like ''%' || ip_last_name || '%'' ';
+			v_where := v_where || 'AND lower(last_name) like ''%' || lower(ip_last_name) || '%'' ';
 		ELSE
-			v_where := v_where || 'last_name like ''%' || ip_last_name || '%'' ';
+			v_where := v_where || 'lower(last_name) like ''%' || lower(ip_last_name) || '%'' ';
 			v_has_previous := 1;
 		END IF;
 	END IF;
 	
 	IF v_has_previous <> 0 THEN
 		v_sql := v_sql || v_where;
-		v_sql_count := v_sql || v_where;
+		v_sql_count := v_sql_count || v_where;
 	END IF;
 	
-	EXECUTE IMMEDIATE v_sql_count INTO op_all_rows;
+	INSERT INTO logs (log_text, marker) VALUES (v_sql_count, 'SQL_COUNT');
+	
+	EXECUTE v_sql_count INTO op_all_rows;
 	
 	v_sql := v_sql || 'ORDER BY created_on DESC LIMIT ' || ip_user_count || ' OFFSET ' || (ip_page_number - 1) * ip_user_count;
 	
-	INSERT INTO logs (log_text) VALUES (v_sql);
+	INSERT INTO logs (log_text, marker) VALUES (v_sql, 'SQL');
 	
 	op_all_users := get_users_count();
 	

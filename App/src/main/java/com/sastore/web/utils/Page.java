@@ -14,9 +14,10 @@ import lombok.ToString;
 public abstract class Page {
 
     protected Integer currentPage;
-    protected Long localTotalElements;
-    protected Long globalTotalElements;
-    protected Integer maxElementsPerPage = 6;
+    protected Long noPagedTotal;
+    protected Long pagedTotal;
+    protected Long total;
+    protected Integer maxElementsPerPage;
     protected Integer startPage;
     protected Integer endPage;
 
