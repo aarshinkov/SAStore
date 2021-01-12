@@ -2,9 +2,11 @@ package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
+import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
+import com.sastore.web.services.RoleService;
 import com.sastore.web.services.UserService;
 import com.sastore.web.utils.Breadcrumb;
 import org.slf4j.Logger;
@@ -13,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,9 @@ public class AdminController extends Base {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -81,9 +84,57 @@ public class AdminController extends Base {
 
         model.addAttribute("user", user);
 
+        List<RoleEntity> roles = roleService.getRoles();
+
+        List<RoleEntity> unassignedRoles = new ArrayList<>();
+
+        model.addAttribute("roles", roles);
+
+        for (RoleEntity role : roles) {
+            if (!user.getRoles().contains(role)) {
+                unassignedRoles.add(role);
+            }
+        }
+
+        model.addAttribute("unassignedRoles", unassignedRoles);
+
         model.addAttribute("globalMenu", "users");
 
         return "admin/users/user";
+    }
+
+    @PostMapping("/user/role/add")
+    public String addRole(@RequestParam("userId") String userId,
+                          @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
+
+        try {
+            Roles role = Roles.valueOf(rolename.toUpperCase());
+
+            UserEntity updatedUser = userService.addRole(userId, role);
+
+            //redirectAttributes.addFlashAttribute("msgSuccess", "");
+        } catch (Exception e) {
+            //redirectAttributes.addFlashAttribute("msgError", "");
+        }
+
+        return "redirect:/user/" + userId;
+    }
+
+    @PostMapping("/user/role/remove")
+    public String removeRole(@RequestParam("userId") String userId,
+                             @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
+
+        try {
+            Roles role = Roles.valueOf(rolename.toUpperCase());
+
+            UserEntity updatedUser = userService.removeRole(userId, role);
+
+            //redirectAttributes.addFlashAttribute("msgSuccess", "");
+        } catch (Exception e) {
+            //redirectAttributes.addFlashAttribute("msgError", "");
+        }
+
+        return "redirect:/user/" + userId;
     }
 
     @GetMapping("/count/admins")
@@ -108,5 +159,28 @@ public class AdminController extends Base {
         model.addAttribute("count", userService.getUsersCountByRole(Roles.USER.getRole()));
 
         return "admin/users/fragments :: #usersCount";
+    }
+
+    private List<RoleEntity> getUnassignedRoles(List<RoleEntity> roles, List<RoleEntity> userRoles) {
+        List<String> auxRoles = new ArrayList<>();
+        List<String> auxUserRoles = new ArrayList<>();
+
+        for (RoleEntity role : roles) {
+            auxRoles.add(role.getRolename());
+        }
+
+        for (RoleEntity userRole : userRoles) {
+            auxUserRoles.add(userRole.getRolename());
+        }
+
+        List<RoleEntity> unassignedRoles = new ArrayList<>();
+
+        for (String role : auxRoles) {
+            if (!auxUserRoles.contains(role)) {
+                unassignedRoles.add(new RoleEntity(role));
+            }
+        }
+
+        return unassignedRoles;
     }
 }

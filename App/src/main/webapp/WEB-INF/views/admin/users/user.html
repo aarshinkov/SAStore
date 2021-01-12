@@ -77,11 +77,28 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
+                    <div class="d-flex">
+                        <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
+                        <a href="#" class="btn btn-sm btn-outline-success ml-auto" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
+                           data-toggle="modal" data-target="#addRoleModal">
+                            <i class="fas fa-plus"></i>
+                            <span>Add role</span>
+                        </a>
+                    </div>
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Every user must have at least one role.</span>
+                    </small>
                     <hr/>
 
                     <div th:each="r : ${user.roles}">
-                        <div th:text="#{user.roles. + ${r.rolename}}">Role</div>
+                        <div class="d-flex">
+                            <div th:text="#{user.roles. + ${r.rolename}}">Role</div>
+                            <a href="#" class="btn btn-xs btn-outline-danger ml-auto" th:if="${#lists.size(user.roles) gt 1}"
+                               data-toggle="modal" data-target="#removeRoleModal" th:attr="data-rolename=${r.rolename}">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
                         <small class="text-muted" th:text="#{user.roles.descr. + ${r.rolename}}">Role description</small>
                         <hr/>
                     </div>
@@ -89,6 +106,85 @@
             </div>
         </div>
     </div>
+
+    <!-- Add role modal -->
+    <div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
+         aria-labelledby="addRoleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white shadow-none">
+                    <h6 class="modal-title" id="addRoleModalLabel">Add role</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/user/role/add}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select class="form-control" name="rolename">
+                                <option th:each="ur : ${unassignedRoles}" th:value="${ur.rolename}" th:text="#{user.roles. + ${ur.rolename}}">Role</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="userId" th:value="${user.userId}"/>
+                        <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            <span>Cancel</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /Add role modal -->
+
+    <!-- Remove role modal -->
+    <div class="modal fade" id="removeRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) gt 1}"
+         aria-labelledby="removeRoleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white shadow-none">
+                    <h6 class="modal-title" id="removeRoleModalLabel">Remove role</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/user/role/remove}" method="post">
+                    <div class="modal-body">
+                        <div>Do you really want to remove this role from user <b th:text="${user.fullName}"></b>?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="userId" th:value="${user.userId}"/>
+                        <input id="roleInput" type="hidden" name="rolename"/>
+                        <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            <span>Cancel</span>
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /Remove role modal -->
+
+    <script type="text/javascript" th:inline="javascript">
+        $('#removeRoleModal').on('show.bs.modal', function (event) {
+            let modal = $(event.relatedTarget);
+            let rolename = modal.data('rolename');
+
+            $('#roleInput').val(rolename);
+        });
+    </script>
 </div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.sastore.web.services;
 
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.UserEntity;
+import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
 import com.sastore.web.models.SignupModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,10 @@ public interface UserService extends UserDetailsService {
     UserEntity createUser(SignupModel signupModel);
 
     Long getUsersCountByRole(String rolename);
+
+    UserEntity addRole(String userId, Roles role) throws Exception;
+
+    UserEntity removeRole(String userId, Roles role) throws Exception;
 
     boolean isUserExistByEmail(String email);
 

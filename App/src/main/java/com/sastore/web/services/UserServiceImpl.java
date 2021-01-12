@@ -207,6 +207,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity addRole(String userId, Roles role) throws Exception {
+        UserEntity user = usersRepository.findByUserId(userId);
+
+        if (user == null) {
+            throw new Exception("User with ID " + userId + " not found!");
+        }
+
+        RoleEntity newRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
+
+        user.getRoles().add(newRole);
+
+        return usersRepository.save(user);
+    }
+
+    @Override
+    public UserEntity removeRole(String userId, Roles role) throws Exception {
+        UserEntity user = usersRepository.findByUserId(userId);
+
+        if (user == null) {
+            throw new Exception("User with ID " + userId + " not found!");
+        }
+
+        RoleEntity storedRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
+
+        List<RoleEntity> userRoles = user.getRoles();
+
+        for (int i = 0; i < userRoles.size(); i++) {
+            if (userRoles.get(i).getRolename().equals(storedRole.getRolename())) {
+                userRoles.remove(i);
+            }
+        }
+
+        user.setRoles(userRoles);
+
+        return usersRepository.save(user);
+    }
+
+    @Override
     public boolean isUserExistByEmail(String email) {
         UserEntity storedUser = usersRepository.findByEmail(email);
 
