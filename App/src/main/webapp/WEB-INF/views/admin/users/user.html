@@ -19,8 +19,8 @@
                         <div class="mt-3">
                             <h4 th:text="${user.fullName}">John Doe</h4>
                             <!--                            <p class="text-secondary mb-1" th:text="#{user.roles. + ${user.getRoles().toArray()[0].rolename}}">User role</p>-->
-                            <p class="text-muted font-size-sm" th:text="#{account.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
-                            <p class="text-muted font-size-sm" th:if="${user.editedOn ne null}"
+                            <p class="text-muted font-size-sm mb-0" th:text="#{account.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
+                            <p class="text-muted font-size-sm"
                                th:text="#{account.editedon(${#dates.format(user.editedOn, #messages.msg('format.datetime3'))})}">Edited Dec 31, 2017</p>
                             <!--                            <button class="btn btn-primary">Follow</button>-->
                         </div>
