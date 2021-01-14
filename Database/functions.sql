@@ -89,3 +89,55 @@ BEGIN
 	SELECT count(*) INTO op_all_rows FROM users u;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Get products
+CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN int, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
+DECLARE
+	v_sql varchar;
+	v_where varchar;
+	v_sql_count varchar;
+	v_has_previous int := 0;
+BEGIN
+	v_sql := 'SELECT * FROM products u ';
+	v_sql_count := 'SELECT count(*) FROM products u ';
+	v_where := 'WHERE ';
+
+	IF ip_product_id IS NOT NULL THEN
+		v_where := v_where || 'product_id = ' || ip_product_id || ' ';
+		v_has_previous := 1;
+	END IF;
+	
+	IF ip_title IS NOT NULL THEN
+		IF v_has_previous = 1 THEN
+			v_where := v_where || 'AND lower(title) like ''%' || ip_title || '%'' ';
+		ELSE
+			v_where := v_where || 'lower(title) like ''%' || ip_title || '%'' ';
+			v_has_previous := 1;
+		END IF;
+	END IF;
+	
+	IF v_has_previous <> 0 THEN
+		v_sql := v_sql || v_where;
+		v_sql_count := v_sql_count || v_where;
+	END IF;
+	
+	INSERT INTO logs (log_text, marker) VALUES (v_sql_count, 'SQL_COUNT');
+	
+	EXECUTE v_sql_count INTO op_all_rows;
+	
+	v_sql := v_sql || 'ORDER BY added_on DESC LIMIT ' || ip_product_count || ' OFFSET ' || (ip_page_number - 1) * ip_product_count;
+	
+	INSERT INTO logs (log_text, marker) VALUES (v_sql, 'SQL');
+	
+	op_all_products := get_products_count();
+	
+	OPEN saCursor FOR EXECUTE v_sql;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Get products count
+CREATE OR REPLACE FUNCTION get_products_count(op_all_rows OUT bigint) RETURNS BIGINT AS $$
+BEGIN
+	SELECT count(*) INTO op_all_rows FROM products u;
+END;
+$$ LANGUAGE plpgsql;

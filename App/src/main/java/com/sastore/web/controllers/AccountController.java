@@ -34,7 +34,7 @@ public class AccountController extends Base {
         model.addAttribute("globalMenu", "account");
         model.addAttribute("submenu", "account");
 
-        if (sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole())) {
+        if (hasSpecialRole()) {
             return "admin/account/account";
         }
 

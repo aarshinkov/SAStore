@@ -118,7 +118,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form th:action="@{/user/role/add}" method="post">
+                <form th:action="@{/admin/user/role/add}" method="post">
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Role</label>
@@ -155,7 +155,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form th:action="@{/user/role/remove}" method="post">
+                <form th:action="@{/admin/user/role/remove}" method="post">
                     <div class="modal-body">
                         <div>Do you really want to remove this role from user <b th:text="${user.fullName}"></b>?</div>
                     </div>

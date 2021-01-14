@@ -2,6 +2,10 @@
   width: auto !important;
 }
 
+.c-text-dark-gray {
+  color: #505050;
+}
+
 table {
   &.table-fit {
     @include width;
@@ -14,5 +18,11 @@ table {
     tbody td, tfoot td {
       @include width;
     }
+  }
+}
+
+@for $c-font-size from 1 through 10 {
+  .c-font-size-#{$c-font-size * 5} {
+    font-size: $c-font-size * 5px;
   }
 }

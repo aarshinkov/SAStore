@@ -1,5 +1,6 @@
 package com.sastore.web.base;
 
+import com.sastore.web.enums.Roles;
 import com.sastore.web.security.SecurityChecks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,10 @@ public class Base {
 
     @Autowired
     private MessageSource messageSource;
+
+    protected Boolean hasSpecialRole() {
+        return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole());
+    }
 
     protected String getMessage(String key) {
         return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());

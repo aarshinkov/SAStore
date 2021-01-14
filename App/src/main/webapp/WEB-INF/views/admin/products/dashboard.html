@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+<head>
+    <title th:text="#{app.title('Products')}">Products</title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+    <div class="row gutters-sm">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p>Products</p>
+                    <hr/>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Added on</th>
+                                <th scope="col">Edited on</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="p : ${products.collection}">
+                                <td>
+                                    <a class="text-decoration-underline" href="#" th:href="@{/admin/product/} + ${p.productId}" th:text="${p.productId}">1</a>
+                                </td>
+                                <td th:text="${p.title}">Product 1</td>
+                                <td>
+                                    <span th:text="${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}">23.60</span>
+                                </td>
+                                <td th:text="${#numbers.formatDecimal(p.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')}">23</td>
+                                <td>
+                                    <span th:text="${#dates.format(p.addedOn, #messages.msg('format.datetime4'))}"></span>
+                                </td>
+                                <td>
+                                    <span th:if="${p.editedOn ne null}" th:text="${p.editedOn}">Edited on</span>
+                                    <i th:if="${p.editedOn eq null}" th:text="#{product.editedOn.empty}">Not edited yet</i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

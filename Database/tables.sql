@@ -18,6 +18,7 @@ CREATE TABLE roles(
 INSERT INTO roles (rolename) VALUES ('ADMIN');
 INSERT INTO roles (rolename) VALUES ('USER');
 INSERT INTO roles (rolename) VALUES ('SALES');
+INSERT INTO roles (rolename) VALUES ('PRODUCTS');
 
 CREATE SEQUENCE public.s_user_roles
 	INCREMENT 1
@@ -46,4 +47,22 @@ CREATE TABLE logs(
 	log_id int not null primary key default nextval('s_logs'),
 	log_text text not null,
 	created_on timestamp not null default NOW()
+);
+
+CREATE SEQUENCE public.s_products
+	INCREMENT 1
+	START 1000;
+	
+ALTER SEQUENCE public.s_products
+	OWNER TO sastore_user;
+	
+CREATE TABLE products(
+	product_id int not null primary key default nextval('s_products'),
+	title varchar(200) not null,
+	price numeric not null,
+	avail_quant int not null default 1,
+	description text not null,
+	main_image varchar(300) not null,
+	added_on timestamp not null default NOW(),
+	edited_on timestamp
 );

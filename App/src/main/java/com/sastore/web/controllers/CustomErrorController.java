@@ -1,7 +1,6 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
-import com.sastore.web.enums.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -43,7 +42,7 @@ public class CustomErrorController extends Base implements ErrorController {
             }
         }
 
-        if (sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole())) {
+        if (hasSpecialRole()) {
             return "errors/adminError";
         }
 

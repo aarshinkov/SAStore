@@ -4,7 +4,7 @@
 <body>
 <div id="pagination" th:remove="tag">
 
-    <div class="row">
+    <div class="row" th:if="${pageWrapper.totalPages gt 1}">
         <div class="col-sm-12 mt-4">
             <ul class="pagination pagination-circle pg-blue pagination-md justify-content-center">
 

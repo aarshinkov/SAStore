@@ -1,11 +1,8 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
-import com.sastore.web.enums.Roles;
-import com.sastore.web.security.SecurityChecks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +19,8 @@ public class HomeController extends Base {
     @GetMapping({"/", "/home"})
     public String home(Model model) {
 
-        if (sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole())) {
-            return "redirect:/dashboard";
+        if (hasSpecialRole()) {
+            return "redirect:/admin/dashboard";
         }
 
 //        if (SecurityContextHolder.getContext()) {

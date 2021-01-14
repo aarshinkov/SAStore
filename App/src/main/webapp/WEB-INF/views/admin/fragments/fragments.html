@@ -151,7 +151,7 @@
 
         <!-- Sidebar header -->
         <div class="sidebar-header">
-            <a href="index.html" class="logo">
+            <a th:href="@{/}" href="#" class="logo">
                 <img th:src="@{/resources/img/logo-white.svg}" src="../../resources/img/logo-white.svg" alt="Logo" id="main-logo">
                 <span>SA Store</span>
             </a>
@@ -165,30 +165,31 @@
         <div class="sidebar-body">
             <ul class="nav treeview mb-4" data-accordion>
                 <li class="nav-label">DASHBOARD</li>
-                <li class="nav-item">
-                    <a class="nav-link has-icon" th:href="@{/dashboard}" href="#" th:classappend="${globalMenu eq 'dashboard'} ? 'active'">
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'SALES', 'PRODUCTS')">
+                    <a class="nav-link has-icon" th:href="@{/admin/dashboard}" href="#" th:classappend="${globalMenu eq 'dashboard'} ? 'active'">
                         <i data-feather="globe"></i>
                         <span>General</span>
                     </a>
                 </li>
-                <div sec:authorize="hasAnyRole('ADMIN', 'SALES')" th:remove="tag">
-                    <li class="nav-label">SALES</li>
-                    <li class="nav-item">
-                        <a class="nav-link has-icon" th:href="@{/sales}" href="#" th:classappend="${globalMenu eq 'sales'} ? 'active'">
-                            <i data-feather="shopping-bag"></i>
-                            <span>Sales</span>
-                        </a>
-                    </li>
-                </div>
-                <div sec:authorize="hasRole('ADMIN')" th:remove="tag">
-                    <li class="nav-label">Users</li>
-                    <li class="nav-item">
-                        <a class="nav-link has-icon" th:href="@{/users}" href="#" th:classappend="${globalMenu eq 'users'} ? 'active'">
-                            <i data-feather="users"></i>
-                            <span>Users</span>
-                        </a>
-                    </li>
-                </div>
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'SALES')">
+                    <a class="nav-link has-icon" th:href="@{/admin/sales}" href="#" th:classappend="${globalMenu eq 'sales'} ? 'active'">
+                        <i data-feather="pie-chart"></i>
+                        <span>Sales</span>
+                    </a>
+                </li>
+                <li class="nav-label" sec:authorize="hasAnyRole('ADMIN', 'SALES', 'PRODUCTS')">MANAGING</li>
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'PRODUCTS')">
+                    <a class="nav-link has-icon" th:href="@{/admin/products}" href="#" th:classappend="${globalMenu eq 'products'} ? 'active'">
+                        <i data-feather="shopping-bag"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link has-icon" th:href="@{/admin/users}" href="#" th:classappend="${globalMenu eq 'users'} ? 'active'">
+                        <i data-feather="users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
                 <!--                <li class="nav-item">-->
                 <!--                    <a class="nav-link has-icon treeview-toggle" href="#"><i class="material-icons">folder_open</i>Submenu</a>-->
                 <!--                    <ul class="nav">-->
