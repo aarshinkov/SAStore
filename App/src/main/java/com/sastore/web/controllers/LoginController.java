@@ -135,7 +135,7 @@ public class LoginController extends Base {
             return "auth/signup";
         }
 
-//        UserEntity createdUser = userService.createUser(signupModel);
+        UserEntity createdUser = userService.createUser(signupModel);
 
         return "redirect:/login";
     }

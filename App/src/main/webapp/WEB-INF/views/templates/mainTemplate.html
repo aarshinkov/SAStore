@@ -19,11 +19,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
 
     <!-- Plugins -->
-    <link rel="stylesheet" th:href="@{/resources/plugins/swiper/swiper.min.css}" href="../../resources/plugins/swiper/swiper.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/plugins/nouislider/nouislider.min.css}" href=".../../resources/plugins/nouislider/nouislider.min.css"/>
+    <link rel="stylesheet" th:href="@{/resources/users/plugins/swiper/swiper.min.css}" href="../../resources/users/plugins/swiper/swiper.min.css"/>
+    <link rel="stylesheet" th:href="@{/resources/users/plugins/nouislider/nouislider.min.css}" href="../../resources/users/plugins/nouislider/nouislider.min.css"/>
 
-    <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../resources/scss/style.css"/>
+    <link rel="stylesheet" th:href="@{/resources/users/scss/style.css}" href="../../resources/users/scss/style.css"/>
 
+    <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../../resources/scss/style.css"/>
 </head>
 <body style="height: 100%; display: flex; flex-direction: column;">
 <div th:insert="fragments/mainMenu :: #mainMenu"></div>
@@ -62,14 +63,14 @@
 
 <div th:insert="fragments/footer :: #footer"></div>
 
-<script th:src="@{/resources/js/script.js}" src="../../resources/js/script.js"></script>
+<script th:src="@{/resources/users/js/script.js}" src="../../resources/js/script.js"></script>
 
 <!-- Main script -->
-<script th:src="@{/resources/js/app.js}" src="../../resources/js/app.js"></script>
+<script th:src="@{/resources/users/js/app.js}" src="../../resources/users/js/app.js"></script>
 
 <!-- Plugins -->
-<script th:src="@{/resources/plugins/swiper/swiper.min.js}" src="../../resources/plugins/swiper/swiper.min.js"></script>
-<script th:src="@{/resources/plugins/nouislider/nouislider.min.js}" src="../../resources/plugins/nouislider/nouislider.min.js"></script>
+<script th:src="@{/resources/users/plugins/swiper/swiper.min.js}" src="../../resources/users/plugins/swiper/swiper.min.js"></script>
+<script th:src="@{/resources/users/plugins/nouislider/nouislider.min.js}" src="../../resources/users/plugins/nouislider/nouislider.min.js"></script>
 
 </body>
 </html>

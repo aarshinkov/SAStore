@@ -8,7 +8,9 @@
 </head>
 <body>
 <div layout:fragment="contentDiv">
-    <div>Error page</div>
+    <div th:insert="errors/fragments :: #error403" th:if="${errorCode eq '403'}"></div>
+    <div th:insert="errors/fragments :: #error404" th:if="${errorCode eq '404'}"></div>
+    <div th:insert="errors/fragments :: #error500" th:if="${errorCode eq '500'}"></div>
 </div>
 </body>
 </html>

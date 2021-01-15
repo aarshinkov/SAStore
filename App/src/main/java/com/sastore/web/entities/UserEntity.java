@@ -55,7 +55,7 @@ public class UserEntity implements UserDetails, Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
-    private Set<RoleEntity> roles;
+    private List<RoleEntity> roles;
 
     public String getFullName() {
         return (lastName != null) ? firstName + ' ' + lastName : firstName;
