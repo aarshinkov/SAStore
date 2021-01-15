@@ -1,5 +1,6 @@
 package com.sastore.web.filters;
 
+import com.sastore.web.enums.Order;
 import lombok.*;
 
 import java.io.Serializable;
@@ -20,6 +21,8 @@ public class UserFilter implements Serializable {
     private String firstName;
     private String lastName;
     private Boolean isActive;
+    private String role;
+    private String order = Order.DESCENDING.getOrder();
 
     public String getPagingParams() {
         String result = "";
@@ -42,6 +45,14 @@ public class UserFilter implements Serializable {
 
         if (isActive != null) {
             result += "&active=" + isActive;
+        }
+
+        if (role != null) {
+            result += "&role=" + role;
+        }
+
+        if (order != null) {
+            result += "&order=" + order;
         }
 
         return result;

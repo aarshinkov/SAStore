@@ -4,6 +4,7 @@ import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.entities.UserEntity;
+import com.sastore.web.enums.Order;
 import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
 import com.sastore.web.services.RoleService;
@@ -42,15 +43,19 @@ public class UsersController extends Base {
                         @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                         @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
 
+        if (page <= 0) {
+            return "redirect:/admin/users?page=1" + filter.getPagingParams();
+        }
+
+        if (limit <= 0) {
+            return "redirect:/admin/users?limit=10" + filter.getPagingParams();
+        }
+
         ObjCollection<UserEntity> users = userService.getUsers(page, limit, filter);
 
         model.addAttribute("users", users);
 
-        String otherParams = "";
-
-        if (limit != null && limit > 0) {
-            otherParams = "&limit=" + limit;
-        }
+        String otherParams = "&limit=" + limit;
 
         model.addAttribute("otherParameters", otherParams);
 
@@ -71,7 +76,7 @@ public class UsersController extends Base {
 
         List<Breadcrumb> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
-        breadcrumbs.add(new Breadcrumb("Users", "/users"));
+        breadcrumbs.add(new Breadcrumb("Users", "/admin/users"));
         breadcrumbs.add(new Breadcrumb(user.getFullName(), null));
         model.addAttribute("breadcrumbs", breadcrumbs);
 
@@ -160,5 +165,13 @@ public class UsersController extends Base {
         model.addAttribute("count", userService.getUsersCountByRole(Roles.PRODUCTS.getRole()));
 
         return "admin/users/fragments :: #productsCount";
+    }
+
+    @GetMapping("/users/count/orders")
+    public String getOrdersUsersCount(Model model) {
+
+        model.addAttribute("count", userService.getUsersCountByRole(Roles.ORDERS.getRole()));
+
+        return "admin/users/fragments :: #ordersCount";
     }
 }

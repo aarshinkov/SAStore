@@ -20,7 +20,7 @@
                             <h4 th:text="${user.fullName}">John Doe</h4>
                             <!--                            <p class="text-secondary mb-1" th:text="#{user.roles. + ${user.getRoles().toArray()[0].rolename}}">User role</p>-->
                             <p class="text-muted font-size-sm mb-0" th:text="#{account.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
-                            <p class="text-muted font-size-sm"
+                            <p class="text-muted font-size-sm" th:if="${user.editedOn ne null}"
                                th:text="#{account.editedon(${#dates.format(user.editedOn, #messages.msg('format.datetime3'))})}">Edited Dec 31, 2017</p>
                             <!--                            <button class="btn btn-primary">Follow</button>-->
                         </div>
@@ -63,7 +63,7 @@
                             <h6 class="mb-0">Status</h6>
                         </div>
                         <div class="col-12 col-sm-9 col-xl-10 text-secondary">
-                            <span class="badge" th:classappend="${user.isActive} ? 'badge-success' : 'badge-danger'"
+                            <span class="badge badge-pill" th:classappend="${user.isActive} ? 'badge-success' : 'badge-danger'"
                                   th:text="${user.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
                         </div>
                     </div>

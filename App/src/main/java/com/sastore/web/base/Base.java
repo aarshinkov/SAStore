@@ -24,7 +24,7 @@ public class Base {
     private MessageSource messageSource;
 
     protected Boolean hasSpecialRole() {
-        return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole());
+        return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole()) || sc.hasRole(Roles.ORDERS.getRole());
     }
 
     protected String getMessage(String key) {

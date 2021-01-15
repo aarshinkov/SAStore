@@ -19,6 +19,7 @@ INSERT INTO roles (rolename) VALUES ('ADMIN');
 INSERT INTO roles (rolename) VALUES ('USER');
 INSERT INTO roles (rolename) VALUES ('SALES');
 INSERT INTO roles (rolename) VALUES ('PRODUCTS');
+INSERT INTO roles (rolename) VALUES ('ORDERS');
 
 CREATE SEQUENCE public.s_user_roles
 	INCREMENT 1
@@ -40,7 +41,7 @@ CREATE SEQUENCE public.s_logs
 	INCREMENT 1
 	START 1;
 	
-ALTER SEQUENCE public.s_user_roles
+ALTER SEQUENCE public.s_logs
 	OWNER TO sastore_user;
 
 CREATE TABLE logs(

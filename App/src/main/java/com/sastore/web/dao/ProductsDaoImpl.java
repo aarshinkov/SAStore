@@ -42,7 +42,7 @@ public class ProductsDaoImpl implements ProductsDao {
             cstmt.setInt(2, limit);
 
             if (filter.getProductId() == null) {
-                cstmt.setNull(3, Types.INTEGER);
+                cstmt.setNull(3, Types.BIGINT);
             } else {
                 cstmt.setLong(3, filter.getProductId());
             }
@@ -99,7 +99,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
             return collection;
         } catch (Exception e) {
-            log.error("Error getting users!", e);
+            log.error("Error getting products!", e);
         }
 
         return null;

@@ -8,7 +8,8 @@ public enum Roles {
     ADMIN("ADMIN"),
     SALES("SALES"),
     USER("USER"),
-    PRODUCTS("PRODUCTS");
+    PRODUCTS("PRODUCTS"),
+    ORDERS("ORDERS");
 
     private final String role;
 

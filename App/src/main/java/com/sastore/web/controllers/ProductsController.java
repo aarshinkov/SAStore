@@ -33,6 +33,14 @@ public class ProductsController extends Base {
                               @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                               @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
 
+        if (page <= 0) {
+            return "redirect:/admin/products?page=1" + filter.getPagingParams();
+        }
+
+        if (limit <= 0) {
+            return "redirect:/admin/products?limit=10" + filter.getPagingParams();
+        }
+
         ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
 
         model.addAttribute("products", products);

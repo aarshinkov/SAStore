@@ -17,7 +17,7 @@
         <!--            <hr/>-->
         <!--        </div>-->
 
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title text-secondary font-size-sm">Total users</h6>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-4 mb-3">
             <div id="normalUsersCountDiv" class="card"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
@@ -44,6 +44,9 @@
         <div class="col-12 col-md-4 mb-3">
             <div id="productsUsersCountDiv" class="card"></div>
         </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div id="ordersUsersCountDiv" class="card"></div>
+        </div>
     </div>
 
     <div class="row gutters-sm">
@@ -54,15 +57,27 @@
                     <hr/>
                     <form th:action="@{/admin/users}" action="#" method="GET" th:object="${filter}">
                         <div class="form-row">
-                            <div class="form-group col-12 col-md-4">
+                            <div class="form-group col-12 col-md-6">
                                 <label>User ID</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                             </div>
-                            <div class="form-group col-12 col-md-4">
+                            <div class="form-group col-12 col-md-6">
                                 <label>Email</label>
                                 <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
                             </div>
-                            <div class="form-group col-12 col-md-4">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6">
+                                <label>First name</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label>Last name</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6 col-xl-3">
                                 <label>Status</label>
                                 <select class="form-control form-control-sm" th:field="*{isActive}">
                                     <option value="">- All -</option>
@@ -70,22 +85,30 @@
                                     <option value="true">Active</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-4">
-                                <label>First name</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                            <div class="form-group col-12 col-md-6 col-xl-3">
+                                <label>Assigned role</label>
+                                <select class="form-control form-control-sm" th:field="*{role}">
+                                    <option value="">- All -</option>
+                                    <option value="ADMIN" th:text="#{user.roles.ADMIN}">Administrator</option>
+                                    <option value="USER" th:text="#{user.roles.USER}">User</option>
+                                    <option value="SALES" th:text="#{user.roles.SALES}">Sales</option>
+                                    <option value="PRODUCTS" th:text="#{user.roles.PRODUCTS}">Products</option>
+                                    <option value="ORDERS" th:text="#{user.roles.ORDERS}">Orders</option>
+                                </select>
                             </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label>Last name</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
+                            <div class="form-group col-12 col-md-6 col-xl-3">
                                 <label>Users per page</label>
                                 <select class="form-control form-control-sm" name="limit">
                                     <option value="5" th:selected="${limit eq 5}">5</option>
                                     <option value="10" th:selected="${limit eq 10}">10</option>
                                     <option value="20" th:selected="${limit eq 20}">20</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-xl-3">
+                                <label>Order</label>
+                                <select class="form-control form-control-sm" th:field="*{order}">
+                                    <option value="ASC" th:selected="${order eq 'ASCENDING'}">Ascending</option>
+                                    <option value="DESC" th:selected="${order eq 'DESCENDING'}">Descending</option>
                                 </select>
                             </div>
                         </div>
@@ -136,12 +159,13 @@
                                     </td>
                                     <td th:text="${u.email}">joh.doe@gmail.com</td>
                                     <td>
-                                        <span class="badge" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                                        <span class="badge badge-pill" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
                                     </td>
                                     <td>
                                         <div th:each="r : ${u.roles}">
-                                        <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
-                                              th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary' : (${r.rolename eq 'PRODUCTS'} ? 'badge-success')))">Rolename</span>
+                                        <span class="badge badge-pill" th:text="#{user.roles. + ${r.rolename}}"
+                                              th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary' :
+                                              (${r.rolename eq 'PRODUCTS'} ? 'badge-success' : (${r.rolename eq 'ORDERS'} ? 'badge-info'))))">Rolename</span>
                                         </div>
                                     </td>
                                     <td class="text-center">
@@ -213,6 +237,7 @@
         let salesUsersCountUrl = /*[[@{/admin/users/count/sales}]]*/;
         let normalUsersCountUrl = /*[[@{/admin/users/count/users}]]*/;
         let productsUsersCountUrl = /*[[@{/admin/users/count/products}]]*/;
+        let ordersUsersCountUrl = /*[[@{/admin/users/count/orders}]]*/;
 
         /*]]>*/
 
@@ -268,6 +293,19 @@
             });
         }
 
+        function getOrdersUsersCount() {
+            $.ajax({
+                url: ordersUsersCountUrl,
+                type: 'get',
+                success: function (data) {
+                    $("#ordersUsersCountDiv").empty().append(data);
+                },
+                error: function (xhr, status, error) {
+                    alert("fail");
+                }
+            });
+        }
+
         $('#deleteModal').on('show.bs.modal', function (event) {
             let modal = $(event.relatedTarget);
             let userId = modal.data('user-id');
@@ -279,6 +317,7 @@
         getSalesUsersCount();
         getNormalUsersCount();
         getProductsUsersCount();
+        getOrdersUsersCount();
     </script>
 </div>
 </body>

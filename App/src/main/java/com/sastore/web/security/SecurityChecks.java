@@ -11,6 +11,10 @@ public class SecurityChecks {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        if (authentication == null) {
+            return false;
+        }
+
         for (GrantedAuthority authority : authentication.getAuthorities()) {
             if (authority.getAuthority().equals("ROLE_" + role)) {
                 return true;
@@ -21,6 +25,10 @@ public class SecurityChecks {
 
     public Boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            return false;
+        }
 
         for (GrantedAuthority authority : authentication.getAuthorities()) {
             if (authority.getAuthority().equals("ROLE_ANONYMOUS")) {

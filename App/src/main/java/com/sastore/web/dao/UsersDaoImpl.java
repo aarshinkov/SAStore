@@ -4,6 +4,7 @@ import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.collections.UsersCollection;
 import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.entities.UserEntity;
+import com.sastore.web.enums.Order;
 import com.sastore.web.filters.UserFilter;
 import com.sastore.web.utils.Page;
 import com.sastore.web.utils.PageImpl;
@@ -38,7 +39,7 @@ public class UsersDaoImpl implements UsersDao {
     public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
              CallableStatement cstmtRoles = conn.prepareCall("{? = call get_user_roles(?)}")) {
 
             conn.setAutoCommit(false);
@@ -76,15 +77,31 @@ public class UsersDaoImpl implements UsersDao {
                 cstmt.setString(7, filter.getLastName());
             }
 
-            cstmt.registerOutParameter(8, Types.BIGINT);
-            cstmt.registerOutParameter(9, Types.BIGINT);
-            cstmt.registerOutParameter(10, Types.REF_CURSOR);
+            if (StringUtils.isEmpty(filter.getRole())) {
+                cstmt.setString(8, null);
+            } else {
+                cstmt.setString(8, filter.getRole());
+            }
+
+            if (StringUtils.isEmpty(filter.getOrder())) {
+                cstmt.setString(9, Order.DESCENDING.getOrder());
+            } else {
+                if (filter.getOrder().equals(Order.ASCENDING.getOrder())) {
+                    cstmt.setString(9, Order.ASCENDING.getOrder());
+                } else {
+                    cstmt.setString(9, Order.DESCENDING.getOrder());
+                }
+            }
+
+            cstmt.registerOutParameter(10, Types.BIGINT);
+            cstmt.registerOutParameter(11, Types.BIGINT);
+            cstmt.registerOutParameter(12, Types.REF_CURSOR);
 
             cstmt.execute();
 
-            Long total = cstmt.getLong(8);
-            Long noPagedTotal = cstmt.getLong(9);
-            ResultSet rset = (ResultSet) cstmt.getObject(10);
+            Long total = cstmt.getLong(10);
+            Long noPagedTotal = cstmt.getLong(11);
+            ResultSet rset = (ResultSet) cstmt.getObject(12);
 
             ObjCollection<UserEntity> collection = new UsersCollection<>();
 
@@ -140,7 +157,7 @@ public class UsersDaoImpl implements UsersDao {
 
             return collection;
         } catch (Exception e) {
-            log.error("Error getting products!", e);
+            log.error("Error getting users!", e);
         }
 
         return null;
