@@ -33,7 +33,6 @@ public class ProductFilter implements Serializable {
 //        if (price != null) {
 //            result += "&price=" + price;
 //        }
-
         return result;
     }
 }

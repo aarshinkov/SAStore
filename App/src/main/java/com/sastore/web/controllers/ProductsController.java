@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -30,8 +27,8 @@ public class ProductsController extends Base {
 
     @GetMapping("/products")
     public String getProducts(@ModelAttribute("filter") ProductFilter filter,
-                              @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                              @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
 
         if (page <= 0) {
             return "redirect:/admin/products?page=1" + filter.getPagingParams();
@@ -47,9 +44,7 @@ public class ProductsController extends Base {
 
         String otherParams = "";
 
-        if (limit != null && limit > 0) {
-            otherParams = "&limit=" + limit;
-        }
+        otherParams = "&limit=" + limit;
 
         model.addAttribute("otherParameters", otherParams);
 
@@ -61,5 +56,17 @@ public class ProductsController extends Base {
         model.addAttribute("globalMenu", "products");
 
         return "admin/products/dashboard";
+    }
+
+    @GetMapping("/product/{productId}")
+    public String product(@PathVariable("productId") Long productId, Model model) {
+
+        ProductEntity product = productService.getProductByProductId(productId);
+
+        model.addAttribute("product", product);
+
+        model.addAttribute("globalMenu", "products");
+
+        return "admin/products/product";
     }
 }

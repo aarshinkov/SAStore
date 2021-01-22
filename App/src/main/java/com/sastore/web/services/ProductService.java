@@ -4,8 +4,6 @@ import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.filters.ProductFilter;
 
-import java.util.List;
-
 /**
  * @author Atanas Yordanov Arshinkov
  * @since 1.0.0

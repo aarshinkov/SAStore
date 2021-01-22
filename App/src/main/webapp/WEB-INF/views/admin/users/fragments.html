@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<body>
-<div id="userFragment" th:remove="tag">
+    <body>
+        <div id="userFragment" th:remove="tag">
 
-</div>
-
-<div id="adminCount" th:remove="tag">
-    <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm">Total admins</h6>
-        <div class="d-flex align-items-center mb-1">
-            <i class="fas fa-user-tie c-text-dark-gray c-font-size-20 mr-2"></i>
-            <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-            <span class="small text-success">
-                <span>2.4%</span>
-                <i class="material-icons align-bottom">keyboard_arrow_up</i>
-            </span>
         </div>
-    </div>
-</div>
 
-<div id="salesCount" th:remove="tag">
-    <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm">Total sales managers</h6>
-        <div class="d-flex align-items-center mb-1">
-            <i class="fas fa-user-clock c-text-dark-gray c-font-size-20 mr-2"></i>
-            <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-            <span class="small text-success">
-                <span>4.1%</span>
-                <i class="material-icons align-bottom">keyboard_arrow_up</i>
-            </span>
+        <div id="adminCount" th:remove="tag">
+            <div class="card-body">
+                <h6 class="card-title text-secondary font-size-sm">Total admins</h6>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-tie c-text-dark-gray c-font-size-20 mr-2"></i>
+                    <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
+                    <span class="small text-success">
+                        <span>2.4%</span>
+                        <i class="material-icons align-bottom">keyboard_arrow_up</i>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div id="usersCount" th:remove="tag">
-    <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm">Total customers</h6>
-        <div class="d-flex align-items-center mb-1">
-            <i class="far fa-user c-text-dark-gray c-font-size-20 mr-2"></i>
-            <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-            <span class="small text-success">
-                <span>5.8%</span>
-                <i class="material-icons align-bottom">keyboard_arrow_up</i>
-            </span>
+        <div id="salesCount" th:remove="tag">
+            <div class="card-body">
+                <h6 class="card-title text-secondary font-size-sm">Total sales managers</h6>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-clock c-text-dark-gray c-font-size-20 mr-2"></i>
+                    <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
+                    <span class="small text-success">
+                        <span>4.1%</span>
+                        <i class="material-icons align-bottom">keyboard_arrow_up</i>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div id="productsCount" th:remove="tag">
-    <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm">Total product managers</h6>
-        <div class="d-flex align-items-center mb-1">
-            <i class="fas fa-user-tag c-text-dark-gray c-font-size-20 mr-2"></i>
-            <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-            <span class="small text-success">
-                <span>1.7%</span>
-                <i class="material-icons align-bottom">keyboard_arrow_up</i>
-            </span>
+        <div id="usersCount" th:remove="tag">
+            <div class="card-body">
+                <h6 class="card-title text-secondary font-size-sm">Total customers</h6>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="far fa-user c-text-dark-gray c-font-size-20 mr-2"></i>
+                    <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
+                    <span class="small text-success">
+                        <span>5.8%</span>
+                        <i class="material-icons align-bottom">keyboard_arrow_up</i>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div id="ordersCount" th:remove="tag">
-    <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm">Total orders managers</h6>
-        <div class="d-flex align-items-center mb-1">
-            <i class="fas fa-user-cog c-text-dark-gray c-font-size-20 mr-2"></i>
-            <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-            <span class="small text-success">
-                <span>1.7%</span>
-                <i class="material-icons align-bottom">keyboard_arrow_up</i>
-            </span>
+        <div id="productsCount" th:remove="tag">
+            <div class="card-body">
+                <h6 class="card-title text-secondary font-size-sm">Total product managers</h6>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-tag c-text-dark-gray c-font-size-20 mr-2"></i>
+                    <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
+                    <span class="small text-success">
+                        <span>1.7%</span>
+                        <i class="material-icons align-bottom">keyboard_arrow_up</i>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-</body>
+
+        <div id="ordersCount" th:remove="tag">
+            <div class="card-body">
+                <h6 class="card-title text-secondary font-size-sm">Total orders managers</h6>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-cog c-text-dark-gray c-font-size-20 mr-2"></i>
+                    <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
+                    <span class="small text-success">
+                        <span>1.7%</span>
+                        <i class="material-icons align-bottom">keyboard_arrow_up</i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

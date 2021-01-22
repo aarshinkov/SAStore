@@ -23,13 +23,6 @@ public class HomeController extends Base {
             return "redirect:/admin/dashboard";
         }
 
-//        if (SecurityContextHolder.getContext()) {
-//            log.debug("LOGGED IN");
-//        } else {
-//            log.debug("NOT LOGGED IN");
-//        }
-
-
         model.addAttribute("globalMenu", "home");
         return "home";
     }

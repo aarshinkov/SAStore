@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Base {
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired

@@ -34,7 +34,7 @@ public class ProductsDaoImpl implements ProductsDao {
     @Override
     public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call get_products(?, ?, ?, ?, ?, ?)}")) {
+                CallableStatement cstmt = conn.prepareCall("{? = call get_products(?, ?, ?, ?, ?, ?)}")) {
 
             conn.setAutoCommit(false);
 

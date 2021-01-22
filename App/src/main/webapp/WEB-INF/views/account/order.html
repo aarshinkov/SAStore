@@ -3,155 +3,155 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
-<head>
-    <title th:text="#{app.title('Account')}">Home</title>
-</head>
-<body>
-<div layout:fragment="contentDiv">
-    <div class="row gutters-3">
-        <div class="col-md-4 col-lg-3">
-            <div th:insert="account/fragments :: #accountFragment"></div>
-        </div>
-        <div class="col mt-3 mt-md-0">
-            <div class="card card-style1">
-                <div class="card-body">
-                    <h4>ORD556789</h4>
-                    <hr>
-
-                    <nav class="steps">
-                        <a href="javascript:void(0)" data-step="1" class="done">Processing</a>
-                        <a href="javascript:void(0)" data-step="2" class="done">Sending</a>
-                        <a href="javascript:void(0)" data-step="3">Delivered</a>
-                        <a href="javascript:void(0)" data-step="4">Finished</a>
-                    </nav>
-
-                    <ul class="list-group list-group-flush list-group-sm mt-4">
-                        <li class="list-group-item px-0">
-                            <div class="media">
-                                <a href="shop-single.html">
-                                    <img src="../../img/products/1_small.jpg" alt="product" width="75">
-                                </a>
-                                <div class="media-body ml-3">
-                                    <a href="shop-single.html" class="card-link text-secondary">Hanes Hooded Sweatshirt</a>
-                                    <div class="font-size-sm"><span class="text-muted">Size:</span> small</div>
-                                    <div class="price">
-                                        <span class="text-success">$18.56</span>
-                                        <span class="ml-3 text-secondary font-weight-normal">x 1</span>
-                                        <span class="ml-3">$18.56</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="media">
-                                <a href="shop-single.html">
-                                    <img src="../../img/products/2_small.jpg" alt="product" width="75">
-                                </a>
-                                <div class="media-body ml-3">
-                                    <a href="shop-single.html" class="card-link text-secondary">The Flash Logo T-Shirt</a>
-                                    <div class="font-size-sm"><span class="text-muted">Size:</span> medium</div>
-                                    <div class="price">
-                                        <span class="text-success">$16.64</span>
-                                        <span class="ml-3 text-secondary font-weight-normal">x 2</span>
-                                        <span class="ml-3">$33.28</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="media">
-                                <a href="shop-single.html">
-                                    <img src="../../img/products/3_small.jpg" alt="product" width="75">
-                                </a>
-                                <div class="media-body ml-3">
-                                    <a href="shop-single.html" class="card-link text-secondary">Open Front Cropped Cardigans</a>
-                                    <div class="font-size-sm"><span class="text-muted">Size:</span> large</div>
-                                    <div class="price">
-                                        <span class="text-success">$15.20</span>
-                                        <span class="ml-3 text-secondary font-weight-normal">x 1</span>
-                                        <span class="ml-3">$15.20</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="mt-3 font-condensed">
-                        <div class="d-flex">
-                            <div class="text-muted">Bag Total</div>
-                            <div class="ml-auto font-weight-bold">$67.04</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="text-muted">Bag Discount</div>
-                            <div class="ml-auto font-weight-bold">$2.04</div>
-                        </div>
-                        <hr class="my-1">
-                        <div class="d-flex">
-                            <div class="text-muted">Coupon Discount</div>
-                            <div class="ml-auto font-weight-bold">-</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="text-muted">Shipping Cost</div>
-                            <div class="ml-auto font-weight-bold">Express ($10.00)</div>
-                        </div>
-                        <hr>
-                        <div class="d-flex">
-                            <div class="text-muted">Order Total</div>
-                            <div class="ml-auto font-weight-bold text-primary h4 mb-0">$75.00</div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h5><u>Shipping Address :</u></h5>
-                            <strong>John Thor</strong><br>
-                            john.thor@example.com<br>
-                            1-787-376-1552<br>
-                            2114 Jadewood Farms<br>
-                            Piscataway, New Jersey<br>
-                            08854<br>
-                            United States
-                        </div>
-                        <div class="col-lg-6 mt-4 mt-lg-0">
-                            <h5><u>Payment Method :</u></h5>
-                            <strong>Credit card</strong>
-                            <table class="table table-borderless table-sm">
-                                <tbody>
-                                <tr>
-                                    <td>Number <span class="float-right">:</span></td>
-                                    <td>4567 8912 3456 7891 234</td>
-                                </tr>
-                                <tr>
-                                    <td>Full Name <span class="float-right">:</span></td>
-                                    <td>John Thor</td>
-                                </tr>
-                                <tr>
-                                    <td>Expiry Date <span class="float-right">:</span></td>
-                                    <td>01 / 2020</td>
-                                </tr>
-                                <tr>
-                                    <td>CVC Code <span class="float-right">:</span></td>
-                                    <td>1234</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3">
-                        <a th:href="@{/account/orders}" href="#" class="btn btn-outline-primary btn-sm has-icon">
-                            <i class="material-icons">chevron_left</i>
-                            <span>Back</span>
-                        </a>
-                        <button type="button" class="btn btn-primary btn-sm has-icon">
-                            <i class="material-icons mr-2">print</i>
-                            <span>Print</span>
-                        </button>
-                    </div>
+    <head>
+        <title th:text="#{app.title('Account')}">Home</title>
+    </head>
+    <body>
+        <div layout:fragment="contentDiv">
+            <div class="row gutters-3">
+                <div class="col-md-4 col-lg-3">
+                    <div th:insert="account/fragments :: #accountFragment"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+                <div class="col mt-3 mt-md-0">
+                    <div class="card card-style1">
+                        <div class="card-body">
+                            <h4>ORD556789</h4>
+                            <hr>
+
+                                <nav class="steps">
+                                    <a href="javascript:void(0)" data-step="1" class="done">Processing</a>
+                                    <a href="javascript:void(0)" data-step="2" class="done">Sending</a>
+                                    <a href="javascript:void(0)" data-step="3">Delivered</a>
+                                    <a href="javascript:void(0)" data-step="4">Finished</a>
+                                </nav>
+
+                                <ul class="list-group list-group-flush list-group-sm mt-4">
+                                    <li class="list-group-item px-0">
+                                        <div class="media">
+                                            <a href="shop-single.html">
+                                                <img src="../../img/products/1_small.jpg" alt="product" width="75">
+                                            </a>
+                                            <div class="media-body ml-3">
+                                                <a href="shop-single.html" class="card-link text-secondary">Hanes Hooded Sweatshirt</a>
+                                                <div class="font-size-sm"><span class="text-muted">Size:</span> small</div>
+                                                <div class="price">
+                                                    <span class="text-success">$18.56</span>
+                                                    <span class="ml-3 text-secondary font-weight-normal">x 1</span>
+                                                    <span class="ml-3">$18.56</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="media">
+                                            <a href="shop-single.html">
+                                                <img src="../../img/products/2_small.jpg" alt="product" width="75">
+                                            </a>
+                                            <div class="media-body ml-3">
+                                                <a href="shop-single.html" class="card-link text-secondary">The Flash Logo T-Shirt</a>
+                                                <div class="font-size-sm"><span class="text-muted">Size:</span> medium</div>
+                                                <div class="price">
+                                                    <span class="text-success">$16.64</span>
+                                                    <span class="ml-3 text-secondary font-weight-normal">x 2</span>
+                                                    <span class="ml-3">$33.28</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="media">
+                                            <a href="shop-single.html">
+                                                <img src="../../img/products/3_small.jpg" alt="product" width="75">
+                                            </a>
+                                            <div class="media-body ml-3">
+                                                <a href="shop-single.html" class="card-link text-secondary">Open Front Cropped Cardigans</a>
+                                                <div class="font-size-sm"><span class="text-muted">Size:</span> large</div>
+                                                <div class="price">
+                                                    <span class="text-success">$15.20</span>
+                                                    <span class="ml-3 text-secondary font-weight-normal">x 1</span>
+                                                    <span class="ml-3">$15.20</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="mt-3 font-condensed">
+                                    <div class="d-flex">
+                                        <div class="text-muted">Bag Total</div>
+                                        <div class="ml-auto font-weight-bold">$67.04</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="text-muted">Bag Discount</div>
+                                        <div class="ml-auto font-weight-bold">$2.04</div>
+                                    </div>
+                                    <hr class="my-1">
+                                        <div class="d-flex">
+                                            <div class="text-muted">Coupon Discount</div>
+                                            <div class="ml-auto font-weight-bold">-</div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="text-muted">Shipping Cost</div>
+                                            <div class="ml-auto font-weight-bold">Express ($10.00)</div>
+                                        </div>
+                                        <hr>
+                                            <div class="d-flex">
+                                                <div class="text-muted">Order Total</div>
+                                                <div class="ml-auto font-weight-bold text-primary h4 mb-0">$75.00</div>
+                                            </div>
+                                            <hr>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <h5><u>Shipping Address :</u></h5>
+                                                        <strong>John Thor</strong><br>
+                                                            john.thor@example.com<br>
+                                                                1-787-376-1552<br>
+                                                                    2114 Jadewood Farms<br>
+                                                                        Piscataway, New Jersey<br>
+                                                                            08854<br>
+                                                                                United States
+                                                                                </div>
+                                                                                <div class="col-lg-6 mt-4 mt-lg-0">
+                                                                                    <h5><u>Payment Method :</u></h5>
+                                                                                    <strong>Credit card</strong>
+                                                                                    <table class="table table-borderless table-sm">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>Number <span class="float-right">:</span></td>
+                                                                                                <td>4567 8912 3456 7891 234</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>Full Name <span class="float-right">:</span></td>
+                                                                                                <td>John Thor</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>Expiry Date <span class="float-right">:</span></td>
+                                                                                                <td>01 / 2020</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>CVC Code <span class="float-right">:</span></td>
+                                                                                                <td>1234</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="d-flex justify-content-between mt-3">
+                                                                                    <a th:href="@{/account/orders}" href="#" class="btn btn-outline-primary btn-sm has-icon">
+                                                                                        <i class="material-icons">chevron_left</i>
+                                                                                        <span>Back</span>
+                                                                                    </a>
+                                                                                    <button type="button" class="btn btn-primary btn-sm has-icon">
+                                                                                        <i class="material-icons mr-2">print</i>
+                                                                                        <span>Print</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </body>
+                                                                                </html>

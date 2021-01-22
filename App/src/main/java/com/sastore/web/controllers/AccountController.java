@@ -1,7 +1,6 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
-import com.sastore.web.enums.Roles;
 import com.sastore.web.utils.Breadcrumb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class AccountController extends Base {
         if (hasSpecialRole()) {
             return "admin/account/account";
         }
-
+        
         return "account/account";
     }
 

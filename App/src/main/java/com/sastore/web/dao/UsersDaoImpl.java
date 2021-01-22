@@ -39,8 +39,8 @@ public class UsersDaoImpl implements UsersDao {
     public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-             CallableStatement cstmtRoles = conn.prepareCall("{? = call get_user_roles(?)}")) {
+                CallableStatement cstmt = conn.prepareCall("{? = call get_users(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+                CallableStatement cstmtRoles = conn.prepareCall("{? = call get_user_roles(?)}")) {
 
             conn.setAutoCommit(false);
 

@@ -2,7 +2,6 @@ package com.sastore.web;
 
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.beans.Version;
-import com.sastore.web.security.SecurityChecks;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -35,8 +34,8 @@ public class SaStoreApplication {
         return new PasswordValidator();
     }
 
-    @Bean
-    public SecurityChecks securityChecks() {
-        return new SecurityChecks();
-    }
+//    @Bean
+//    public SecurityChecks securityChecks() {
+//        return new SecurityChecks();
+//    }
 }

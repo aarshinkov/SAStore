@@ -1,28 +1,28 @@
 @mixin width {
-  width: auto !important;
+    width: auto !important;
 }
 
 .c-text-dark-gray {
-  color: #505050;
+    color: #505050;
 }
 
 table {
-  &.table-fit {
-    @include width;
-    table-layout: auto !important;
+    &.table-fit {
+        @include width;
+        table-layout: auto !important;
 
-    thead th, tfoot th {
-      @include width;
-    }
+        thead th, tfoot th {
+            @include width;
+        }
 
-    tbody td, tfoot td {
-      @include width;
+        tbody td, tfoot td {
+            @include width;
+        }
     }
-  }
 }
 
 @for $c-font-size from 1 through 10 {
-  .c-font-size-#{$c-font-size * 5} {
-    font-size: $c-font-size * 5px;
-  }
+    .c-font-size-#{$c-font-size * 5} {
+        font-size: $c-font-size * 5px;
+    }
 }

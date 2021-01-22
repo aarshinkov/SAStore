@@ -1,7 +1,8 @@
 package com.sastore.web.beans;
 
 /**
- * A class for password verification. It checks if a provided password meet the requirements
+ * A class for password verification. It checks if a provided password meet the
+ * requirements
  *
  * @author Atanas Yordanov Arhinkov
  * @since 1.0.0
@@ -19,8 +20,8 @@ public class PasswordValidator {
     private final String SPECIAL_SYMBOLS = "!@#$%^&*-_";
 
     /**
-     * The method takes a password as an argument and checks
-     * if it complies with the requirements
+     * The method takes a password as an argument and checks if it complies with
+     * the requirements
      *
      * @param password the password to be checked
      * @return true - if the password is valid; false - if it is not
@@ -35,11 +36,7 @@ public class PasswordValidator {
             return false;
         }
 
-        if (!hasCases(password)) {
-            return false;
-        }
-
-        return true;
+        return hasCases(password);
     }
 
     /**
@@ -72,11 +69,13 @@ public class PasswordValidator {
     }
 
     /**
-     * Checks if a password string contains a character from a character sequence
+     * Checks if a password string contains a character from a character
+     * sequence
      *
      * @param password the password string to be checked
-     * @param SYMBOLS  the character sequence of the symbols to be checked from
-     * @return true if the provided password as string contains at least one symbol
+     * @param SYMBOLS the character sequence of the symbols to be checked from
+     * @return true if the provided password as string contains at least one
+     * symbol
      */
     private Boolean hasSymbols(final String password, final String SYMBOLS) {
 

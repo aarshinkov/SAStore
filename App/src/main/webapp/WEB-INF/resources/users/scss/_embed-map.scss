@@ -1,5 +1,5 @@
 .embed-map {
-  @include media-breakpoint-down(sm) {
-    height: 400px;
-  }
+    @include media-breakpoint-down(sm) {
+        height: 400px;
+    }
 }

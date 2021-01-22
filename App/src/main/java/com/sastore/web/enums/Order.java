@@ -5,6 +5,7 @@ package com.sastore.web.enums;
  * @since 1.0.0
  */
 public enum Order {
+    
     ASCENDING("ASC"),
     DESCENDING("DESC");
 

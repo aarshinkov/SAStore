@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Aspect
 @Component
 public class LogAspect {
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Before("execution(* com.sastore.web.controllers.*.*(..)) "

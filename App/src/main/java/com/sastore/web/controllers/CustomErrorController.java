@@ -1,6 +1,8 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -8,9 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -21,26 +20,56 @@ public class CustomErrorController extends Base implements ErrorController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/error")
+    @GetMapping("/customError")
     public String handleError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
 
-            log.debug(statusCode + "");
-
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 log.debug("Not allowed!");
-                model.addAttribute("errorCode", "403");
+                return "redirect:/403";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 log.debug("Page not found!");
-                model.addAttribute("errorCode", "404");
+                return "redirect:/404";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 log.debug("Internal server error!");
-                model.addAttribute("errorCode", "500");
+                return "redirect:/500";
             }
         }
+
+        return "redirect:/500";
+    }
+
+    @GetMapping("/403")
+    public String error403(Model model) {
+
+        model.addAttribute("errorCode", "403");
+
+        if (hasSpecialRole()) {
+            return "errors/adminError";
+        }
+
+        return "errors/error";
+    }
+
+    @GetMapping("/404")
+    public String error404(Model model) {
+
+        model.addAttribute("errorCode", "404");
+
+        if (hasSpecialRole()) {
+            return "errors/adminError";
+        }
+
+        return "errors/error";
+    }
+
+    @GetMapping("/500")
+    public String error500(Model model) {
+
+        model.addAttribute("errorCode", "500");
 
         if (hasSpecialRole()) {
             return "errors/adminError";

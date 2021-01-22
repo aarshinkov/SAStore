@@ -1,10 +1,9 @@
 package com.sastore.web.controllers;
 
+import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
-import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.entities.UserEntity;
-import com.sastore.web.enums.Order;
 import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
 import com.sastore.web.services.RoleService;
@@ -40,8 +39,8 @@ public class UsersController extends Base {
 
     @GetMapping("/users")
     public String users(@ModelAttribute("filter") UserFilter filter,
-                        @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                        @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
 
         if (page <= 0) {
             return "redirect:/admin/users?page=1" + filter.getPagingParams();
@@ -103,7 +102,7 @@ public class UsersController extends Base {
 
     @PostMapping("/user/role/add")
     public String addRole(@RequestParam("userId") String userId,
-                          @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
+            @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
 
         try {
             Roles role = Roles.valueOf(rolename.toUpperCase());
@@ -120,7 +119,7 @@ public class UsersController extends Base {
 
     @PostMapping("/user/role/remove")
     public String removeRole(@RequestParam("userId") String userId,
-                             @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
+            @RequestParam("rolename") String rolename, RedirectAttributes redirectAttributes) {
 
         try {
             Roles role = Roles.valueOf(rolename.toUpperCase());
