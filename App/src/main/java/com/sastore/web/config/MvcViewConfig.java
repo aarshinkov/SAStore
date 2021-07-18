@@ -53,7 +53,6 @@ public class MvcViewConfig implements WebMvcConfigurer {
     }
 
     @Bean
-
     public Set<ITemplateResolver> templateResolvers() {
         Set<ITemplateResolver> templateResolvers = new HashSet<>();
         templateResolvers.add(srtr());

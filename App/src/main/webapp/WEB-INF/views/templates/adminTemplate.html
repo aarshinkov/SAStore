@@ -22,6 +22,8 @@
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.2/tinymce.min.js" integrity="sha512-SPCExIkjTrrcv8Jfu4dzvDJfMe7A9CKmKE8v1fd+Ku3Dq5B9w8rfmrAHfz2RKU+4zOyT1JlprGA1bC2o8Z1yZA==" crossorigin="anonymous"></script>
+
         <!-- Main Style -->
         <link rel="stylesheet" th:href="@{/resources/admin/plugins/simplebar/simplebar.min.css}"
               href="../../resources/admin/plugins/simplebar/simplebar.min.css"/>
@@ -138,5 +140,10 @@
             });
         </script>
 
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
     </body>
 </html>

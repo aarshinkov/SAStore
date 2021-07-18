@@ -2,6 +2,7 @@ package com.sastore.web;
 
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.beans.Version;
+import com.sastore.web.uploader.Uploader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,11 @@ public class SaStoreApplication {
     @Bean
     public PasswordValidator passwordValidator() {
         return new PasswordValidator();
+    }
+
+    @Bean
+    public Uploader uploader() {
+        return new Uploader();
     }
 
 //    @Bean

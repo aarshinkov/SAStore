@@ -1,6 +1,7 @@
 package com.sastore.web.collections;
 
 import lombok.ToString;
+import com.sastore.web.entities.ProductEntity;
 
 /**
  * @param <ProductEntity>

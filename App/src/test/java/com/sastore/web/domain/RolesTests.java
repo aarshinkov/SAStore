@@ -19,10 +19,12 @@ public class RolesTests {
 //        rolesString.add("ADMIN");
 //        rolesString.add("SALES");
 //        rolesString.add("USER");
+//        rolesString.add("PRODUCTS");
 //
 //        rolesObj.add(new RoleEntity("ADMIN"));
 //        rolesObj.add(new RoleEntity("SALES"));
 //        rolesObj.add(new RoleEntity("USER"));
+//        rolesObj.add(new RoleEntity("PRODUCTS"));
 //    }
 //
 //    @Test
@@ -49,7 +51,7 @@ public class RolesTests {
 //            }
 //        }
 //
-//        assertEquals(2, unassignedRoles.size());
+//        assertEquals(3, unassignedRoles.size());
 //        assertEquals("ADMIN", unassignedRoles.get(0));
 //        assertEquals("SALES", unassignedRoles.get(1));
 //    }
@@ -68,7 +70,7 @@ public class RolesTests {
 //            }
 //        }
 //
-//        assertEquals(1, unassignedRoles.size());
+//        assertEquals(2, unassignedRoles.size());
 //        assertEquals("SALES", unassignedRoles.get(0));
 //    }
 //
@@ -85,7 +87,7 @@ public class RolesTests {
 //            }
 //        }
 //
-//        assertEquals(2, unassignedRoles.size());
+//        assertEquals(3, unassignedRoles.size());
 //    }
 //
 //    @Test
@@ -102,7 +104,7 @@ public class RolesTests {
 //            }
 //        }
 //
-//        assertEquals(1, unassignedRoles.size());
+//        assertEquals(2, unassignedRoles.size());
 //    }
 //
 //    @Test

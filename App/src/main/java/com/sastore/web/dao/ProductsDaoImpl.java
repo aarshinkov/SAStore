@@ -71,7 +71,9 @@ public class ProductsDaoImpl implements ProductsDao {
                 product.setTitle(rset.getString("title"));
                 product.setPrice(rset.getDouble("price"));
                 product.setAvailableQuantity(rset.getInt("avail_quant"));
+                product.setViews(rset.getInt("views"));
                 product.setDescription(rset.getString("description"));
+                product.setStatus(rset.getInt("status"));
                 product.setMainImage(rset.getString("main_image"));
                 product.setAddedOn(rset.getTimestamp("added_on"));
                 product.setEditedOn(rset.getTimestamp("edited_on"));

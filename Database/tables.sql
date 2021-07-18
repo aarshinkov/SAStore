@@ -62,8 +62,18 @@ CREATE TABLE products(
 	title varchar(200) not null,
 	price numeric not null,
 	avail_quant int not null default 1,
+	views int not null default 0,
 	description text not null,
-	main_image varchar(300) not null,
+	status int not null default 1,
+	main_image varchar(500),
 	added_on timestamp not null default NOW(),
+	approved_on timestamp,
 	edited_on timestamp
+);
+
+CREATE TABLE prod_images(
+	image_id varchar(500) not null primary key,
+	product_id int not null references products(product_id),
+	is_main boolean not null default false,
+	created_on timestamp not null default NOW()
 );
