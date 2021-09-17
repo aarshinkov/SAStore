@@ -2,45 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<body>
-<div id="accountFragment" th:remove="tag">
-    <div class="card card-style1">
-        <div class="card-body text-center">
-            <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" width="100" height="100" alt="User" class="rounded-circle mb-3">
-            <h5 class="mb-0" th:text="${session.user.fullName}">John Thor</h5>
-            <!--                    <small class="text-muted" th:text="${session.user.createdOn}">Joined Dec 31, 2017</small>-->
-            <small class="text-muted" th:text="#{account.createdon(${#dates.format(session.user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</small>
-            <hr/>
-            <div class="font-condensed d-flex align-items-center justify-content-center" sec:authorize="hasRole('USER')"
-                 data-toggle="tooltip" title="" data-original-title="You currently have 9,386 Points to spend.">
-                <i class="material-icons text-warning mr-2">grade</i> Points: 9386
+    <body>
+        <div id="accountFragment" th:remove="tag">
+            <div class="card card-style1">
+                <div class="card-body text-center">
+                    <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" width="100" height="100" alt="User" class="rounded-circle mb-3">
+                        <h5 class="mb-0" th:text="${session.user.fullName}">John Thor</h5>
+                        <!--                    <small class="text-muted" th:text="${session.user.createdOn}">Joined Dec 31, 2017</small>-->
+                        <small class="text-muted" th:text="#{account.createdon(${#dates.format(session.user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</small>
+                        <hr/>
+                        <div class="font-condensed d-flex align-items-center justify-content-center" sec:authorize="hasRole('USER')"
+                             data-toggle="tooltip" title="" data-original-title="You currently have 9,386 Points to spend.">
+                            <i class="material-icons text-warning mr-2">grade</i> Points: 9386
+                        </div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a th:href="@{/account}" href="#" class="list-group-item list-group-item-action d-flex" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
+                        <i class="material-icons mr-3">person</i>
+                        <span>My account</span>
+                    </a>
+                    <a th:href="@{/account/orders}" href="#" class="list-group-item list-group-item-action d-flex" sec:authorize="hasRole('USER')"
+                       th:classappend="${globalMenu eq 'account' and submenu eq 'orders'} ? 'active'">
+                        <i class="material-icons mr-3">shopping_cart</i>
+                        <span>Orders</span>
+                    </a>
+                    <a th:href="@{/account/wishlist}" href="#" class="list-group-item list-group-item-action d-flex align-items-center" th:classappend="${globalMenu eq 'account' and submenu eq 'wishlist'} ? 'active'">
+                        <i class="material-icons mr-3">favorite_border</i>
+                        <span>Wishlist</span>
+                        <span class="badge badge-danger badge-pill ml-auto">3</span>
+                    </a>
+                    <a th:href="@{/account/addresses}" href="#" class="list-group-item list-group-item-action d-flex" th:classappend="${globalMenu eq 'account' and submenu eq 'addresses'} ? 'active'">
+                        <i class="material-icons mr-3">location_on</i>
+                        <span>Addresses</span>
+                    </a>
+                    <a th:href="@{/logout}" href="#" class="list-group-item list-group-item-action text-danger d-flex">
+                        <i class="material-icons mr-3">exit_to_app</i>
+                        <span>Logout</span>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="list-group list-group-flush">
-            <a th:href="@{/account}" href="#" class="list-group-item list-group-item-action d-flex" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
-                <i class="material-icons mr-3">person</i>
-                <span>My account</span>
-            </a>
-            <a th:href="@{/account/orders}" href="#" class="list-group-item list-group-item-action d-flex" sec:authorize="hasRole('USER')"
-               th:classappend="${globalMenu eq 'account' and submenu eq 'orders'} ? 'active'">
-                <i class="material-icons mr-3">shopping_cart</i>
-                <span>Orders</span>
-            </a>
-            <a th:href="@{/account/wishlist}" href="#" class="list-group-item list-group-item-action d-flex align-items-center" th:classappend="${globalMenu eq 'account' and submenu eq 'wishlist'} ? 'active'">
-                <i class="material-icons mr-3">favorite_border</i>
-                <span>Wishlist</span>
-                <span class="badge badge-danger badge-pill ml-auto">3</span>
-            </a>
-            <a th:href="@{/account/addresses}" href="#" class="list-group-item list-group-item-action d-flex" th:classappend="${globalMenu eq 'account' and submenu eq 'addresses'} ? 'active'">
-                <i class="material-icons mr-3">location_on</i>
-                <span>Addresses</span>
-            </a>
-            <a th:href="@{/logout}" href="#" class="list-group-item list-group-item-action text-danger d-flex">
-                <i class="material-icons mr-3">exit_to_app</i>
-                <span>Logout</span>
-            </a>
-        </div>
-    </div>
-</div>
-</body>
+    </body>
 </html>

@@ -3,270 +3,322 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/adminTemplate}">
-<head>
-    <title th:text="#{app.title('Users')}">Users</title>
-</head>
-<body>
-<div layout:fragment="contentDiv">
-    <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title(#{users.title})}">Users</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-    <div class="row gutters-sm">
+      <div class="row gutters-sm">
 
         <!--        <div class="col-12">-->
         <!--            <h3>Users</h3>-->
         <!--            <hr/>-->
         <!--        </div>-->
 
-        <div class="col-12 col-md-3 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title text-secondary font-size-sm">Total users</h6>
-                    <div class="d-flex align-items-center mb-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-user-plus mr-2">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="8.5" cy="7" r="4"></circle>
-                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                        </svg>
-                        <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
-                        <span class="small text-danger">
-                            <span>0.3%</span>
-                            <i class="material-icons align-bottom">keyboard_arrow_down</i>
-                        </span>
-                    </div>
-                </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.users}">Total users</h6>
+              <div class="d-flex align-items-center mb-1">
+                <i class="fas fa-users c-text-dark-gray c-font-size-20 mr-2"></i>
+                <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
+                <span class="small text-danger">
+                  <span>0.3%</span>
+                  <i class="material-icons align-bottom">keyboard_arrow_down</i>
+                </span>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="col-12 col-md-3 mb-3">
-            <div id="usersCountDiv" class="card"></div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="normalUsersCountDiv" class="card"></div>
         </div>
-        <div class="col-12 col-md-3 mb-3">
-            <div id="adminsCountDiv" class="card"></div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="adminsUsersCountDiv" class="card"></div>
         </div>
-        <div class="col-12 col-md-3 mb-3">
-            <div id="salesCountDiv" class="card"></div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="salesUsersCountDiv" class="card"></div>
         </div>
-    </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="productsUsersCountDiv" class="card"></div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="ordersUsersCountDiv" class="card"></div>
+        </div>
+      </div>
 
-    <div class="row gutters-sm">
+      <div class="row gutters-sm">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Search</h5>
-                    <hr/>
-                    <form th:action="@{/users}" action="#" method="GET" th:object="${filter}">
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-4">
-                                <label>User ID</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label>Email</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label>Status</label>
-                                <select class="form-control form-control-sm" th:field="*{isActive}">
-                                    <option value="">- All -</option>
-                                    <option value="false">Inactive</option>
-                                    <option value="true">Active</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-4">
-                                <label>First name</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label>Last name</label>
-                                <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label>Users per page</label>
-                                <select class="form-control form-control-sm" name="limit">
-                                    <option value="5" th:selected="${limit eq 5}">5</option>
-                                    <option value="10" th:selected="${limit eq 10}">10</option>
-                                    <option value="20" th:selected="${limit eq 20}">20</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                        <a th:href="@{/users}" href="#" class="btn btn-outline-dark btn-sm">Clear</a>
-                    </form>
-                    <hr/>
+          <div class="card">
+            <div class="card-body">
+              <h5 th:text="#{users.search.header}">Search</h5>
+              <hr/>
+              <form th:action="@{/admin/users}" action="#" method="GET" th:object="${filter}">
+                <div class="form-row">
+                  <div class="form-group col-12 col-md-6">
+                    <label th:text="#{users.search.userid}">User ID</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
+                  </div>
+                  <div class="form-group col-12 col-md-6">
+                    <label th:text="#{users.search.email}">Email</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-12 col-md-6">
+                    <label th:text="#{users.search.firstname}">First name</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                  </div>
+                  <div class="form-group col-12 col-md-6">
+                    <label th:text="#{users.search.lastname}">Last name</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-12 col-md-6 col-xl-3">
+                    <label th:text="#{users.search.status}">Status</label>
+                    <select class="form-control form-control-sm" th:field="*{isActive}">
+                      <option value="" th:text="#{users.search.status.all}">- All -</option>
+                      <option value="false" th:text="#{users.search.status.inactive}">Inactive</option>
+                      <option value="true" th:text="#{users.search.status.active}">Active</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12 col-md-6 col-xl-3">
+                    <label th:text="#{users.search.assignedrole}">Assigned role</label>
+                    <select class="form-control form-control-sm" th:field="*{role}">
+                      <option value=""th:text="#{users.search.assignedrole.all}" >- All -</option>
+                      <option value="ADMIN" th:text="#{user.roles.ADMIN}">Administrator</option>
+                      <option value="USER" th:text="#{user.roles.USER}">User</option>
+                      <option value="SALES" th:text="#{user.roles.SALES}">Sales</option>
+                      <option value="PRODUCTS" th:text="#{user.roles.PRODUCTS}">Products</option>
+                      <option value="ORDERS" th:text="#{user.roles.ORDERS}">Orders</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12 col-md-6 col-xl-3">
+                    <label th:text="#{users.search.usersperpage}">Users per page</label>
+                    <select class="form-control form-control-sm" name="limit">
+                      <option value="5" th:selected="${limit eq 5}">5</option>
+                      <option value="10" th:selected="${limit eq 10}">10</option>
+                      <option value="20" th:selected="${limit eq 20}">20</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12 col-md-6 col-xl-3">
+                    <label th:text="#{users.search.order}">Order</label>
+                    <select class="form-control form-control-sm" th:field="*{order}">
+                      <option value="ASC" th:selected="${order eq 'ASCENDING'}" th:text="#{users.search.order.asc}">Ascending</option>
+                      <option value="DESC" th:selected="${order eq 'DESCENDING'}" th:text="#{users.search.order.desc}">Descending</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" th:text="#{btn.search}">Search</button>
+                <a th:href="@{/admin/users}" href="#" th:if="${isSearched}" th:text="#{btn.clear}" class="btn btn-outline-dark btn-sm">Clear</a>
+              </form>
+              <hr/>
 
-                    <h5 th:text="#{users.search.nofound}" th:if="${#lists.size(users.collection) eq 0}">No users found</h5>
+              <h5 th:text="#{users.search.nofound}" th:if="${#lists.size(users.collection) eq 0}">No users found</h5>
 
-                    <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
+              <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
 
-                        <div class="d-flex">
-                            <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Потребители</h5>
+                <div class="d-flex">
+                  <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
 
-                            <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
-                                <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
-                                <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
-                                <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
-                                    <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
-                                    <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover table-sm">
-                                <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">First name</th>
-                                    <th scope="col">Last name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Roles</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="u : ${users.collection}">
-                                    <td>
-                                        <a class="text-decoration-underline" href="#" th:href="@{/user/} + ${u.userId}" th:text="${u.userId}">1</a>
-                                    </td>
-                                    <td th:text="${u.firstName}">John</td>
-                                    <td>
-                                        <span th:if="${u.lastName ne null}" th:text="${u.lastName}">Doe</span>
-                                        <i th:if="${u.lastName eq null}" th:text="#{user.lastName.empty}">No last name</i>
-                                    </td>
-                                    <td th:text="${u.email}">joh.doe@gmail.com</td>
-                                    <td>
-                                        <span class="badge" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
-                                    </td>
-                                    <td>
-                                        <div th:each="r : ${u.roles}">
-                                        <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
-                                              th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary'))">Rolename</span>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-xs btn-outline-danger" data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
+                  <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                    <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
+                      <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                      <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Edit modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col" th:text="#{users.item.id}">ID</th>
+                        <th scope="col" th:text="#{users.item.firstname}">First name</th>
+                        <th scope="col" th:text="#{users.item.lastname}">Last name</th>
+                        <th scope="col" th:text="#{users.item.email}">Email</th>
+                        <th scope="col" th:text="#{users.item.status}">Status</th>
+                        <th scope="col" th:text="#{users.item.roles}">Roles</th>
+                        <th scope="col" th:text="#{users.item.actions}">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="u : ${users.collection}">
+                        <td>
+                          <a class="text-decoration-underline" href="#" th:href="@{/admin/users(id=${u.userId})}" th:text="${u.userId}">1</a>
+                        </td>
+                        <td th:text="${u.firstName}">John</td>
+                        <td>
+                          <span th:if="${u.lastName ne null}" th:text="${u.lastName}">Doe</span>
+                          <i th:if="${u.lastName eq null}" th:text="#{user.lastName.empty}">No last name</i>
+                        </td>
+                        <td th:text="${u.email}">joh.doe@gmail.com</td>
+                        <td>
+                          <span class="badge badge-pill" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                        </td>
+                        <td>
+                          <div th:each="r : ${u.roles}">
+                            <span class="badge badge-pill" th:text="#{user.roles. + ${r.rolename}}"
+                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary' :
+                                  (${r.rolename eq 'PRODUCTS'} ? 'badge-success' : (${r.rolename eq 'ORDERS'} ? 'badge-info'))))">Rolename</span>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <a href="#" class="btn btn-xs btn-outline-danger" th:if="${session.user.userId ne u.userId}"
+                             data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white shadow-none">
-                    <h6 class="modal-title" id="editModalLabel">Edit user</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="editModalDiv" class="modal-body"></div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        <span>Cancel</span>
-                    </a>
-                    <a href="#" class="btn btn-primary">
-                        <i class="fas fa-save"></i>
-                        <span>Save</span>
-                    </a>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white shadow-none">
+              <h6 class="modal-title" id="editModalLabel">Edit user</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div id="editModalDiv" class="modal-body"></div>
+            <div class="modal-footer">
+              <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                <i class="fas fa-times"></i>
+                <span th:text="#{btn.cancel}">Cancel</span>
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                <span th:text="#{btn.save}">Save</span>
+              </a>
+            </div>
+          </div>
         </div>
-    </div>
-    <!-- /Edit modal -->
+      </div>
+      <!-- /Edit modal -->
 
-    <!-- Delete modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <!-- Delete modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white shadow-none">
-                    <h6 class="modal-title" id="deleteModalLabel">Modal title</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen book.
-                </div>
+          <div class="modal-content">
+            <div class="modal-header bg-danger text-white shadow-none">
+              <h6 class="modal-title" id="deleteModalLabel">Modal title</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+              make a type specimen book.
+            </div>
+          </div>
         </div>
-    </div>
-    <!-- /Delete modal -->
+      </div>
+      <!-- /Delete modal -->
 
-    <script type="text/javascript" th:inline="javascript">
+      <script type="text/javascript" th:inline="javascript">
 
         /*<![CDATA[*/
-        let adminsCountUrl = /*[[@{/count/admins}]]*/;
-        let salesCountUrl = /*[[@{/count/sales}]]*/;
-        let usersCountUrl = /*[[@{/count/users}]]*/;
+        let adminsUsersCountUrl = /*[[@{/admin/users/count/admins}]]*/;
+                let salesUsersCountUrl = /*[[@{/admin/users/count/sales}]]*/;
+                let normalUsersCountUrl = /*[[@{/admin/users/count/users}]]*/;
+                let productsUsersCountUrl = /*[[@{/admin/users/count/products}]]*/;
+                let ordersUsersCountUrl = /*[[@{/admin/users/count/orders}]]*/;
 
         /*]]>*/
 
-        function getAdminsCount() {
-            $.ajax({
-                url: adminsCountUrl,
-                type: 'get',
-                success: function (data) {
-                    $("#adminsCountDiv").empty().append(data);
-                },
-                error: function (xhr, status, error) {
-                    alert("fail");
-                }
-            });
+        function getAdminsUsersCount() {
+          $.ajax({
+            url: adminsUsersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#adminsUsersCountDiv").empty().append(data);
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
         }
 
-        function getSalesCount() {
-            $.ajax({
-                url: salesCountUrl,
-                type: 'get',
-                success: function (data) {
-                    $("#salesCountDiv").empty().append(data);
-                },
-                error: function (xhr, status, error) {
-                    alert("fail");
-                }
-            });
+        function getSalesUsersCount() {
+          $.ajax({
+            url: salesUsersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#salesUsersCountDiv").empty().append(data);
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
         }
 
-        function getUsersCount() {
-            $.ajax({
-                url: usersCountUrl,
-                type: 'get',
-                success: function (data) {
-                    $("#usersCountDiv").empty().append(data);
-                },
-                error: function (xhr, status, error) {
-                    alert("fail");
-                }
-            });
+        function getNormalUsersCount() {
+          $.ajax({
+            url: normalUsersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#normalUsersCountDiv").empty().append(data);
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        function getProductsUsersCount() {
+          $.ajax({
+            url: productsUsersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#productsUsersCountDiv").empty().append(data);
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        function getOrdersUsersCount() {
+          $.ajax({
+            url: ordersUsersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#ordersUsersCountDiv").empty().append(data);
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
         }
 
         $('#deleteModal').on('show.bs.modal', function (event) {
-            let modal = $(event.relatedTarget);
-            let userId = modal.data('user-id');
+          let modal = $(event.relatedTarget);
+          let userId = modal.data('user-id');
 
-            // $('#commentDeleteId').val(commentId);
+          // $('#commentDeleteId').val(commentId);
         });
 
-        getAdminsCount();
-        getSalesCount();
-        getUsersCount();
-    </script>
-</div>
-</body>
+        getAdminsUsersCount();
+        getSalesUsersCount();
+        getNormalUsersCount();
+        getProductsUsersCount();
+        getOrdersUsersCount();
+      </script>
+    </div>
+  </body>
 </html>

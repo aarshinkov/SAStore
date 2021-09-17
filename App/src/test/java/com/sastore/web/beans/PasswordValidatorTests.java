@@ -1,6 +1,5 @@
-package com.sastore.beans;
+package com.sastore.web.beans;
 
-import com.sastore.web.beans.PasswordValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

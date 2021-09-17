@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+    <head>
+        <title th:text="#{app.title('Pending')}">Pending</title>
+    </head>
+    <body>
+        <div layout:fragment="contentDiv">
+            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+            <div class="row gutters-sm">
+                <div class="col-12">
+                    <p>Pending approval</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

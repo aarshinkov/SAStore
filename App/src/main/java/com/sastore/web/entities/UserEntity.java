@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -22,7 +21,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Table(name = "users")
 @DynamicInsert
@@ -59,6 +57,11 @@ public class UserEntity implements UserDetails, Serializable {
 
     public String getFullName() {
         return (lastName != null) ? firstName + ' ' + lastName : firstName;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
     }
 
     @Override

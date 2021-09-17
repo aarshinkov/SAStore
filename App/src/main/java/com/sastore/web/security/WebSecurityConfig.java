@@ -29,17 +29,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // Order of antmatchers -> specific ones first, then globals
+
         http.authorizeRequests()
-                .antMatchers("/login").anonymous()
-                .antMatchers("/signup").anonymous()
-                .antMatchers("/dashboard").hasAnyRole("ADMIN", "SALES")
+                .antMatchers("/login", "/signup").anonymous()
+                .antMatchers("/admin/sales/**").hasAnyRole("ADMIN", "SALES")
+                .antMatchers("/admin/users/**", "/admin/user/**").hasRole("ADMIN")
+                .antMatchers("/admin/users/count/**").hasRole("ADMIN")
+                .antMatchers("/admin/products/**", "/admin/product/**").hasAnyRole("ADMIN", "PRODUCTS")
+                .antMatchers("/admin/orders/**", "/admin/order/**").hasAnyRole("ADMIN", "ORDERS")
                 .antMatchers("/account/orders", "/account/wishlist", "/account/addresses").hasRole("USER")
                 .antMatchers("/account/**").authenticated()
+                .antMatchers("/admin/dashboard").hasAnyRole("ADMIN", "SALES", "PRODUCTS")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/sales/**").hasAnyRole("ADMIN", "SALES")
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("ADMIN")
-                .antMatchers("/count/**").hasRole("ADMIN")
+                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .and()

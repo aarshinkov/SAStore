@@ -1,6 +1,5 @@
 package com.sastore.web.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,6 +15,7 @@ import java.util.Locale;
  */
 @Configuration
 public class LanguageConfig implements WebMvcConfigurer {
+
     private final String LANG_DEFAULT = "bg";
     private final String LANG_COOKIE_NAME = "lang";
 

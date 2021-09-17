@@ -2,141 +2,148 @@
 <html th:lang="#{lang.curr}" lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" style="height: 100%;">
-<head>
-    <title>Title</title>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <head>
+        <title>Title</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <!-- Font & Icon -->
-    <link rel="stylesheet" th:href="@{/resources/admin/font/inter/inter.min.css}"
-          href="../../resources/admin/font/inter/inter.min.css" id="font-css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css}"
-          href="../../resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/fontawesome-free/css/all.min.css}"
-          href="../../resources/admin/plugins/fontawesome-free/css/all.min.css"/>
-    <!-- Plugins -->
+        <!-- Font & Icon -->
+        <link rel="stylesheet" th:href="@{/resources/admin/font/inter/inter.min.css}"
+              href="../../resources/admin/font/inter/inter.min.css" id="font-css"/>
+        <link rel="stylesheet" th:href="@{/resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css}"
+              href="../../resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css"/>
+        <link rel="stylesheet" th:href="@{/resources/admin/plugins/fontawesome-free/css/all.min.css}"
+              href="../../resources/admin/plugins/fontawesome-free/css/all.min.css"/>
+        <!-- Plugins -->
 
-    <!-- CSS plugins goes here -->
+        <!-- CSS plugins goes here -->
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
 
-    <!-- Main Style -->
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/simplebar/simplebar.min.css}"
-          href="../../resources/admin/plugins/simplebar/simplebar.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/scss/style.css}" href="../../resources/admin/scss/style.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/scss/sidebar-blue.css}" href="../../scss/sidebar-blue.css" id="theme-css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.2/tinymce.min.js" integrity="sha512-SPCExIkjTrrcv8Jfu4dzvDJfMe7A9CKmKE8v1fd+Ku3Dq5B9w8rfmrAHfz2RKU+4zOyT1JlprGA1bC2o8Z1yZA==" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../../resources/scss/style.css"/>
+        <!-- Main Style -->
+        <link rel="stylesheet" th:href="@{/resources/admin/plugins/simplebar/simplebar.min.css}"
+              href="../../resources/admin/plugins/simplebar/simplebar.min.css"/>
+        <link rel="stylesheet" th:href="@{/resources/admin/scss/style.css}" href="../../resources/admin/scss/style.css"/>
+        <link rel="stylesheet" th:href="@{/resources/admin/scss/sidebar-blue.css}" href="../../scss/sidebar-blue.css" id="theme-css"/>
 
-    <script th:src="@{/resources/admin/js/jquery.min.js}" src="../../resources/admin/js/jquery.min.js"></script>
-</head>
-<body style="height: 100%; display: flex; flex-direction: column;">
-<div th:insert="admin/fragments/fragments :: #sidebar"></div>
+        <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../../resources/scss/style.css"/>
 
-<!-- Main -->
-<div class="main" style="height: 100%; display: flex; flex-direction: column;">
-    <div th:insert="admin/fragments/fragments :: #mainMenu"></div>
+        <script th:src="@{/resources/admin/js/jquery.min.js}" src="../../resources/admin/js/jquery.min.js"></script>
+    </head>
+    <body style="height: 100%; display: flex; flex-direction: column;">
+        <div th:insert="admin/fragments/fragments :: #sidebar"></div>
 
-    <!-- Main body -->
-    <div class="main-body" style="flex: 1 0 auto; min-height: auto;">
-        <nav aria-label="breadcrumb" class="main-breadcrumb" th:if="${breadcrumbs ne null}">
-            <ol class="breadcrumb">
-                <li th:each="b, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active'">
-                    <a th:href="@{${b.url}}" th:if="${b.url ne null}" th:text="${b.label}">Item</a>
-                    <span th:if="${b.url eq null}" th:text="${b.label}"></span>
-                </li>
-            </ol>
-        </nav>
+        <!-- Main -->
+        <div class="main" style="height: 100%; display: flex; flex-direction: column;">
+            <div th:insert="admin/fragments/fragments :: #mainMenu"></div>
 
-        <div layout:fragment="contentDiv" th:remove="tag"></div>
-    </div>
+            <!-- Main body -->
+            <div class="main-body" style="flex: 1 0 auto; min-height: auto;">
+                <nav aria-label="breadcrumb" class="main-breadcrumb" th:if="${breadcrumbs ne null}">
+                    <ol class="breadcrumb">
+                        <li th:each="b, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active'">
+                            <a th:href="@{${b.url}}" th:if="${b.url ne null}" th:text="${b.label}">Item</a>
+                            <span th:if="${b.url eq null}" th:text="${b.label}"></span>
+                        </li>
+                    </ol>
+                </nav>
 
-    <footer class="bg-white text-center text-lg-start shadow">
-        <!-- Copyright -->
-        <div class="text-center p-3">
-            <div th:insert="fragments/footer :: #copyright"></div>
+                <div layout:fragment="contentDiv" th:remove="tag"></div>
+            </div>
+
+            <footer class="bg-white text-center text-lg-start shadow">
+                <!-- Copyright -->
+                <div class="text-center p-3">
+                    <div th:insert="fragments/footer :: #copyright"></div>
+                </div>
+                <!-- Copyright -->
+            </footer>
         </div>
-        <!-- Copyright -->
-    </footer>
-</div>
-<!-- /Main -->
+        <!-- /Main -->
 
-<!-- Main Scripts -->
-<script th:src="@{/resources/admin/js/bootstrap.bundle.min.js}" src="../../resources/admin/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/resources/admin/plugins/simplebar/simplebar.min.js}" src="../../resources/admin/plugins/simplebar/simplebar.min.js"></script>
-<script th:src="@{/resources/admin/plugins/feather-icons/feather.min.js}" src="../../resources/admin/plugins/feather-icons/feather.min.js"></script>
-<script th:src="@{/resources/admin/js/script.min.js}" src="../../resources/admin/js/script.min.js"></script>
+        <!-- Main Scripts -->
+        <script th:src="@{/resources/admin/js/bootstrap.bundle.min.js}" src="../../resources/admin/js/bootstrap.bundle.min.js"></script>
+        <script th:src="@{/resources/admin/plugins/simplebar/simplebar.min.js}" src="../../resources/admin/plugins/simplebar/simplebar.min.js"></script>
+        <script th:src="@{/resources/admin/plugins/feather-icons/feather.min.js}" src="../../resources/admin/plugins/feather-icons/feather.min.js"></script>
+        <script th:src="@{/resources/admin/js/script.min.js}" src="../../resources/admin/js/script.min.js"></script>
 
-<!-- Plugins -->
-<script th:src="@{/resources/admin/plugins/chart.js/Chart.min.js}" src="../../resources/admin/plugins/chart.js/Chart.min.js"></script>
-<script th:src="@{/resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js}" src="../../resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-<!--<script th:src="@{/resources/admin/plugins/jqvmap/jquery.vmap.min.js}" src="../../resources/admin/plugins/jqvmap/jquery.vmap.min.js"></script>-->
-<!--<script th:src="@{/resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js}" src="../../resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>-->
+        <!-- Plugins -->
+        <script th:src="@{/resources/admin/plugins/chart.js/Chart.min.js}" src="../../resources/admin/plugins/chart.js/Chart.min.js"></script>
+        <script th:src="@{/resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js}" src="../../resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+        <!--<script th:src="@{/resources/admin/plugins/jqvmap/jquery.vmap.min.js}" src="../../resources/admin/plugins/jqvmap/jquery.vmap.min.js"></script>-->
+        <!--<script th:src="@{/resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js}" src="../../resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>-->
 
-<script th:src="@{/resources/admin/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js}"
+        <script th:src="@{/resources/admin/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js}"
         src="../../resources/admin/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js"></script>
-<script>
-    $(() => {
-        App.checkAll()
-        // Run datatable
-        var table = $('#example').DataTable({
-            drawCallback: function() {
-                $('.dataTables_paginate > .pagination').addClass('pagination-sm') // make pagination small
-            }
-        })
-        // Apply column filter
-        $('#example .dt-column-filter th').each(function(i) {
-            $('input', this).on('keyup change', function() {
-                if (table.column(i).search() !== this.value) {
-                    table
-                        .column(i)
-                        .search(this.value)
-                        .draw()
+        <script>
+            $(() => {
+                App.checkAll()
+                // Run datatable
+                var table = $('#example').DataTable({
+                    drawCallback: function () {
+                        $('.dataTables_paginate > .pagination').addClass('pagination-sm') // make pagination small
+                    }
+                })
+                // Apply column filter
+                $('#example .dt-column-filter th').each(function (i) {
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw()
+                        }
+                    })
+                })
+                // Toggle Column filter function
+                var responsiveFilter = function (table, index, val) {
+                    var th = $(table).find('.dt-column-filter th').eq(index)
+                    val === true ? th.removeClass('d-none') : th.addClass('d-none')
                 }
+                // Run Toggle Column filter at first
+                $.each(table.columns().responsiveHidden(), function (index, val) {
+                    responsiveFilter('#example', index, val)
+                })
+                // Run Toggle Column filter on responsive-resize event
+                table.on('responsive-resize', function (e, datatable, columns) {
+                    $.each(columns, function (index, val) {
+                        responsiveFilter('#example', index, val)
+                    })
+                })
             })
-        })
-        // Toggle Column filter function
-        var responsiveFilter = function(table, index, val) {
-            var th = $(table).find('.dt-column-filter th').eq(index)
-            val === true ? th.removeClass('d-none') : th.addClass('d-none')
-        }
-        // Run Toggle Column filter at first
-        $.each(table.columns().responsiveHidden(), function(index, val) {
-            responsiveFilter('#example', index, val)
-        })
-        // Run Toggle Column filter on responsive-resize event
-        table.on('responsive-resize', function(e, datatable, columns) {
-            $.each(columns, function(index, val) {
-                responsiveFilter('#example', index, val)
-            })
-        })
-    })
-</script>
+        </script>
 
-<script>
-    $(() => {
-        function run_sparkline() {
-            $('.sparkline-data').text('').sparkline('html', {
-                width: '100%',
-                height: 20,
-                lineColor: gray,
-                fillColor: false,
-                tagValuesAttribute: 'data-value'
+        <script>
+            $(() => {
+                function run_sparkline() {
+                    $('.sparkline-data').text('').sparkline('html', {
+                        width: '100%',
+                        height: 20,
+                        lineColor: gray,
+                        fillColor: false,
+                        tagValuesAttribute: 'data-value'
+                    });
+                }
+
+                // Run sparkline on document view (window) resized
+                App.resize(() => {
+                    run_sparkline()
+                })();
+                // Run sparkline on sidebar updated (toggle collapse)
+                document.addEventListener('sidebar:update', () => {
+                    run_sparkline();
+                });
             });
-        }
+        </script>
 
-        // Run sparkline on document view (window) resized
-        App.resize(() => {
-            run_sparkline()
-        })();
-        // Run sparkline on sidebar updated (toggle collapse)
-        document.addEventListener('sidebar:update', () => {
-            run_sparkline();
-        });
-    });
-</script>
-
-</body>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+    </body>
 </html>

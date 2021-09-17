@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService {
 
-    ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter userFilter);
+    ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter);
 
     UserEntity getUserByEmail(String email);
 

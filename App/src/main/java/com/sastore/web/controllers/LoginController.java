@@ -59,9 +59,9 @@ public class LoginController extends Base {
 
     @PostMapping("/authentication")
     public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+            @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
 
-        log.debug("email: " + email);
+        log.debug("Email: " + email);
         UserEntity user = userService.getUserByEmail(email);
 
         if (user != null) {
@@ -91,7 +91,7 @@ public class LoginController extends Base {
 //                    throw new CustomException(404, "Not found", "User with email " + email + " not found", HttpStatus.NOT_FOUND);
                     log.debug("Username not found");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("Error!", e);
                 }
             }
             // Bad credentials
