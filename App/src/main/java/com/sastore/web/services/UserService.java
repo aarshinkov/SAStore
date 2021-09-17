@@ -13,21 +13,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService {
 
-    ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter);
+  ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter);
 
-    UserEntity getUserByEmail(String email);
+  UserEntity getUserByEmail(String email);
 
-    UserEntity getUserByUserId(String userId);
+  UserEntity getUserByUserId(String userId);
 
-    UserEntity createUser(SignupModel signupModel);
+  UserEntity createUser(SignupModel signupModel);
 
-    Long getUsersCountByRole(String rolename);
+  Long getUsersCountByRole(String rolename);
 
-    UserEntity addRole(String userId, Roles role) throws Exception;
+  UserEntity addRole(String userId, Roles role) throws Exception;
 
-    UserEntity removeRole(String userId, Roles role) throws Exception;
+  UserEntity removeRole(String userId, Roles role) throws Exception;
 
-    boolean isUserExistByEmail(String email);
+  boolean isUserExistByEmail(String email);
 
-    boolean isPasswordMatch(String userId, String password);
+  boolean isPasswordMatch(String userId, String password);
 }

@@ -30,39 +30,39 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 public class ProductEntity implements Serializable {
 
-    @Id
-    @SequenceGenerator(name = "seq_gen_product", sequenceName = "s_products", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_product")
-    @Column(name = "product_id")
-    private Long productId;
+  @Id
+  @SequenceGenerator(name = "seq_gen_product", sequenceName = "s_products", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_product")
+  @Column(name = "product_id")
+  private Long productId;
 
-    @Column(name = "title")
-    private String title;
+  @Column(name = "title")
+  private String title;
 
-    @Column(name = "price")
-    private Double price;
+  @Column(name = "price")
+  private Double price;
 
-    @Column(name = "avail_quant")
-    private Integer availableQuantity;
+  @Column(name = "avail_quant")
+  private Integer availableQuantity;
 
-    @Column(name = "views")
-    private Integer views;
+  @Column(name = "views")
+  private Integer views;
 
-    @Column(name = "description")
-    private String description;
+  @Column(name = "description")
+  private String description;
 
-    @Column(name = "status")
-    private Integer status;
+  @Column(name = "status")
+  private Integer status;
 
-    @Column(name = "main_image")
-    private String mainImage;
+  @Column(name = "main_image")
+  private String mainImage;
 
-    @Column(name = "added_on")
-    private Timestamp addedOn;
+  @Column(name = "added_on")
+  private Timestamp addedOn;
 
-    @Column(name = "approved_on")
-    private Timestamp approvedOn;
+  @Column(name = "approved_on")
+  private Timestamp approvedOn;
 
-    @Column(name = "edited_on")
-    private Timestamp editedOn;
+  @Column(name = "edited_on")
+  private Timestamp editedOn;
 }

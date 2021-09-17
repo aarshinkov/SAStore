@@ -3,22 +3,22 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
-    <head>
-        <title th:text="#{app.title('Image')}">Image</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title('Image')}">Image</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <form th:action="@{/test/image}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="file"/>
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm">Upload image</button>
-            </form>
+      <form th:action="@{/test/image}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="file"/>
+            <label class="custom-file-label">Choose file</label>
+          </div>
         </div>
-    </body>
+        <button type="submit" class="btn btn-primary btn-sm">Upload image</button>
+      </form>
+    </div>
+  </body>
 </html>

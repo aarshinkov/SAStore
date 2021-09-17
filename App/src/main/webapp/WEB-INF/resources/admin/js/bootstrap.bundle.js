@@ -1,15 +1,18 @@
 /*!
-  * Bootstrap v4.5.3 (https://getbootstrap.com/)
-  * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-  */
+ * Bootstrap v4.5.3 (https://getbootstrap.com/)
+ * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('jquery')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'jquery'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bootstrap = {}, global.jQuery));
-}(this, (function (exports, $) { 'use strict';
+          typeof define === 'function' && define.amd ? define(['exports', 'jquery'], factory) :
+          (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bootstrap = {}, global.jQuery));
+}(this, (function (exports, $) {
+  'use strict';
 
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+  function _interopDefaultLegacy(e) {
+    return e && typeof e === 'object' && 'default' in e ? e : {'default': e};
+  }
 
   var $__default = /*#__PURE__*/_interopDefaultLegacy($);
 
@@ -18,14 +21,17 @@
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
       descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
 
   function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
+    if (protoProps)
+      _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties(Constructor, staticProps);
     return Constructor;
   }
 
@@ -353,11 +359,11 @@
     };
 
     _createClass(Alert, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION;
+        }
+      }]);
 
     return Alert;
   }();
@@ -497,11 +503,11 @@
     };
 
     _createClass(Button, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$1;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$1;
+        }
+      }]);
 
     return Button;
   }();
@@ -1126,16 +1132,16 @@
     };
 
     _createClass(Carousel, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$2;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$2;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default;
+        }
+      }]);
 
     return Carousel;
   }();
@@ -1468,16 +1474,16 @@
     };
 
     _createClass(Collapse, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$3;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$1;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$3;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$1;
+        }
+      }]);
 
     return Collapse;
   }();
@@ -1585,14 +1591,14 @@
   var supportsMicroTasks = isBrowser && window.Promise;
 
   /**
-  * Create a debounced version of a method, that's asynchronously deferred
-  * but called in the minimum time possible.
-  *
-  * @method
-  * @memberof Popper.Utils
-  * @argument {Function} fn
-  * @returns {Function}
-  */
+   * Create a debounced version of a method, that's asynchronously deferred
+   * but called in the minimum time possible.
+   *
+   * @method
+   * @memberof Popper.Utils
+   * @argument {Function} fn
+   * @returns {Function}
+   */
   var debounce = supportsMicroTasks ? microtaskDebounce : taskDebounce;
 
   /**
@@ -1662,9 +1668,9 @@
     // Firefox want us to check `-x` and `-y` variations as well
 
     var _getStyleComputedProp = getStyleComputedProperty(element),
-        overflow = _getStyleComputedProp.overflow,
-        overflowX = _getStyleComputedProp.overflowX,
-        overflowY = _getStyleComputedProp.overflowY;
+            overflow = _getStyleComputedProp.overflow,
+            overflowX = _getStyleComputedProp.overflowX,
+            overflowY = _getStyleComputedProp.overflowY;
 
     if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) {
       return element;
@@ -1897,14 +1903,17 @@
         var descriptor = props[i];
         descriptor.enumerable = descriptor.enumerable || false;
         descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
         Object.defineProperty(target, descriptor.key, descriptor);
       }
     }
 
     return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
+      if (protoProps)
+        defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        defineProperties(Constructor, staticProps);
       return Constructor;
     };
   }();
@@ -1981,7 +1990,8 @@
       } else {
         rect = element.getBoundingClientRect();
       }
-    } catch (e) {}
+    } catch (e) {
+    }
 
     var result = {
       left: rect.left,
@@ -2144,7 +2154,7 @@
 
     // NOTE: 1 DOM access here
 
-    var boundaries = { top: 0, left: 0 };
+    var boundaries = {top: 0, left: 0};
     var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
 
     // Handle viewport case
@@ -2169,8 +2179,8 @@
       // In case of HTML, we need a different computation
       if (boundariesNode.nodeName === 'HTML' && !isFixed(offsetParent)) {
         var _getWindowSizes = getWindowSizes(popper.ownerDocument),
-            height = _getWindowSizes.height,
-            width = _getWindowSizes.width;
+                height = _getWindowSizes.height,
+                width = _getWindowSizes.width;
 
         boundaries.top += offsets.top - offsets.marginTop;
         boundaries.bottom = height + offsets.top;
@@ -2195,7 +2205,7 @@
 
   function getArea(_ref) {
     var width = _ref.width,
-        height = _ref.height;
+            height = _ref.height;
 
     return width * height;
   }
@@ -2249,7 +2259,7 @@
 
     var filteredAreas = sortedAreas.filter(function (_ref2) {
       var width = _ref2.width,
-          height = _ref2.height;
+              height = _ref2.height;
       return width >= popper.clientWidth && height >= popper.clientHeight;
     });
 
@@ -2304,7 +2314,7 @@
    * @returns {String} flipped placement
    */
   function getOppositePlacement(placement) {
-    var hash = { left: 'right', right: 'left', bottom: 'top', top: 'bottom' };
+    var hash = {left: 'right', right: 'left', bottom: 'top', top: 'bottom'};
     return placement.replace(/left|right|bottom|top/g, function (matched) {
       return hash[matched];
     });
@@ -2487,7 +2497,7 @@
   function isModifierEnabled(modifiers, modifierName) {
     return modifiers.some(function (_ref) {
       var name = _ref.name,
-          enabled = _ref.enabled;
+              enabled = _ref.enabled;
       return enabled && name === modifierName;
     });
   }
@@ -2556,7 +2566,7 @@
   function attachToScrollParents(scrollParent, event, callback, scrollParents) {
     var isBody = scrollParent.nodeName === 'BODY';
     var target = isBody ? scrollParent.ownerDocument.defaultView : scrollParent;
-    target.addEventListener(event, callback, { passive: true });
+    target.addEventListener(event, callback, {passive: true});
 
     if (!isBody) {
       attachToScrollParents(getScrollParent(target.parentNode), event, callback, scrollParents);
@@ -2573,7 +2583,7 @@
   function setupEventListeners(reference, options, state, updateBound) {
     // Resize event listener on window
     state.updateBound = updateBound;
-    getWindow(reference).addEventListener('resize', state.updateBound, { passive: true });
+    getWindow(reference).addEventListener('resize', state.updateBound, {passive: true});
 
     // Scroll event listener on scroll parents
     var scrollElement = getScrollParent(reference);
@@ -2733,7 +2743,7 @@
 
     // Apply `position` to popper before anything else because
     // without the position applied we can't guarantee correct computations
-    setStyles(popper, { position: options.positionFixed ? 'fixed' : 'absolute' });
+    setStyles(popper, {position: options.positionFixed ? 'fixed' : 'absolute'});
 
     return options;
   }
@@ -2759,10 +2769,10 @@
    */
   function getRoundedOffsets(data, shouldRound) {
     var _data$offsets = data.offsets,
-        popper = _data$offsets.popper,
-        reference = _data$offsets.reference;
+            popper = _data$offsets.popper,
+            reference = _data$offsets.reference;
     var round = Math.round,
-        floor = Math.floor;
+            floor = Math.floor;
 
     var noRound = function noRound(v) {
       return v;
@@ -2798,7 +2808,7 @@
    */
   function computeStyle(data, options) {
     var x = options.x,
-        y = options.y;
+            y = options.y;
     var popper = data.offsets.popper;
 
     // Remove this legacy support in Popper.js v2
@@ -2839,7 +2849,7 @@
     // `x` to `top` to make the popper grow towards its top instead of
     // its bottom.
     var left = void 0,
-        top = void 0;
+            top = void 0;
     if (sideA === 'bottom') {
       // when offsetParent is <html> the positioning is relative to the bottom of the screen (excluding the scrollbar)
       // and not the bottom of the html element
@@ -2951,8 +2961,8 @@
 
     var placement = data.placement.split('-')[0];
     var _data$offsets = data.offsets,
-        popper = _data$offsets.popper,
-        reference = _data$offsets.reference;
+            popper = _data$offsets.popper,
+            reference = _data$offsets.reference;
 
     var isVertical = ['left', 'right'].indexOf(placement) !== -1;
 
@@ -3179,8 +3189,8 @@
    */
   function keepTogether(data) {
     var _data$offsets = data.offsets,
-        popper = _data$offsets.popper,
-        reference = _data$offsets.reference;
+            popper = _data$offsets.popper,
+            reference = _data$offsets.reference;
 
     var placement = data.placement.split('-')[0];
     var floor = Math.floor;
@@ -3298,25 +3308,25 @@
       var measurement = (index === 1 ? !useHeight : useHeight) ? 'height' : 'width';
       var mergeWithPrevious = false;
       return op
-      // This aggregates any `+` or `-` sign that aren't considered operators
-      // e.g.: 10 + +5 => [10, +, +5]
-      .reduce(function (a, b) {
-        if (a[a.length - 1] === '' && ['+', '-'].indexOf(b) !== -1) {
-          a[a.length - 1] = b;
-          mergeWithPrevious = true;
-          return a;
-        } else if (mergeWithPrevious) {
-          a[a.length - 1] += b;
-          mergeWithPrevious = false;
-          return a;
-        } else {
-          return a.concat(b);
-        }
-      }, [])
-      // Here we convert the string values into number values (in px)
-      .map(function (str) {
-        return toValue(str, measurement, popperOffsets, referenceOffsets);
-      });
+              // This aggregates any `+` or `-` sign that aren't considered operators
+              // e.g.: 10 + +5 => [10, +, +5]
+              .reduce(function (a, b) {
+                if (a[a.length - 1] === '' && ['+', '-'].indexOf(b) !== -1) {
+                  a[a.length - 1] = b;
+                  mergeWithPrevious = true;
+                  return a;
+                } else if (mergeWithPrevious) {
+                  a[a.length - 1] += b;
+                  mergeWithPrevious = false;
+                  return a;
+                } else {
+                  return a.concat(b);
+                }
+              }, [])
+              // Here we convert the string values into number values (in px)
+              .map(function (str) {
+                return toValue(str, measurement, popperOffsets, referenceOffsets);
+              });
     });
 
     // Loop trough the offsets arrays and execute the operations
@@ -3342,9 +3352,9 @@
   function offset(data, _ref) {
     var offset = _ref.offset;
     var placement = data.placement,
-        _data$offsets = data.offsets,
-        popper = _data$offsets.popper,
-        reference = _data$offsets.reference;
+            _data$offsets = data.offsets,
+            popper = _data$offsets.popper,
+            reference = _data$offsets.reference;
 
     var basePlacement = placement.split('-')[0];
 
@@ -3396,8 +3406,8 @@
     var transformProp = getSupportedPropertyName('transform');
     var popperStyles = data.instance.popper.style; // assignment to help minification
     var top = popperStyles.top,
-        left = popperStyles.left,
-        transform = popperStyles[transformProp];
+            left = popperStyles.left,
+            transform = popperStyles[transformProp];
 
     popperStyles.top = '';
     popperStyles.left = '';
@@ -3459,8 +3469,8 @@
     // if shift shiftvariation is specified, run the modifier
     if (shiftvariation) {
       var _data$offsets = data.offsets,
-          reference = _data$offsets.reference,
-          popper = _data$offsets.popper;
+              reference = _data$offsets.reference,
+              popper = _data$offsets.popper;
 
       var isVertical = ['bottom', 'top'].indexOf(basePlacement) !== -1;
       var side = isVertical ? 'left' : 'top';
@@ -3526,8 +3536,8 @@
     var placement = data.placement;
     var basePlacement = placement.split('-')[0];
     var _data$offsets = data.offsets,
-        popper = _data$offsets.popper,
-        reference = _data$offsets.reference;
+            popper = _data$offsets.popper,
+            reference = _data$offsets.reference;
 
     var isHoriz = ['left', 'right'].indexOf(basePlacement) !== -1;
 
@@ -4028,10 +4038,10 @@
           name: name
         }, _this.options.modifiers[name]);
       })
-      // sort the modifiers by order
-      .sort(function (a, b) {
-        return a.order - b.order;
-      });
+              // sort the modifiers by order
+              .sort(function (a, b) {
+                return a.order - b.order;
+              });
 
       // modifiers have the ability to execute arbitrary code when Popper.js get inited
       // such code is executed in the same order of its modifier
@@ -4060,51 +4070,51 @@
 
 
     createClass(Popper, [{
-      key: 'update',
-      value: function update$$1() {
-        return update.call(this);
-      }
-    }, {
-      key: 'destroy',
-      value: function destroy$$1() {
-        return destroy.call(this);
-      }
-    }, {
-      key: 'enableEventListeners',
-      value: function enableEventListeners$$1() {
-        return enableEventListeners.call(this);
-      }
-    }, {
-      key: 'disableEventListeners',
-      value: function disableEventListeners$$1() {
-        return disableEventListeners.call(this);
-      }
+        key: 'update',
+        value: function update$$1() {
+          return update.call(this);
+        }
+      }, {
+        key: 'destroy',
+        value: function destroy$$1() {
+          return destroy.call(this);
+        }
+      }, {
+        key: 'enableEventListeners',
+        value: function enableEventListeners$$1() {
+          return enableEventListeners.call(this);
+        }
+      }, {
+        key: 'disableEventListeners',
+        value: function disableEventListeners$$1() {
+          return disableEventListeners.call(this);
+        }
 
-      /**
-       * Schedules an update. It will run on the next UI update available.
-       * @method scheduleUpdate
-       * @memberof Popper
-       */
+        /**
+         * Schedules an update. It will run on the next UI update available.
+         * @method scheduleUpdate
+         * @memberof Popper
+         */
 
 
-      /**
-       * Collection of utilities useful when writing custom modifiers.
-       * Starting from version 1.7, this method is available only if you
-       * include `popper-utils.js` before `popper.js`.
-       *
-       * **DEPRECATION**: This way to access PopperUtils is deprecated
-       * and will be removed in v2! Use the PopperUtils module directly instead.
-       * Due to the high instability of the methods contained in Utils, we can't
-       * guarantee them to follow semver. Use them at your own risk!
-       * @static
-       * @private
-       * @type {Object}
-       * @deprecated since version 1.8
-       * @member Utils
-       * @memberof Popper
-       */
+        /**
+         * Collection of utilities useful when writing custom modifiers.
+         * Starting from version 1.7, this method is available only if you
+         * include `popper-utils.js` before `popper.js`.
+         *
+         * **DEPRECATION**: This way to access PopperUtils is deprecated
+         * and will be removed in v2! Use the PopperUtils module directly instead.
+         * Due to the high instability of the methods contained in Utils, we can't
+         * guarantee them to follow semver. Use them at your own risk!
+         * @static
+         * @private
+         * @type {Object}
+         * @deprecated since version 1.8
+         * @member Utils
+         * @memberof Popper
+         */
 
-    }]);
+      }]);
     return Popper;
   }();
 
@@ -4600,21 +4610,21 @@
     };
 
     _createClass(Dropdown, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$4;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$2;
-      }
-    }, {
-      key: "DefaultType",
-      get: function get() {
-        return DefaultType$2;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$4;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$2;
+        }
+      }, {
+        key: "DefaultType",
+        get: function get() {
+          return DefaultType$2;
+        }
+      }]);
 
     return Dropdown;
   }();
@@ -4948,11 +4958,11 @@
       var _this5 = this;
 
       $__default['default'](document).off(EVENT_FOCUSIN) // Guard against infinite focus loop
-      .on(EVENT_FOCUSIN, function (event) {
-        if (document !== event.target && _this5._element !== event.target && $__default['default'](_this5._element).has(event.target).length === 0) {
-          _this5._element.focus();
-        }
-      });
+              .on(EVENT_FOCUSIN, function (event) {
+                if (document !== event.target && _this5._element !== event.target && $__default['default'](_this5._element).has(event.target).length === 0) {
+                  _this5._element.focus();
+                }
+              });
     };
 
     _proto._setEscapeEvent = function _setEscapeEvent() {
@@ -5197,16 +5207,16 @@
     };
 
     _createClass(Modal, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$5;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$3;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$5;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$3;
+        }
+      }]);
 
     return Modal;
   }();
@@ -5377,7 +5387,8 @@
     for (var i = 0, len = elements.length; i < len; i++) {
       var _ret = _loop(i);
 
-      if (_ret === "continue") continue;
+      if (_ret === "continue")
+        continue;
     }
 
     return createdDocument.body.innerHTML;
@@ -6043,41 +6054,41 @@
     };
 
     _createClass(Tooltip, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$6;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$4;
-      }
-    }, {
-      key: "NAME",
-      get: function get() {
-        return NAME$6;
-      }
-    }, {
-      key: "DATA_KEY",
-      get: function get() {
-        return DATA_KEY$6;
-      }
-    }, {
-      key: "Event",
-      get: function get() {
-        return Event;
-      }
-    }, {
-      key: "EVENT_KEY",
-      get: function get() {
-        return EVENT_KEY$6;
-      }
-    }, {
-      key: "DefaultType",
-      get: function get() {
-        return DefaultType$4;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$6;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$4;
+        }
+      }, {
+        key: "NAME",
+        get: function get() {
+          return NAME$6;
+        }
+      }, {
+        key: "DATA_KEY",
+        get: function get() {
+          return DATA_KEY$6;
+        }
+      }, {
+        key: "Event",
+        get: function get() {
+          return Event;
+        }
+      }, {
+        key: "EVENT_KEY",
+        get: function get() {
+          return EVENT_KEY$6;
+        }
+      }, {
+        key: "DefaultType",
+        get: function get() {
+          return DefaultType$4;
+        }
+      }]);
 
     return Tooltip;
   }();
@@ -6222,42 +6233,42 @@
     };
 
     _createClass(Popover, null, [{
-      key: "VERSION",
-      // Getters
-      get: function get() {
-        return VERSION$7;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$5;
-      }
-    }, {
-      key: "NAME",
-      get: function get() {
-        return NAME$7;
-      }
-    }, {
-      key: "DATA_KEY",
-      get: function get() {
-        return DATA_KEY$7;
-      }
-    }, {
-      key: "Event",
-      get: function get() {
-        return Event$1;
-      }
-    }, {
-      key: "EVENT_KEY",
-      get: function get() {
-        return EVENT_KEY$7;
-      }
-    }, {
-      key: "DefaultType",
-      get: function get() {
-        return DefaultType$5;
-      }
-    }]);
+        key: "VERSION",
+        // Getters
+        get: function get() {
+          return VERSION$7;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$5;
+        }
+      }, {
+        key: "NAME",
+        get: function get() {
+          return NAME$7;
+        }
+      }, {
+        key: "DATA_KEY",
+        get: function get() {
+          return DATA_KEY$7;
+        }
+      }, {
+        key: "Event",
+        get: function get() {
+          return Event$1;
+        }
+      }, {
+        key: "EVENT_KEY",
+        get: function get() {
+          return EVENT_KEY$7;
+        }
+      }, {
+        key: "DefaultType",
+        get: function get() {
+          return DefaultType$5;
+        }
+      }]);
 
     return Popover;
   }(Tooltip);
@@ -6455,7 +6466,7 @@
         return;
       }
 
-      for (var i = this._offsets.length; i--;) {
+      for (var i = this._offsets.length; i--; ) {
         var isActiveTarget = this._activeTarget !== this._targets[i] && scrollTop >= this._offsets[i] && (typeof this._offsets[i + 1] === 'undefined' || scrollTop < this._offsets[i + 1]);
 
         if (isActiveTarget) {
@@ -6524,16 +6535,16 @@
     };
 
     _createClass(ScrollSpy, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$8;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$6;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$8;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$6;
+        }
+      }]);
 
     return ScrollSpy;
   }();
@@ -6548,7 +6559,7 @@
     var scrollSpys = [].slice.call(document.querySelectorAll(SELECTOR_DATA_SPY));
     var scrollSpysLength = scrollSpys.length;
 
-    for (var i = scrollSpysLength; i--;) {
+    for (var i = scrollSpysLength; i--; ) {
       var $spy = $__default['default'](scrollSpys[i]);
 
       ScrollSpy._jQueryInterface.call($spy, $spy.data());
@@ -6760,11 +6771,11 @@
     };
 
     _createClass(Tab, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$9;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$9;
+        }
+      }]);
 
     return Tab;
   }();
@@ -6979,21 +6990,21 @@
     };
 
     _createClass(Toast, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION$a;
-      }
-    }, {
-      key: "DefaultType",
-      get: function get() {
-        return DefaultType$7;
-      }
-    }, {
-      key: "Default",
-      get: function get() {
-        return Default$7;
-      }
-    }]);
+        key: "VERSION",
+        get: function get() {
+          return VERSION$a;
+        }
+      }, {
+        key: "DefaultType",
+        get: function get() {
+          return DefaultType$7;
+        }
+      }, {
+        key: "Default",
+        get: function get() {
+          return Default$7;
+        }
+      }]);
 
     return Toast;
   }();
@@ -7025,7 +7036,7 @@
   exports.Tooltip = Tooltip;
   exports.Util = Util;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  Object.defineProperty(exports, '__esModule', {value: true});
 
 })));
 //# sourceMappingURL=bootstrap.bundle.js.map

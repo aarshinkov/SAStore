@@ -61,7 +61,7 @@ textarea.summernote {
     border-color: $success;
   }
   .note-form-control:invalid,
-  .note-form-control:valid {
+    .note-form-control:valid {
     border-color: $input-border-color;
     &:focus {
       border-color: $input-focus-border-color;

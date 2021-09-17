@@ -3,7 +3,9 @@ function autocomplete(inp, arr) {
   inp.addEventListener('input', function () {
     let a, b, i, val = this.value
     closeAllLists()
-    if (!val) { return false }
+    if (!val) {
+      return false
+    }
     currentFocus = -1
     if (arr.filter(i => i.toUpperCase().startsWith(val.toUpperCase())).length) {
       a = document.createElement('div')
@@ -40,7 +42,8 @@ function autocomplete(inp, arr) {
   // execute a function presses a key on the keyboard
   inp.addEventListener('keydown', function (e) {
     var x = document.getElementById(this.id + 'autocomplete-list')
-    if (x) x = x.getElementsByTagName('a')
+    if (x)
+      x = x.getElementsByTagName('a')
     if (e.keyCode == 40) { // arrow down
       currentFocus++
       addActive(x)
@@ -49,16 +52,20 @@ function autocomplete(inp, arr) {
       addActive(x)
     } else if (e.keyCode == 13) { // enter
       if (currentFocus > -1) {
-        if (x) x[currentFocus].click()
+        if (x)
+          x[currentFocus].click()
       }
       e.preventDefault()
     }
   })
   function addActive(x) {
-    if (!x) return false
+    if (!x)
+      return false
     removeActive(x)
-    if (currentFocus >= x.length) currentFocus = 0
-    if (currentFocus < 0) currentFocus = (x.length - 1)
+    if (currentFocus >= x.length)
+      currentFocus = 0
+    if (currentFocus < 0)
+      currentFocus = (x.length - 1)
     x[currentFocus].classList.add('active')
   }
   function removeActive(x) {

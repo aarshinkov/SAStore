@@ -21,22 +21,22 @@ import lombok.ToString;
 @ToString
 public class SignupModel implements Serializable {
 
-    @NotEmpty
-    @Size(min = 2, max = 100)
-    private String firstName;
+  @NotEmpty
+  @Size(min = 2, max = 100)
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    @NotEmpty
-    @Email
-    @Size(max = 200)
-    private String email;
+  @NotEmpty
+  @Email
+  @Size(max = 200)
+  private String email;
 
-    @NotEmpty
-    @Size(min = 2, max = 100)
-    private String password;
+  @NotEmpty
+  @Size(min = 2, max = 100)
+  private String password;
 
-    @NotEmpty
-    @Size(min = 2, max = 100)
-    private String confirmPassword;
+  @NotEmpty
+  @Size(min = 2, max = 100)
+  private String confirmPassword;
 }

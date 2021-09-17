@@ -42,7 +42,7 @@
 .overlay {
   z-index: 1;
   .img:hover &,
-  &.overlay-show {
+    &.overlay-show {
     opacity: .5;
   }
 }
@@ -51,7 +51,7 @@
   z-index: 2;
   flex-direction: column;
   .img:hover &,
-  &.overlay-show {
+    &.overlay-show {
     opacity: 1;
   }
 }

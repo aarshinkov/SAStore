@@ -26,78 +26,78 @@ import java.util.List;
 @DynamicInsert
 public class UserEntity implements UserDetails, Serializable {
 
-    @Id
-    @Column(name = "user_id")
-    private String userId;
+  @Id
+  @Column(name = "user_id")
+  private String userId;
 
-    @Column(name = "email")
-    private String email;
+  @Column(name = "email")
+  private String email;
 
-    @Column(name = "password")
-    private String password;
+  @Column(name = "password")
+  private String password;
 
-    @Column(name = "first_name")
-    private String firstName;
+  @Column(name = "first_name")
+  private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  @Column(name = "last_name")
+  private String lastName;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+  @Column(name = "is_active")
+  private Boolean isActive;
 
-    @Column(name = "created_on")
-    private Timestamp createdOn;
+  @Column(name = "created_on")
+  private Timestamp createdOn;
 
-    @Column(name = "edited_on")
-    private Timestamp editedOn;
+  @Column(name = "edited_on")
+  private Timestamp editedOn;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
-    private List<RoleEntity> roles;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
+  private List<RoleEntity> roles;
 
-    public String getFullName() {
-        return (lastName != null) ? firstName + ' ' + lastName : firstName;
+  public String getFullName() {
+    return (lastName != null) ? firstName + ' ' + lastName : firstName;
+  }
+
+  @Override
+  public String toString() {
+    return getFullName();
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<GrantedAuthority> authorities = new ArrayList<>();
+
+    for (RoleEntity role : roles) {
+      authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
     }
 
-    @Override
-    public String toString() {
-        return getFullName();
-    }
+    return authorities;
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+  @Override
+  public String getUsername() {
+    return this.email;
+  }
 
-        for (RoleEntity role : roles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
-        }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-        return authorities;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
+  @Override
+  public boolean isEnabled() {
 //        return isActive;
-        return true;
-    }
+    return true;
+  }
 }

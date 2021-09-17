@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CartController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/cart")
-    public String cart(Model model) {
-        return "cart";
-    }
+  @GetMapping("/cart")
+  public String cart(Model model) {
+    return "cart";
+  }
 }

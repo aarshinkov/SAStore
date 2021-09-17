@@ -83,57 +83,57 @@ const settingModal = `
   </div>
 </div>
 `
-document.body.insertAdjacentHTML('beforeend', settingModal)
+        document.body.insertAdjacentHTML('beforeend', settingModal)
 
 // Transparent modal backdrop
-$('#settingModal').on('show.bs.modal', () => {
-  document.head.insertAdjacentHTML('beforeend', `
+        $('#settingModal').on('show.bs.modal', () => {
+document.head.insertAdjacentHTML('beforeend', `
     <style id="tmp-style">.modal-backdrop.show{opacity:0}</style>
   `)
-}).on('hidden.bs.modal', () => {
-  document.querySelector('#tmp-style').remove()
-})
+        }).on('hidden.bs.modal', () => {
+document.querySelector('#tmp-style').remove()
+        })
 
 // apply theme
-function applyTheme(src) {
-  let logo = src.includes('white') ? 'logo.svg' : 'logo-white.svg'
-  document.querySelector('#main-logo').src = '../../img/' + logo
-  document.querySelector('#theme-css').href = src
-}
+        function applyTheme(src) {
+        let logo = src.includes('white') ? 'logo.svg' : 'logo-white.svg'
+                document.querySelector('#main-logo').src = '../../img/' + logo
+                document.querySelector('#theme-css').href = src
+        }
 // apply font
 function applyFont(src, css) {
-  document.querySelector('#font-css').href = src
-  if (src.includes('inter')) {
-    document.querySelector('#font-family-css') && document.querySelector('#font-family-css').remove()
-  } else {
-    document.querySelector('#main-css').insertAdjacentHTML('afterend', `<link rel="stylesheet" href="${css}" id="font-family-css">`)
-  }
+document.querySelector('#font-css').href = src
+        if (src.includes('inter')) {
+document.querySelector('#font-family-css') && document.querySelector('#font-family-css').remove()
+} else {
+document.querySelector('#main-css').insertAdjacentHTML('afterend', `<link rel="stylesheet" href="${css}" id="font-family-css">`)
+}
 }
 // watch changes
 document.addEventListener('change', e => {
-  if (e.target.closest('input[name="navigation-theme"]')) {
-    const el = e.target.closest('input[name="navigation-theme"]')
-    applyTheme(el.value)
-    sessionStorage.setItem('navigation-theme', el.value)
-  }
+if (e.target.closest('input[name="navigation-theme"]')) {
+const el = e.target.closest('input[name="navigation-theme"]')
+        applyTheme(el.value)
+        sessionStorage.setItem('navigation-theme', el.value)
+}
 })
-document.addEventListener('click', e => {
-  if (e.target.closest('input[name="font-family-theme"]')) {
-    const el = e.target.closest('input[name="font-family-theme"]')
-    applyFont(el.value, el.dataset.css)
-    sessionStorage.setItem('font-family-theme', el.value)
-  }
-})
+        document.addEventListener('click', e => {
+        if (e.target.closest('input[name="font-family-theme"]')) {
+        const el = e.target.closest('input[name="font-family-theme"]')
+                applyFont(el.value, el.dataset.css)
+                sessionStorage.setItem('font-family-theme', el.value)
+        }
+        })
 // init from session
-if (sessionStorage.getItem('navigation-theme')) {
-  document.querySelector('input[name="navigation-theme"][value="' + sessionStorage.getItem('navigation-theme') + '"]').checked = true
-  applyTheme(sessionStorage.getItem('navigation-theme'))
-}
+        if (sessionStorage.getItem('navigation-theme')) {
+document.querySelector('input[name="navigation-theme"][value="' + sessionStorage.getItem('navigation-theme') + '"]').checked = true
+        applyTheme(sessionStorage.getItem('navigation-theme'))
+        }
 if (sessionStorage.getItem('font-family-theme')) {
-  document.querySelector('input[name="font-family-theme"][value="' + sessionStorage.getItem('font-family-theme') + '"]').click()
-  setTimeout(() => {
-    for (const el of document.querySelectorAll('input[name="font-family-theme"]:not(:checked)')) {
-      el.closest('.btn').classList.remove('active')
-    }
-  }, 500)
-}
+document.querySelector('input[name="font-family-theme"][value="' + sessionStorage.getItem('font-family-theme') + '"]').click()
+        setTimeout(() => {
+        for (const el of document.querySelectorAll('input[name="font-family-theme"]:not(:checked)')) {
+        el.closest('.btn').classList.remove('active')
+        }
+        }, 500)
+        }

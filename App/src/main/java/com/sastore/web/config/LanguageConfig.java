@@ -16,28 +16,28 @@ import java.util.Locale;
 @Configuration
 public class LanguageConfig implements WebMvcConfigurer {
 
-    private final String LANG_DEFAULT = "bg";
-    private final String LANG_COOKIE_NAME = "lang";
+  private final String LANG_DEFAULT = "bg";
+  private final String LANG_COOKIE_NAME = "lang";
 
-    @Bean(name = "localeResolver")
-    public CookieLocaleResolver cookieLocaleResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setCookieName(LANG_COOKIE_NAME);
-        localeResolver.setDefaultLocale(new Locale(LANG_DEFAULT));
+  @Bean(name = "localeResolver")
+  public CookieLocaleResolver cookieLocaleResolver() {
+    CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+    localeResolver.setCookieName(LANG_COOKIE_NAME);
+    localeResolver.setDefaultLocale(new Locale(LANG_DEFAULT));
 
-        return localeResolver;
-    }
+    return localeResolver;
+  }
 
-    @Bean(name = "localeInterceptor")
-    public LocaleChangeInterceptor localeInterceptor() {
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName(LANG_COOKIE_NAME);
+  @Bean(name = "localeInterceptor")
+  public LocaleChangeInterceptor localeInterceptor() {
+    LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+    interceptor.setParamName(LANG_COOKIE_NAME);
 
-        return interceptor;
-    }
+    return interceptor;
+  }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeInterceptor());
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(localeInterceptor());
+  }
 }

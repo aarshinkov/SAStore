@@ -19,38 +19,38 @@ import java.math.BigDecimal;
 @Component
 public class LogAspect {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Before("execution(* com.sastore.web.controllers.*.*(..)) "
-            + " || execution(* com.sastore.web.services.*.*(..))")
-    public void methodBegin(JoinPoint joinPoint) {
+  @Before("execution(* com.sastore.web.controllers.*.*(..)) "
+          + " || execution(* com.sastore.web.services.*.*(..))")
+  public void methodBegin(JoinPoint joinPoint) {
 
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        String methodName = joinPoint.getSignature().getName();
-        log.debug(className + " -> " + methodName + "() begin --");
+    String className = joinPoint.getTarget().getClass().getSimpleName();
+    String methodName = joinPoint.getSignature().getName();
+    log.debug(className + " -> " + methodName + "() begin --");
+  }
+
+  @Around("execution(* com.sastore.web.controllers.*.*(..)) "
+          + " || execution(* com.sastore.web.services.*.*(..))")
+  public Object logExecTime(ProceedingJoinPoint pjp) throws Throwable {
+    String className = pjp.getTarget().getClass().getSimpleName();
+    String methodName = pjp.getSignature().getName();
+
+    long startTime = System.nanoTime();
+    Object output = pjp.proceed();
+    BigDecimal elapsedTimeMillis = new BigDecimal(System.nanoTime() - startTime).divide(new BigDecimal(1000000));
+
+    String result = className + " -> " + methodName + "() ended in ";
+
+    if (elapsedTimeMillis.doubleValue() < 1000) {
+      result += elapsedTimeMillis + " millis";
+    } else {
+      result += elapsedTimeMillis.divide(new BigDecimal(1000)) + " seconds";
     }
 
-    @Around("execution(* com.sastore.web.controllers.*.*(..)) "
-            + " || execution(* com.sastore.web.services.*.*(..))")
-    public Object logExecTime(ProceedingJoinPoint pjp) throws Throwable {
-        String className = pjp.getTarget().getClass().getSimpleName();
-        String methodName = pjp.getSignature().getName();
+    result += " --";
+    log.debug(result);
 
-        long startTime = System.nanoTime();
-        Object output = pjp.proceed();
-        BigDecimal elapsedTimeMillis = new BigDecimal(System.nanoTime() - startTime).divide(new BigDecimal(1000000));
-
-        String result = className + " -> " + methodName + "() ended in ";
-
-        if (elapsedTimeMillis.doubleValue() < 1000) {
-            result += elapsedTimeMillis + " millis";
-        } else {
-            result += elapsedTimeMillis.divide(new BigDecimal(1000)) + " seconds";
-        }
-
-        result += " --";
-        log.debug(result);
-
-        return output;
-    }
+    return output;
+  }
 }

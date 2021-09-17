@@ -58,7 +58,7 @@
     .navbar-nav .show > &,
     .nav-pills &.active,
     &:active,
-    &.active {
+      &.active {
       color: darken($component-active-bg, 8%);
       background-color: darken($faded-primary, 8%);
     }
@@ -119,13 +119,13 @@
   @if $size != 0 {
     .nav-gap-x-#{$size} {
       > .nav-link + .nav-link:not(.nav-item),
-      > .nav-item + .nav-item {
+        > .nav-item + .nav-item {
         margin-left: $length;
       }
     }
     .nav-gap-y-#{$size} {
       > .nav-link + .nav-link:not(.nav-item),
-      > .nav-item + .nav-item {
+        > .nav-item + .nav-item {
         margin-top: $length;
       }
     }

@@ -1,7 +1,7 @@
 // Custom checkboxes, radios, switchs hover
 .custom-control .custom-control-input {
   &:not(:disabled):not(:checked):not(:active):hover ~ .custom-control-label::before,
-  &:not(:disabled):not(:checked):not(:active):focus ~ .custom-control-label::before {
+    &:not(:disabled):not(:checked):not(:active):focus ~ .custom-control-label::before {
     border-color: darken($custom-control-indicator-border-color, 20%);
     .was-validated & {
       border-color: inherit;

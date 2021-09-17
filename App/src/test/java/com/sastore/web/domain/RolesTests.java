@@ -6,12 +6,11 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RolesTests {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private List<String> rolesString = new ArrayList<>();
+  private List<String> rolesString = new ArrayList<>();
 //    private List<RoleEntity> rolesObj = new ArrayList<>();
 //
 //    @BeforeEach

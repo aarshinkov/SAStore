@@ -10,7 +10,7 @@ import com.sastore.web.filters.UserFilter;
  */
 public interface UsersDao {
 
-    ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter);
+  ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter);
 
-    Long getUsersCountByRole(String rolename);
+  Long getUsersCountByRole(String rolename);
 }

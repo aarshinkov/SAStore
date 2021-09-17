@@ -44,10 +44,10 @@
   display: none;
   background-color: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
   @include media-breakpoint-down(md) { // Show backdrop on md down
-    .sidebar-expand & {
-      display: block;
-      animation-name: fadeIn;
-      animation-duration: .5s;
-    }
+                                       .sidebar-expand & {
+                                         display: block;
+                                         animation-name: fadeIn;
+                                         animation-duration: .5s;
+                                       }
   }
 }

@@ -19,17 +19,39 @@ const App = (() => {
     let el, check, cls
 
     switch (value) {
-      case 'xs': cls = 'd-none d-sm-block'; break
-      case 'sm': cls = 'd-block d-sm-none d-md-block'; break
-      case 'md': cls = 'd-block d-md-none d-lg-block'; break
-      case 'lg': cls = 'd-block d-lg-none d-xl-block'; break
-      case 'xl': cls = 'd-block d-xl-none'; break
-      case 'smDown': cls = 'd-none d-md-block'; break
-      case 'mdDown': cls = 'd-none d-lg-block'; break
-      case 'lgDown': cls = 'd-none d-xl-block'; break
-      case 'smUp': cls = 'd-block d-sm-none'; break
-      case 'mdUp': cls = 'd-block d-md-none'; break
-      case 'lgUp': cls = 'd-block d-lg-none'; break
+      case 'xs':
+        cls = 'd-none d-sm-block';
+        break
+      case 'sm':
+        cls = 'd-block d-sm-none d-md-block';
+        break
+      case 'md':
+        cls = 'd-block d-md-none d-lg-block';
+        break
+      case 'lg':
+        cls = 'd-block d-lg-none d-xl-block';
+        break
+      case 'xl':
+        cls = 'd-block d-xl-none';
+        break
+      case 'smDown':
+        cls = 'd-none d-md-block';
+        break
+      case 'mdDown':
+        cls = 'd-none d-lg-block';
+        break
+      case 'lgDown':
+        cls = 'd-none d-xl-block';
+        break
+      case 'smUp':
+        cls = 'd-block d-sm-none';
+        break
+      case 'mdUp':
+        cls = 'd-block d-md-none';
+        break
+      case 'lgUp':
+        cls = 'd-block d-lg-none';
+        break
     }
 
     el = document.createElement('div')
@@ -42,17 +64,39 @@ const App = (() => {
   }
 
   // Shorthand for Bootstrap breakPoint checker
-  function xs() { return breakPoint('xs') }
-  function sm() { return breakPoint('sm') }
-  function md() { return breakPoint('md') }
-  function lg() { return breakPoint('lg') }
-  function xl() { return breakPoint('xl') }
-  function smDown() { return breakPoint('smDown') }
-  function mdDown() { return breakPoint('mdDown') }
-  function lgDown() { return breakPoint('lgDown') }
-  function smUp() { return breakPoint('smUp') }
-  function mdUp() { return breakPoint('mdUp') }
-  function lgUp() { return breakPoint('lgUp') }
+  function xs() {
+    return breakPoint('xs')
+  }
+  function sm() {
+    return breakPoint('sm')
+  }
+  function md() {
+    return breakPoint('md')
+  }
+  function lg() {
+    return breakPoint('lg')
+  }
+  function xl() {
+    return breakPoint('xl')
+  }
+  function smDown() {
+    return breakPoint('smDown')
+  }
+  function mdDown() {
+    return breakPoint('mdDown')
+  }
+  function lgDown() {
+    return breakPoint('lgDown')
+  }
+  function smUp() {
+    return breakPoint('smUp')
+  }
+  function mdUp() {
+    return breakPoint('mdUp')
+  }
+  function lgUp() {
+    return breakPoint('lgUp')
+  }
 
   // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
   let vh = window.innerHeight * 0.01
@@ -209,7 +253,7 @@ const App = (() => {
       if (e.target.closest('#navSection')) {
         const target = document.querySelector(e.target.getAttribute('href'))
         const y = target.getBoundingClientRect().top + window.pageYOffset - ((document.body.dataset.offset || 140) - 1)
-        window.scrollTo({ top: y, behavior: 'smooth' })
+        window.scrollTo({top: y, behavior: 'smooth'})
         e.preventDefault()
       }
     })
@@ -219,12 +263,12 @@ const App = (() => {
   function accordionActive() {
     $('.collapse.show[data-parent]').closest('.card').addClass('active')
     $(document)
-      .on('show.bs.collapse', '.collapse[data-parent]', function () {
-        $(this).closest('.card').addClass('active')
-      })
-      .on('hide.bs.collapse', '.collapse[data-parent]', function () {
-        $(this).closest('.card').removeClass('active')
-      })
+            .on('show.bs.collapse', '.collapse[data-parent]', function () {
+              $(this).closest('.card').addClass('active')
+            })
+            .on('hide.bs.collapse', '.collapse[data-parent]', function () {
+              $(this).closest('.card').removeClass('active')
+            })
   }
 
   // Dropdown hover
@@ -244,7 +288,7 @@ const App = (() => {
   // Table with check all & bulk action
   function checkAll() {
     if (document.querySelectorAll('.has-checkAll').length) {
-      const activeTr= 'table-active'
+      const activeTr = 'table-active'
       for (const el of document.querySelectorAll('.has-checkAll')) {
         const thCheckbox = el.querySelector('th input[type="checkbox"]')
         const tdCheckbox = el.querySelectorAll('tr > td:first-child input[type="checkbox"]')
@@ -341,8 +385,8 @@ const App = (() => {
   function featherIcon() {
     feather.replace()
     const observer = new MutationObserver(() => feather.replace())
-    observer.observe(document.querySelector('.main'), { childList: true, subtree: true, })
-    observer.observe(document.querySelector('.sidebar'), { childList: true, subtree: true, })
+    observer.observe(document.querySelector('.main'), {childList: true, subtree: true, })
+    observer.observe(document.querySelector('.sidebar'), {childList: true, subtree: true, })
   }
 
   // Togle Todo item done
@@ -390,10 +434,18 @@ const App = (() => {
     const iconInfo = '<svg class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="21" height="21"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>'
     let icon = ''
     switch (option.icon) {
-      case 'success': icon = iconSuccess; break;
-      case 'warning': icon = iconWarning; break;
-      case 'error': icon = iconError; break;
-      default: icon = iconInfo; break;
+      case 'success':
+        icon = iconSuccess;
+        break;
+      case 'warning':
+        icon = iconWarning;
+        break;
+      case 'error':
+        icon = iconError;
+        break;
+      default:
+        icon = iconInfo;
+        break;
     }
 
     const toast = `
@@ -482,7 +534,7 @@ const App = (() => {
     }
 
     for (const el of document.querySelectorAll('select.bs-select')) {
-      let config = { style: 'btn' }
+      let config = {style: 'btn'}
 
       // creatable
       if (el.dataset.bsSelectCreatable === 'true') {
@@ -658,29 +710,29 @@ const observer = new MutationObserver(() => {
   $('[data-toggle="tooltip"]').tooltip()
 })
 if (document.querySelector('.main')) {
-  observer.observe(document.querySelector('.main'), { childList: true, subtree: true, })
-  observer.observe(document.querySelector('.sidebar'), { childList: true, subtree: true, })
+  observer.observe(document.querySelector('.main'), {childList: true, subtree: true, })
+  observer.observe(document.querySelector('.sidebar'), {childList: true, subtree: true, })
 }
 
 // Sample colors
-const blue   = App.color('blue')
+const blue = App.color('blue')
 const indigo = App.color('indigo')
 const purple = App.color('purple')
-const pink   = App.color('pink')
-const red    = App.color('red')
+const pink = App.color('pink')
+const red = App.color('red')
 const orange = App.color('orange')
 const yellow = App.color('yellow')
-const green  = App.color('green')
-const teal   = App.color('teal')
-const cyan   = App.color('cyan')
-const gray   = App.color('gray')
-const lime   = '#cddc39'
+const green = App.color('green')
+const teal = App.color('teal')
+const cyan = App.color('cyan')
+const gray = App.color('gray')
+const lime = '#cddc39'
 
 // This is for development, attach breakpoint to document title
 /* App.resize(() => {
-  if (App.xs()) { document.title = 'xs' }
-  if (App.sm()) { document.title = 'sm' }
-  if (App.md()) { document.title = 'md' }
-  if (App.lg()) { document.title = 'lg' }
-  if (App.xl()) { document.title = 'xl' }
-})() */
+ if (App.xs()) { document.title = 'xs' }
+ if (App.sm()) { document.title = 'sm' }
+ if (App.md()) { document.title = 'md' }
+ if (App.lg()) { document.title = 'lg' }
+ if (App.xl()) { document.title = 'xl' }
+ })() */

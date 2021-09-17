@@ -28,128 +28,128 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private UsersDao usersDao;
+  @Autowired
+  private UsersDao usersDao;
 
-    @Autowired
-    private UsersRepository usersRepository;
+  @Autowired
+  private UsersRepository usersRepository;
 
-    @Autowired
-    private RolesRepository rolesRepository;
+  @Autowired
+  private RolesRepository rolesRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Override
-    public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
+  @Override
+  public ObjCollection<UserEntity> getUsers(Integer page, Integer limit, UserFilter filter) {
 
-        return usersDao.getUsers(page, limit, filter);
+    return usersDao.getUsers(page, limit, filter);
+  }
+
+  @Override
+  public UserEntity getUserByEmail(String email) {
+
+    return usersRepository.findByEmail(email);
+  }
+
+  @Override
+  public UserEntity getUserByUserId(String userId) {
+
+    return usersRepository.findByUserId(userId);
+  }
+
+  @Override
+  public UserEntity createUser(SignupModel signupModel) {
+
+    UserEntity user = new UserEntity();
+    user.setUserId(UUID.randomUUID().toString());
+    user.setFirstName(signupModel.getFirstName());
+    user.setLastName(signupModel.getLastName());
+    user.setEmail(signupModel.getEmail());
+
+    String encodedPassword = passwordEncoder.encode(signupModel.getPassword());
+
+    user.setPassword(encodedPassword);
+
+    List<RoleEntity> roles = new ArrayList<>();
+
+    RoleEntity userRole = rolesRepository.findByRolename(Roles.USER.getRole());
+
+    roles.add(userRole);
+
+    user.setRoles(roles);
+
+    return usersRepository.save(user);
+  }
+
+  @Override
+  public Long getUsersCountByRole(String rolename) {
+
+    return usersDao.getUsersCountByRole(rolename);
+  }
+
+  @Override
+  public UserEntity addRole(String userId, Roles role) throws Exception {
+    UserEntity user = usersRepository.findByUserId(userId);
+
+    if (user == null) {
+      throw new Exception("User with ID " + userId + " not found!");
     }
 
-    @Override
-    public UserEntity getUserByEmail(String email) {
+    RoleEntity newRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
 
-        return usersRepository.findByEmail(email);
+    user.getRoles().add(newRole);
+
+    return usersRepository.save(user);
+  }
+
+  @Override
+  public UserEntity removeRole(String userId, Roles role) throws Exception {
+    UserEntity user = usersRepository.findByUserId(userId);
+
+    if (user == null) {
+      throw new Exception("User with ID " + userId + " not found!");
     }
 
-    @Override
-    public UserEntity getUserByUserId(String userId) {
+    RoleEntity storedRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
 
-        return usersRepository.findByUserId(userId);
+    List<RoleEntity> userRoles = user.getRoles();
+
+    for (int i = 0; i < userRoles.size(); i++) {
+      if (userRoles.get(i).getRolename().equals(storedRole.getRolename())) {
+        userRoles.remove(i);
+      }
     }
 
-    @Override
-    public UserEntity createUser(SignupModel signupModel) {
+    user.setRoles(userRoles);
 
-        UserEntity user = new UserEntity();
-        user.setUserId(UUID.randomUUID().toString());
-        user.setFirstName(signupModel.getFirstName());
-        user.setLastName(signupModel.getLastName());
-        user.setEmail(signupModel.getEmail());
+    return usersRepository.save(user);
+  }
 
-        String encodedPassword = passwordEncoder.encode(signupModel.getPassword());
+  @Override
+  public boolean isUserExistByEmail(String email) {
 
-        user.setPassword(encodedPassword);
+    return usersRepository.findByEmail(email) != null;
+  }
 
-        List<RoleEntity> roles = new ArrayList<>();
+  @Override
+  public boolean isPasswordMatch(String userId, String password) {
 
-        RoleEntity userRole = rolesRepository.findByRolename(Roles.USER.getRole());
+    UserEntity storedUser = usersRepository.findByUserId(userId);
 
-        roles.add(userRole);
+    return passwordEncoder.matches(password, storedUser.getPassword());
+  }
 
-        user.setRoles(roles);
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserEntity user = usersRepository.findByEmail(email);
 
-        return usersRepository.save(user);
+    if (user == null) {
+      throw new UsernameNotFoundException(email);
     }
 
-    @Override
-    public Long getUsersCountByRole(String rolename) {
-
-        return usersDao.getUsersCountByRole(rolename);
-    }
-
-    @Override
-    public UserEntity addRole(String userId, Roles role) throws Exception {
-        UserEntity user = usersRepository.findByUserId(userId);
-
-        if (user == null) {
-            throw new Exception("User with ID " + userId + " not found!");
-        }
-
-        RoleEntity newRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
-
-        user.getRoles().add(newRole);
-
-        return usersRepository.save(user);
-    }
-
-    @Override
-    public UserEntity removeRole(String userId, Roles role) throws Exception {
-        UserEntity user = usersRepository.findByUserId(userId);
-
-        if (user == null) {
-            throw new Exception("User with ID " + userId + " not found!");
-        }
-
-        RoleEntity storedRole = rolesRepository.findByRolename(role.getRole().toUpperCase());
-
-        List<RoleEntity> userRoles = user.getRoles();
-
-        for (int i = 0; i < userRoles.size(); i++) {
-            if (userRoles.get(i).getRolename().equals(storedRole.getRolename())) {
-                userRoles.remove(i);
-            }
-        }
-
-        user.setRoles(userRoles);
-
-        return usersRepository.save(user);
-    }
-
-    @Override
-    public boolean isUserExistByEmail(String email) {
-
-        return usersRepository.findByEmail(email) != null;
-    }
-
-    @Override
-    public boolean isPasswordMatch(String userId, String password) {
-
-        UserEntity storedUser = usersRepository.findByUserId(userId);
-
-        return passwordEncoder.matches(password, storedUser.getPassword());
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserEntity user = usersRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new UsernameNotFoundException(email);
-        }
-
-        return user;
-    }
+    return user;
+  }
 }

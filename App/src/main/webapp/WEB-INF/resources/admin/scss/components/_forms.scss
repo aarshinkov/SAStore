@@ -19,53 +19,53 @@
   }
 }
 // Icon top position ==============================================================================
-  .input-icon > svg { top: 8px }
-  .input-icon.input-icon-sm > svg { top: 6px }
-  .input-icon.input-icon-lg > svg { top: 10px }
-  // material icons
-  .input-icon > i.material-icons { top: 7px }
-  .input-icon.input-icon-sm > i.material-icons { top: 5px }
-  .input-icon.input-icon-lg > i.material-icons { top: 9px }
-  // fontawesome
-  .input-icon > i[class^="fa"] { top: 11px }
-  .input-icon.input-icon-sm > i[class^="fa"] { top: 9px }
-  .input-icon.input-icon-lg > i[class^="fa"] { top: 15px }
+.input-icon > svg { top: 8px }
+.input-icon.input-icon-sm > svg { top: 6px }
+.input-icon.input-icon-lg > svg { top: 10px }
+// material icons
+.input-icon > i.material-icons { top: 7px }
+.input-icon.input-icon-sm > i.material-icons { top: 5px }
+.input-icon.input-icon-lg > i.material-icons { top: 9px }
+// fontawesome
+.input-icon > i[class^="fa"] { top: 11px }
+.input-icon.input-icon-sm > i[class^="fa"] { top: 9px }
+.input-icon.input-icon-lg > i[class^="fa"] { top: 15px }
 
 // Icon left position =============================================================================
-  .input-icon:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x }
-  .input-icon.input-icon-sm:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x-sm }
-  .input-icon.input-icon-lg:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x-lg }
-  // material icons
-  .input-icon:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x }
-  .input-icon.input-icon-sm:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x-sm }
-  .input-icon.input-icon-lg:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x-lg }
-  // fontawesome
-  .input-icon:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x }
-  .input-icon.input-icon-sm:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x-sm }
-  .input-icon.input-icon-lg:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x-lg }
+.input-icon:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x }
+.input-icon.input-icon-sm:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x-sm }
+.input-icon.input-icon-lg:not(.input-icon-right) > svg { left: (1/1.3321492007) * $input-padding-x-lg }
+// material icons
+.input-icon:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x }
+.input-icon.input-icon-sm:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x-sm }
+.input-icon.input-icon-lg:not(.input-icon-right) > i.material-icons { left: (2/3) * $input-padding-x-lg }
+// fontawesome
+.input-icon:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x }
+.input-icon.input-icon-sm:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x-sm }
+.input-icon.input-icon-lg:not(.input-icon-right) > i[class^="fa"] { left: (2/2.4) * $input-padding-x-lg }
 
 // Input padding-left =============================================================================
-  .input-icon:not(.input-icon-right) > .form-control { padding-left: calc(#{$input-padding-x} + 1.5em) }
-  .input-icon.input-icon-sm:not(.input-icon-right) > .form-control-sm { padding-left: calc(#{$input-padding-x-sm} + 1.5em) }
-  .input-icon.input-icon-lg:not(.input-icon-right) > .form-control-lg { padding-left: calc(#{$input-padding-x-lg} + 1.5em) }
+.input-icon:not(.input-icon-right) > .form-control { padding-left: calc(#{$input-padding-x} + 1.5em) }
+.input-icon.input-icon-sm:not(.input-icon-right) > .form-control-sm { padding-left: calc(#{$input-padding-x-sm} + 1.5em) }
+.input-icon.input-icon-lg:not(.input-icon-right) > .form-control-lg { padding-left: calc(#{$input-padding-x-lg} + 1.5em) }
 
 // Icon right position
-  .input-icon.input-icon-right > svg { right: (1/1.3321492007) * $input-padding-x }
-  .input-icon.input-icon-right.input-icon-sm > svg { right: (1/1.3321492007) * $input-padding-x-sm }
-  .input-icon.input-icon-right.input-icon-lg > svg { right: (1/1.3321492007) * $input-padding-x-lg }
-  // material icons
-  .input-icon.input-icon-right > i.material-icons { right: (2/3) * $input-padding-x }
-  .input-icon.input-icon-right.input-icon-sm > i.material-icons { right: (2/3) * $input-padding-x-sm }
-  .input-icon.input-icon-right.input-icon-lg > i.material-icons { right: (2/3) * $input-padding-x-lg }
-  // fontawesome
-  .input-icon.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x }
-  .input-icon.input-icon-sm.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x-sm }
-  .input-icon.input-icon-lg.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x-lg }
+.input-icon.input-icon-right > svg { right: (1/1.3321492007) * $input-padding-x }
+.input-icon.input-icon-right.input-icon-sm > svg { right: (1/1.3321492007) * $input-padding-x-sm }
+.input-icon.input-icon-right.input-icon-lg > svg { right: (1/1.3321492007) * $input-padding-x-lg }
+// material icons
+.input-icon.input-icon-right > i.material-icons { right: (2/3) * $input-padding-x }
+.input-icon.input-icon-right.input-icon-sm > i.material-icons { right: (2/3) * $input-padding-x-sm }
+.input-icon.input-icon-right.input-icon-lg > i.material-icons { right: (2/3) * $input-padding-x-lg }
+// fontawesome
+.input-icon.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x }
+.input-icon.input-icon-sm.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x-sm }
+.input-icon.input-icon-lg.input-icon-right > i[class^="fa"] { right: (2/2.4) * $input-padding-x-lg }
 
 // Input padding-right
-  .input-icon.input-icon-right > .form-control { padding-right: calc(#{$input-padding-x} + 1.5em) }
-  .input-icon.input-icon-right.input-icon-sm > .form-control-sm { padding-right: calc(#{$input-padding-x-sm} + 1.5em) }
-  .input-icon.input-icon-right.input-icon-lg > .form-control-lg { padding-right: calc(#{$input-padding-x-lg} + 1.5em) }
+.input-icon.input-icon-right > .form-control { padding-right: calc(#{$input-padding-x} + 1.5em) }
+.input-icon.input-icon-right.input-icon-sm > .form-control-sm { padding-right: calc(#{$input-padding-x-sm} + 1.5em) }
+.input-icon.input-icon-right.input-icon-lg > .form-control-lg { padding-right: calc(#{$input-padding-x-lg} + 1.5em) }
 
 // Floating Labels
 .floating-label {
@@ -99,7 +99,7 @@
       opacity: 0;
     }
     &:focus,
-    &:not(:placeholder-shown) {
+      &:not(:placeholder-shown) {
       padding-top: 1.25rem;
       padding-bottom: .25rem;
       ~ label {
@@ -126,7 +126,7 @@
         padding-left: calc(#{$input-padding-x} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-left: calc(#{$input-padding-x} + 2.25em + 9px);
       }
     }
@@ -136,7 +136,7 @@
         padding-right: calc(#{$input-padding-x} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-right: calc(#{$input-padding-x} + 2.25em + 9px);
       }
     }
@@ -151,7 +151,7 @@
   }
   > .form-control {
     &:focus,
-    &:not(:placeholder-shown) {
+      &:not(:placeholder-shown) {
       padding-top: calc(1.25rem - 0.125rem);
       padding-bottom: calc(.25rem - 0.125rem);
       ~ label {
@@ -171,7 +171,7 @@
         padding-left: calc(#{$input-padding-x-sm} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-left: calc(#{$input-padding-x-sm} + 2.25em + 9px);
       }
     }
@@ -181,7 +181,7 @@
         padding-right: calc(#{$input-padding-x-sm} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-right: calc(#{$input-padding-x-sm} + 2.25em + 9px);
       }
     }
@@ -196,7 +196,7 @@
   }
   > .form-control {
     &:focus,
-    &:not(:placeholder-shown) {
+      &:not(:placeholder-shown) {
       padding-top: calc(1.25rem + 0.125rem);
       padding-bottom: calc(.25rem + 0.125rem);
       ~ label {
@@ -213,7 +213,7 @@
         padding-left: calc(#{$input-padding-x-lg} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-left: calc(#{$input-padding-x-lg} + 2.25em + 12px);
       }
     }
@@ -223,7 +223,7 @@
         padding-right: calc(#{$input-padding-x-lg} + 2.25em);
       }
       > .form-control:focus ~ label,
-      > .form-control:not(:placeholder-shown) ~ label {
+        > .form-control:not(:placeholder-shown) ~ label {
         padding-right: calc(#{$input-padding-x-lg} + 2.25em + 12px);
       }
     }

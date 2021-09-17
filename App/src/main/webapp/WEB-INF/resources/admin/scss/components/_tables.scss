@@ -51,7 +51,7 @@
 }
 .has-checkAll {
   > thead > tr:last-child > th:first-child,
-  > tbody > tr:not(.detail-row) > td:first-child {
+    > tbody > tr:not(.detail-row) > td:first-child {
     width: 31px;
     text-align: center;
   }

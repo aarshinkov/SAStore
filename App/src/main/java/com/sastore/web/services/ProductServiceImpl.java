@@ -23,84 +23,84 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private ProductsDao productsDao;
+  @Autowired
+  private ProductsDao productsDao;
 
-    @Autowired
-    private ProductsRepository productsRepository;
+  @Autowired
+  private ProductsRepository productsRepository;
 
-    @Autowired
-    private ProductImagesRepository productImagesRepository;
+  @Autowired
+  private ProductImagesRepository productImagesRepository;
 
-    @Override
-    public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
+  @Override
+  public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
 
-        return productsDao.getProducts(page, limit, filter);
-    }
+    return productsDao.getProducts(page, limit, filter);
+  }
 
-    @Override
-    public ProductEntity getProductByProductId(Long productId) {
-        return productsRepository.findByProductId(productId);
-    }
+  @Override
+  public ProductEntity getProductByProductId(Long productId) {
+    return productsRepository.findByProductId(productId);
+  }
 
-    @Override
-    public ProductEntity createProduct(ProductCreateModel pcm) throws Exception {
+  @Override
+  public ProductEntity createProduct(ProductCreateModel pcm) throws Exception {
 
-        ProductEntity product = new ProductEntity();
-        product.setTitle(pcm.getTitle());
-        product.setPrice(pcm.getPrice());
-        product.setAvailableQuantity(pcm.getAvailableQuantity());
-        product.setDescription(pcm.getDescription());
+    ProductEntity product = new ProductEntity();
+    product.setTitle(pcm.getTitle());
+    product.setPrice(pcm.getPrice());
+    product.setAvailableQuantity(pcm.getAvailableQuantity());
+    product.setDescription(pcm.getDescription());
 
-        ProductEntity createdProduct = productsRepository.save(product);
+    ProductEntity createdProduct = productsRepository.save(product);
 
-        return createdProduct;
-    }
+    return createdProduct;
+  }
 
-    @Override
-    public void approveProduct(Long productId) throws Exception {
-        ProductEntity product = productsRepository.findByProductId(productId);
-        product.setStatus(ProductStatuses.ACTIVE.getStatus());
-        product.setApprovedOn(new Timestamp(System.currentTimeMillis()));
+  @Override
+  public void approveProduct(Long productId) throws Exception {
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setStatus(ProductStatuses.ACTIVE.getStatus());
+    product.setApprovedOn(new Timestamp(System.currentTimeMillis()));
 
-        productsRepository.save(product);
-    }
+    productsRepository.save(product);
+  }
 
-    @Override
-    public void deactivateProduct(Long productId) throws Exception {
-        ProductEntity product = productsRepository.findByProductId(productId);
-        product.setStatus(ProductStatuses.INACTIVE.getStatus());
-        product.setEditedOn(new Timestamp(System.currentTimeMillis()));
+  @Override
+  public void deactivateProduct(Long productId) throws Exception {
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setStatus(ProductStatuses.INACTIVE.getStatus());
+    product.setEditedOn(new Timestamp(System.currentTimeMillis()));
 
-        productsRepository.save(product);
-    }
+    productsRepository.save(product);
+  }
 
-    @Override
-    public void deleteProduct(Long productId) throws Exception {
-        ProductEntity product = productsRepository.findByProductId(productId);
-        product.setStatus(ProductStatuses.DELETED.getStatus());
-        product.setEditedOn(new Timestamp(System.currentTimeMillis()));
+  @Override
+  public void deleteProduct(Long productId) throws Exception {
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setStatus(ProductStatuses.DELETED.getStatus());
+    product.setEditedOn(new Timestamp(System.currentTimeMillis()));
 
-        productsRepository.save(product);
-    }
+    productsRepository.save(product);
+  }
 
-    @Override
-    public void addImage(FileName file, Long productId) throws Exception {
+  @Override
+  public void addImage(FileName file, Long productId) throws Exception {
 
-        ProductImageEntity pi = new ProductImageEntity();
-        pi.setImageId(file.getFullName());
+    ProductImageEntity pi = new ProductImageEntity();
+    pi.setImageId(file.getFullName());
 
-        //TODO implement is main logic
-        pi.setIsMain(true);
+    //TODO implement is main logic
+    pi.setIsMain(true);
 
-        ProductEntity product = productsRepository.findByProductId(productId);
-        product.setMainImage(file.getFullName());
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setMainImage(file.getFullName());
 
-        pi.setProduct(product);
+    pi.setProduct(product);
 
-        productImagesRepository.save(pi);
-        productsRepository.save(product);
-    }
+    productImagesRepository.save(pi);
+    productsRepository.save(product);
+  }
 }

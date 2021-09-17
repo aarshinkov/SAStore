@@ -13,11 +13,11 @@ $label-color: rgba(#fff,.4);
   }
   .logo,
   .nav-link:hover,
-  .nav-link.active {
+    .nav-link.active {
     color: $link-active-color;
   }
   .nav-link:hover,
-  .nav-link.active {
+    .nav-link.active {
     background-color: $link-active-bg;
   }
   .nav-link.active {
@@ -27,7 +27,7 @@ $label-color: rgba(#fff,.4);
     color: $label-color;
   }
   .treeview ul .nav-link:hover,
-  .treeview ul .nav-link.active {
+    .treeview ul .nav-link.active {
     background-color: transparent;
     box-shadow: none;
   }
@@ -43,9 +43,9 @@ $label-color: rgba(#fff,.4);
     background-color: transparent;
   }
   [data-scroll]:hover,
-  [data-scroll]:focus,
-  .navbar-nav .nav-link:hover,
-  .navbar-nav .nav-link.active {
+    [data-scroll]:focus,
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
     color: $link-active-color;
     background-color: $link-active-bg;
   }

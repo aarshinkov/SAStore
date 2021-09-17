@@ -10,5 +10,5 @@ import com.sastore.web.filters.ProductFilter;
  */
 public interface ProductsDao {
 
-    ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
+  ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
 }

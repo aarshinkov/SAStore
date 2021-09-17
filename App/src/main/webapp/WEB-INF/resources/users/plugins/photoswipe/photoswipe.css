@@ -1,6 +1,6 @@
 /*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
 /*
-	Styles for basic PhotoSwipe functionality (sliding area, open/close transitions)
+    Styles for basic PhotoSwipe functionality (sliding area, open/close transitions)
 */
 /* pswp = photoswipe */
 .pswp {
@@ -18,11 +18,11 @@
   /* create separate layer, to avoid paint on window.onscroll in webkit/blink */
   -webkit-backface-visibility: hidden;
   outline: none; }
-  .pswp * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
-  .pswp img {
-    max-width: none; }
+.pswp * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+.pswp img {
+  max-width: none; }
 
 /* style is added when JS option showHideOpacity is set to true */
 .pswp--animate_opacity {
@@ -31,7 +31,7 @@
   will-change: opacity;
   /* for open/close transition */
   -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
-          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+  transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
 
 .pswp--open {
   display: block; }
@@ -55,8 +55,8 @@
   cursor: grabbing; }
 
 /*
-	Background is added as a separate element.
-	As animating opacity is much faster than animating rgba() background-color.
+    Background is added as a separate element.
+    As animating opacity is much faster than animating rgba() background-color.
 */
 .pswp__bg {
   position: absolute;
@@ -67,7 +67,7 @@
   background: #000;
   opacity: 0;
   -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   will-change: opacity; }
 
@@ -95,7 +95,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none; }
 
@@ -107,13 +107,13 @@
   transform-origin: left top;
   /* for open/close transition */
   -webkit-transition: -webkit-transform 333ms cubic-bezier(0.4, 0, 0.22, 1);
-          transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+  transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }
 
 .pswp__bg {
   will-change: opacity;
   /* for open/close transition */
   -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
-          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+  transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
 
 .pswp--animated-in .pswp__bg,
 .pswp--animated-in .pswp__zoom-wrap {
@@ -140,15 +140,15 @@
   left: 0; }
 
 /*
-	stretched thumbnail or div placeholder element (see below)
-	style is added to avoid flickering in webkit/blink when layers overlap
+    stretched thumbnail or div placeholder element (see below)
+    style is added to avoid flickering in webkit/blink when layers overlap
 */
 .pswp__img--placeholder {
   -webkit-backface-visibility: hidden; }
 
 /*
-	div element that matches size of large image
-	large image loads on top of it
+    div element that matches size of large image
+    large image loads on top of it
 */
 .pswp__img--placeholder--blank {
   background: #222; }
@@ -160,8 +160,8 @@
   top: 0; }
 
 /*
-	Error message appears when image is not loaded
-	(JS option errorMsg controls markup)
+    Error message appears when image is not loaded
+    (JS option errorMsg controls markup)
 */
 .pswp__error-msg {
   position: absolute;

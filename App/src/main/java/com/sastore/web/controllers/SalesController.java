@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class SalesController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/sales")
-    public String sales(Model model) {
+  @GetMapping("/sales")
+  public String sales(Model model) {
 
-        model.addAttribute("globalMenu", "sales");
+    model.addAttribute("globalMenu", "sales");
 
-        return "admin/sales/sales";
-    }
+    return "admin/sales/sales";
+  }
 }

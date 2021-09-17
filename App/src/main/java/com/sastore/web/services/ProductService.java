@@ -12,17 +12,17 @@ import com.sastore.web.uploader.domain.FileName;
  */
 public interface ProductService {
 
-    ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
+  ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
 
-    ProductEntity getProductByProductId(Long productId);
+  ProductEntity getProductByProductId(Long productId);
 
-    ProductEntity createProduct(ProductCreateModel pcm) throws Exception;
+  ProductEntity createProduct(ProductCreateModel pcm) throws Exception;
 
-    void approveProduct(Long productId) throws Exception;
+  void approveProduct(Long productId) throws Exception;
 
-    void deactivateProduct(Long productId) throws Exception;
+  void deactivateProduct(Long productId) throws Exception;
 
-    void deleteProduct(Long productId) throws Exception;
+  void deleteProduct(Long productId) throws Exception;
 
-    void addImage(FileName file, Long productId) throws Exception;
+  void addImage(FileName file, Long productId) throws Exception;
 }

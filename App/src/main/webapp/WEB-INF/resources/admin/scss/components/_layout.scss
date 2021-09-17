@@ -12,8 +12,8 @@
     .sidebar {
       width: $sidebar-width-collapse;
       .show + ul { // Hide submenu
-        display: none;
-        height: 0;
+                   display: none;
+                   height: 0;
       }
       .nav-label {
         display: none; // Hide nav-label
@@ -21,8 +21,8 @@
       &:hover {
         width: $sidebar-width;
         .show + ul { // Show submenu on sidebar:hover
-          display: block;
-          height: auto;
+                     display: block;
+                     height: auto;
         }
         .nav-label {
           display: block; // Show nav-label on sidebar:hover
@@ -55,7 +55,7 @@
       border-right: 0 !important;
     }
     .sidebar-header [data-toggle="sidebar"] { // Show sidebar's toggler
-      display: flex;
+                                              display: flex;
     }
   }
 }

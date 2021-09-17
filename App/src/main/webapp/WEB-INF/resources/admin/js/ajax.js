@@ -50,10 +50,10 @@ App.loadPlugins = (plugins, scripts) => {
   }
 
   return Promise.all(loaded1)
-  .then(() => Promise.all(loaded2))
-  .then(text => jsPlugins.map((src, i) => createScript(src, text[i]))) // generate js plugins
-  .then(() => Promise.all(loaded3))
-  .then(text => scripts && scripts.map((src, i) => createScript(src, text[i], true))) // generate js scripts
+          .then(() => Promise.all(loaded2))
+          .then(text => jsPlugins.map((src, i) => createScript(src, text[i]))) // generate js plugins
+          .then(() => Promise.all(loaded3))
+          .then(text => scripts && scripts.map((src, i) => createScript(src, text[i], true))) // generate js scripts
 }
 
 // Show ajax loader
@@ -70,13 +70,13 @@ App.startLoading = () => {
 // Stop ajax loader
 App.stopLoading = () => {
   ajaxloader.style.display = 'none'
-  ajaxloader.classList.remove('loading','show')
+  ajaxloader.classList.remove('loading', 'show')
 }
 
 /*
-when you initiate a plugin on a page and then leave to another page,
-it may leave elements that need to be cleaned up manually before loading new page
-*/
+ when you initiate a plugin on a page and then leave to another page,
+ it may leave elements that need to be cleaned up manually before loading new page
+ */
 App.cleanScraps = () => {
   // remove all tags written by some plugins (popover, datepicker, limiterBox..)
   let ajaxJs = document.getElementById('ajax-js')
@@ -162,9 +162,11 @@ App.currentLinkParents = currentLink => {
   let parent = []
   while (target) {
     // Get only nav-link
-    if (target.classList.contains('nav-item')) parent.unshift(target.querySelector('.nav-link'))
+    if (target.classList.contains('nav-item'))
+      parent.unshift(target.querySelector('.nav-link'))
     // Stop on treeview
-    if (target.classList.contains('treeview')) break
+    if (target.classList.contains('treeview'))
+      break
     target = target.parentNode
   }
   return parent
@@ -198,9 +200,9 @@ App.updateMenuTop = currentLink => {
 // Get original menu name (clean <i>, <svg>, <span>)
 App.originalMenuName = dirty => {
   return dirty
-    .replace(/<i.*>.*?<\/i>/ig, '')
-    .replace(/<span.*>.*?<\/span>/ig, '')
-    .replace(/<svg.*>.*?<\/svg>/ig, '').trim()
+          .replace(/<i.*>.*?<\/i>/ig, '')
+          .replace(/<span.*>.*?<\/span>/ig, '')
+          .replace(/<svg.*>.*?<\/svg>/ig, '').trim()
 }
 
 // Generate breadcrumb
@@ -248,8 +250,8 @@ App.ajax = (config) => {
 
     // change page title from global var
     document.title = currentLink
-      ? App.originalMenuName(currentLink.innerHTML)
-      : document.title
+            ? App.originalMenuName(currentLink.innerHTML)
+            : document.title
 
   } else {
     // Load default url

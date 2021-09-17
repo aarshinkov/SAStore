@@ -15,30 +15,30 @@ import java.util.Properties;
  */
 public class Version extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private ServletContext context;
+  @Autowired
+  private ServletContext context;
 
-    private String CURRENT_VERSION = null;
+  private String CURRENT_VERSION = null;
 
-    public synchronized String getVersion() {
-        if (CURRENT_VERSION != null) {
-            CURRENT_VERSION = getMessage("footer.progress");
-        }
-
-        try {
-            if (context != null) {
-                InputStream is = context.getResourceAsStream("/META-INF/MANIFEST.MF");
-                Properties props = new Properties();
-                props.load(is);
-                CURRENT_VERSION = "v" + props.get("Implementation-Version") + " " + getMessage("footer.from") + " " + props.get("Implementation-Date");
-            }
-        } catch (Exception e) {
-            CURRENT_VERSION = getMessage("footer.progress");
-//      CURRENT_VERSION = "Work in progress...";
-        }
-
-        return CURRENT_VERSION;
+  public synchronized String getVersion() {
+    if (CURRENT_VERSION != null) {
+      CURRENT_VERSION = getMessage("footer.progress");
     }
+
+    try {
+      if (context != null) {
+        InputStream is = context.getResourceAsStream("/META-INF/MANIFEST.MF");
+        Properties props = new Properties();
+        props.load(is);
+        CURRENT_VERSION = "v" + props.get("Implementation-Version") + " " + getMessage("footer.from") + " " + props.get("Implementation-Date");
+      }
+    } catch (Exception e) {
+      CURRENT_VERSION = getMessage("footer.progress");
+//      CURRENT_VERSION = "Work in progress...";
+    }
+
+    return CURRENT_VERSION;
+  }
 }

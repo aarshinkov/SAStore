@@ -11,5 +11,5 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class CountController {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 }

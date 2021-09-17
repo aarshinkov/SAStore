@@ -6,7 +6,7 @@
   .nav-link {
     white-space: nowrap;
     &:not([data-scroll]) > i,
-    &:not([data-scroll]) > svg {
+      &:not([data-scroll]) > svg {
       margin-right: .25rem;
     }
   }

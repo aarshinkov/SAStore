@@ -16,23 +16,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    protected SecurityChecks sc;
+  @Autowired
+  protected SecurityChecks sc;
 
-    @Autowired
-    private MessageSource messageSource;
+  @Autowired
+  private MessageSource messageSource;
 
-    protected Boolean hasSpecialRole() {
-        return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole()) || sc.hasRole(Roles.ORDERS.getRole());
-    }
+  protected Boolean hasSpecialRole() {
+    return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole()) || sc.hasRole(Roles.ORDERS.getRole());
+  }
 
-    protected String getMessage(String key) {
-        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
-    }
+  protected String getMessage(String key) {
+    return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+  }
 
-    protected String getMessage(String key, Object... params) {
-        return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
-    }
+  protected String getMessage(String key, Object... params) {
+    return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
+  }
 }

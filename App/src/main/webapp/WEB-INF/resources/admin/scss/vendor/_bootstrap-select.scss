@@ -16,8 +16,8 @@
     }
   }
   &:not(.is-valid):not(.is-invalid) > .dropdown-toggle:not(:disabled):not(.disabled):focus,
-  &:not(.is-valid):not(.is-invalid) > .dropdown-toggle:not(:disabled):not(.disabled):active,
-  &.show:not(.is-valid):not(.is-invalid) > .dropdown-toggle {
+    &:not(.is-valid):not(.is-invalid) > .dropdown-toggle:not(:disabled):not(.disabled):active,
+    &.show:not(.is-valid):not(.is-invalid) > .dropdown-toggle {
     border-color: $custom-select-focus-border-color;
     background-color: $custom-select-bg;
   }
@@ -44,11 +44,11 @@
     right: 5px;
   }
   .bs-ok-default::after { // Select multiple check mark
-    content: '';
-    border: 0;
-    transform: none;
-    width: 18px;
-    background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black' width='18px' height='18px'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E");
+                          content: '';
+                          border: 0;
+                          transform: none;
+                          width: 18px;
+                          background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black' width='18px' height='18px'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E");
   }
   .no-results {
     padding: 3px 9px;
@@ -77,8 +77,8 @@
   }
   >.dropdown-toggle.bs-placeholder,
   >.dropdown-toggle.bs-placeholder:active,
-  >.dropdown-toggle.bs-placeholder:focus,
-  >.dropdown-toggle.bs-placeholder:hover {
+    >.dropdown-toggle.bs-placeholder:focus,
+    >.dropdown-toggle.bs-placeholder:hover {
     color: $text-muted; // placeholder
   }
 }

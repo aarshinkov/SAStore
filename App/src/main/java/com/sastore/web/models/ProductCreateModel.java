@@ -22,16 +22,16 @@ import lombok.ToString;
 @ToString
 public class ProductCreateModel implements Serializable {
 
-    @NotBlank
-    private String title;
+  @NotBlank
+  private String title;
 
-    @NotNull
-    private Double price;
+  @NotNull
+  private Double price;
 
-    @NotNull
-    @Min(0)
-    private Integer availableQuantity;
+  @NotNull
+  @Min(0)
+  private Integer availableQuantity;
 
-    @NotBlank
-    private String description;
+  @NotBlank
+  private String description;
 }

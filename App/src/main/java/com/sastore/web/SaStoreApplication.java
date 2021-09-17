@@ -16,29 +16,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class SaStoreApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SaStoreApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SaStoreApplication.class, args);
+  }
 
-    @Bean
-    public Version version() {
-        return new Version();
-    }
+  @Bean
+  public Version version() {
+    return new Version();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(12);
+  }
 
-    @Bean
-    public PasswordValidator passwordValidator() {
-        return new PasswordValidator();
-    }
+  @Bean
+  public PasswordValidator passwordValidator() {
+    return new PasswordValidator();
+  }
 
-    @Bean
-    public Uploader uploader() {
-        return new Uploader();
-    }
+  @Bean
+  public Uploader uploader() {
+    return new Uploader();
+  }
 
 //    @Bean
 //    public SecurityChecks securityChecks() {

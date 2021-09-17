@@ -10,15 +10,15 @@
   overflow: hidden;
   cursor: text;
   &.focus { // copied from form-control-focus mixin
-    color: $input-focus-color;
-    background-color: $input-focus-bg;
-    border-color: $input-focus-border-color;
-    outline: 0;
-    @if $enable-shadows {
-      box-shadow: $input-box-shadow, $input-focus-box-shadow;
-    } @else {
-      box-shadow: $input-focus-box-shadow;
-    }
+            color: $input-focus-color;
+            background-color: $input-focus-bg;
+            border-color: $input-focus-border-color;
+            outline: 0;
+            @if $enable-shadows {
+              box-shadow: $input-box-shadow, $input-focus-box-shadow;
+            } @else {
+              box-shadow: $input-focus-box-shadow;
+            }
   }
   .tagin.is-valid + &,
   .was-validated .tagin:valid + & {
