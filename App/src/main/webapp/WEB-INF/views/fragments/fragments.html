@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <body>
-        <div id="cartModalFragment" th:remove="tag">
-            <!-- CART MODAL -->
-            <div class="modal fade modal-content-right modal-cart" id="cartModal" tabindex="-1" role="dialog"
-                 aria-labelledby="cartModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom">
-                            <h5 class="modal-title" id="cartModalLabel">You have 4 items in your cart</h5>
-                            <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button" data-dismiss="modal">
-                                <i class="material-icons">close</i>
-                            </button>
-                        </div>
-                        <div class="modal-body scrollbar-width-thin">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0" th:each="i : ${#numbers.sequence(0, 4)}">
-                                    <div class="media">
-                                        <a href="#" class="mr-2">
-                                            <img src="https://www.artofbrilliance.co.uk/wp-content/uploads/2019/02/happy-tshirt-1.jpg" width="50" height="50" alt="Product"/>
-                                        </a>
-                                        <div class="media-body">
-                                            <a href="#" class="d-block text-body" title="Cotton Fleece Long Hoodie">
-                                                <span>Cotton Fleece Long Hoodie</span>
-                                            </a>
-                                            <div th:remove="tag">
-                                                <em class="text-muted" th:utext="#{cart.quantandprice('1', '2.99', #{currency.bgn})}">1 x $ 85.00</em>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-icon btn-sm btn-text-danger rounded-circle" type="button">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <div class="modal-footer border-top">
-                            <div class="mr-auto">
-                                <em>Subtotal</em>
-                                <h5 class="mb-0 text-dark font-weight-bold font-condensed" th:utext="#{cart.total(${#numbers.formatDecimal('34678.432', 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">235.32 lv.</h5>
-                            </div>
-                            <a th:href="@{/cart}" href="#" class="btn btn-faded-success">View Cart</a>
-                            <a th:href="@{/checkout}" href="#" class="btn btn-success">Checkout</a>
-                        </div>
-                    </div>
-                </div>
+  <body>
+    <div id="cartModalFragment" th:remove="tag">
+      <!-- CART MODAL -->
+      <div class="modal fade modal-content-right modal-cart" id="cartModal" tabindex="-1" role="dialog"
+           aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-bottom">
+              <h5 class="modal-title" id="cartModalLabel">You have 4 items in your cart</h5>
+              <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button" data-dismiss="modal">
+                <i class="material-icons">close</i>
+              </button>
             </div>
-            <!-- /CART MODAL -->
+            <div class="modal-body scrollbar-width-thin">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item px-0" th:each="i : ${#numbers.sequence(0, 4)}">
+                  <div class="media">
+                    <a href="#" class="mr-2">
+                      <img src="https://www.artofbrilliance.co.uk/wp-content/uploads/2019/02/happy-tshirt-1.jpg" width="50" height="50" alt="Product"/>
+                    </a>
+                    <div class="media-body">
+                      <a href="#" class="d-block text-body" title="Cotton Fleece Long Hoodie">
+                        <span>Cotton Fleece Long Hoodie</span>
+                      </a>
+                      <div th:remove="tag">
+                        <em class="text-muted" th:utext="#{cart.quantandprice('1', '2.99', #{currency.bgn})}">1 x $ 85.00</em>
+                      </div>
+                    </div>
+                    <button class="btn btn-icon btn-sm btn-text-danger rounded-circle" type="button">
+                      <i class="material-icons">close</i>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+            <div class="modal-footer border-top">
+              <div class="mr-auto">
+                <em>Subtotal</em>
+                <h5 class="mb-0 text-dark font-weight-bold font-condensed" th:utext="#{cart.total(${#numbers.formatDecimal('34678.432', 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">235.32 lv.</h5>
+              </div>
+              <a th:href="@{/cart}" href="#" class="btn btn-faded-success">View Cart</a>
+              <a th:href="@{/checkout}" href="#" class="btn btn-success">Checkout</a>
+            </div>
+          </div>
         </div>
-    </body>
+      </div>
+      <!-- /CART MODAL -->
+    </div>
+  </body>
 </html>

@@ -4,213 +4,213 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{templates/adminTemplate}">
-    <head>
-        <title th:text="#{app.title('Products')}">Products</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title('Products')}">Products</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <div class="row gutters-sm">
-                <div class="col-12 col-xl-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img th:src="@{/resources/img/default.jpg}" src="#" alt="Admin" th:if="${product.mainImage eq null}"
-                                     class="img-thumbnail" width="180"/>
-                                <img th:src="@{~/images/products/} + ${product.mainImage}" src="#" alt="Admin" th:if="${product.mainImage ne null}"
-                                     class="img-thumbnail" width="180"/>
-                                <div class="mt-3">
-                                    <h5 th:text="${product.title}">Product title</h5>
-                                    <div class="mb-2" th:if="${product.status eq 1}">
-                                        <div class="badge badge-pill badge-warning" th:text="#{product.status. + ${product.status}}"></div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle ml-2"
-                                             data-toggle="tooltip" data-placement="top" title="In order for a product to be approved, it must have at least one image.">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                        </svg>
-                                    </div>
-                                    <div class="mb-2 badge badge-pill" th:if="${product.status ne 1}"
-                                         th:classappend="${product.status eq 0} ? 'badge-success' : (${product.status eq 2} ? 'badge-secondary' : (${product.status eq 3} ? 'badge-danger'))"
-                                         th:text="#{product.status. + ${product.status}}"></div>
-                                    <div class="text-muted font-size-sm" th:text="#{product.id(${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')})}">ID</div>
-                                    <!--                                    <p th:text="${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')}"></p>-->
-                                    <!--<button class="btn btn-primary">Follow</button>-->
-                                    <!--<button class="btn btn-outline-primary">Message</button>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="row gutters-sm">
+        <div class="col-12 col-xl-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img th:src="@{/resources/img/default.jpg}" src="#" alt="Admin" th:if="${product.mainImage eq null}"
+                     class="img-thumbnail" width="180"/>
+                <img th:src="@{~/images/products/} + ${product.mainImage}" src="#" alt="Admin" th:if="${product.mainImage ne null}"
+                     class="img-thumbnail" width="180"/>
+                <div class="mt-3">
+                  <h5 th:text="${product.title}">Product title</h5>
+                  <div class="mb-2" th:if="${product.status eq 1}">
+                    <div class="badge badge-pill badge-warning" th:text="#{product.status. + ${product.status}}"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle ml-2"
+                         data-toggle="tooltip" data-placement="top" title="In order for a product to be approved, it must have at least one image.">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="mb-2 badge badge-pill" th:if="${product.status ne 1}"
+                       th:classappend="${product.status eq 0} ? 'badge-success' : (${product.status eq 2} ? 'badge-secondary' : (${product.status eq 3} ? 'badge-danger'))"
+                       th:text="#{product.status. + ${product.status}}"></div>
+                  <div class="text-muted font-size-sm" th:text="#{product.id(${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')})}">ID</div>
+                  <!--                                    <p th:text="${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')}"></p>-->
+                  <!--<button class="btn btn-primary">Follow</button>-->
+                  <!--<button class="btn btn-outline-primary">Message</button>-->
                 </div>
-                <div class="col-12 col-xl-8 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                    <h6 class="mb-0" th:text="#{product.price}">Price</h6>
-                                </div>
-                                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                                    <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                    <h6 class="mb-0" th:text="#{product.quantity}">Available quantity</h6>
-                                </div>
-                                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                                    <span th:text="#{quant(${#numbers.formatDecimal(product.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">10</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                    <h6 class="mb-0" th:text="#{product.addedOn}">Added on</h6>
-                                </div>
-                                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                                    <span th:text="${#dates.format(product.addedOn, #messages.msg('format.datetime4'))}"></span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                    <h6 class="mb-0" th:text="#{product.approvedOn}">Approved on</h6>
-                                </div>
-                                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                                    <span th:if="${product.approvedOn eq null}" th:text="#{product.approvedOn.empty}"></span>
-                                    <span th:if="${product.approvedOn ne null}" th:text="${#dates.format(product.approvedOn, #messages.msg('format.datetime4'))}"></span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                    <h6 class="mb-0" th:text="#{product.editedOn}">Edited on</h6>
-                                </div>
-                                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                                    <span th:if="${product.editedOn eq null}" th:text="#{product.editedOn.empty}"></span>
-                                    <span th:if="${product.editedOn ne null}" th:text="${#dates.format(product.editedOn, #messages.msg('format.datetime4'))}"></span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="d-flex">
-                                <div class="mr-auto"></div>
-                                <div sec:authorize="!hasRole('ADMIN')" th:if="${product.mainImage ne null or product.status eq 3}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle mr-3"
-                                         data-toggle="tooltip" data-placement="left" title="Only administrator could approve the product.">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                    </svg>
-                                </div>
-                                <form class="ml-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
-                                      th:if="${(product.mainImage ne null and product.approvedOn eq null) or product.status eq 3}">
-                                    <input type="hidden" name="productId" th:value="${product.productId}"/>
-                                    <button type="submit" class="btn btn-outline-success btn-sm ml-auto">
-                                        <i class="fas fa-check"></i>
-                                        <span>Approve</span>
-                                    </button>
-                                </form>
-                                <form class="ml-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
-                                    <input type="hidden" name="productId" th:value="${product.productId}"/>
-                                    <button type="submit" class="btn btn-outline-secondary btn-sm">
-                                        <i class="fas fa-times"></i>
-                                        <span>Deactivate</span>
-                                    </button>
-                                </form>
-                                <form class="ml-2" th:action="@{/admin/product/delete}" method="post" th:if="${product.status eq 0 or product.status eq 2}">
-                                    <input type="hidden" name="productId" th:value="${product.productId}"/>
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-            <div class="row gutters-sm">
-                <div class="col-12 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 th:text="#{product.description}">Description</h5>
-                            <hr/>
-                            <div th:utext="${product.description}"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row gutters-sm">
-                <div class="col-12 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-end">
-                                <h5 class="mb-0" th:text="#{product.images}">Images</h5>
-                                <a href="#" data-toggle="modal" data-target="#newImageModal" class="btn btn-success btn-sm ml-auto">
-                                    <i class="far fa-images"></i>
-                                    <span th:text="#{product.images.add}">Add image</span>
-                                </a>
-                            </div>
-                            <hr/>
-
-                            <div class="row">
-                                <div class="col-12" th:if="${product.mainImage eq null and product.approvedOn eq null}">
-                                    <h6>No images uploaded for this product yet.</h6>
-                                </div>
-                                <!--                                <div class="col-12 col-lg-2" data-toggle="modal"
-                                                                     data-target="#newImageModal" style="cursor: pointer;">
-                                                                    <img class="img-thumbnail" src="#" th:src="@{/resources/img/img_add.jpg}" alt="..."/>
-                                                                </div>-->
-                                <div class="col-12 col-lg-2" th:if="${product.mainImage ne null}">
-                                    <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${product.mainImage}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="newImageModal" tabindex="-1" role="dialog" aria-labelledby="newImageLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 id="modal-title-confirm" class="modal-title font-light fs--18">Adding image</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="fi fi-close fs--18" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <form th:action="@{/admin/products/image/new}" method="post" enctype="multipart/form-data">
-                            <div class="modal-body pt--30 pb--30">
-                                <div class="mb-4">Add image to product <b th:text="${product.title}"></b></div>
-
-                                <div class="form-group">
-                                    <!--<label class="col-form-label">Image</label>-->
-                                    <div class="input-group mb-3">
-                                        <div class="custom-file custom-file-primary">
-                                            <input name="file" type="file" class="custom-file-input" id="fileUploadInput"/>
-                                            <label class="custom-file-label" for="fileUploadInput">Choose image</label>
-                                        </div>
-                                        <input name="productId" type="hidden" th:value="${product.productId}"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-confirm-yes btn-sm btn-primary">
-                                    <i class="fas fa-save"></i>
-                                    <span>Save</span>
-                                </button>
-                                <a href="#" class="btn btn-confirm-no btn-sm btn-light" data-dismiss="modal">
-                                    <i class="fi fi-close"></i>
-                                    <span>Cancel</span>
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </body>
+        <div class="col-12 col-xl-8 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                  <h6 class="mb-0" th:text="#{product.price}">Price</h6>
+                </div>
+                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                  <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                  <h6 class="mb-0" th:text="#{product.quantity}">Available quantity</h6>
+                </div>
+                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                  <span th:text="#{quant(${#numbers.formatDecimal(product.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">10</span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                  <h6 class="mb-0" th:text="#{product.addedOn}">Added on</h6>
+                </div>
+                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                  <span th:text="${#dates.format(product.addedOn, #messages.msg('format.datetime4'))}"></span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                  <h6 class="mb-0" th:text="#{product.approvedOn}">Approved on</h6>
+                </div>
+                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                  <span th:if="${product.approvedOn eq null}" th:text="#{product.approvedOn.empty}"></span>
+                  <span th:if="${product.approvedOn ne null}" th:text="${#dates.format(product.approvedOn, #messages.msg('format.datetime4'))}"></span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                  <h6 class="mb-0" th:text="#{product.editedOn}">Edited on</h6>
+                </div>
+                <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                  <span th:if="${product.editedOn eq null}" th:text="#{product.editedOn.empty}"></span>
+                  <span th:if="${product.editedOn ne null}" th:text="${#dates.format(product.editedOn, #messages.msg('format.datetime4'))}"></span>
+                </div>
+              </div>
+              <hr/>
+              <div class="d-flex">
+                <div class="mr-auto"></div>
+                <div sec:authorize="!hasRole('ADMIN')" th:if="${product.mainImage ne null or product.status eq 3}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle mr-3"
+                       data-toggle="tooltip" data-placement="left" title="Only administrator could approve the product.">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <form class="ml-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:if="${(product.mainImage ne null and product.approvedOn eq null) or product.status eq 3}">
+                  <input type="hidden" name="productId" th:value="${product.productId}"/>
+                  <button type="submit" class="btn btn-outline-success btn-sm ml-auto">
+                    <i class="fas fa-check"></i>
+                    <span th:text="#{btn.approve}">Approve</span>
+                  </button>
+                </form>
+                <form class="ml-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
+                  <input type="hidden" name="productId" th:value="${product.productId}"/>
+                  <button type="submit" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-times"></i>
+                    <span th:text="#{btn.deactivate}">Deactivate</span>
+                  </button>
+                </form>
+                <form class="ml-2" th:action="@{/admin/product/delete}" method="post" th:if="${product.status eq 0 or product.status eq 2}">
+                  <input type="hidden" name="productId" th:value="${product.productId}"/>
+                  <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                    <span th:text="#{btn.delete}">Delete</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row gutters-sm">
+        <div class="col-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 th:text="#{product.description}">Description</h5>
+              <hr/>
+              <div th:utext="${product.description}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row gutters-sm">
+        <div class="col-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-end">
+                <h5 class="mb-0" th:text="#{product.images}">Images</h5>
+                <a href="#" data-toggle="modal" data-target="#newImageModal" class="btn btn-success btn-sm ml-auto">
+                  <i class="far fa-images"></i>
+                  <span th:text="#{product.images.add}">Add image</span>
+                </a>
+              </div>
+              <hr/>
+
+              <div class="row">
+                <div class="col-12" th:if="${product.mainImage eq null and product.approvedOn eq null}">
+                  <h6>No images uploaded for this product yet.</h6>
+                </div>
+                <!--                                <div class="col-12 col-lg-2" data-toggle="modal"
+                                                     data-target="#newImageModal" style="cursor: pointer;">
+                                                    <img class="img-thumbnail" src="#" th:src="@{/resources/img/img_add.jpg}" alt="..."/>
+                                                </div>-->
+                <div class="col-12 col-lg-2" th:if="${product.mainImage ne null}">
+                  <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${product.mainImage}"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="newImageModal" tabindex="-1" role="dialog" aria-labelledby="newImageLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="modal-title-confirm" class="modal-title font-light fs--18">Adding image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="fi fi-close fs--18" aria-hidden="true"></span>
+              </button>
+            </div>
+            <form th:action="@{/admin/products/image/new}" method="post" enctype="multipart/form-data">
+              <div class="modal-body pt--30 pb--30">
+                <div class="mb-4">Add image to product <b th:text="${product.title}"></b></div>
+
+                <div class="form-group">
+                  <!--<label class="col-form-label">Image</label>-->
+                  <div class="input-group mb-3">
+                    <div class="custom-file custom-file-primary">
+                      <input name="file" type="file" class="custom-file-input" id="fileUploadInput"/>
+                      <label class="custom-file-label" for="fileUploadInput">Choose image</label>
+                    </div>
+                    <input name="productId" type="hidden" th:value="${product.productId}"/>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-confirm-yes btn-sm btn-primary">
+                  <i class="fas fa-save"></i>
+                  <span>Save</span>
+                </button>
+                <a href="#" class="btn btn-confirm-no btn-sm btn-light" data-dismiss="modal">
+                  <i class="fi fi-close"></i>
+                  <span>Cancel</span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

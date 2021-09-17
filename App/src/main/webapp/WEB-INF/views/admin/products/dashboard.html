@@ -3,118 +3,118 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/adminTemplate}">
-    <head>
-        <title th:text="#{app.title('Products')}">Products</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title(#{products.title})}">Products</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <div class="row gutters-sm">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-end">
-                                <h5 class="mb-0">Search</h5>
-                                <a th:href="@{/admin/products/new}" href="#" class="btn btn-sm btn-outline-success ml-auto">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Add product</span>
-                                </a>
-                            </div>
-                            <hr/>
+      <div class="row gutters-sm">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-end">
+                <h5 class="mb-0" th:text="#{products.search.header}">Search</h5>
+                <a th:href="@{/admin/products/new}" href="#" class="btn btn-sm btn-outline-success ml-auto">
+                  <i class="fas fa-plus"></i>
+                  <span th:text="#{products.search.addproduct}">Add product</span>
+                </a>
+              </div>
+              <hr/>
 
-                            <form th:action="@{/admin/products}" action="#" method="GET" th:object="${filter}">
-                                <div class="form-row">
-                                    <div class="form-group col-12 col-md-4">
-                                        <label>Product ID</label>
-                                        <input type="number" class="form-control form-control-sm" th:field="*{productId}" autofocus="autofocus"/>
-                                    </div>
-                                    <div class="form-group col-12 col-md-4">
-                                        <label>Title</label>
-                                        <input type="text" class="form-control form-control-sm" th:field="*{title}"/>
-                                    </div>
-                                    <div class="form-group col-12 col-md-4">
-                                        <label>Products per page</label>
-                                        <select class="form-control form-control-sm" name="limit">
-                                            <option value="5" th:selected="${limit eq 5}">5</option>
-                                            <option value="10" th:selected="${limit eq 10}">10</option>
-                                            <option value="20" th:selected="${limit eq 20}">20</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                                <a th:href="@{/admin/products}" href="#" class="btn btn-outline-dark btn-sm">Clear</a>
-                            </form>
-                            <hr/>
-
-                            <h5 th:text="#{products.search.nofound}" th:if="${#lists.size(products.collection) eq 0}">No users found</h5>
-
-                            <div th:remove="tag" th:if="${#lists.size(products.collection) ne 0}">
-
-                                <div class="d-flex">
-                                    <h5 th:text="#{products.search.count(${#numbers.formatDecimal(#lists.size(products.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Products</h5>
-
-                                    <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
-                                        <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
-                                        <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
-                                        <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
-                                            <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
-                                            <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">Views</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Added on</th>
-                                                <th scope="col">Approved on</th>
-                                                <th scope="col">Edited on</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="p : ${products.collection}">
-                                                <td>
-                                                    <a class="text-decoration-underline" href="#" th:href="@{/admin/product/} + ${p.productId}" th:text="${p.productId}">1</a>
-                                                </td>
-                                                <td th:text="${p.title}">Product 1</td>
-                                                <td>
-                                                    <span th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
-                                                </td>
-                                                <td th:text="#{quant(${#numbers.formatDecimal(p.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">23</td>
-                                                <td th:text="${#numbers.formatDecimal(p.views, 1, 'WHITESPACE', 0, 'DEFAULT')}">44</td>
-                                                <td>
-                                                    <span class="badge badge-pill" th:classappend="${p.status eq 0} ? 'badge-success' : (${p.status eq 1} ? 'badge-warning' : (${p.status eq 2} ? 'badge-secondary' : (${p.status eq 3} ? 'badge-danger')))"
-                                                          th:text="#{product.status. + ${p.status}}"></span>
-                                                </td>
-                                                <td>
-                                                    <span th:text="${#dates.format(p.addedOn, #messages.msg('format.datetime4'))}"></span>
-                                                </td>
-                                                <td>
-                                                    <span th:if="${p.approvedOn ne null}" th:text="${#dates.format(p.approvedOn, #messages.msg('format.datetime4'))}">Approved on</span>
-                                                    <i th:if="${p.approvedOn eq null}" th:text="#{product.approvedOn.empty}">Not approved yet</i>
-                                                </td>
-                                                <td>
-                                                    <span th:if="${p.editedOn ne null}" th:text="${#dates.format(p.editedOn, #messages.msg('format.datetime4'))}">Edited on</span>
-                                                    <i th:if="${p.editedOn eq null}" th:text="#{product.editedOn.empty}">Not edited yet</i>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
-                            </div>
-                        </div>
-                    </div>
+              <form th:action="@{/admin/products}" action="#" method="GET" th:object="${filter}">
+                <div class="form-row">
+                  <div class="form-group col-12 col-md-4">
+                    <label th:text="#{products.search.productid}">Product ID</label>
+                    <input type="number" class="form-control form-control-sm" th:field="*{productId}" autofocus="autofocus"/>
+                  </div>
+                  <div class="form-group col-12 col-md-4">
+                    <label th:text="#{products.search.title}">Title</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{title}"/>
+                  </div>
+                  <div class="form-group col-12 col-md-4">
+                    <label th:text="#{products.search.productsperpage}">Products per page</label>
+                    <select class="form-control form-control-sm" name="limit">
+                      <option value="5" th:selected="${limit eq 5}">5</option>
+                      <option value="10" th:selected="${limit eq 10}">10</option>
+                      <option value="20" th:selected="${limit eq 20}">20</option>
+                    </select>
+                  </div>
                 </div>
+                <button type="submit" class="btn btn-primary btn-sm" th:text="#{btn.search}">Search</button>
+                <a th:href="@{/admin/products}" href="#" class="btn btn-outline-dark btn-sm" th:text="#{btn.clear}">Clear</a>
+              </form>
+              <hr/>
+
+              <h5 th:text="#{products.search.nofound}" th:if="${#lists.size(products.collection) eq 0}">No products found</h5>
+
+              <div th:remove="tag" th:if="${#lists.size(products.collection) ne 0}">
+
+                <div class="d-flex">
+                  <h5 th:text="#{products.search.count(${#numbers.formatDecimal(#lists.size(products.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Products</h5>
+
+                  <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                    <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
+                      <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                      <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col" th:text="#{products.item.id}">ID</th>
+                        <th scope="col" th:text="#{products.item.title}">Title</th>
+                        <th scope="col" th:text="#{products.item.price}">Price</th>
+                        <th scope="col" th:text="#{products.item.quantity}">Quantity</th>
+                        <th scope="col" th:text="#{products.item.views}">Views</th>
+                        <th scope="col" th:text="#{products.item.status}">Status</th>
+                        <th scope="col" th:text="#{products.item.addedon}">Added on</th>
+                        <th scope="col" th:text="#{products.item.approvedon}">Approved on</th>
+                        <th scope="col" th:text="#{products.item.editedon}">Edited on</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="p : ${products.collection}">
+                        <td>
+                          <a class="text-decoration-underline" href="#" th:href="@{/admin/products(id=${p.productId})}" th:text="${p.productId}">1</a>
+                        </td>
+                        <td th:text="${p.title}">Product 1</td>
+                        <td>
+                          <span th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
+                        </td>
+                        <td th:text="#{quant(${#numbers.formatDecimal(p.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">23</td>
+                        <td th:text="${#numbers.formatDecimal(p.views, 1, 'WHITESPACE', 0, 'DEFAULT')}">44</td>
+                        <td>
+                          <span class="badge badge-pill" th:classappend="${p.status eq 0} ? 'badge-success' : (${p.status eq 1} ? 'badge-warning' : (${p.status eq 2} ? 'badge-secondary' : (${p.status eq 3} ? 'badge-danger')))"
+                                th:text="#{product.status. + ${p.status}}"></span>
+                        </td>
+                        <td>
+                          <span th:text="${#dates.format(p.addedOn, #messages.msg('format.datetime4'))}"></span>
+                        </td>
+                        <td>
+                          <span th:if="${p.approvedOn ne null}" th:text="${#dates.format(p.approvedOn, #messages.msg('format.datetime4'))}">Approved on</span>
+                          <i th:if="${p.approvedOn eq null}" th:text="#{product.approvedOn.empty}">Not approved yet</i>
+                        </td>
+                        <td>
+                          <span th:if="${p.editedOn ne null}" th:text="${#dates.format(p.editedOn, #messages.msg('format.datetime4'))}">Edited on</span>
+                          <i th:if="${p.editedOn eq null}" th:text="#{product.editedOn.empty}">Not edited yet</i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
+              </div>
             </div>
+          </div>
         </div>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>

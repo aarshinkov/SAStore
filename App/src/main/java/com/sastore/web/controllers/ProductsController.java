@@ -29,177 +29,131 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin")
 public class ProductsController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private ProductService productService;
+  @Autowired
+  private ProductService productService;
 
-    @Autowired
-    private Uploader uploader;
+  @Autowired
+  private Uploader uploader;
 
-    @GetMapping("/products")
-    public String getProducts(@ModelAttribute("filter") ProductFilter filter,
-            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-            @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+  @GetMapping("/products/pending")
+  public String pendingProducts(Model model) {
 
-        if (page <= 0) {
-            return "redirect:/admin/products?page=1" + filter.getPagingParams();
-        }
+    model.addAttribute("submenu", "pending");
+    model.addAttribute("globalMenu", "products");
 
-        if (limit <= 0) {
-            return "redirect:/admin/products?limit=10" + filter.getPagingParams();
-        }
+    return "admin/products/pending";
+  }
 
-        ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
+  @GetMapping("/products/new")
+  public String prepareNewProduct(Model model) {
 
-        model.addAttribute("products", products);
+    model.addAttribute("pcm", new ProductCreateModel());
 
-        String otherParams = "";
+    model.addAttribute("globalMenu", "products");
 
-        otherParams = "&limit=" + limit;
+    return "admin/products/new";
+  }
 
-        model.addAttribute("otherParameters", otherParams);
+  @PostMapping("/products/new")
+  public String createProduct(@ModelAttribute("pcm") @Valid ProductCreateModel pcm,
+          BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
-        model.addAttribute("pageWrapper", products.getPage());
-        model.addAttribute("maxPagesPerView", 3);
-
-        model.addAttribute("limit", limit);
-
-        model.addAttribute("submenu", "products");
-        model.addAttribute("globalMenu", "products");
-
-        return "admin/products/dashboard";
+    if (pcm.getPrice() != null) {
+      if (pcm.getPrice() <= 0.00) {
+        bindingResult.rejectValue("price", "products.new.error.price");
+      }
     }
 
-    @GetMapping("/products/pending")
-    public String pendingProducts(Model model) {
+    if (bindingResult.hasErrors()) {
 
-        model.addAttribute("submenu", "pending");
-        model.addAttribute("globalMenu", "products");
-
-        return "admin/products/pending";
+      model.addAttribute("globalMenu", "products");
+      return "admin/products/new";
     }
 
-    @GetMapping("/products/new")
-    public String prepareNewProduct(Model model) {
-
-        model.addAttribute("pcm", new ProductCreateModel());
-
-        model.addAttribute("globalMenu", "products");
-
-        return "admin/products/new";
-    }
-
-    @PostMapping("/products/new")
-    public String createProduct(@ModelAttribute("pcm") @Valid ProductCreateModel pcm,
-            BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-
-        if (pcm.getPrice() != null) {
-            if (pcm.getPrice() <= 0.00) {
-                bindingResult.rejectValue("price", "products.new.error.price");
-            }
-        }
-
-        if (bindingResult.hasErrors()) {
-
-            model.addAttribute("globalMenu", "products");
-            return "admin/products/new";
-        }
-
-        try {
-            ProductEntity createdProduct = productService.createProduct(pcm);
+    try {
+      ProductEntity createdProduct = productService.createProduct(pcm);
 
 //            redirectAttributes.addFlashAttribute("msgSuccess", getMessage("products.new.success"));
-        } catch (Exception e) {
-            log.error("Error creating product", e);
+    } catch (Exception e) {
+      log.error("Error creating product", e);
 //            redirectAttributes.addFlashAttribute("msgError", getMessage("products.new.error"));
-        }
-
-        return "redirect:/admin/products";
     }
 
-    @PostMapping("/product/approve")
-    public String approveProduct(@RequestParam("productId") Long productId,
-            RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/products";
+  }
 
-        try {
-            productService.approveProduct(productId);
+  @PostMapping("/product/approve")
+  public String approveProduct(@RequestParam("productId") Long productId,
+          RedirectAttributes redirectAttributes) {
+
+    try {
+      productService.approveProduct(productId);
 
 //            redirectAttributes.addFlashAttribute("msgSuccess", "product.approved.success");
-        } catch (Exception e) {
-            log.error("Error approving a product!", e);
+    } catch (Exception e) {
+      log.error("Error approving a product!", e);
 //            redirectAttributes.addFlashAttribute("msgError", "product.approved.error");
-        }
-
-        return "redirect:/admin/product/" + productId;
     }
 
-    @PostMapping("/product/deactivate")
-    public String deactivateProduct(@RequestParam("productId") Long productId,
-            RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/product/" + productId;
+  }
 
-        try {
-            productService.deactivateProduct(productId);
+  @PostMapping("/product/deactivate")
+  public String deactivateProduct(@RequestParam("productId") Long productId,
+          RedirectAttributes redirectAttributes) {
+
+    try {
+      productService.deactivateProduct(productId);
 
 //            redirectAttributes.addFlashAttribute("msgSuccess", "product.deactivated.success");
-        } catch (Exception e) {
-            log.error("Error deactivating a product!", e);
+    } catch (Exception e) {
+      log.error("Error deactivating a product!", e);
 //            redirectAttributes.addFlashAttribute("msgError", "product.deactivated.error");
-        }
-
-        return "redirect:/admin/product/" + productId;
     }
 
-    @PostMapping("/product/delete")
-    public String deleteProduct(@RequestParam("productId") Long productId,
-            RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/product/" + productId;
+  }
 
-        try {
-            productService.deleteProduct(productId);
+  @PostMapping("/product/delete")
+  public String deleteProduct(@RequestParam("productId") Long productId,
+          RedirectAttributes redirectAttributes) {
+
+    try {
+      productService.deleteProduct(productId);
 
 //            redirectAttributes.addFlashAttribute("msgSuccess", "product.deleted.success");
-        } catch (Exception e) {
-            log.error("Error deleting a product!", e);
+    } catch (Exception e) {
+      log.error("Error deleting a product!", e);
 //            redirectAttributes.addFlashAttribute("msgError", "product.deleted.error");
-        }
-
-        return "redirect:/admin/product/" + productId;
     }
 
-    @PostMapping("/products/image/new")
-    public String createImage(@RequestParam("file") MultipartFile file,
-            @RequestParam("productId") Long productId,
-            RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/product/" + productId;
+  }
 
-        log.debug("Uploading image");
+  @PostMapping("/products/image/new")
+  public String createImage(@RequestParam("file") MultipartFile file,
+          @RequestParam("productId") Long productId,
+          RedirectAttributes redirectAttributes) {
 
-        FileName name = null;
+    log.debug("Uploading image");
 
-        try {
-            name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.PRODUCTS);
+    FileName name = null;
 
-            productService.addImage(name, productId);
+    try {
+      name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.PRODUCTS);
 
-            redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
+      productService.addImage(name, productId);
 
-        } catch (Exception e) {
-            log.error("Error uploading a file!", e);
+      redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
 
-            redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
-        }
+    } catch (Exception e) {
+      log.error("Error uploading a file!", e);
 
-        return "redirect:/admin/product/" + productId;
+      redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
     }
 
-    @GetMapping("/product/{productId}")
-    public String product(@PathVariable("productId") Long productId, Model model) {
-
-        ProductEntity product = productService.getProductByProductId(productId);
-
-        model.addAttribute("product", product);
-
-        model.addAttribute("globalMenu", "products");
-
-        return "admin/products/product";
-    }
+    return "redirect:/admin/product/" + productId;
+  }
 }

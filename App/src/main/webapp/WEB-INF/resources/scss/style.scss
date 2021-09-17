@@ -23,6 +23,6 @@ table {
 
 @for $c-font-size from 1 through 10 {
     .c-font-size-#{$c-font-size * 5} {
-        font-size: $c-font-size * 5px;
+        font-size: $c-font-size * 10px;
     }
 }

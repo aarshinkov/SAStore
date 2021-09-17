@@ -3,188 +3,188 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/adminTemplate}">
-    <head>
-        <title th:text="#{app.title(${user.fullName})}">Users</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title(${user.fullName})}">Users</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <div class="row gutters-sm">
-                <div class="col-12 col-md-3 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img th:src="@{/resources/img/user/user_default.svg}" src="../../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="150"/>
-                                <div class="mt-3">
-                                    <h4 th:text="${user.fullName}">John Doe</h4>
-                                    <!--                            <p class="text-secondary mb-1" th:text="#{user.roles. + ${user.getRoles().toArray()[0].rolename}}">User role</p>-->
-                                    <p class="text-muted font-size-sm mb-0" th:text="#{account.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
-                                    <p class="text-muted font-size-sm" th:if="${user.editedOn ne null}"
-                                       th:text="#{account.editedon(${#dates.format(user.editedOn, #messages.msg('format.datetime3'))})}">Edited Dec 31, 2017</p>
-                                    <!--                            <button class="btn btn-primary">Follow</button>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="row gutters-sm">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img th:src="@{/resources/img/user/user_default.svg}" src="../../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="150"/>
+                <div class="mt-3">
+                  <h4 th:text="${user.fullName}">John Doe</h4>
+                  <!--                            <p class="text-secondary mb-1" th:text="#{user.roles. + ${user.getRoles().toArray()[0].rolename}}">User role</p>-->
+                  <p class="text-muted font-size-sm mb-0" th:text="#{user.createdon(${#dates.format(user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</p>
+                  <p class="text-muted font-size-sm" th:if="${user.editedOn ne null}"
+                     th:text="#{user.editedon(${#dates.format(user.editedOn, #messages.msg('format.datetime3'))})}">Edited Dec 31, 2017</p>
+                  <!--                            <button class="btn btn-primary">Follow</button>-->
                 </div>
-                <div class="col-12 col-md-9">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-sm-3 col-xl-2">
-                                    <h6 class="mb-0">User ID</h6>
-                                </div>
-                                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
-                                    <span th:text="${user.userId}">User ID</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-3 col-xl-2">
-                                    <h6 class="mb-0">Full name</h6>
-                                </div>
-                                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
-                                    <span th:text="${user.fullName}">John Doe</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-3 col-xl-2">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
-                                    <span th:text="${user.email}">john.doe@gmail.com</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12 col-sm-3 col-xl-2">
-                                    <h6 class="mb-0">Status</h6>
-                                </div>
-                                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
-                                    <span class="badge badge-pill" th:classappend="${user.isActive} ? 'badge-success' : 'badge-danger'"
-                                          th:text="${user.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
-                                </div>
-                            </div>
-                            <hr/>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-
-            <div class="row gutters-sm">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
-                                <a href="#" class="btn btn-sm btn-outline-success ml-auto" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
-                                   data-toggle="modal" data-target="#addRoleModal">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Add role</span>
-                                </a>
-                            </div>
-                            <small class="text-muted">
-                                <i class="fas fa-info-circle"></i>
-                                <span>Every user must have at least one role.</span>
-                            </small>
-                            <hr/>
-
-                            <div th:each="r : ${user.roles}">
-                                <div class="d-flex">
-                                    <div th:text="#{user.roles. + ${r.rolename}}">Role</div>
-                                    <a href="#" class="btn btn-xs btn-outline-danger ml-auto" th:if="${#lists.size(user.roles) gt 1}"
-                                       data-toggle="modal" data-target="#removeRoleModal" th:attr="data-rolename=${r.rolename}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                                <small class="text-muted" th:text="#{user.roles.descr. + ${r.rolename}}">Role description</small>
-                                <hr/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Add role modal -->
-            <div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
-                 aria-labelledby="addRoleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-dark text-white shadow-none">
-                            <h6 class="modal-title" id="addRoleModalLabel">Add role</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form th:action="@{/admin/user/role/add}" method="post">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select class="form-control" name="rolename">
-                                        <option th:each="ur : ${unassignedRoles}" th:value="${ur.rolename}" th:text="#{user.roles. + ${ur.rolename}}">Role</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="hidden" name="userId" th:value="${user.userId}"/>
-                                <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
-                                    <i class="fas fa-times"></i>
-                                    <span>Cancel</span>
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i>
-                                    <span>Save</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- /Add role modal -->
-
-            <!-- Remove role modal -->
-            <div class="modal fade" id="removeRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) gt 1}"
-                 aria-labelledby="removeRoleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-danger text-white shadow-none">
-                            <h6 class="modal-title" id="removeRoleModalLabel">Remove role</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form th:action="@{/admin/user/role/remove}" method="post">
-                            <div class="modal-body">
-                                <div>Do you really want to remove this role from user <b th:text="${user.fullName}"></b>?</div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="hidden" name="userId" th:value="${user.userId}"/>
-                                <input id="roleInput" type="hidden" name="rolename"/>
-                                <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
-                                    <i class="fas fa-times"></i>
-                                    <span>Cancel</span>
-                                </a>
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                    <span>Save</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- /Remove role modal -->
-
-            <script type="text/javascript" th:inline="javascript">
-                $('#removeRoleModal').on('show.bs.modal', function (event) {
-                    let modal = $(event.relatedTarget);
-                    let rolename = modal.data('rolename');
-
-                    $('#roleInput').val(rolename);
-                });
-            </script>
+          </div>
         </div>
-    </body>
+        <div class="col-12 col-md-9">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-3 col-xl-2">
+                  <h6 class="mb-0" th:text="#{user.userid}">User ID</h6>
+                </div>
+                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
+                  <span th:text="${user.userId}">User ID</span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-3 col-xl-2">
+                  <h6 class="mb-0" th:text="#{user.fullname}">Full name</h6>
+                </div>
+                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
+                  <span th:text="${user.fullName}">John Doe</span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-3 col-xl-2">
+                  <h6 class="mb-0" th:text="#{user.email}">Email</h6>
+                </div>
+                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
+                  <span th:text="${user.email}">john.doe@gmail.com</span>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-12 col-sm-3 col-xl-2">
+                  <h6 class="mb-0" th:text="#{user.status}">Status</h6>
+                </div>
+                <div class="col-12 col-sm-9 col-xl-10 text-secondary">
+                  <span class="badge badge-pill" th:classappend="${user.isActive} ? 'badge-success' : 'badge-danger'"
+                        th:text="${user.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                </div>
+              </div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gutters-sm">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex">
+                <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
+                <a href="#" class="btn btn-sm btn-outline-success ml-auto" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
+                   data-toggle="modal" data-target="#addRoleModal">
+                  <i class="fas fa-plus"></i>
+                  <span th:text="#{user.roles.add}">Add role</span>
+                </a>
+              </div>
+              <small class="text-muted">
+                <i class="fas fa-info-circle"></i>
+                <span th:text="#{user.roles.rule}">Every user must have at least one role.</span>
+              </small>
+              <hr/>
+
+              <div th:each="r : ${user.roles}">
+                <div class="d-flex">
+                  <div th:text="#{user.roles. + ${r.rolename}}">Role</div>
+                  <a href="#" class="btn btn-xs btn-outline-danger ml-auto" th:if="${#lists.size(user.roles) gt 1}"
+                     data-toggle="modal" data-target="#removeRoleModal" th:attr="data-rolename=${r.rolename}">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
+                </div>
+                <small class="text-muted" th:text="#{user.roles.descr. + ${r.rolename}}">Role description</small>
+                <hr/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add role modal -->
+      <div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
+           aria-labelledby="addRoleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-dark text-white shadow-none">
+              <h6 class="modal-title" id="addRoleModalLabel" th:text="#{user.roles.add.header}">Add role</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form th:action="@{/admin/user/role/add}" method="post">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label th:text="#{user.roles.add.role}">Role</label>
+                  <select class="form-control" name="rolename">
+                    <option th:each="ur : ${unassignedRoles}" th:value="${ur.rolename}" th:text="#{user.roles. + ${ur.rolename}}">Role</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <input type="hidden" name="userId" th:value="${user.userId}"/>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  <span th:text="#{btn.save}">Save</span>
+                </button>
+                <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                  <i class="fas fa-times"></i>
+                  <span th:text="#{btn.cancel}">Cancel</span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /Add role modal -->
+
+      <!-- Remove role modal -->
+      <div class="modal fade" id="removeRoleModal" tabindex="-1" role="dialog" th:if="${#lists.size(user.roles) gt 1}"
+           aria-labelledby="removeRoleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-danger text-white shadow-none">
+              <h6 class="modal-title" id="removeRoleModalLabel" th:text="#{user.roles.remove.header}">Remove role</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form th:action="@{/admin/user/role/remove}" method="post">
+              <div class="modal-body">
+                <div th:utext="#{user.roles.remove.message(${user.fullName})}">Do you really want to remove this role from user John Doe?</div>
+              </div>
+              <div class="modal-footer">
+                <input type="hidden" name="userId" th:value="${user.userId}"/>
+                <input id="roleInput" type="hidden" name="rolename"/>
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash-alt"></i>
+                  <span th:text="#{btn.remove}">Remove</span>
+                </button>
+                <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                  <i class="fas fa-times"></i>
+                  <span th:text="#{btn.cancel}">Cancel</span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /Remove role modal -->
+
+      <script type="text/javascript" th:inline="javascript">
+        $('#removeRoleModal').on('show.bs.modal', function (event) {
+          let modal = $(event.relatedTarget);
+          let rolename = modal.data('rolename');
+
+          $('#roleInput').val(rolename);
+        });
+      </script>
+    </div>
+  </body>
 </html>

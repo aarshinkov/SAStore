@@ -19,45 +19,50 @@ import lombok.ToString;
 @ToString
 public class UserFilter implements Serializable {
 
-    private String userId;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private Boolean isActive;
-    private String role;
-    private String order = Order.DESCENDING.getOrder();
+  private String userId;
+  private String email;
+  private String firstName;
+  private String lastName;
+  private Boolean isActive;
+  private String role;
+  private String order = Order.DESCENDING.getOrder();
 
-    public String getPagingParams() {
-        String result = "";
+  public boolean isFilterEmpty() {
 
-        if (userId != null) {
-            result += "&userId=" + userId;
-        }
+    return !(userId != null || email != null || firstName != null || lastName != null || isActive != null || role != null);
+  }
 
-        if (email != null) {
-            result += "&email=" + email;
-        }
+  public String getPagingParams() {
+    String result = "";
 
-        if (firstName != null) {
-            result += "&firstName=" + firstName;
-        }
-
-        if (lastName != null) {
-            result += "&lastName=" + lastName;
-        }
-
-        if (isActive != null) {
-            result += "&active=" + isActive;
-        }
-
-        if (role != null) {
-            result += "&role=" + role;
-        }
-
-        if (order != null) {
-            result += "&order=" + order;
-        }
-
-        return result;
+    if (userId != null) {
+      result += "&userId=" + userId;
     }
+
+    if (email != null) {
+      result += "&email=" + email;
+    }
+
+    if (firstName != null) {
+      result += "&firstName=" + firstName;
+    }
+
+    if (lastName != null) {
+      result += "&lastName=" + lastName;
+    }
+
+    if (isActive != null) {
+      result += "&active=" + isActive;
+    }
+
+    if (role != null) {
+      result += "&role=" + role;
+    }
+
+    if (order != null) {
+      result += "&order=" + order;
+    }
+
+    return result;
+  }
 }
