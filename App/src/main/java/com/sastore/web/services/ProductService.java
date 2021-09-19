@@ -14,15 +14,15 @@ public interface ProductService {
 
   ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
 
-  ProductEntity getProductByProductId(Long productId);
+  ProductEntity getProductByProductId(String productId);
 
   ProductEntity createProduct(ProductCreateModel pcm) throws Exception;
 
-  void approveProduct(Long productId) throws Exception;
+  void approveProduct(String productId) throws Exception;
 
-  void deactivateProduct(Long productId) throws Exception;
+  void deactivateProduct(String productId) throws Exception;
 
-  void deleteProduct(Long productId) throws Exception;
+  void deleteProduct(String productId) throws Exception;
 
-  void addImage(FileName file, Long productId) throws Exception;
+  void addImage(FileName file, String productId) throws Exception;
 }

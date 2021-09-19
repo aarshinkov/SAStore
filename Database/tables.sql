@@ -49,16 +49,9 @@ CREATE TABLE logs(
 	log_text text not null,
 	created_on timestamp not null default NOW()
 );
-
-CREATE SEQUENCE public.s_products
-	INCREMENT 1
-	START 1000;
-	
-ALTER SEQUENCE public.s_products
-	OWNER TO sastore_user;
 	
 CREATE TABLE products(
-	product_id int not null primary key default nextval('s_products'),
+	product_id varchar(100) not null primary key,
 	title varchar(200) not null,
 	price numeric not null,
 	avail_quant int not null default 1,
@@ -73,7 +66,7 @@ CREATE TABLE products(
 
 CREATE TABLE prod_images(
 	image_id varchar(500) not null primary key,
-	product_id int not null references products(product_id),
+	product_id varchar(100) not null references products(product_id),
 	is_main boolean not null default false,
 	created_on timestamp not null default NOW()
 );

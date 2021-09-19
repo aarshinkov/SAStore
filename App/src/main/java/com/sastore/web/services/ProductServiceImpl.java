@@ -11,6 +11,7 @@ import com.sastore.web.repositories.ProductImagesRepository;
 import com.sastore.web.repositories.ProductsRepository;
 import com.sastore.web.uploader.domain.FileName;
 import java.sql.Timestamp;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public ProductEntity getProductByProductId(Long productId) {
+  public ProductEntity getProductByProductId(String productId) {
     return productsRepository.findByProductId(productId);
   }
 
@@ -49,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
   public ProductEntity createProduct(ProductCreateModel pcm) throws Exception {
 
     ProductEntity product = new ProductEntity();
+    product.setProductId(UUID.randomUUID().toString());
     product.setTitle(pcm.getTitle());
     product.setPrice(pcm.getPrice());
     product.setAvailableQuantity(pcm.getAvailableQuantity());
@@ -60,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public void approveProduct(Long productId) throws Exception {
+  public void approveProduct(String productId) throws Exception {
     ProductEntity product = productsRepository.findByProductId(productId);
     product.setStatus(ProductStatuses.ACTIVE.getStatus());
     product.setApprovedOn(new Timestamp(System.currentTimeMillis()));
@@ -69,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public void deactivateProduct(Long productId) throws Exception {
+  public void deactivateProduct(String productId) throws Exception {
     ProductEntity product = productsRepository.findByProductId(productId);
     product.setStatus(ProductStatuses.INACTIVE.getStatus());
     product.setEditedOn(new Timestamp(System.currentTimeMillis()));
@@ -78,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public void deleteProduct(Long productId) throws Exception {
+  public void deleteProduct(String productId) throws Exception {
     ProductEntity product = productsRepository.findByProductId(productId);
     product.setStatus(ProductStatuses.DELETED.getStatus());
     product.setEditedOn(new Timestamp(System.currentTimeMillis()));
@@ -87,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public void addImage(FileName file, Long productId) throws Exception {
+  public void addImage(FileName file, String productId) throws Exception {
 
     ProductImageEntity pi = new ProductImageEntity();
     pi.setImageId(file.getFullName());

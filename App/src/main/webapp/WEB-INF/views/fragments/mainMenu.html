@@ -47,19 +47,19 @@
                 <span th:text="${session.user.fullName}">Hi, John</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="userDropdown">
-                <a class="dropdown-item has-icon pr-5" th:href="@{/account}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'active'">
                   <i class="material-icons mr-2">person</i>
-                  <span>My account</span>
+                  <span>My profile</span>
                 </a>
-                <a class="dropdown-item has-icon pr-5" th:href="@{/account/orders}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'orders'} ? 'active'">
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/orders}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'active'">
                   <i class="material-icons mr-2">shopping_cart</i>
                   <span>My orders</span>
                 </a>
-                <a class="dropdown-item has-icon pr-5" th:href="@{/account/wishlist}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'wishlist'} ? 'active'">
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/wishlist}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'wishlist'} ? 'active'">
                   <i class="material-icons mr-2">favorite_border</i>
                   <span>Wishlist</span>
                 </a>
-                <!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/account/settings}" href="#">-->
+                <!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/profile/settings}" href="#">-->
                 <!--                            <i class="material-icons mr-2">settings</i>-->
                 <!--                            <span>Settings</span>-->
                 <!--                        </a>-->
@@ -75,11 +75,11 @@
           <div sec:authorize="!isAuthenticated()" th:remove="tag">
             <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
               <i class="material-icons mr-1">login</i>
-              <span>Login</span>
+              <span th:text="#{nav.login}">Login</span>
             </a>
             <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
               <i class="material-icons mr-1">person_add</i>
-              <span>Signup</span>
+              <span th:text="#{nav.signup}">Signup</span>
             </a>
           </div>
         </div>
@@ -228,7 +228,7 @@
             <a class="nav-link nav-icon" data-toggle="modal" href="#searchModal">
               <i class="material-icons">search</i>
             </a>
-            <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/account/wishlist}" href="#">
+            <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/profile/wishlist}" href="#">
               <i class="material-icons">favorite_border</i>
               <span class="badge badge-pill badge-danger">3</span>
             </a>

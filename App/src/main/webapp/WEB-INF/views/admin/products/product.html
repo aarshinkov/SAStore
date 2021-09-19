@@ -35,7 +35,8 @@
                   <div class="mb-2 badge badge-pill" th:if="${product.status ne 1}"
                        th:classappend="${product.status eq 0} ? 'badge-success' : (${product.status eq 2} ? 'badge-secondary' : (${product.status eq 3} ? 'badge-danger'))"
                        th:text="#{product.status. + ${product.status}}"></div>
-                  <div class="text-muted font-size-sm" th:text="#{product.id(${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')})}">ID</div>
+                  <div class="text-muted font-size-sm" th:text="#{product.id}">ID</div>
+                  <div class="text-muted font-size-sm" th:text="${product.productId}">ID</div>
                   <!--                                    <p th:text="${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')}"></p>-->
                   <!--<button class="btn btn-primary">Follow</button>-->
                   <!--<button class="btn btn-outline-primary">Message</button>-->

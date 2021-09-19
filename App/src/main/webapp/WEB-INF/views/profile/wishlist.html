@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="#{app.title('Account')}">Home</title>
+    <title th:text="#{app.title('Profile')}">Home</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
       <div class="row gutters-3">
         <div class="col-md-4 col-lg-3">
-          <div th:insert="account/fragments :: #accountFragment"></div>
+          <div th:insert="profile/fragments :: #profileFragment"></div>
         </div>
         <div class="col mt-3 mt-md-0">
           <div class="card card-style1">

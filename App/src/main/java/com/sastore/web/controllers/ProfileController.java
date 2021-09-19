@@ -18,61 +18,61 @@ import java.util.List;
  * @since 1.0.0
  */
 @Controller
-public class AccountController extends Base {
+public class ProfileController extends Base {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @GetMapping("/account")
-  public String account(Model model) {
+  @GetMapping("/profile")
+  public String profile(Model model) {
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
-    breadcrumbs.add(new Breadcrumb("Profile", null));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), null));
     model.addAttribute("breadcrumbs", breadcrumbs);
 
-    model.addAttribute("globalMenu", "account");
-    model.addAttribute("submenu", "account");
+    model.addAttribute("globalMenu", "profile");
+    model.addAttribute("submenu", "profile");
 
     if (hasSpecialRole()) {
-      return "admin/account/account";
+      return "admin/profile/profile";
     }
 
-    return "account/account";
+    return "profile/profile";
   }
 
-  @GetMapping("/account/orders")
+  @GetMapping("/profile/orders")
   public String orders(Model model) {
 
-    model.addAttribute("globalMenu", "account");
+    model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "orders");
 
-    return "account/orders";
+    return "profile/orders";
   }
 
-  @GetMapping("/account/order")
+  @GetMapping("/profile/order")
   public String orderDetails(@RequestParam("orderId") String orderId, Model model) {
 
-    model.addAttribute("globalMenu", "account");
+    model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "orders");
 
-    return "account/order";
+    return "profile/order";
   }
 
-  @GetMapping("/account/wishlist")
+  @GetMapping("/profile/wishlist")
   public String wishlist(Model model) {
 
-    model.addAttribute("globalMenu", "account");
+    model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "wishlist");
 
-    return "account/wishlist";
+    return "profile/wishlist";
   }
 
-  @GetMapping("/account/addresses")
+  @GetMapping("/profile/addresses")
   public String addresses(Model model) {
 
-    model.addAttribute("globalMenu", "account");
+    model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "addresses");
 
-    return "account/addresses";
+    return "profile/addresses";
   }
 }

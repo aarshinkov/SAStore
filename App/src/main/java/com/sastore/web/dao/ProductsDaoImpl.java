@@ -67,7 +67,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
       while (rset.next()) {
         ProductEntity product = new ProductEntity();
-        product.setProductId(rset.getLong("product_id"));
+        product.setProductId(rset.getString("product_id"));
         product.setTitle(rset.getString("title"));
         product.setPrice(rset.getDouble("price"));
         product.setAvailableQuantity(rset.getInt("avail_quant"));

@@ -126,7 +126,7 @@
                     <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.user.getRoles().toArray()[0].rolename}}">Administrator</span>
                   </div>
               </div>
-              <a class="dropdown-item has-icon" th:href="@{/account}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
+              <a class="dropdown-item has-icon" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
                 <i class="mr-2" data-feather="user"></i>
                 <span th:text="#{nav.profile}">Profile</span>
               </a>

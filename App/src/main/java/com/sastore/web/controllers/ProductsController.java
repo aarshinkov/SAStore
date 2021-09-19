@@ -3,13 +3,12 @@ package com.sastore.web.controllers;
 import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
-import com.sastore.web.models.ProductCreateModel;
 import com.sastore.web.filters.ProductFilter;
+import com.sastore.web.models.ProductCreateModel;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
 import com.sastore.web.uploader.domain.FileName;
 import com.sastore.web.uploader.domain.ImageFolder;
-import java.io.IOException;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping("/admin")
 public class ProductsController extends Base {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -37,16 +35,61 @@ public class ProductsController extends Base {
   @Autowired
   private Uploader uploader;
 
-  @GetMapping("/products/pending")
-  public String pendingProducts(Model model) {
+  @GetMapping(value = "/products")
+  public String getProducts(@RequestParam(name = "id") String productId, Model model) {
 
-    model.addAttribute("submenu", "pending");
-    model.addAttribute("globalMenu", "products");
-
-    return "admin/products/pending";
+    return "products/product";
   }
 
-  @GetMapping("/products/new")
+  // ADMIN
+  @GetMapping("/admin/products")
+  public String getProducts(@ModelAttribute("filter") ProductFilter filter,
+          @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+          @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+
+    if (page <= 0) {
+      return "redirect:/admin/products?page=1" + filter.getPagingParams();
+    }
+
+    if (limit <= 0) {
+      return "redirect:/admin/products?limit=10" + filter.getPagingParams();
+    }
+
+    ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
+
+    model.addAttribute("products", products);
+
+    String otherParams = "";
+
+    otherParams = "&limit=" + limit;
+
+    model.addAttribute("otherParameters", otherParams);
+
+    model.addAttribute("pageWrapper", products.getPage());
+    model.addAttribute("maxPagesPerView", 3);
+
+    model.addAttribute("limit", limit);
+
+    model.addAttribute("submenu", "products");
+    model.addAttribute("globalMenu", "products");
+
+    return "admin/products/dashboard";
+  }
+
+  @GetMapping(value = "/admin/products", params = {"id"})
+  public String product(@RequestParam(name = "id") String productId, Model model) {
+
+    ProductEntity product = productService.getProductByProductId(productId);
+
+    model.addAttribute("product", product);
+
+    model.addAttribute("globalMenu", "products");
+
+    return "admin/products/product";
+
+  }
+
+  @GetMapping("/admin/products/new")
   public String prepareNewProduct(Model model) {
 
     model.addAttribute("pcm", new ProductCreateModel());
@@ -56,7 +99,7 @@ public class ProductsController extends Base {
     return "admin/products/new";
   }
 
-  @PostMapping("/products/new")
+  @PostMapping("/admin/products/new")
   public String createProduct(@ModelAttribute("pcm") @Valid ProductCreateModel pcm,
           BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
@@ -84,8 +127,17 @@ public class ProductsController extends Base {
     return "redirect:/admin/products";
   }
 
-  @PostMapping("/product/approve")
-  public String approveProduct(@RequestParam("productId") Long productId,
+  @GetMapping("/admin/products/pending")
+  public String pendingProducts(Model model) {
+
+    model.addAttribute("submenu", "pending");
+    model.addAttribute("globalMenu", "products");
+
+    return "admin/products/pending";
+  }
+
+  @PostMapping("/admin/product/approve")
+  public String approveProduct(@RequestParam("productId") String productId,
           RedirectAttributes redirectAttributes) {
 
     try {
@@ -97,11 +149,11 @@ public class ProductsController extends Base {
 //            redirectAttributes.addFlashAttribute("msgError", "product.approved.error");
     }
 
-    return "redirect:/admin/product/" + productId;
+    return "redirect:/admin/products?id=" + productId;
   }
 
-  @PostMapping("/product/deactivate")
-  public String deactivateProduct(@RequestParam("productId") Long productId,
+  @PostMapping("/admin/product/deactivate")
+  public String deactivateProduct(@RequestParam("productId") String productId,
           RedirectAttributes redirectAttributes) {
 
     try {
@@ -113,11 +165,11 @@ public class ProductsController extends Base {
 //            redirectAttributes.addFlashAttribute("msgError", "product.deactivated.error");
     }
 
-    return "redirect:/admin/product/" + productId;
+    return "redirect:/admin/products?id=" + productId;
   }
 
-  @PostMapping("/product/delete")
-  public String deleteProduct(@RequestParam("productId") Long productId,
+  @PostMapping("/admin/product/delete")
+  public String deleteProduct(@RequestParam("productId") String productId,
           RedirectAttributes redirectAttributes) {
 
     try {
@@ -129,12 +181,12 @@ public class ProductsController extends Base {
 //            redirectAttributes.addFlashAttribute("msgError", "product.deleted.error");
     }
 
-    return "redirect:/admin/product/" + productId;
+    return "redirect:/admin/products?id=" + productId;
   }
 
-  @PostMapping("/products/image/new")
+  @PostMapping("/admin/products/image/new")
   public String createImage(@RequestParam("file") MultipartFile file,
-          @RequestParam("productId") Long productId,
+          @RequestParam("productId") String productId,
           RedirectAttributes redirectAttributes) {
 
     log.debug("Uploading image");
@@ -154,6 +206,6 @@ public class ProductsController extends Base {
       redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
     }
 
-    return "redirect:/admin/product/" + productId;
+    return "redirect:/admin/products?id=" + productId;
   }
 }
