@@ -70,3 +70,15 @@ CREATE TABLE prod_images(
 	is_main boolean not null default false,
 	created_on timestamp not null default NOW()
 );
+
+CREATE TABLE addresses(
+	address_id varchar(100) not null primary key,
+	country varchar(10) not null default 'bg',
+	city varchar(100) not null,
+	district varchar(100),
+	street varchar(500) not null,
+	street_no int not null,
+	enter varchar(30),
+	floor int
+	apartment_no int
+);

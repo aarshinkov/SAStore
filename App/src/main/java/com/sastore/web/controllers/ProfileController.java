@@ -42,6 +42,12 @@ public class ProfileController extends Base {
 
   @GetMapping("/profile/orders")
   public String orders(Model model) {
+    
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile.orders", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
 
     model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "orders");
@@ -58,17 +64,29 @@ public class ProfileController extends Base {
     return "profile/order";
   }
 
-  @GetMapping("/profile/wishlist")
-  public String wishlist(Model model) {
+  @GetMapping("/profile/favorites")
+  public String favorites(Model model) {
 
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile.favorites", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+    
     model.addAttribute("globalMenu", "profile");
-    model.addAttribute("submenu", "wishlist");
+    model.addAttribute("submenu", "favorites");
 
-    return "profile/wishlist";
+    return "profile/favorites";
   }
 
   @GetMapping("/profile/addresses")
   public String addresses(Model model) {
+    
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile.addresses", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
 
     model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "addresses");

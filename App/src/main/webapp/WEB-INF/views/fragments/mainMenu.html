@@ -4,6 +4,258 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <body>
     <div id="mainMenu" th:remove="tag">
+      <header class="z-index-fixed shadow mb-3">
+        <div class="border-bottom bg-light border-dashed">
+          <div class="container py-1">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-6 d-none d-md-flex">
+                <div class="small text-muted text-truncate">Get 25% off on first order, Use code <badge class="badge badge-pill bg-primary">FIRST25</badge></div>
+              </div>
+              <div class="col-12 col-md-6 ms-auto text-end">
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="dropdown me-4" th:with="lang=#{lang.curr}">
+                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{nav.lang. + #{lang.curr}}">Eng</a>
+                    <div class="dropdown-menu dropdown-menu-end mt-1">
+                      <a href="?lang=en" class="dropdown-item active" th:classappend="${lang eq 'en'} ? 'active'">
+                        <small th:text="#{nav.lang.en}">English</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'en'}"></i>
+                      </a>
+                      <a href="?lang=bg" class="dropdown-item" th:classappend="${lang eq 'bg'} ? 'active'">
+                        <small th:text="#{nav.lang.bg}">Bulgarian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'bg'}"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="dropdown me-4">
+                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false">Usd</a>
+                    <div class="dropdown-menu dropdown-menu-xxs dropdown-menu-end mt-1">
+                      <a href="#" class="dropdown-item active">
+                        <small>Usd <i class="bi bi-check fs-5 lh-1 align-middle"></i></small>
+                      </a>
+                      <a href="#" class="dropdown-item">
+                        <small>Euro</small>
+                      </a>
+                    </div>
+                  </div>
+                  <a href="#" class="text-muted d-none d-md-block small me-4">
+                    <i class="bi bi-telephone me-1 d-none d-md-inline-block"></i>
+                    <span>01 123 4567 890</span>
+                  </a>
+                  <div class="nav-item me-3 me-lg-0" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" href="#" class="btn btn-primary btn-sm">
+                      <i class="icon-Door"></i>
+                      <span th:text="#{nav.login}">Login</span>
+                    </a>
+                    <a th:href="@{/signup}" href="#" class="btn btn-success btn-sm">
+                      <i class="icon-Add-User"></i>
+                      <span th:text="#{nav.signup}">Signup</span>
+                    </a>
+                    <!--                    <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
+                                          <i class="material-icons mr-1">login</i>
+                                          <span th:text="#{nav.login}">Login</span>
+                                        </a>
+                                        <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
+                                          <i class="material-icons mr-1">person_add</i>
+                                          <span th:text="#{nav.signup}">Signup</span>
+                                        </a>-->
+                  </div>
+                  <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <a href="#" class="text-muted small" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                      <!--<img src="assets/img/avatar/2.jpg" class="avatar xs rounded-circle me-1 align-middle" alt=""/>-->
+                      <i class="icon-Street-View"></i>
+                      <span class="d-none d-md-inline-block" th:text="${session.user.fullName}">John Doe</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end mt-2">
+                      <a class="dropdown-item" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'text-primary'">
+                        <i class="icon-Profile"></i>
+                        <span th:text="#{nav.profile}">Profile</span>
+                      </a>
+                      <a class="dropdown-item" th:href="@{/profile/orders}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'text-primary'">
+                        <i class="icon-File-ClipboardFileText"></i>
+                        <span th:text="#{nav.profile.orders}">My orders</span>
+                      </a>
+                      <a class="dropdown-item" th:href="@{/profile/favorites}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'text-primary'">
+                        <i class="icon-Heart"></i>
+                        <span th:text="#{nav.profile.favorites}">Favorites</span>
+                      </a>
+                      <hr class="my-1"/>
+                      <a th:href="@{/logout}" href="#" class="dropdown-item text-danger">
+                        <i class="icon-Power-3"></i>
+                        <span th:text="#{nav.logout}">Logout</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <div class="container position-relative">
+            <a class="navbar-brand" href="#" th:href="@{/}">
+              <!--<img src="assets/img/logo/logo-shop.svg" alt="" class="img-fluid"/>-->
+              <span th:text="#{app.name}">SA Store</span>
+            </a>
+            <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
+              <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarTheme" aria-controls="mainNavbarTheme" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                  <i></i>
+                </span>
+              </button>
+              <div class="nav-item">
+                <a href="#" th:href="@{/cart}" class="nav-link lh-1 position-relative">
+                  <i class="icon-Full-Cart" style="font-size: 28px;"></i>
+                  <!--<span class="cart-number position-absolute end-0 top-0 me-n2 mt-n1 lh-1 fw-semibold small size-20 bg-primary shadow-sm rounded-circle center-both text-light ms-1">5</span>-->
+                </a>
+              </div>
+            </div>
+            <div class="collapse navbar-collapse" id="mainNavbarTheme">
+              <!-- Add .mx-auto to line below to center navigation -->
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" th:href="@{/}" th:classappend="${globalMenu eq 'home'} ? 'active'">
+                    <span th:text="#{nav.home}">Home</span>
+                  </a>
+                </li>
+
+                <li class="nav-item nav-item dropdown position-static-lg me-lg-3">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Men
+                    <!--Dropdown menu arrow svg icon-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 9" class="dropdown-arrow">
+                      <path fill="currentColor" d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
+                      </path>
+                    </svg>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-fw py-lg-0 overflow-hidden">
+                    <div class="row mx-0">
+
+                      <div class="col-lg-4 pe-lg-0 order-lg-4 pe-lg-0 ms-lg-auto d-none d-lg-flex">
+                        <div class="d-flex bg-dark flex-column h-100 w-100 py-4 py-md-5 position-relative">
+                          <img alt="" src="assets/img/shop/banners/03.jpg" class="bg-image opacity-80"/>
+                          <div class="position-absolute text-center d-flex flex-column justify-content-center align-items-center text-white left-0 top-0 w-100 h-100 p-4">
+                            <div>
+                              <div class="d-md-flex mb-2 justify-content-center align-items-center">
+                                <span style="height: 1px" class="d-none d-md-block bg-light width-60"></span>
+                                <h5 class="mb-0 mx-3 text-white">
+                                  Limited Discount
+                                </h5>
+                                <span style="height: 1px" class="d-none d-md-block bg-light width-60"></span>
+                              </div>
+                              <h3 class="display-3 text-serif fw-normal">New Arrivals
+                              </h3>
+                              <p class="mb-4">Order over $100 and get 30% Off</p>
+                              <a href="#!" class="btn btn-outline-white btn-hover-arrow">
+                                <span>Shop Now</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-3 py-lg-5 mb-lg-0 mb-4">
+                        <div class="d-flex flex-column mb-3">
+                          <h5 class="dropdown-header mb-2">Topwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            T-shirts
+                            <span class="badge badge-pill bg-success py-0 small d-inline-block ms-1">New</span>
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Casual Shirts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Formal Shirts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sweatshirts
+
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Jackets
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Blazers &amp; Coats
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sweaters
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-3 py-lg-5 mb-lg-0 mb-4">
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Bottomwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            Jeans
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Trousers &amp; Pants
+                            <span class="badge badge-pill bg-success py-0 small d-inline-block ms-1">-20%</span>
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Shorts &amp; Track Pants
+                          </a>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Footwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            Shoes
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sandals &amp; Floaters
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Flip Flops &amp; Socks
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-2 py-lg-5">
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Accessories</h5>
+                          <a class="dropdown-item" href="#!">
+                            Face mask
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Wallets &amp; Belts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Backpacks
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Headphones
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sunglasses
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Belts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Socks
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Watches
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                    </div>
+                    <!--/.row-->
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div id="mainMenu2" th:remove="tag">
       <!-- TOP BAR -->
       <div class="topbar">
         <div class="container-fluid d-flex align-items-center">
@@ -55,9 +307,9 @@
                   <i class="material-icons mr-2">shopping_cart</i>
                   <span>My orders</span>
                 </a>
-                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/wishlist}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'wishlist'} ? 'active'">
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/favorites}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'active'">
                   <i class="material-icons mr-2">favorite_border</i>
-                  <span>Wishlist</span>
+                  <span>Favorites</span>
                 </a>
                 <!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/profile/settings}" href="#">-->
                 <!--                            <i class="material-icons mr-2">settings</i>-->
@@ -228,7 +480,7 @@
             <a class="nav-link nav-icon" data-toggle="modal" href="#searchModal">
               <i class="material-icons">search</i>
             </a>
-            <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/profile/wishlist}" href="#">
+            <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/profile/favorites}" href="#">
               <i class="material-icons">favorite_border</i>
               <span class="badge badge-pill badge-danger">3</span>
             </a>

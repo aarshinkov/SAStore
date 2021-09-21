@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="#{app.title('Profile')}">Home</title>
+    <title th:text="#{app.title(#{orders.title})}">Orders</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">

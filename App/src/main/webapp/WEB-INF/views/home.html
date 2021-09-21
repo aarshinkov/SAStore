@@ -10,25 +10,7 @@
     <div layout:fragment="contentDiv">
       <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-      <div class="row">
-        <div class="col-12 col-md-2">
-          <p>Filter</p>
-        </div>
-        <div class="col-12 col-md-10">
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3" th:each="p : ${products.collection}">
-              <div class="card">
-                <a href="#" th:href="@{/products(id=${p.productId})}">
-                  <img th:src="@{~/images/products/} + ${p.mainImage}" src="#" class="card-img-top" alt="..."/>
-                </a>
-                <div class="card-body">
-                  <p th:text="${p.title}"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div>Home</div>
     </div>
   </body>
 </html>

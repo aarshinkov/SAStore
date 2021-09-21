@@ -9,68 +9,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <!-- Font & Icon -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Google fonts CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <link th:href="@{/resources/users/fonts/bootstrap-icons/bootstrap-icons.css}" href="../../resources/users/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- iconsmind icons CSS -->
+    <link th:href="@{/resources/users/fonts/iconsmind/iconsmind.css}" href="../../resources/users/fonts/iconsmind/iconsmind.css" rel="stylesheet"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
 
-    <!-- Plugins -->
-    <link rel="stylesheet" th:href="@{/resources/users/plugins/swiper/swiper.min.css}" href="../../resources/users/plugins/swiper/swiper.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/users/plugins/nouislider/nouislider.min.css}" href="../../resources/users/plugins/nouislider/nouislider.min.css"/>
-
-    <link rel="stylesheet" th:href="@{/resources/users/scss/style.css}" href="../../resources/users/scss/style.css"/>
-
-    <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../../resources/scss/style.css"/>
+    <link rel="stylesheet" th:href="@{/resources/users/css/theme.css}" href="../../resources/users/css/theme.css"/>
   </head>
-  <body style="height: 100%; display: flex; flex-direction: column;">
+  <body>
+
+    <!-- Preloader Spinner -->
+    <div class="spinner-loader bg-gradient-secondary text-white">
+      <div class="spinner-border text-primary" role="status">
+      </div>
+      <span class="small d-block ms-2" th:text="#{loading}">Loading...</span>
+    </div>
+
     <div th:insert="fragments/mainMenu :: #mainMenu"></div>
 
-    <div class="container-fluid my-4" style="flex: 1 0 auto; min-height: auto;">
-      <div layout:fragment="contentDiv" th:remove="tag"></div>
-    </div>
+    <!--<div class="container-fluid my-4" style="flex: 1 0 auto; min-height: auto;">-->
 
-    <!-- SEARCH MODAL -->
-    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-1 p-lg-3">
-            <form>
-              <div class="input-group input-group-lg input-group-search">
-                <div class="input-group-prepend">
-                  <button class="btn btn-text-secondary btn-icon btn-lg rounded-circle" type="button" data-dismiss="modal">
-                    <i class="material-icons">chevron_left</i>
-                  </button>
-                </div>
-                <input type="search" class="form-control form-control-lg border-0 shadow-none mx-1 px-0 px-lg-3" id="searchInput" placeholder="Search..." required/>
-                <div class="input-group-append">
-                  <button class="btn btn-text-secondary btn-icon btn-lg rounded-circle" type="submit">
-                    <i class="material-icons">search</i>
-                  </button>
-                </div>
-              </div>
-            </form>
+    <main class="main-content" id="main-content">
+      <section class="position-relative">
+        <div class="container position-relative">
+
+          <nav aria-label="breadcrumb" class="" th:if="${breadcrumbs ne null}">
+            <ol class="breadcrumb mb-3">
+              <li th:each="b, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active'">
+                <i class="fas fa-user-circle" th:if="${iterStat.first}"></i>
+                <a th:href="@{${b.url}}" th:if="${b.url ne null}" th:text="${b.label}">Item</a>
+                <span th:if="${b.url eq null}" th:text="${b.label}"></span>
+              </li>
+            </ol>
+          </nav>
+
+          <div class="overflow-hidden">
+            <div class="position-relative pb-7 pb-lg-12">
+              <div layout:fragment="contentDiv" th:remove="tag"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- /SEARCH MODAL -->
-
-    <div th:insert="fragments/fragments :: #cartModalFragment"></div>
-
-    <div th:insert="fragments/footer :: #footer"></div>
-
-    <script th:src="@{/resources/users/js/script.js}" src="../../resources/js/script.js"></script>
+      </section>
+    </main>
+    <!--</div>-->
 
     <!-- Main script -->
-    <script th:src="@{/resources/users/js/app.js}" src="../../resources/users/js/app.js"></script>
-
-    <!-- Plugins -->
-    <script th:src="@{/resources/users/plugins/swiper/swiper.min.js}" src="../../resources/users/plugins/swiper/swiper.min.js"></script>
-    <script th:src="@{/resources/users/plugins/nouislider/nouislider.min.js}" src="../../resources/users/plugins/nouislider/nouislider.min.js"></script>
-
+    <!--<script th:src="@{/resources/users/js/app.js}" src="../../resources/users/js/app.js"></script>-->
+    <script th:src="@{/resources/users/js/theme.bundle.js}" src="../../resources/users/js/theme.bundle.js"></script>
   </body>
 </html>

@@ -35,4 +35,8 @@ public class Base {
   protected String getMessage(String key, Object... params) {
     return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
   }
+
+  protected boolean isLoggedIn() {
+    return sc.isLoggedIn();
+  }
 }

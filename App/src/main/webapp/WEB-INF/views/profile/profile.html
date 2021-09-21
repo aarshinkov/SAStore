@@ -8,6 +8,18 @@
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div class="row">
+        <div class="col-md-4 col-lg-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col mt-3 mt-md-0">
+          <div>Profile
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="contentDiv1">
       <div class="row gutters-3">
         <div class="col-md-4 col-lg-3">
           <div th:insert="profile/fragments :: #profileFragment"></div>
@@ -20,28 +32,28 @@
               <form class="form-style-1">
                 <div class="form-group">
                   <label>User ID</label>
-                  <div th:text="${session.user.userId}">User ID</div>
+                  <div th:text="${session.userId}">User ID</div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileFirstName">First Name</label>
-                    <input type="text" class="form-control" id="profileFirstName" th:value="${session.user.firstName}">
+                    <input type="text" class="form-control" id="profileFirstName" th:value="${session.user.firstName}"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileLastName">Last Name</label>
-                    <input type="text" class="form-control" id="profileLastName" th:value="${session.user.lastName}">
+                    <input type="text" class="form-control" id="profileLastName" th:value="${session.user.lastName}"/>
                   </div>
                   <div class="form-group col-12">
                     <label for="profileEmail">Email address</label>
-                    <input type="email" class="form-control" id="profileEmail" th:value="${session.user.email}">
+                    <input type="email" class="form-control" id="profileEmail" th:value="${session.email}"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileNewPassword">New Password</label>
-                    <input type="password" class="form-control" id="profileNewPassword">
+                    <input type="password" class="form-control" id="profileNewPassword"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileConfirmPassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="profileConfirmPassword">
+                    <input type="password" class="form-control" id="profileConfirmPassword"/>
                   </div>
                   <div class="form-group col-12">
                     <button type="button" class="btn btn-primary">Update profile</button>
