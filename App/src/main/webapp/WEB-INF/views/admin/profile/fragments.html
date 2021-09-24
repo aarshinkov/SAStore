@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <body>
+
+    <div id="submenu" th:remove="tag">
+      <!--Account nav-->
+      <ul class="nav nav-tabs nav-vertical mb-4 h-100">
+        <li class="nav-item">
+          <a href="#" th:href="@{/profile}" class="nav-link px-3 d-flex align-items-center" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'active'">
+            <i data-feather="user" class="fe-1x align-middle me-2"></i>
+            <span th:text="#{nav.profile}">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" th:href="@{/profile/roles}" class="nav-link px-3 d-flex align-items-center" th:classappend="${globalMenu eq 'profile' and submenu eq 'roles'} ? 'active'">
+            <i data-feather="lock" class="fe-1x align-middle me-2"></i>
+            <span th:text="#{nav.profile.roles}">User roles</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

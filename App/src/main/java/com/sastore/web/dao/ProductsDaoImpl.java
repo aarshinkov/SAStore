@@ -41,10 +41,10 @@ public class ProductsDaoImpl implements ProductsDao {
       cstmt.setInt(1, page);
       cstmt.setInt(2, limit);
 
-      if (filter.getProductId() == null) {
-        cstmt.setNull(3, Types.BIGINT);
+      if (StringUtils.isEmpty(filter.getProductId())) {
+        cstmt.setString(3, null);
       } else {
-        cstmt.setLong(3, filter.getProductId());
+        cstmt.setString(3, filter.getProductId());
       }
 
       if (StringUtils.isEmpty(filter.getTitle())) {

@@ -479,7 +479,8 @@ $input-btn-font-size-lg: $font-size-base * 1.125 !default;
 $btn-font-family:             $font-family-base !default;
 $btn-font-size:               $input-btn-font-size !default;
 $btn-font-weight:             $font-weight-normal !default;
-$btn-text-transform:         capitalize !default;
+// $btn-text-transform:         capitalize !default;
+$btn-text-transform:         none !default;
 $btn-letter-spacing:         -.011rem !default;
 
 

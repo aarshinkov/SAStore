@@ -1,0 +1,27 @@
+
+
+
+//
+// Switch
+//
+.form-check{
+  .form-check-input{
+    cursor: pointer;
+  }
+}
+.form-switch-label{
+  cursor: pointer;
+}
+.form-switch {
+    min-height: $form-switch-min-height;
+  }
+  .form-switch > .form-check-input {
+    cursor: pointer;
+    height: $form-switch-min-height;
+    margin-top: 0; // Form switch input height is always equal to the height of the switch
+  }
+  
+  .form-switch > .form-check-label {
+    margin-top: calc((#{$form-switch-min-height} - #{$line-height-base} * 1em) / 2);
+  }
+  

@@ -2,6 +2,9 @@ package com.sastore.web.base;
 
 import com.sastore.web.enums.Roles;
 import com.sastore.web.security.SecurityChecks;
+import com.sastore.web.services.SystemService;
+import com.sastore.web.utils.AppConstants;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,13 @@ public class Base {
   @Autowired
   private MessageSource messageSource;
 
+  @Autowired
+  private SystemService systemService;
+
+  protected String getLoggedUserId(HttpServletRequest request) {
+    return (String) systemService.getSessionAttribute(request, AppConstants.SESSION_USER_ID);
+  }
+
   protected Boolean hasSpecialRole() {
     return sc.hasRole(Roles.ADMIN.getRole()) || sc.hasRole(Roles.SALES.getRole()) || sc.hasRole(Roles.PRODUCTS.getRole()) || sc.hasRole(Roles.ORDERS.getRole());
   }
@@ -38,5 +48,9 @@ public class Base {
 
   protected boolean isLoggedIn() {
     return sc.isLoggedIn();
+  }
+
+  public String getEnvironment() {
+    return getMessage("env");
   }
 }

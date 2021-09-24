@@ -70,6 +70,12 @@ public class UsersController extends Base {
 
     model.addAttribute("limit", limit);
 
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.users", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("users.header"));
     model.addAttribute("globalMenu", "users");
 
     return "admin/users/dashboard";
@@ -102,6 +108,7 @@ public class UsersController extends Base {
 
     model.addAttribute("unassignedRoles", unassignedRoles);
 
+    model.addAttribute("pageTitle", user.getFullName());
     model.addAttribute("globalMenu", "users");
 
     return "admin/users/user";

@@ -9,10 +9,14 @@ import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
 import com.sastore.web.uploader.domain.FileName;
 import com.sastore.web.uploader.domain.ImageFolder;
+import com.sastore.web.utils.Breadcrumb;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,6 +59,14 @@ public class ProductsController extends Base {
       return "redirect:/admin/products?limit=10" + filter.getPagingParams();
     }
 
+    boolean isSearched = false;
+
+    if (!filter.isFilterEmpty()) {
+      isSearched = true;
+    }
+
+    model.addAttribute("isSearched", isSearched);
+
     ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
 
     model.addAttribute("products", products);
@@ -70,8 +82,14 @@ public class ProductsController extends Base {
 
     model.addAttribute("limit", limit);
 
-    model.addAttribute("submenu", "products");
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.title"));
     model.addAttribute("globalMenu", "products");
+    model.addAttribute("submenu", "products");
 
     return "admin/products/dashboard";
   }
@@ -83,6 +101,15 @@ public class ProductsController extends Base {
 
     model.addAttribute("product", product);
 
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products", null, LocaleContextHolder.getLocale()), "/admin/products"));
+    breadcrumbs.add(new Breadcrumb(product.getTitle(), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.title"));
+
+    model.addAttribute("pageTitle", product.getTitle());
     model.addAttribute("globalMenu", "products");
 
     return "admin/products/product";

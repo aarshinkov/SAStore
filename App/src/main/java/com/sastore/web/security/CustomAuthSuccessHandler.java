@@ -52,6 +52,8 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     session.setAttribute("user", names);
     session.setAttribute("userId", user.getUserId());
     session.setAttribute("email", email);
+    session.setAttribute("avatar", user.getAvatar());
+    session.setAttribute("roles", user.getRoles());
     session.setAttribute("createdOn", user.getCreatedOn());
 
     SavedRequest savedRequest = requestCache.getRequest(request, response);

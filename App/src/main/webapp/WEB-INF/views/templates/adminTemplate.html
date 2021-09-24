@@ -9,135 +9,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <!-- Font & Icon -->
-    <link rel="stylesheet" th:href="@{/resources/admin/font/inter/inter.min.css}"
-          href="../../resources/admin/font/inter/inter.min.css" id="font-css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css}"
-          href="../../resources/admin/plugins/material-design-icons-iconfont/material-design-icons.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/fontawesome-free/css/all.min.css}"
-          href="../../resources/admin/plugins/fontawesome-free/css/all.min.css"/>
-    <!-- Plugins -->
+    <!--Bootstrap icons-->
+    <link th:href="@{/resources/admin/fonts/bootstrap-icons/bootstrap-icons.css}" href="../../resources/admin/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- iconsmind icons CSS -->
+    <!--<link th:href="@{/resources/admin/fonts/iconsmind/iconsmind.css}" href="../../resources/admin/fonts/iconsmind/iconsmind.css" rel="stylesheet"/>-->
 
-    <!-- CSS plugins goes here -->
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/resources/admin/css/simplebar.min.css}" href="../../resources/admin/css/simplebar.min.css"/>
+    <link rel="stylesheet" th:href="@{/resources/admin/css/style.css}" href="../../resources/admin/css/style.css"/>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.2/tinymce.min.js" integrity="sha512-SPCExIkjTrrcv8Jfu4dzvDJfMe7A9CKmKE8v1fd+Ku3Dq5B9w8rfmrAHfz2RKU+4zOyT1JlprGA1bC2o8Z1yZA==" crossorigin="anonymous"></script>
-
-    <!-- Main Style -->
-    <link rel="stylesheet" th:href="@{/resources/admin/plugins/simplebar/simplebar.min.css}"
-          href="../../resources/admin/plugins/simplebar/simplebar.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/scss/style.css}" href="../../resources/admin/scss/style.css"/>
-    <link rel="stylesheet" th:href="@{/resources/admin/scss/sidebar-blue.css}" href="../../scss/sidebar-blue.css" id="theme-css"/>
-
-    <link rel="stylesheet" th:href="@{/resources/scss/style.css}" href="../../resources/scss/style.css"/>
-
-    <script th:src="@{/resources/admin/js/jquery.min.js}" src="../../resources/admin/js/jquery.min.js"></script>
   </head>
-  <body style="height: 100%; display: flex; flex-direction: column;">
-    <div th:insert="admin/fragments/fragments :: #sidebar"></div>
+  <body>
 
-    <!-- Main -->
-    <div class="main" style="height: 100%; display: flex; flex-direction: column;">
-      <div th:insert="admin/fragments/fragments :: #mainMenu"></div>
+    <!--////////////////// PreLoader Start//////////////////////-->
+    <div class="loader">
+      <!--Placeholder animated layout for preloader-->
+      <div class="d-flex flex-column flex-root">
+        <div class="page d-flex flex-row flex-column-fluid">
 
-      <!-- Main body -->
-      <div class="main-body" style="flex: 1 0 auto; min-height: auto;">
-        <nav aria-label="breadcrumb" class="main-breadcrumb" th:if="${breadcrumbs ne null}">
-          <ol class="breadcrumb">
-            <li th:each="b, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active'">
-              <a th:href="@{${b.url}}" th:if="${b.url ne null}" th:text="${b.label}">Item</a>
-              <span th:if="${b.url eq null}" th:text="${b.label}"></span>
-            </li>
-          </ol>
-        </nav>
+          <!--Sidebar start-->
+          <aside class="page-sidebar aside-dark placeholder-wave">
+            <div class="placeholder col-12 h-100 bg-dark"></div>
+          </aside>
+          <div class="page-content d-flex flex-column flex-row-fluid">
+            <div
+              class="content flex-column p-4 pb-0 d-flex justify-content-center align-items-center flex-column-fluid position-relative">
+              <div class="w-100 h-100 position-relative d-flex align-items-center justify-content-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader anim-spinner me-2"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>
+                <div>
+                  <span th:text="#{loading}">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--////////////////// /.PreLoader END//////////////////////-->
 
-        <div layout:fragment="contentDiv" th:remove="tag"></div>
+    <div th:insert="admin/fragments/fragments :: #mainMenu"></div>
+
+    <!--///////////Page content wrapper///////////////-->
+    <main class="page-content d-flex flex-column flex-row-fluid">
+
+      <div th:insert="admin/fragments/fragments :: #topheader"></div>
+
+      <div class="toolbar p-4 pb-0">
+        <div class="position-relative container-fluid px-0">
+          <div class="row align-items-center position-relative">
+            <div class="col-md-5 mb-3 mb-lg-0">
+              <h3 class="mb-2" th:if="${pageTitleType ne null and pageTitleType eq 'welcome'}">
+                <span class="fs-4 text-muted" th:text="#{admin.welcome}">Welcome back,</span>
+                <span th:text="${session.user}"></span>
+              </h3>
+              <h3 class="mb-2" th:if="${pageTitleType eq null or pageTitleType ne 'welcome'}">
+                <span th:text="${pageTitle}">Page title</span>
+              </h3>
+
+              <nav aria-label="breadcrumb" class="" th:if="${breadcrumbs ne null}">
+                <ol class="breadcrumb mb-0">
+                  <li th:each="b, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last or b.url eq null} ? 'active'">
+                    <i class="fas fa-user-circle" th:if="${iterStat.first}"></i>
+                    <a th:href="@{${b.url}}" th:if="${b.url ne null}" th:text="${b.label}">Item</a>
+                    <span th:if="${b.url eq null}" th:text="${b.label}"></span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <footer class="bg-white text-center text-lg-start shadow">
-        <!-- Copyright -->
-        <div class="text-center p-3">
-          <div th:insert="fragments/footer :: #copyright"></div>
+      <div class="content p-4 pb-0 d-flex flex-column-fluid position-relative">
+        <div class="container-fluid px-0 h-100">
+          <div layout:fragment="contentDiv" th:remove="tag"></div>
         </div>
-        <!-- Copyright -->
-      </footer>
-    </div>
-    <!-- /Main -->
+      </div>
 
-    <!-- Main Scripts -->
-    <script th:src="@{/resources/admin/js/bootstrap.bundle.min.js}" src="../../resources/admin/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/resources/admin/plugins/simplebar/simplebar.min.js}" src="../../resources/admin/plugins/simplebar/simplebar.min.js"></script>
-    <script th:src="@{/resources/admin/plugins/feather-icons/feather.min.js}" src="../../resources/admin/plugins/feather-icons/feather.min.js"></script>
-    <script th:src="@{/resources/admin/js/script.min.js}" src="../../resources/admin/js/script.min.js"></script>
+    </main>
 
-    <!-- Plugins -->
-    <script th:src="@{/resources/admin/plugins/chart.js/Chart.min.js}" src="../../resources/admin/plugins/chart.js/Chart.min.js"></script>
-    <script th:src="@{/resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js}" src="../../resources/admin/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-    <!--<script th:src="@{/resources/admin/plugins/jqvmap/jquery.vmap.min.js}" src="../../resources/admin/plugins/jqvmap/jquery.vmap.min.js"></script>-->
-    <!--<script th:src="@{/resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js}" src="../../resources/admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>-->
-
-    <script th:src="@{/resources/admin/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js}"
-    src="../../resources/admin/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js"></script>
-    <script>
-      $(() => {
-        App.checkAll()
-        // Run datatable
-        var table = $('#example').DataTable({
-          drawCallback: function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-sm') // make pagination small
-          }
-        })
-        // Apply column filter
-        $('#example .dt-column-filter th').each(function (i) {
-          $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
-              table
-                      .column(i)
-                      .search(this.value)
-                      .draw()
-            }
-          })
-        })
-        // Toggle Column filter function
-        var responsiveFilter = function (table, index, val) {
-          var th = $(table).find('.dt-column-filter th').eq(index)
-          val === true ? th.removeClass('d-none') : th.addClass('d-none')
-        }
-        // Run Toggle Column filter at first
-        $.each(table.columns().responsiveHidden(), function (index, val) {
-          responsiveFilter('#example', index, val)
-        })
-        // Run Toggle Column filter on responsive-resize event
-        table.on('responsive-resize', function (e, datatable, columns) {
-          $.each(columns, function (index, val) {
-            responsiveFilter('#example', index, val)
-          })
-        })
-      })
-    </script>
+    <script th:src="@{/resources/admin/js/feather.min.js}" src="../../resources/admin/js/feather.min.js"></script>
+    <script th:src="@{/resources/admin/js/theme.bundle.js}" src="../../resources/admin/js/theme.bundle.js"></script>
 
     <script>
-      $(() => {
-        function run_sparkline() {
-          $('.sparkline-data').text('').sparkline('html', {
-            width: '100%',
-            height: 20,
-            lineColor: gray,
-            fillColor: false,
-            tagValuesAttribute: 'data-value'
-          });
-        }
-
-        // Run sparkline on document view (window) resized
-        App.resize(() => {
-          run_sparkline()
-        })();
-        // Run sparkline on sidebar updated (toggle collapse)
-        document.addEventListener('sidebar:update', () => {
-          run_sparkline();
-        });
-      });
+      feather.replace()
     </script>
 
     <script>

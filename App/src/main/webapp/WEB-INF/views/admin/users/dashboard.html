@@ -56,28 +56,28 @@
               <h5 th:text="#{users.search.header}">Search</h5>
               <hr/>
               <form th:action="@{/admin/users}" action="#" method="GET" th:object="${filter}">
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.userid}">User ID</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                   </div>
-                  <div class="form-group col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.email}">Email</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.firstname}">First name</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
                   </div>
-                  <div class="form-group col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.lastname}">Last name</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.status}">Status</label>
                     <select class="form-control form-control-sm" th:field="*{isActive}">
                       <option value="" th:text="#{users.search.status.all}">- All -</option>
@@ -85,7 +85,7 @@
                       <option value="true" th:text="#{users.search.status.active}">Active</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.assignedrole}">Assigned role</label>
                     <select class="form-control form-control-sm" th:field="*{role}">
                       <option value=""th:text="#{users.search.assignedrole.all}" >- All -</option>
@@ -96,7 +96,7 @@
                       <option value="ORDERS" th:text="#{user.roles.ORDERS}">Orders</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.usersperpage}">Users per page</label>
                     <select class="form-control form-control-sm" name="limit">
                       <option value="5" th:selected="${limit eq 5}">5</option>
@@ -104,7 +104,7 @@
                       <option value="20" th:selected="${limit eq 20}">20</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.order}">Order</label>
                     <select class="form-control form-control-sm" th:field="*{order}">
                       <option value="ASC" th:selected="${order eq 'ASCENDING'}" th:text="#{users.search.order.asc}">Ascending</option>
@@ -124,7 +124,7 @@
                 <div class="d-flex">
                   <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
 
-                  <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                  <div class="d-flex ms-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
                     <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
                     <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
                     <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
@@ -159,19 +159,19 @@
                         </td>
                         <td th:text="${u.email}">joh.doe@gmail.com</td>
                         <td>
-                          <span class="badge badge-pill" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                          <span class="badge" th:classappend="${u.isActive} ? 'bg-success' : 'bg-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
                         </td>
                         <td>
                           <div th:each="r : ${u.roles}">
-                            <span class="badge badge-pill" th:text="#{user.roles. + ${r.rolename}}"
-                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary' :
-                                  (${r.rolename eq 'PRODUCTS'} ? 'badge-success' : (${r.rolename eq 'ORDERS'} ? 'badge-info'))))">Rolename</span>
+                            <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
+                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'bg-danger' :(${r.rolename eq 'SALES'} ? 'bg-warning' : (${r.rolename eq 'USER'} ? 'bg-primary' :
+                                  (${r.rolename eq 'PRODUCTS'} ? 'bg-success' : (${r.rolename eq 'ORDERS'} ? 'bg-info'))))">Rolename</span>
                           </div>
                         </td>
                         <td class="text-center">
-                          <a href="#" class="btn btn-xs btn-outline-danger" th:if="${session.user.userId ne u.userId}"
+                          <a href="#" class="btn btn-xs btn-outline-danger" th:if="${session.userId ne u.userId}"
                              data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
-                            <i class="fas fa-trash-alt"></i>
+                            <i data-feather="trash-2" class="fe-1x"></i>
                           </a>
                         </td>
                       </tr>

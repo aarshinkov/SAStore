@@ -101,7 +101,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Get products
-CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN bigint, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
+CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
 DECLARE
 	v_sql varchar;
 	v_where varchar;
@@ -112,9 +112,13 @@ BEGIN
 	v_sql_count := 'SELECT count(*) FROM products p ';
 	v_where := 'WHERE ';
 
-	IF ip_product_id IS NOT NULL THEN
-		v_where := v_where || 'product_id = ' || ip_product_id || ' ';
-		v_has_previous := 1;
+	IF ip_title IS NOT NULL THEN
+		IF v_has_previous = 1 THEN
+			v_where := v_where || 'AND lower(product_id) like ''%' || ip_product_id || '%'' ';
+		ELSE
+			v_where := v_where || 'lower(product_id) like ''%' || ip_product_id || '%'' ';
+			v_has_previous := 1;
+		END IF;
 	END IF;
 	
 	IF ip_title IS NOT NULL THEN

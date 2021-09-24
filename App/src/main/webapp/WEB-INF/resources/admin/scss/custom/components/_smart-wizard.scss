@@ -1,0 +1,27 @@
+//
+//Smart wizard
+//
+.sw>.nav .nav-link {
+    display: block;
+    padding: $nav-link-padding-y $nav-link-padding-x;
+}
+.sw .toolbar.toolbar-bottom{
+padding: $spacer * .5 0;
+display: flex;
+justify-content: space-between;
+}
+.sw .nav.nav-wizard{
+    .nav-link{  
+    padding: $spacer;
+        color: $body-color;
+        border-bottom: 2px solid transparent;
+        &.active{
+            border-bottom-color: $primary;
+            color: $primary;
+        }
+        &.done{
+            border-bottom-color: $success;
+            color: $success;
+        }
+    }
+}

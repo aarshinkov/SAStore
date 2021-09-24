@@ -42,6 +42,9 @@ public class UserEntity implements UserDetails, Serializable {
   @Column(name = "last_name")
   private String lastName;
 
+  @Column(name = "avatar")
+  private String avatar;
+
   @Column(name = "is_active")
   private Boolean isActive;
 

@@ -4,6 +4,7 @@ CREATE TABLE users(
 	password varchar(100) not null,
 	first_name varchar(100) not null,
 	last_name varchar(100),
+	avatar varchar(200) not null default 'user_default.png',
     is_active boolean not null default false,
 	created_on timestamp not null default NOW(),
 	edited_on timestamp
@@ -73,6 +74,8 @@ CREATE TABLE prod_images(
 
 CREATE TABLE addresses(
 	address_id varchar(100) not null primary key,
+	person_first_name varchar(200) not null,
+	person_last_name varchar(200) not null,
 	country varchar(10) not null default 'bg',
 	city varchar(100) not null,
 	district varchar(100),
@@ -81,4 +84,6 @@ CREATE TABLE addresses(
 	enter varchar(30),
 	floor int
 	apartment_no int
+	user_id varchar(100) references users(user_id),
+	is_default boolean not null default true
 );
