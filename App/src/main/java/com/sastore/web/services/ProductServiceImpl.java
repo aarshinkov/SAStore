@@ -26,6 +26,10 @@ public class ProductServiceImpl implements ProductService {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  private final String[] openTags = {"<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>", "<p>"};
+  private final String[] closeTags = {"</h1>", "</h2>", "</h3>", "</h4>", "</h5>", "</h6>", "</p>"};
+  private final String[] breakTags = {"<br>", "<br/>"};
+
   @Autowired
   private ProductsDao productsDao;
 
@@ -39,6 +43,12 @@ public class ProductServiceImpl implements ProductService {
   public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
 
     return productsDao.getProducts(page, limit, filter);
+  }
+
+  @Override
+  public ObjCollection<ProductEntity> getAdminProducts(Integer page, Integer limit, ProductFilter filter) {
+
+    return productsDao.getAdminProducts(page, limit, filter);
   }
 
   @Override
@@ -104,5 +114,32 @@ public class ProductServiceImpl implements ProductService {
 
     productImagesRepository.save(pi);
     productsRepository.save(product);
+  }
+
+  @Override
+  public String getFirstParagraph(String description) {
+    
+    final String[] split = description.split("((</)\\w+(>))");
+
+    return split[0].replaceAll("((<)\\w+(>))", "");
+  }
+
+  @Override
+  public String getProductDescriptionFormatted(String description) {
+
+    for (String tag : openTags) {
+      description = description.replace(tag, "");
+    }
+
+    for (String tag : closeTags) {
+      description = description.replace(tag, "<br/>");
+    }
+
+    return description;
+  }
+
+  @Override
+  public String getProductDescriptionNonFormatted(String description) {
+    return description;
   }
 }

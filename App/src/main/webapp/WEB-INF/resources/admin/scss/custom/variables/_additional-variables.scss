@@ -7,7 +7,8 @@ $letter-spacing-base:.005rem;
 $letter-spacing-headings:.01rem;
 
 //buttons
-$btn-text-transform:         capitalize;
+// $btn-text-transform:         capitalize;
+$btn-text-transform:         none;
 $btn-font-family:          null;
 $btn-font-weight:         $font-weight-normal;
 

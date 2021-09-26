@@ -14,15 +14,50 @@
               <div class="col-12 col-md-6 ms-auto text-end">
                 <div class="d-flex justify-content-end align-items-center">
                   <div class="dropdown me-4" th:with="lang=#{lang.curr}">
-                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{nav.lang. + #{lang.curr}}">Eng</a>
+                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="flag-icon me-1" th:classappend="'flag-icon-' + #{flag.curr}"></i>
+                      <span th:text="#{nav.lang. + #{lang.curr}}">English</span>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-end mt-1">
-                      <a href="?lang=en" class="dropdown-item active" th:classappend="${lang eq 'en'} ? 'active'">
+                      <a href="?lang=en" class="dropdown-item" th:classappend="${lang eq 'en'} ? 'active'">
+                        <i class="flag-icon flag-icon-gb me-1"></i>
                         <small th:text="#{nav.lang.en}">English</small>
                         <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'en'}"></i>
                       </a>
                       <a href="?lang=bg" class="dropdown-item" th:classappend="${lang eq 'bg'} ? 'active'">
+                        <i class="flag-icon flag-icon-bg me-1"></i>
                         <small th:text="#{nav.lang.bg}">Bulgarian</small>
                         <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'bg'}"></i>
+                      </a>
+                      <a href="?lang=fr" class="dropdown-item" th:classappend="${lang eq 'fr'} ? 'active'">
+                        <i class="flag-icon flag-icon-fr me-1"></i>
+                        <small th:text="#{nav.lang.fr}">French</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'fr'}"></i>
+                      </a>
+                      <a href="?lang=de" class="dropdown-item" th:classappend="${lang eq 'de'} ? 'active'">
+                        <i class="flag-icon flag-icon-de me-1"></i>
+                        <small th:text="#{nav.lang.de}">German</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'de'}"></i>
+                      </a>
+                      <a href="?lang=es" class="dropdown-item" th:classappend="${lang eq 'es'} ? 'active'">
+                        <i class="flag-icon flag-icon-es me-1"></i>
+                        <small th:text="#{nav.lang.es}">Spanish</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'es'}"></i>
+                      </a>
+                      <a href="?lang=it" class="dropdown-item" th:classappend="${lang eq 'it'} ? 'active'">
+                        <i class="flag-icon flag-icon-it me-1"></i>
+                        <small th:text="#{nav.lang.it}">Italian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'it'}"></i>
+                      </a>
+                      <a href="?lang=ru" class="dropdown-item" th:classappend="${lang eq 'ru'} ? 'active'">
+                        <i class="flag-icon flag-icon-ru me-1"></i>
+                        <small th:text="#{nav.lang.ru}">Russian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'ru'}"></i>
+                      </a>
+                      <a href="?lang=zh" class="dropdown-item" th:classappend="${lang eq 'zh'} ? 'active'">
+                        <i class="flag-icon flag-icon-cn me-1"></i>
+                        <small th:text="#{nav.lang.zh}">Chinese</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'zh'}"></i>
                       </a>
                     </div>
                   </div>
@@ -286,6 +321,10 @@
                 <a class="dropdown-item" href="?lang=bg" th:classappend="${lang eq 'bg'} ? 'active'">
                   <span class="flag-icon flag-icon-bg icon-width-2"></span>
                   <span th:text="#{nav.lang.bg}">Bulgarian</span>
+                </a>
+                <a class="dropdown-item" href="?lang=zh" th:classappend="${lang eq 'zh'} ? 'active'">
+                  <span class="flag-icon flag-icon-zh icon-width-2"></span>
+                  <span th:text="#{nav.lang.zh}">Chinese</span>
                 </a>
               </div>
             </div>

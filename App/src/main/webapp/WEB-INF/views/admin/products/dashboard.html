@@ -70,7 +70,7 @@
                       <tr>
                         <th scope="col" th:text="#{products.item.id}">ID</th>
                         <th scope="col" th:text="#{products.item.title}">Title</th>
-                        <th scope="col" th:text="#{products.item.price}">Price</th>
+                        <th scope="col" th:text="#{products.item.price}">Current price</th>
                         <th scope="col" th:text="#{products.item.quantity}">Quantity</th>
                         <th scope="col" th:text="#{products.item.views}">Views</th>
                         <th scope="col" th:text="#{products.item.status}">Status</th>
@@ -86,13 +86,14 @@
                         </td>
                         <td th:text="${p.title}">Product 1</td>
                         <td>
-                          <span th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
+                          <span th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
+                          <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}"
+                                th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'" th:if="${p.discount ne 0}">23.60</span>
                         </td>
                         <td th:text="#{quant(${#numbers.formatDecimal(p.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">23</td>
                         <td th:text="${#numbers.formatDecimal(p.views, 1, 'WHITESPACE', 0, 'DEFAULT')}">44</td>
                         <td>
-                          <span class="badge" th:classappend="${p.status eq 0} ? 'bg-success' : (${p.status eq 1} ? 'bg-warning' : (${p.status eq 2} ? 'bg-secondary' : (${p.status eq 3} ? 'bg-danger')))"
-                                th:text="#{product.status. + ${p.status}}"></span>
+                          <span class="badge" th:classappend="${p.status eq 0} ? 'bg-success' : (${p.status eq 1} ? 'bg-warning' : (${p.status eq 2} ? 'bg-secondary' : (${p.status eq 3} ? 'bg-danger')))" th:text="#{product.status. + ${p.status}}"></span>
                         </td>
                         <td>
                           <span th:text="${#dates.format(p.addedOn, #messages.msg('format.datetime4'))}"></span>

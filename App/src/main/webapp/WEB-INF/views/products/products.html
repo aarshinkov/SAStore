@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title('Home')}">Home</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+      <div class="row">
+        <div class="col-12 col-md-2">
+          Something
+        </div>
+        <div class="col-12 col-md-10">
+          <div class="row">
+            <div class="col-12">
+              <p>Products</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="p : ${products.collection}">
+              <div class="card card-hover-expand">
+                <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="add to wishlist">
+                  <i class="bi bi-suit-heart"></i>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-success position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" th:if="${p.discount ne 0}"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="" th:data-bs-original-title="${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
+                  <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                </button>
+                <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${p.productId})}">
+                  <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"></a>
+                <div class="card-body pt-0 bg-white">
+                  <a class="text-muted d-block small pb-1" href="#!">Category</a>
+                  <h3 class="fs-5"><a class="text-dark" href="#!" th:text="${p.title}">Title</a></h3>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <span class="text-dark small fw-bold">
+                        <span th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">85 lv.</span>
+                        <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${p.discount ne 0}">52.22 lv.</del>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body card-body-expand">
+                  <div class="d-grid text-center">
+                    <a class="btn btn-primary mb-2 shadow-sm btn-sm" href="#!">
+                      <i class="icon-Add-Cart"></i>
+                      <span>Add to cart</span>
+                    </a>
+                    <a class="btn btn-light border shadow-sm btn-sm" href="#" th:href="@{/product(id=${p.productId})}">
+                      <i class="icon-Eye-Visible"></i>
+                      <span>View details</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

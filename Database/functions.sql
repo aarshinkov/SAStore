@@ -100,48 +100,45 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Get products
-CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
-DECLARE
-	v_sql varchar;
-	v_where varchar;
-	v_sql_count varchar;
-	v_has_previous int := 0;
+-- Get admin products
+CREATE OR REPLACE FUNCTION get_products_admin(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
 BEGIN
-	v_sql := 'SELECT * FROM products p ';
-	v_sql_count := 'SELECT count(*) FROM products p ';
-	v_where := 'WHERE ';
-
-	IF ip_title IS NOT NULL THEN
-		IF v_has_previous = 1 THEN
-			v_where := v_where || 'AND lower(product_id) like ''%' || ip_product_id || '%'' ';
-		ELSE
-			v_where := v_where || 'lower(product_id) like ''%' || ip_product_id || '%'' ';
-			v_has_previous := 1;
-		END IF;
-	END IF;
-	
-	IF ip_title IS NOT NULL THEN
-		IF v_has_previous = 1 THEN
-			v_where := v_where || 'AND lower(title) like ''%' || ip_title || '%'' ';
-		ELSE
-			v_where := v_where || 'lower(title) like ''%' || ip_title || '%'' ';
-			v_has_previous := 1;
-		END IF;
-	END IF;
-	
-	IF v_has_previous <> 0 THEN
-		v_sql := v_sql || v_where;
-		v_sql_count := v_sql_count || v_where;
-	END IF;
-	
-	EXECUTE v_sql_count INTO op_all_rows;
-	
-	v_sql := v_sql || 'ORDER BY added_on DESC LIMIT ' || ip_product_count || ' OFFSET ' || (ip_page_number - 1) * ip_product_count;
+	SELECT COUNT(*)
+	INTO op_all_rows
+	FROM products p
+	WHERE LOWER(product_id) LIKE '%' || COALESCE(ip_product_id, LOWER(product_id)) || '%'
+	AND LOWER(title) LIKE '%' || COALESCE(ip_title, LOWER(title)) || '%';
 	
 	op_all_products := get_products_count();
+
+	OPEN saCursor FOR
+	SELECT *
+	FROM products p
+	WHERE LOWER(product_id) LIKE '%' || COALESCE(ip_product_id, LOWER(product_id)) || '%'
+	AND LOWER(title) LIKE '%' || COALESCE(ip_title, LOWER(title)) || '%'
+	ORDER BY p.added_on DESC LIMIT ip_product_count OFFSET (ip_page_number - 1) * ip_product_count;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Get products
+CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
+BEGIN
+	SELECT COUNT(*)
+	INTO op_all_rows
+	FROM products p
+	WHERE LOWER(product_id) LIKE '%' || COALESCE(ip_product_id, LOWER(product_id)) || '%'
+	AND LOWER(title) LIKE '%' || COALESCE(ip_title, LOWER(title)) || '%'
+	AND status = 0;
 	
-	OPEN saCursor FOR EXECUTE v_sql;
+	op_all_products := get_products_count();
+
+	OPEN saCursor FOR
+	SELECT *
+	FROM products p
+	WHERE LOWER(product_id) LIKE '%' || COALESCE(ip_product_id, LOWER(product_id)) || '%'
+	AND LOWER(title) LIKE '%' || COALESCE(ip_title, LOWER(title)) || '%'
+	AND status = 0
+	ORDER BY p.added_on DESC LIMIT ip_product_count OFFSET (ip_page_number - 1) * ip_product_count;
 END;
 $$ LANGUAGE plpgsql;
 

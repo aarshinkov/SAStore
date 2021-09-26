@@ -13,6 +13,8 @@ import com.sastore.web.uploader.domain.FileName;
 public interface ProductService {
 
   ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
+  
+  ObjCollection<ProductEntity> getAdminProducts(Integer page, Integer limit, ProductFilter filter);
 
   ProductEntity getProductByProductId(String productId);
 
@@ -25,4 +27,11 @@ public interface ProductService {
   void deleteProduct(String productId) throws Exception;
 
   void addImage(FileName file, String productId) throws Exception;
+  
+  // Utils
+  String getFirstParagraph(String description);
+  
+  String getProductDescriptionFormatted(String description);
+  
+  String getProductDescriptionNonFormatted(String description);
 }

@@ -40,14 +40,70 @@ public class ProductsController extends Base {
   private Uploader uploader;
 
   @GetMapping(value = "/products")
-  public String getProducts(@RequestParam(name = "id") String productId, Model model) {
+  public String getProducts(@ModelAttribute("filter") ProductFilter filter,
+          @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+          @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+
+    if (page <= 0) {
+      return "redirect:/products?page=1" + filter.getPagingParams();
+    }
+
+    if (limit <= 0) {
+      return "redirect:/products?limit=10" + filter.getPagingParams();
+    }
+
+    ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
+
+    model.addAttribute("products", products);
+
+    String otherParams = "";
+
+    otherParams = "&limit=" + limit;
+
+    model.addAttribute("otherParameters", otherParams);
+
+    model.addAttribute("pageWrapper", products.getPage());
+    model.addAttribute("maxPagesPerView", 3);
+
+    model.addAttribute("limit", limit);
+
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.products", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.title"));
+    model.addAttribute("globalMenu", "products");
+    model.addAttribute("submenu", "products");
+
+    return "products/products";
+  }
+
+  @GetMapping(value = "/product")
+  public String getProduct(@RequestParam("id") String productId, Model model) {
+
+    ProductEntity product = productService.getProductByProductId(productId);
+    
+    product.setFormattedDescription(productService.getFirstParagraph(product.getDescription()));
+
+    model.addAttribute("product", product);
+    
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.products", null, LocaleContextHolder.getLocale()), "/products"));
+    breadcrumbs.add(new Breadcrumb(product.getTitle(), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.title"));
+    model.addAttribute("globalMenu", "products");
+    model.addAttribute("submenu", "products");
 
     return "products/product";
   }
 
   // ADMIN
   @GetMapping("/admin/products")
-  public String getProducts(@ModelAttribute("filter") ProductFilter filter,
+  public String getAdminProducts(@ModelAttribute("filter") ProductFilter filter,
           @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
           @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
 
@@ -67,7 +123,7 @@ public class ProductsController extends Base {
 
     model.addAttribute("isSearched", isSearched);
 
-    ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
+    ObjCollection<ProductEntity> products = productService.getAdminProducts(page, limit, filter);
 
     model.addAttribute("products", products);
 
@@ -121,6 +177,13 @@ public class ProductsController extends Base {
 
     model.addAttribute("pcm", new ProductCreateModel());
 
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products", null, LocaleContextHolder.getLocale()), "/admin/products"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products.new", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.new.header"));
     model.addAttribute("globalMenu", "products");
 
     return "admin/products/new";
@@ -214,24 +277,26 @@ public class ProductsController extends Base {
   @PostMapping("/admin/products/image/new")
   public String createImage(@RequestParam("file") MultipartFile file,
           @RequestParam("productId") String productId,
+          @RequestParam(name = "isMain", required = false, defaultValue = "false") Boolean isMain,
           RedirectAttributes redirectAttributes) {
 
     log.debug("Uploading image");
+    log.debug("isMain: " + isMain);
 
     FileName name = null;
 
-    try {
-      name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.PRODUCTS);
-
-      productService.addImage(name, productId);
-
-      redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
-
-    } catch (Exception e) {
-      log.error("Error uploading a file!", e);
-
-      redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
-    }
+//    try {
+//      name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.PRODUCTS);
+//
+//      productService.addImage(name, productId);
+//
+//      redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
+//
+//    } catch (Exception e) {
+//      log.error("Error uploading a file!", e);
+//
+//      redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
+//    }
 
     return "redirect:/admin/products?id=" + productId;
   }

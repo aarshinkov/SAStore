@@ -19114,7 +19114,7 @@ a:not(.nav-link):not(.btn):not(.dropdown-item):not(.badge).text-muted:hover {
 }
 
 .btn {
-  text-transform: capitalize;
+  text-transform: none;
   font-weight: 400;
 }
 

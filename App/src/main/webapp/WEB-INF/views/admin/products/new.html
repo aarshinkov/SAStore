@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/adminTemplate}">
   <head>
-    <title th:text="#{app.title('New product')}">New product</title>
+    <title th:text="#{app.title(#{products.new.title})}">New product</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
@@ -18,21 +18,21 @@
                 <h5>Creating a new product</h5>
                 <hr/>
 
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-4">
+                <div class="row">
+                  <div class="col-12 col-md-4 mb-3">
                     <label>Title</label>
                     <input type="text" class="form-control" th:field="*{title}"
                            th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"/>
                     <span class="invalid-feedback" th:errors="*{title}">Error</span>
                   </div>
-                  <div class="form-group col-12 col-md-4">
+                  <div class="col-12 col-md-4 mb-3">
                     <label>Price <small class="text-muted">(in leva)</small></label>
                     <input type="number" class="form-control" min="0.01"
                            value="1.00" step="0.01" th:field="*{price}"
                            th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'"/>
                     <span class="invalid-feedback" th:errors="*{price}">Error</span>
                   </div>
-                  <div class="form-group col-12 col-md-4">
+                  <div class="col-12 col-md-4 mb-3">
                     <label>Available quantity</label>
                     <input type="number" min="1" class="form-control"
                            value="1" th:field="*{availableQuantity}"
@@ -40,7 +40,7 @@
                     <span class="invalid-feedback" th:errors="*{availableQuantity}">Error</span>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Description</label>
                   <textarea class="form-control md-textarea" style="min-height: 400px;" th:field="*{description}"
                             th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"></textarea>
