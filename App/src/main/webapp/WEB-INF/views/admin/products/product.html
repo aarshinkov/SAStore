@@ -216,8 +216,12 @@
                                                      data-target="#newImageModal" style="cursor: pointer;">
                                                     <img class="img-thumbnail" src="#" th:src="@{/resources/img/img_add.jpg}" alt="..."/>
                                                 </div>-->
-                <div class="col-12 col-lg-2" th:if="${product.mainImage ne null}">
+                <div class="col-12 col-lg-2 position-relative" th:if="${product.mainImage ne null}">
+                  <span class="badge bg-danger ms-2 mt-2 position-absolute rounded-pill top-0">Main image</span>
                   <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${product.mainImage}"/>
+                </div>
+                <div class="col-12 col-lg-2" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                  <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${image.imageId}"/>
                 </div>
               </div>
             </div>
@@ -232,15 +236,19 @@
               <h5 class="modal-title" id="newImageModalLabel" th:text="#{product.images.add.header}">Add an image</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/admin/products/image/new}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/products/image/new}" method="post" th:object="${picm}" enctype="multipart/form-data">
               <div class="modal-body">
                 <div class="mb-2" th:utext="#{product.images.add.message(${product.title})}">Add image to product</div>
 
                 <div class="mb-2">
                   <label class="col-form-label" th:text="#{product.images.add.image}">Image</label>
-                  <input name="file" type="file" class="form-control" id="fileUploadInput"/>
+                  <input th:field="*{file}" type="file" class="form-control" id="fileUploadInput"/>
                 </div>
-                <input name="productId" type="hidden" th:value="${product.productId}"/>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" th:field="*{isMain}"/>
+                  <label class="form-check-label">Make main</label>
+                </div>
+                <input th:field="*{productId}" type="hidden"/>
               </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">

@@ -3,8 +3,10 @@ package com.sastore.web.controllers;
 import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
+import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.filters.ProductFilter;
 import com.sastore.web.models.ProductCreateModel;
+import com.sastore.web.models.ProductImageCreateModel;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
 import com.sastore.web.uploader.domain.FileName;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -83,11 +84,15 @@ public class ProductsController extends Base {
   public String getProduct(@RequestParam("id") String productId, Model model) {
 
     ProductEntity product = productService.getProductByProductId(productId);
-    
+
     product.setFormattedDescription(productService.getFirstParagraph(product.getDescription()));
 
     model.addAttribute("product", product);
     
+    List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
+    
+    model.addAttribute("images", images);
+
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
     breadcrumbs.add(new Breadcrumb(getMessage("nav.products", null, LocaleContextHolder.getLocale()), "/products"));
@@ -167,6 +172,14 @@ public class ProductsController extends Base {
 
     model.addAttribute("pageTitle", product.getTitle());
     model.addAttribute("globalMenu", "products");
+
+    ProductImageCreateModel picm = new ProductImageCreateModel();
+    picm.setProductId(productId);
+    model.addAttribute("picm", picm);
+    
+    List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
+    
+    model.addAttribute("images", images);
 
     return "admin/products/product";
 
@@ -275,29 +288,27 @@ public class ProductsController extends Base {
   }
 
   @PostMapping("/admin/products/image/new")
-  public String createImage(@RequestParam("file") MultipartFile file,
-          @RequestParam("productId") String productId,
-          @RequestParam(name = "isMain", required = false, defaultValue = "false") Boolean isMain,
+  public String createImage(@ModelAttribute("picm") ProductImageCreateModel picm,
           RedirectAttributes redirectAttributes) {
 
     log.debug("Uploading image");
-    log.debug("isMain: " + isMain);
+    log.debug("isMain: " + picm.getIsMain());
 
     FileName name = null;
 
-//    try {
-//      name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.PRODUCTS);
-//
-//      productService.addImage(name, productId);
-//
-//      redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
-//
-//    } catch (Exception e) {
-//      log.error("Error uploading a file!", e);
-//
-//      redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
-//    }
+    try {
+      name = uploader.uploadFile(picm.getFile().getBytes(), picm.getFile().getOriginalFilename(), ImageFolder.PRODUCTS);
 
-    return "redirect:/admin/products?id=" + productId;
+      productService.addImage(name, picm);
+
+      redirectAttributes.addFlashAttribute("msgSuccess", "product.image.add.success");
+
+    } catch (Exception e) {
+      log.error("Error uploading a file!", e);
+
+      redirectAttributes.addFlashAttribute("msgError", "product.image.add.error");
+    }
+
+    return "redirect:/admin/products?id=" + picm.getProductId();
   }
 }

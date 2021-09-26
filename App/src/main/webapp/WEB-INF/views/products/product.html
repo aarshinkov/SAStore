@@ -25,15 +25,9 @@
                         <div class="swiper-slide w-100">
                           <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
                         </div>
-                        <!-- Slides -->
-                        <div class="swiper-slide w-100">
-                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
+                        <div class="swiper-slide w-100" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                          <img th:src="@{~/images/products/} + ${image.imageId}" alt="" class="img-fluid"/>
                         </div>
-                        <!-- Slides -->
-                        <div class="swiper-slide w-100">
-                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
-                        </div>
-
                       </div>
                     </div>
                   </div>
@@ -43,16 +37,11 @@
                       <!-- Additional required wrapper -->
                       <div class="swiper-wrapper">
                         <!-- Slides -->
-                        <div class="swiper-slide">
+                        <div class="swiper-slide d-flex justify-content-center">
                           <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
                         </div>
-                        <!-- Slides -->
-                        <div class="swiper-slide">
-                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
-                        </div>
-                        <!-- Slides -->
-                        <div class="swiper-slide">
-                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
+                        <div class="swiper-slide d-flex justify-content-center" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                          <img th:src="@{~/images/products/} + ${image.imageId}" alt="" class="img-fluid"/>
                         </div>
                       </div>
                       <!-- Swiper Navigation buttons (Remove it if you have to) -->

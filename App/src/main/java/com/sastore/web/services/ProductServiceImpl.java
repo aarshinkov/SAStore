@@ -7,14 +7,17 @@ import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.enums.ProductStatuses;
 import com.sastore.web.filters.ProductFilter;
 import com.sastore.web.models.ProductCreateModel;
+import com.sastore.web.models.ProductImageCreateModel;
 import com.sastore.web.repositories.ProductImagesRepository;
 import com.sastore.web.repositories.ProductsRepository;
 import com.sastore.web.uploader.domain.FileName;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,6 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
   @Autowired
   private ProductImagesRepository productImagesRepository;
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @Override
   public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
@@ -99,16 +105,26 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public void addImage(FileName file, String productId) throws Exception {
+  public List<ProductImageEntity> getProductAdditionalImages(String productId) {
+
+    return productImagesRepository.findAllByProductProductId(productId);
+  }
+
+  @Override
+  public void addImage(FileName file, ProductImageCreateModel picm) throws Exception {
 
     ProductImageEntity pi = new ProductImageEntity();
     pi.setImageId(file.getFullName());
+    pi.setIsMain(picm.getIsMain());
 
-    //TODO implement is main logic
-    pi.setIsMain(true);
+    ProductEntity product = productsRepository.findByProductId(picm.getProductId());
 
-    ProductEntity product = productsRepository.findByProductId(productId);
-    product.setMainImage(file.getFullName());
+    if (picm.getIsMain()) {
+      product.setMainImage(file.getFullName());
+
+      final String updateMainImage = "UPDATE prod_images SET is_main = false WHERE product_id = ? AND image_id != ?";
+      jdbcTemplate.update(updateMainImage, picm.getProductId(), file.getFullName());
+    }
 
     pi.setProduct(product);
 
@@ -118,7 +134,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public String getFirstParagraph(String description) {
-    
+
     final String[] split = description.split("((</)\\w+(>))");
 
     return split[0].replaceAll("((<)\\w+(>))", "");

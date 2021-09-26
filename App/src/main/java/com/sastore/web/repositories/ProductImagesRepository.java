@@ -1,6 +1,7 @@
 package com.sastore.web.repositories;
 
 import com.sastore.web.entities.ProductImageEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductImagesRepository extends JpaRepository<ProductImageEntity, String> {
 
+  List<ProductImageEntity> findAllByProductProductId(String productId);
 }

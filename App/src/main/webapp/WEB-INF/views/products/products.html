@@ -32,10 +32,13 @@
                   <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
                 </button>
                 <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${p.productId})}">
-                  <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"></a>
+                  <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"/>
+                </a>
                 <div class="card-body pt-0 bg-white">
                   <a class="text-muted d-block small pb-1" href="#!">Category</a>
-                  <h3 class="fs-5"><a class="text-dark" href="#!" th:text="${p.title}">Title</a></h3>
+                  <h3 class="fs-5">
+                    <a class="text-dark" href="#!" th:text="${p.title}">Title</a>
+                  </h3>
                   <div class="d-flex justify-content-between">
                     <div>
                       <span class="text-dark small fw-bold">
