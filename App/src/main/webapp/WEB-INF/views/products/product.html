@@ -80,12 +80,10 @@
                 <p class="mb-0" th:text="${#strings.substring(product.formattedDescription, 0, 300)} + '...'" th:if="${#strings.length(product.formattedDescription)} gt 300">Description</p>
 
               </div>
-              <div class="mb-4 pb-4 border-bottom">
+              <div class="mb-4 pb-4 border-bottom" th:if="${product.availableQuantity ne 0}">
                 <h6 class="mb-3">Quantity</h6>
                 <div class="quantity d-flex">
-                  <input type="number" th:max="${product.availableQuantity}" min="1" name="qty"
-                         class="form-control rounded-3 width-60 pe-1 ps-2 form-control-sm wd-40 text-center mx-1"
-                         value="1"/>
+                  <input type="number" th:max="${product.availableQuantity}" min="1" name="qty" class="form-control rounded-3 width-60 pe-1 ps-2 form-control-sm wd-40 text-center mx-1" value="1"/>
                 </div>
               </div>
               <div class="mb-4 pb-4 border-bottom">
@@ -130,14 +128,10 @@
               <!--/.size-->
 
               <div class="mb-4 pb-4 border-bottom">
-                <strong class="text-muted d-flex align-items-center small">
-                  <svg class="me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="12"
-                       height="12" viewBox="0 0 8 8">
-                    <path
-                      d="M2 0v1h1v.03c-1.7.24-3 1.71-3 3.47 0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5c0-.45-.1-.87-.25-1.25l-.91.38c.11.29.16.57.16.88 0 1.39-1.11 2.5-2.5 2.5s-2.5-1.11-2.5-2.5 1.11-2.5 2.5-2.5c.3 0 .59.05.88.16l.34-.94c-.23-.08-.47-.12-.72-.16v-.06h1v-1h-3zm5 1.16s-3.65 2.81-3.84 3c-.19.2-.19.49 0 .69.19.2.49.2.69 0 .2-.2 3.16-3.69 3.16-3.69z">
-                    </path>
-                  </svg>
-                  In Stock &amp; ready to ship</strong>
+                <h4 class="icon-Basket-Items d-inline me-1"></h4>
+                <strong class="text-muted" th:text="#{product.instock.0}" th:if="${product.availableQuantity eq 0}">No pieces in stock.</strong>
+                <strong class="text-muted" th:text="#{product.instock.1}" th:if="${product.availableQuantity eq 1}">1 piece in stock.</strong>
+                <strong class="text-muted" th:text="#{product.instock.n(${product.availableQuantity})}" th:if="${product.availableQuantity gt 1}">3 pieces in stock.</strong>
               </div>
               <div class="mb-4 pb-4 border-bottom">
                 <h6 class="mb-3">Color</h6>
@@ -168,8 +162,9 @@
               </div>
 
               <div class="d-grid">
-                <a href="#" class="btn btn-primary hover-lift">
-                  <svg viewBox="0 0 24 24" class="me-2" width="24" height="24" fill="currentColor"><circle cx="6" cy="19" r="2"></circle><circle cx="16" cy="19" r="2"></circle><path d="M19.997 7H7.13l-.885-2.352A1 1 0 0 0 5.308 4H2v2h2.628L5 7l2.368 7.103a2 2 0 0 0 2.53 1.265l8.734-2.912A2 2 0 0 0 20 10.557z"></path></svg> Add to Bag
+                <a href="#" class="btn btn-primary hover-lift" th:classappend="${product.availableQuantity eq 0} ? 'disabled'">
+                  <i class="icon-Add-Cart fs-4 me-2"></i>
+                  <span>Add to cart</span>
                 </a>
               </div>
               <!--/.cart-action-->
