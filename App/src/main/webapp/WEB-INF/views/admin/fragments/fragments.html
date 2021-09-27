@@ -93,7 +93,7 @@
               </div>
             </a>
 
-            <div class="dropdown-menu mt-0 dropdown-menu-end overflow-hidden">
+            <div class="dropdown-menu mt-0 dropdown-menu-end overflow-hidden" th:with="lang=#{lang.curr}">
               <a href="?lang=en" class="dropdown-item" th:classappend="${lang eq 'en'} ? 'active'">
                 <i class="flag-icon flag-icon-gb me-1"></i>
                 <small th:text="#{nav.lang.en}">English</small>

@@ -169,7 +169,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <a href="#" class="btn btn-xs btn-outline-danger" th:if="${session.userId ne u.userId}"
+                          <a href="#" class="text-danger px-2 py-1" th:if="${session.userId ne u.userId}"
                              data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
                             <i data-feather="trash-2" class="fe-1x"></i>
                           </a>
