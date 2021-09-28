@@ -89,6 +89,8 @@ public class ProductsController extends Base {
 
     model.addAttribute("product", product);
     
+    productService.registerProductView(product);
+    
     List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
     
     model.addAttribute("images", images);

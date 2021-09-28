@@ -16,10 +16,15 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img th:src="@{/resources/img/default.jpg}" src="#" alt="Admin" th:if="${product.mainImage eq null}"
-                     class="img-thumbnail" width="180"/>
-                <img th:src="@{~/images/products/} + ${product.mainImage}" src="#" alt="Admin" th:if="${product.mainImage ne null}"
-                     class="img-thumbnail" width="180"/>
+                <div class="position-relative">
+                  <img th:src="@{/resources/img/default.jpg}" src="#" alt="Admin" th:if="${product.mainImage eq null}"
+                       class="img-thumbnail" width="180"/>
+                  <img th:src="@{~/images/products/} + ${product.mainImage}" src="#" alt="Admin" th:if="${product.mainImage ne null}"
+                       class="img-thumbnail" width="180"/>
+                  <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-n2 z-index-1 btn-sm" type="button">
+                    <span th:text="#{products.item.newItem}">New product</span>
+                  </button>
+                </div>
                 <div class="mt-3">
                   <h5 th:text="${product.title}">Product title</h5>
                   <div class="mb-2" th:if="${product.status eq 1}">

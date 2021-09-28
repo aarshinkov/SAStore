@@ -16,7 +16,10 @@ import org.thymeleaf.util.StringUtils;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -78,6 +81,18 @@ public class ProductsDaoImpl implements ProductsDao {
         product.setMainImage(rset.getString("main_image"));
         product.setAddedOn(rset.getTimestamp("added_on"));
         product.setEditedOn(rset.getTimestamp("edited_on"));
+        product.setApprovedOn(rset.getTimestamp("approved_on"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(product.getApprovedOn());
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        Date expiryDate = cal.getTime();
+
+        if (new Date().before(expiryDate)) {
+          product.setIsNew(true);
+        } else {
+          product.setIsNew(false);
+        }
 
         collection.getCollection().add(product);
       }
@@ -107,7 +122,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
     return null;
   }
-  
+
   @Override
   public ObjCollection<ProductEntity> getAdminProducts(Integer page, Integer limit, ProductFilter filter) {
     try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
@@ -155,6 +170,7 @@ public class ProductsDaoImpl implements ProductsDao {
         product.setMainImage(rset.getString("main_image"));
         product.setAddedOn(rset.getTimestamp("added_on"));
         product.setEditedOn(rset.getTimestamp("edited_on"));
+        product.setApprovedOn(rset.getTimestamp("approved_on"));
 
         collection.getCollection().add(product);
       }

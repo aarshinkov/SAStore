@@ -11,13 +11,62 @@
       <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
       <div class="row">
-        <div class="col-12 col-md-2">
-          Something
+        <div class="col-12 col-md-3">
+          <div class="card rounded-3 p-0 overflow-hidden shadow-sm card-body mb-4">
+            <!--:Title-->
+            <div class="d-flex p-3 border-bottom align-items-center">
+              <h6 class="me-3 mb-0">Categories</h6>
+              <div class="pt-1 flex-grow-1 bg-tint-info"></div>
+            </div>
+            <!--:Collapse categories-->
+            <div class="collapse-group px-3 py-2 collapse d-flex flex-column">
+              <div class="collapse d-block">
+                <div class="nav flex-column">
+                  <a href="#mens" class="nav-link collapsed" data-bs-toggle="collapse" aria-expanded="false">Mens</a>
+                  <div class="collapse" id="mens">
+                    <div class="nav nav-level-2 flex-column">
+                      <a href="#" class="nav-link small">Shirts</a>
+                      <a href="#" class="nav-link small">Jeans</a>
+                      <a href="#" class="nav-link small">Shoes</a>
+                      <a href="#" class="nav-link small">Trousers</a>
+                      <a href="#acc_list" data-bs-toggle="collapse" aria-expanded="false" class="nav-link small collapsed">Accessories</a>
+                      <div class="collapse" id="acc_list">
+                        <div class="nav flex-column nav-level-3">
+                          <a href="#" class="nav-link small">Belts</a>
+                          <a href="#" class="nav-link small">Watches</a>
+                          <a href="#" class="nav-link small">Sunglasses</a>
+                          <a href="#" class="nav-link small">Wallets</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#womens" class="nav-link collapsed" data-bs-toggle="collapse" aria-expanded="false">Womens</a>
+                  <div class="collapse" id="womens">
+                    <div class="nav nav-level-2 flex-column">
+                      <a href="#" class="nav-link small">T-shirts &amp; tops</a>
+                      <a href="#" class="nav-link small">Shorts</a>
+                      <a href="#" class="nav-link small">Shoes</a>
+                      <a href="#" class="nav-link small">Trousers</a>
+                      <a href="#acc_list_womens" data-bs-toggle="collapse" aria-expanded="false" class="nav-link small collapsed">Accessories</a>
+                      <div class="collapse" id="acc_list_womens">
+                        <div class="nav flex-column nav-level-3">
+                          <a href="#" class="nav-link small">Face mask</a>
+                          <a href="#" class="nav-link small">Socks</a>
+                          <a href="#" class="nav-link small">Sunglasses</a>
+                          <a href="#" class="nav-link small">Wallets</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-10">
+        <div class="col-12 col-md-9">
           <div class="row">
             <div class="col-12">
-              <p>Products</p>
+              <h2>Category name</h2>
             </div>
           </div>
           <div class="row">
@@ -27,9 +76,8 @@
                         type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="add to wishlist">
                   <i class="bi bi-suit-heart"></i>
                 </button>
-                <button class="btn py-1 px-1 center-both btn-success position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" th:if="${p.discount ne 0}"
-                        type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="" th:data-bs-original-title="${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
-                  <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-n2 z-index-1 btn-sm" type="button" th:if="${p.isNew}">
+                  <span th:text="#{products.item.newItem}">New product</span>
                 </button>
                 <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${p.productId})}">
                   <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"/>
@@ -44,6 +92,10 @@
                       <span class="text-dark small fw-bold">
                         <span th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">85 lv.</span>
                         <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${p.discount ne 0}">52.22 lv.</del>
+                        <button class="btn py-0 px-1 btn-success btn-sm" style="font-size: 13px;" th:if="${p.discount ne 0}"
+                                type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
+                          <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                        </button>
                       </span>
                     </div>
                   </div>

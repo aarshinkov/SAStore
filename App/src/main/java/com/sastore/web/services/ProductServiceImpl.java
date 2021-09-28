@@ -63,6 +63,19 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public boolean registerProductView(ProductEntity product) {
+
+    product.setViews(product.getViews() + 1);
+
+    try {
+      productsRepository.save(product);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  @Override
   public ProductEntity createProduct(ProductCreateModel pcm) throws Exception {
 
     ProductEntity product = new ProductEntity();

@@ -80,7 +80,7 @@
               <div class="d-flex">
                 <h5 th:text="#{user.roles.active(${#lists.size(user.roles)})}">Active roles</h5>
                 <a href="#" class="btn btn-sm btn-outline-success ms-auto" th:if="${#lists.size(user.roles) lt #lists.size(roles)}"
-                   data-toggle="modal" data-target="#addRoleModal">
+                   data-bs-toggle="modal" data-bs-target="#addRoleModal">
                   <i class="fas fa-plus"></i>
                   <span th:text="#{user.roles.add}">Add role</span>
                 </a>

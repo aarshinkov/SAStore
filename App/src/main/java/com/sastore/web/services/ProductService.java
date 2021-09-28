@@ -20,6 +20,8 @@ public interface ProductService {
   ObjCollection<ProductEntity> getAdminProducts(Integer page, Integer limit, ProductFilter filter);
 
   ProductEntity getProductByProductId(String productId);
+  
+  boolean registerProductView(ProductEntity product);
 
   ProductEntity createProduct(ProductCreateModel pcm) throws Exception;
 

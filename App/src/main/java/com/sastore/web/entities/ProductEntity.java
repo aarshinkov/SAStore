@@ -52,9 +52,6 @@ public class ProductEntity implements Serializable {
   @Column(name = "description")
   private String description;
 
-  @Transient
-  private String formattedDescription;
-
   @Column(name = "status")
   private Integer status;
 
@@ -69,4 +66,10 @@ public class ProductEntity implements Serializable {
 
   @Column(name = "edited_on")
   private Timestamp editedOn;
+
+  @Transient
+  private String formattedDescription;
+
+  @Transient
+  private Boolean isNew;
 }

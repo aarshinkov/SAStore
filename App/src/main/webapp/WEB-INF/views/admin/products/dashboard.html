@@ -87,7 +87,7 @@
                         <td th:text="${p.title}">Product 1</td>
                         <td>
                           <span th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
-                          <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}"
+                          <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="#{products.item.mainPrice.value(#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})})}"
                                 th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'" th:if="${p.discount ne 0}">23.60</span>
                         </td>
                         <td th:text="#{quant(${#numbers.formatDecimal(p.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">23</td>

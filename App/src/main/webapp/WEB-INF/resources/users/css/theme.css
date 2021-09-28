@@ -25011,7 +25011,7 @@ img.bg-image {
 }
 
 .btn {
-  text-transform: capitalize;
+  text-transform: none;
   letter-spacing: -0.011rem;
   font-weight: 400;
   transition: all 0.25s;
