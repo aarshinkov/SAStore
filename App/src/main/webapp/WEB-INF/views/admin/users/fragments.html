@@ -5,73 +5,68 @@
     <div id="userFragment" th:remove="tag">
 
     </div>
-
-    <div id="usersCount" th:remove="tag">
-      <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.customers}">Total customers</h6>
-        <div class="d-flex align-items-center mb-1">
-          <i class="far fa-user c-text-dark-gray c-font-size-20 mr-2"></i>
-          <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-          <span class="small text-success">
-            <span>5.8%</span>
-            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-          </span>
+    
+    <div class="card overflow-hidden" id="usersCount">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-success text-success rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="users" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{users.total.customers}">Total customers</p>
         </div>
       </div>
     </div>
-
-    <div id="adminCount" th:remove="tag">
-      <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.admins}">Total admins</h6>
-        <div class="d-flex align-items-center mb-1">
-          <i class="fas fa-user-tie c-text-dark-gray c-font-size-20 mr-2"></i>
-          <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-          <span class="small text-success">
-            <span>2.4%</span>
-            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-          </span>
+    
+    <div class="card overflow-hidden" id="adminCount">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-warning text-warning rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="briefcase" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{users.total.admins}">Total admins</p>
         </div>
       </div>
     </div>
-
-    <div id="salesCount" th:remove="tag">
-      <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.salesmanagers}">Total sales managers</h6>
-        <div class="d-flex align-items-center mb-1">
-          <i class="fas fa-user-clock c-text-dark-gray c-font-size-20 mr-2"></i>
-          <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-          <span class="small text-success">
-            <span>4.1%</span>
-            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-          </span>
+    
+    <div class="card overflow-hidden" id="salesCount">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-danger text-danger rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="shopping-bag" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{users.total.salesmanagers}">Total sales managers</p>
         </div>
       </div>
     </div>
-
-    <div id="productsCount" th:remove="tag">
-      <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.productsmanagers}">Total product managers</h6>
-        <div class="d-flex align-items-center mb-1">
-          <i class="fas fa-user-tag c-text-dark-gray c-font-size-20 mr-2"></i>
-          <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-          <span class="small text-success">
-            <span>1.7%</span>
-            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-          </span>
+    
+    <div class="card overflow-hidden" id="productsCount">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-info text-info rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="package" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{users.total.productsmanagers}">Total product managers</p>
         </div>
       </div>
     </div>
-
-    <div id="ordersCount" th:remove="tag">
-      <div class="card-body">
-        <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.ordersmanagers}">Total orders managers</h6>
-        <div class="d-flex align-items-center mb-1">
-          <i class="fas fa-user-cog c-text-dark-gray c-font-size-20 mr-2"></i>
-          <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}"></h3>
-          <span class="small text-success">
-            <span>1.7%</span>
-            <i class="material-icons align-bottom">keyboard_arrow_up</i>
-          </span>
+    
+    <div class="card overflow-hidden" id="ordersCount">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-secondary text-secondary rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="file-text" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{users.total.ordersmanagers}">Total orders managers</p>
         </div>
       </div>
     </div>

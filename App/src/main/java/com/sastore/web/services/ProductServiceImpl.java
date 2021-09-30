@@ -144,6 +144,14 @@ public class ProductServiceImpl implements ProductService {
     productImagesRepository.save(pi);
     productsRepository.save(product);
   }
+  
+  @Override
+  public Long getProductsCountByStatus(Integer status) {
+    
+    String sql = "SELECT COUNT(product_id) FROM products WHERE status = ?";
+
+    return jdbcTemplate.queryForObject(sql, Long.class, status);
+  }
 
   @Override
   public String getFirstParagraph(String description) {

@@ -148,6 +148,18 @@ public class UsersController extends Base {
     return "redirect:/admin/users?id=" + userId;
   }
 
+  @PostMapping("/admin/users/remove")
+  public String removeUser(@RequestParam("userId") String userId, RedirectAttributes redirectAttributes) {
+
+    boolean result = userService.removeUser(userId);
+
+    if (result) {
+
+    }
+
+    return "redirect:/admin/users";
+  }
+
   @GetMapping("/admin/users/count/admins")
   public String getAdminsUsersCount(Model model) {
 

@@ -18,38 +18,37 @@
         <!--        </div>-->
 
         <div class="col-12 col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.users}">Total users</h6>
-              <div class="d-flex align-items-center mb-1">
-                <i class="fas fa-users c-text-dark-gray c-font-size-20 mr-2"></i>
-                <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
-                <span class="small text-danger">
-                  <span>0.3%</span>
-                  <i class="material-icons align-bottom">keyboard_arrow_down</i>
-                </span>
+          <div class="card overflow-hidden" id="usersCount">
+            <div class="card-body d-flex align-items-center justify-content-between">
+              <div class="flex-shrink-0 size-60 bg-tint-primary text-primary rounded-pill me-3 d-flex align-items-center justify-content-center">
+                <i data-feather="user-check" class="fe-3x d-block"></i>
+              </div>
+              <div class="flex-grow-1 text-start">
+                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${users.page.total}"
+                    data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;&quot;}" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+                <p class="mb-0 text-muted" th:text="#{users.total.users}">Total users</p>
               </div>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="normalUsersCountDiv" class="card"></div>
+          <div id="normalUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="adminsUsersCountDiv" class="card"></div>
+          <div id="adminsUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="salesUsersCountDiv" class="card"></div>
+          <div id="salesUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="productsUsersCountDiv" class="card"></div>
+          <div id="productsUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="ordersUsersCountDiv" class="card"></div>
+          <div id="ordersUsersCountDiv"></div>
         </div>
       </div>
 
-      <div class="row gutters-sm">
+      <div class="row gutters-sm mb-4">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -150,7 +149,8 @@
                     <tbody>
                       <tr th:each="u : ${users.collection}">
                         <td>
-                          <a class="text-decoration-underline" href="#" th:href="@{/admin/users(id=${u.userId})}" th:text="${u.userId}">1</a>
+                          <a class="text-decoration-underline" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${u.userId}"
+                             th:href="@{/admin/users(id=${u.userId})}" th:text="${#strings.substring(u.userId, 0, 10)} + '...'">1</a>
                         </td>
                         <td th:text="${u.firstName}">John</td>
                         <td>
@@ -170,7 +170,11 @@
                         </td>
                         <td class="text-center">
                           <a href="#" class="text-danger px-2 py-1" th:if="${session.userId ne u.userId}"
-                             data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
+                             data-bs-toggle="modal" data-bs-target="#deleteUserModal" th:data-user-id="${u.userId}"
+                             th:data-user-id-label="#{users.item.actions.delete.id(${u.userId})}"
+                             th:data-user-fullname-label="#{users.item.actions.delete.fullname(${u.fullName})}"
+                             th:data-user-email-label="#{users.item.actions.delete.email(${u.email})}"
+                             th:data-user-delete-msg="#{users.item.actions.delete.msg}">
                             <i data-feather="trash-2" class="fe-1x"></i>
                           </a>
                         </td>
@@ -212,19 +216,30 @@
       <!-- /Edit modal -->
 
       <!-- Delete modal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+      <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" role="dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <div class="modal-header bg-danger text-white shadow-none">
-              <h6 class="modal-title" id="deleteModalLabel">Modal title</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteUserModalLabel" th:text="#{users.item.actions.delete.header}">Delete user</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-              make a type specimen book.
-            </div>
+            <form th:action="@{/admin/users/remove}" method="post">
+              <div class="modal-body">
+                <div class="mb-2" id="deleteUserMessage">Are you sure?</div>
+                <div id="deleteUserLabelId">ID</div>
+                <div id="deleteUserLabelFullname">Full name</div>
+                <div id="deleteUserLabelEmail">Email</div>
+                <input id="deleteUserId" name="userId" type="hidden"/>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">
+                  <span th:text="#{btn.delete}">Delete</span>
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <span th:text="#{btn.close}">Close</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -247,6 +262,7 @@
             type: 'get',
             success: function (data) {
               $("#adminsUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -260,6 +276,7 @@
             type: 'get',
             success: function (data) {
               $("#salesUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -273,6 +290,7 @@
             type: 'get',
             success: function (data) {
               $("#normalUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -286,6 +304,7 @@
             type: 'get',
             success: function (data) {
               $("#productsUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -299,6 +318,7 @@
             type: 'get',
             success: function (data) {
               $("#ordersUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -306,11 +326,23 @@
           });
         }
 
-        $('#deleteModal').on('show.bs.modal', function (event) {
+        document.getElementById('deleteUserModal').addEventListener('show.bs.modal', function (event) {
           let modal = $(event.relatedTarget);
           let userId = modal.data('user-id');
-
-          // $('#commentDeleteId').val(commentId);
+          let email = modal.data('user-email');
+          let deleteUserMsg = modal.data('user-delete-msg');
+          
+          $('#deleteUserId').val(userId);
+          $('#deleteUserMessage').html(deleteUserMsg);
+          
+          let userIdLabel = modal.data('user-id-label');
+          $('#deleteUserLabelId').html(userIdLabel);
+          
+          let fullnameLabel = modal.data('user-fullname-label');
+          $('#deleteUserLabelFullname').html(fullnameLabel);
+          
+          let emailLabel = modal.data('user-email-label');
+          $('#deleteUserLabelEmail').html(emailLabel);
         });
 
         getAdminsUsersCount();

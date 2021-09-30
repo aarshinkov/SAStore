@@ -34,6 +34,8 @@ public interface ProductService {
   List<ProductImageEntity> getProductAdditionalImages(String productId);
 
   void addImage(FileName file, ProductImageCreateModel picm) throws Exception;
+  
+  Long getProductsCountByStatus(Integer status);
 
   // Utils
   String getFirstParagraph(String description);

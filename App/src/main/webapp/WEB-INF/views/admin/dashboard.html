@@ -10,66 +10,14 @@
     <div layout:fragment="contentDiv">
 
       <div class="row">
-        <div class="col-12 col-xl-3 col-sm-6 mb-4">
-          <!-- Card-->
-          <div class="card overflow-hidden">
-            <div class="card-body d-flex align-items-center justify-content-between">
-              <div class="flex-shrink-0 size-60 bg-tint-warning text-warning rounded-pill me-3 d-flex align-items-center justify-content-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users fe-3x d-block"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              </div>
-              <div class="flex-grow-1 text-start">
-                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" data-to="475" data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}">+475</h5>
-                <p class="mb-0 text-muted">New customers</p>
-              </div>
-
-            </div>
-          </div>
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="usersCountDiv"></div>
         </div>
-
-        <div class="col-12 col-xl-3 col-sm-6 mb-4">
-          <!-- Card-->
-          <div class="card overflow-hidden">
-            <div class="card-body d-flex align-items-center justify-content-between">
-              <div class="flex-shrink-0 size-60 bg-tint-primary text-primary rounded-pill me-3 d-flex align-items-center justify-content-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign fe-3x d-block"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              </div>
-              <div class="flex-grow-1 text-start">
-                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" data-to="37475" data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;$&quot;}">$37,475</h5>
-                <p class="mb-0 text-muted">Revenue</p>
-              </div>
-
-            </div>
-          </div>
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="activeProductsCountDiv"></div>
         </div>
-        <div class="col-12 col-xl-3 col-sm-6 mb-4">
-          <!-- Card-->
-          <div class="card overflow-hidden">
-            <div class="card-body d-flex align-items-center justify-content-between">
-              <div class="flex-shrink-0 size-60 bg-tint-success text-success rounded-pill me-3 d-flex align-items-center justify-content-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mouse-pointer fe-3x d-block"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></svg>
-              </div>
-              <div class="flex-grow-1 text-start">
-                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" data-to="547" data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;suffix&quot;:&quot;k&quot;}">547k</h5>
-                <p class="mb-0 text-muted">Total Vistors</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-xl-3 col-sm-6 mb-4">
-          <!-- Card-->
-          <div class="card overflow-hidden">
-            <div class="card-body d-flex align-items-center justify-content-between">
-              <div class="flex-shrink-0 size-60 bg-tint-danger text-danger rounded-pill me-3 d-flex align-items-center justify-content-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart fe-3x d-block"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-              </div>
-              <div class="flex-grow-1 text-start">
-                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" data-to="4468" data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}">+4,468</h5>
-                <p class="mb-0 text-muted">Total Sales</p>
-              </div>
-
-            </div>
-          </div>
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="finishedOrdersCountDiv"></div>
         </div>
       </div>
 
@@ -77,7 +25,7 @@
       <div class="row">
         <div class="col-md-7 col-xl-8 mb-4">
           <!--card-->
-          <div class="card overflow-hidden h-100">
+          <div class="card overflow-hidden">
             <div class="d-flex card-header border-bottom-0 justify-content-between">
               <h5 class="me-3 card-title mb-0">Top Products</h5>
               <a href="#!.html">View All</a>
@@ -94,11 +42,11 @@
                   </tr>
                 </thead>
                 <tbody class="align-middle">
-                  <tr>
+                  <tr th:each="p : ${#numbers.sequence(1, 7)}">
                     <td>
                       <div class="d-flex align-items-center">
                         <a href="#!.html">
-                          <img src="assets/media/products/6.png" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
+                          <img th:src="@{~/images/products/680581a6-6c9c-4de7-b232-7cf47ce5763a.png}" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
                         </a>
                         <p class="mb-0 text-truncate">
                           <a href="#!.html" class="text-dark">Apple white earbuds water proof</a>
@@ -117,82 +65,13 @@
                     <td>9040</td>
                     <td>$623760</td>
                   </tr>
-                  <tr>
-                    <td class="">
-                      <div class="d-flex align-items-center">
-                        <a href="#!.html">
-                          <img src="assets/media/products/3.png" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
-                        </a>
-                        <p class="mb-0 text-truncate">
-                          <a href="#!.html" class="text-dark">Mini handbag for woomens</a>
-                        </p>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="me-2">6%</span>
-                        <span class="small text-success">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up fe-1x align-middle ms-1"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                        </span>
-                      </div>
-                    </td>
-                    <td>$59</td>
-                    <td>8475</td>
-                    <td>$500025</td>
-                  </tr>
-                  <tr>
-                    <td class="">
-                      <div class="d-flex align-items-center">
-                        <a href="#!.html">
-                          <img src="assets/media/products/4.png" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
-                        </a>
-                        <p class="mb-0 text-truncate">
-                          <a href="#!.html" class="text-dark">Minimalist wireless headphone</a>
-                        </p>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="me-2">11%</span>
-                        <span class="small text-success">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up fe-1x align-middle ms-1"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                        </span>
-                      </div>
-                    </td>
-                    <td>$59</td>
-                    <td>7321</td>
-                    <td>$431939</td>
-                  </tr>
-                  <tr>
-                    <td class="">
-                      <div class="d-flex align-items-center">
-                        <a href="#!.html">
-                          <img src="assets/media/products/5.png" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
-                        </a>
-                        <p class="mb-0 text-truncate">
-                          <a href="#!.html" class="text-dark">Google home mini</a>
-                        </p>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="me-2">-7%</span>
-                        <span class="small text-danger">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-down fe-1x align-middle ms-1"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
-                        </span>
-                      </div>
-                    </td>
-                    <td>$39</td>
-                    <td>5485</td>
-                    <td>$212862</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
         <div class="col-md-5 col-xl-4 mb-4">
-          <div class="card h-100">
+          <div class="card"> <!-- Add .h-100 for resize card to align other card -->
             <div class="d-flex card-header justify-content-between">
               <h5 class="me-3 mb-0">Top Customers</h5>
               <a href="#!.html">View All</a>
@@ -201,10 +80,10 @@
               <ul class="list-group list-group-flush">
 
                 <!--List-item-->
-                <li class="list-group-item pt-0">
+                <li class="list-group-item" th:classappend="${iStat.first} ? 'pt-0'" th:each="u, iStat : ${#numbers.sequence(1, 5)}">
                   <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 me-3">
-                      <img src="assets/media/avatars/02.jpg" alt="" class="avatar rounded-circle"/>
+                      <img th:src="@{~/images/users/user_default.png}" alt="" class="avatar rounded-circle"/>
                     </div>
                     <div class="flex-grow-1">
                       <h6 class="mb-0">Inara Britt</h6>
@@ -217,79 +96,66 @@
                     </div>
                   </div>
                 </li>
-                <!--List-item-->
-                <li class="list-group-item">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <img src="assets/media/avatars/03.jpg" alt="" class="avatar rounded-circle"/>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mb-0">Eduard Franz</h6>
-                      <p class="mb-0 text-muted">London, UK</p>
-                    </div>
-                    <div class="flex-shrink-0 text-end">
-                      <span>
-                        $916.00
-                      </span>
-                    </div>
-                  </div>
-                </li>
-                <!--List-item-->
-                <li class="list-group-item">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <img src="assets/media/avatars/04.jpg" alt="" class="avatar rounded-circle"/>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mb-0">Gianluca Darby</h6>
-                      <p class="mb-0 text-muted">São Paulo, Brazil</p>
-                    </div>
-                    <div class="flex-shrink-0 text-end">
-                      <span>
-                        $896.50
-                      </span>
-                    </div>
-                  </div>
-                </li>
-                <!--List-item-->
-                <li class="list-group-item">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <img src="assets/media/avatars/05.jpg" alt="" class="avatar rounded-circle"/>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mb-0">Milana Myles</h6>
-                      <p class="mb-0 text-muted">Marseille, France</p>
-                    </div>
-                    <div class="flex-shrink-0 text-end">
-                      <span>
-                        $874.50
-                      </span>
-                    </div>
-                  </div>
-                </li>
-                <!--List-item-->
-                <li class="list-group-item">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <img src="assets/media/avatars/06.jpg" alt="" class="avatar rounded-circle"/>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mb-0">Taisiia Oluchi</h6>
-                      <p class="mb-0 text-muted">Durban, SA</p>
-                    </div>
-                    <div class="flex-shrink-0 text-end">
-                      <span>
-                        $857.50
-                      </span>
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
+
+      <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        let usersCountUrl = /*[[@{/count/users}]]*/;
+                let activeProductsCountUrl = /*[[@{/count/products/active}]]*/;
+                let finishedOrdersCountUrl = /*[[@{/count/orders/finished}]]*/;
+        /*]]>*/
+
+        function getUsersCount() {
+          $.ajax({
+            url: usersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#usersCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        function getActiveProductsCount() {
+          $.ajax({
+            url: activeProductsCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#activeProductsCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+        
+        function getFinishedOrdersCount() {
+          $.ajax({
+            url: finishedOrdersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#finishedOrdersCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        getUsersCount();
+        getActiveProductsCount();
+        getFinishedOrdersCount();
+      </script>
     </div>
   </body>
 </html>
