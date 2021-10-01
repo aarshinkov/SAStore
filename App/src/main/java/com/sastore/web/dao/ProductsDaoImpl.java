@@ -171,6 +171,21 @@ public class ProductsDaoImpl implements ProductsDao {
         product.setAddedOn(rset.getTimestamp("added_on"));
         product.setEditedOn(rset.getTimestamp("edited_on"));
         product.setApprovedOn(rset.getTimestamp("approved_on"));
+        product.setIsNew(false);
+        
+        if (product.getApprovedOn() != null) {
+
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(product.getApprovedOn());
+          cal.add(Calendar.WEEK_OF_YEAR, 1);
+          Date expiryDate = cal.getTime();
+
+          if (new Date().before(expiryDate)) {
+            product.setIsNew(true);
+          } else {
+            product.setIsNew(false);
+          }
+        }
 
         collection.getCollection().add(product);
       }

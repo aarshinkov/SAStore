@@ -12,6 +12,8 @@ import com.sastore.web.repositories.ProductImagesRepository;
 import com.sastore.web.repositories.ProductsRepository;
 import com.sastore.web.uploader.domain.FileName;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -59,7 +61,24 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public ProductEntity getProductByProductId(String productId) {
-    return productsRepository.findByProductId(productId);
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setIsNew(false);
+
+    if (product.getApprovedOn() != null) {
+
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(product.getApprovedOn());
+      cal.add(Calendar.WEEK_OF_YEAR, 1);
+      Date expiryDate = cal.getTime();
+
+      if (new Date().before(expiryDate)) {
+        product.setIsNew(true);
+      } else {
+        product.setIsNew(false);
+      }
+    }
+
+    return product;
   }
 
   @Override
@@ -86,8 +105,44 @@ public class ProductServiceImpl implements ProductService {
     product.setDescription(pcm.getDescription());
 
     ProductEntity createdProduct = productsRepository.save(product);
+    createdProduct.setIsNew(true);
 
     return createdProduct;
+  }
+
+  @Override
+  public void editProductPrice(String productId, Double mainPrice, Double discount, Integer availableQuantity) throws Exception {
+
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setPrice(mainPrice);
+    product.setDiscount(discount);
+    product.setAvailableQuantity(availableQuantity);
+
+    if (mainPrice == null || mainPrice < 0.00) {
+      product.setPrice(0.00);
+    }
+
+    if (discount == null) {
+      product.setDiscount(0.00);
+    }
+
+    if (discount >= mainPrice) {
+      product.setDiscount(mainPrice);
+    }
+
+    if (availableQuantity == null) {
+      product.setAvailableQuantity(0);
+    }
+
+    if (product.getAvailableQuantity() == 0) {
+      product.setStatus(ProductStatuses.INACTIVE.getStatus());
+    } else {
+      if (product.getApprovedOn() != null) {
+        product.setStatus(ProductStatuses.ACTIVE.getStatus());
+      }
+    }
+
+    productsRepository.save(product);
   }
 
   @Override
@@ -95,6 +150,14 @@ public class ProductServiceImpl implements ProductService {
     ProductEntity product = productsRepository.findByProductId(productId);
     product.setStatus(ProductStatuses.ACTIVE.getStatus());
     product.setApprovedOn(new Timestamp(System.currentTimeMillis()));
+
+    productsRepository.save(product);
+  }
+
+  @Override
+  public void restoreProduct(String productId) throws Exception {
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setStatus(ProductStatuses.ACTIVE.getStatus());
 
     productsRepository.save(product);
   }
@@ -128,15 +191,20 @@ public class ProductServiceImpl implements ProductService {
 
     ProductImageEntity pi = new ProductImageEntity();
     pi.setImageId(file.getFullName());
-    pi.setIsMain(picm.getIsMain());
 
     ProductEntity product = productsRepository.findByProductId(picm.getProductId());
 
-    if (picm.getIsMain()) {
-      product.setMainImage(file.getFullName());
+    if (picm.getIsMain() == null) {
+      pi.setIsMain(true);
+    } else {
+      pi.setIsMain(picm.getIsMain());
 
-      final String updateMainImage = "UPDATE prod_images SET is_main = false WHERE product_id = ? AND image_id != ?";
-      jdbcTemplate.update(updateMainImage, picm.getProductId(), file.getFullName());
+      if (picm.getIsMain()) {
+        product.setMainImage(file.getFullName());
+
+        final String updateMainImage = "UPDATE prod_images SET is_main = false WHERE product_id = ? AND image_id != ?";
+        jdbcTemplate.update(updateMainImage, picm.getProductId(), file.getFullName());
+      }
     }
 
     pi.setProduct(product);
@@ -144,10 +212,10 @@ public class ProductServiceImpl implements ProductService {
     productImagesRepository.save(pi);
     productsRepository.save(product);
   }
-  
+
   @Override
   public Long getProductsCountByStatus(Integer status) {
-    
+
     String sql = "SELECT COUNT(product_id) FROM products WHERE status = ?";
 
     return jdbcTemplate.queryForObject(sql, Long.class, status);

@@ -88,11 +88,11 @@ public class ProductsController extends Base {
     product.setFormattedDescription(productService.getFirstParagraph(product.getDescription()));
 
     model.addAttribute("product", product);
-    
+
     productService.registerProductView(product);
-    
+
     List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
-    
+
     model.addAttribute("images", images);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
@@ -178,9 +178,9 @@ public class ProductsController extends Base {
     ProductImageCreateModel picm = new ProductImageCreateModel();
     picm.setProductId(productId);
     model.addAttribute("picm", picm);
-    
+
     List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
-    
+
     model.addAttribute("images", images);
 
     return "admin/products/product";
@@ -232,6 +232,29 @@ public class ProductsController extends Base {
     return "redirect:/admin/products";
   }
 
+  @PostMapping("/admin/product/price")
+  public String editProductPrice(@RequestParam("productId") String productId,
+          @RequestParam(name = "mainPrice", required = false, defaultValue = "0.00") Double mainPrice,
+          @RequestParam(name = "discount", required = false, defaultValue = "0.00") Double discount,
+          @RequestParam(name = "availableQuantity", required = false, defaultValue = "0") Integer availableQuantity,
+          RedirectAttributes redirectAttributes) {
+
+    log.debug("productId: " + productId);
+    log.debug("mainPrice: " + mainPrice);
+    log.debug("discount: " + discount);
+    log.debug("availableQuantity: " + availableQuantity);
+
+    try {
+      productService.editProductPrice(productId, mainPrice, discount, availableQuantity);
+
+//            redirectAttributes.addFlashAttribute("msgSuccess", "product.restored.success");
+    } catch (Exception e) {
+      log.error("Error editting product price!", e);
+//            redirectAttributes.addFlashAttribute("msgError", "product.restored.error");
+    }
+    return "redirect:/admin/products?id=" + productId;
+  }
+
   @GetMapping("/admin/products/pending")
   public String pendingProducts(Model model) {
 
@@ -252,6 +275,22 @@ public class ProductsController extends Base {
     } catch (Exception e) {
       log.error("Error approving a product!", e);
 //            redirectAttributes.addFlashAttribute("msgError", "product.approved.error");
+    }
+
+    return "redirect:/admin/products?id=" + productId;
+  }
+
+  @PostMapping("/admin/product/restore")
+  public String restoreProduct(@RequestParam("productId") String productId,
+          RedirectAttributes redirectAttributes) {
+
+    try {
+      productService.restoreProduct(productId);
+
+//            redirectAttributes.addFlashAttribute("msgSuccess", "product.restored.success");
+    } catch (Exception e) {
+      log.error("Error restoring a product!", e);
+//            redirectAttributes.addFlashAttribute("msgError", "product.restored.error");
     }
 
     return "redirect:/admin/products?id=" + productId;

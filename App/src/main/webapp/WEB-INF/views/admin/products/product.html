@@ -21,14 +21,22 @@
                        class="img-thumbnail" width="180"/>
                   <img th:src="@{~/images/products/} + ${product.mainImage}" src="#" alt="Admin" th:if="${product.mainImage ne null}"
                        class="img-thumbnail" width="180"/>
-                  <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-n2 z-index-1 btn-sm" type="button">
-                    <span th:text="#{products.item.newItem}">New product</span>
-                  </button>
+                  <!--                  <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-n2 z-index-1 btn-sm" type="button" th:if="${product.isNew}">
+                                      <span th:text="#{products.item.newItem}">New product</span>
+                                    </button>
+                                    <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-10 me-n2 z-index-1 btn-sm" type="button" th:unless="${product.discount eq null or product.discount eq 0}">
+                                      <span th:text="#{products.item.inpromotion}">In promotion</span>
+                                    </button>-->
                 </div>
                 <div class="mt-3">
-                  <h5 th:text="${product.title}">Product title</h5>
+                  <div class="d-flex align-items-center justify-content-center mb-3">
+                    <h5 class="mb-0 me-2" th:text="${product.title}">Product title</h5>
+                    <a href="#" th:href="@{/admin/products/edit(id=${product.productId})}">
+                      <i data-feather="edit" class="fe-1x align-items-center"></i>
+                    </a>
+                  </div>
                   <div class="mb-2" th:if="${product.status eq 1}">
-                    <div class="badge badge-pill badge-warning" th:text="#{product.status. + ${product.status}}"></div>
+                    <div class="badge bg-warning" th:text="#{product.status. + ${product.status}}"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle ml-2"
                          data-toggle="tooltip" data-placement="top" title="In order for a product to be approved, it must have at least one image.">
@@ -40,6 +48,10 @@
                   <div class="mb-2 badge" th:if="${product.status ne 1}"
                        th:classappend="${product.status eq 0} ? 'bg-success' : (${product.status eq 2} ? 'bg-secondary' : (${product.status eq 3} ? 'bg-danger'))"
                        th:text="#{product.status. + ${product.status}}"></div>
+                  <div class="mb-2 badge bg-danger" th:if="${product.isNew}"
+                       th:text="#{products.item.newItem}">New product</div>
+                  <div class="mb-2 badge bg-warning" th:unless="${product.discount eq null or product.discount eq 0}"
+                       th:text="#{products.item.inpromotion}">In promotion</div>
                   <div class="text-muted font-size-sm" th:text="#{product.id}">ID</div>
                   <div class="text-muted font-size-sm" th:text="${product.productId}">ID</div>
                   <!--                                    <p th:text="${#numbers.formatDecimal(product.productId, 0, 'NONE', 0, 'POINT')}"></p>-->
@@ -55,47 +67,109 @@
             <div class="col-12 mb-3">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                      <h5 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount eq 0}">Main price</h5>
-                      <h6 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount ne 0}">Main price</h6>
-                    </div>
-                    <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                      <h5 th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${product.discount eq 0}">23.60</h5>
-                      <del th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${product.discount ne 0}">23.60</del>
-                    </div>
-                  </div>
-                  <hr/>
-                  <div th:if="${product.discount ne 0}">
+                  <div id="pricePresentLabels">
                     <div class="row">
                       <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                        <h6 class="mb-0" th:text="#{product.discount}">Discount</h6>
+                        <h5 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount eq 0}">Main price</h5>
+                        <h6 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount ne 0}">Main price</h6>
                       </div>
                       <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                        <span th:text="#{price(${#numbers.formatDecimal(product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
-                        <span class="badge bg-success" th:text="'-' + ${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">23.60</span>
+                        <h5 th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${product.discount eq 0}">23.60</h5>
+                        <del th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${product.discount ne 0}">23.60</del>
                       </div>
                     </div>
                     <hr/>
+                    <div th:if="${product.discount ne 0}">
+                      <div class="row">
+                        <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                          <h6 class="mb-0" th:text="#{product.discount}">Discount</h6>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                          <span th:text="#{price(${#numbers.formatDecimal(product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
+                          <span class="badge bg-success" th:text="'-' + ${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">23.60</span>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div class="row">
+                        <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                          <h5 class="mb-0" th:text="#{product.price}">Current price</h5>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                          <h5 th:text="#{price(${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</h5>
+                        </div>
+                      </div>
+                      <hr/>
+                    </div>
                     <div class="row">
                       <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                        <h5 class="mb-0" th:text="#{product.price}">Current price</h5>
+                        <h6 class="mb-0" th:text="#{product.quantity}">Available quantity</h6>
                       </div>
                       <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                        <h5 th:text="#{price(${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</h5>
+                        <span th:text="#{quant(${#numbers.formatDecimal(product.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">10</span>
                       </div>
                     </div>
                     <hr/>
                   </div>
-                  <div class="row">
-                    <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                      <h6 class="mb-0" th:text="#{product.quantity}">Available quantity</h6>
-                    </div>
-                    <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
-                      <span th:text="#{quant(${#numbers.formatDecimal(product.availableQuantity, 1, 'WHITESPACE', 0, 'DEFAULT')})}">10</span>
-                    </div>
+                  <div id="pricePresentInput" class="d-none">
+                    <form th:action="@{/admin/product/price}" method="post">
+                      <div class="row">
+                        <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3 d-flex align-items-center">
+                          <h5 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount eq 0}">Main price</h5>
+                          <h6 class="mb-0" th:text="#{product.mainPrice}" th:if="${product.discount ne 0}">Main price</h6>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9">
+                          <input id="mainPriceValue" type="number" name="mainPrice" step="any" class="form-control form-control-sm" th:value="${product.price}" oninput="calcPrice()"/>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div>
+                        <div class="row">
+                          <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3 d-flex align-items-center">
+                            <h6 class="mb-0" th:text="#{product.discount}">Discount</h6>
+                          </div>
+                          <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9">
+                            <input id="discountValue" type="number" name="discount" step="any" class="form-control form-control-sm" th:value="${product.discount eq null} ? '0.00' : ${product.discount}" oninput="calcPrice()"/>
+                          </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                          <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                            <h5 class="mb-0" th:text="#{product.price}">Current price</h5>
+                          </div>
+                          <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
+                            <h5>
+                              <span id="currentPriceValue" th:text="${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}">23.60</span>
+                              <span th:text="#{currency.bgn}"></span>
+                            </h5>
+                          </div>
+                        </div>
+                        <hr/>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-4 col-md-5 col-lg-4 col-xl-3 d-flex align-items-center">
+                          <h6 class="mb-0" th:text="#{product.quantity}">Available quantity</h6>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9">
+                          <input type="number" name="availableQuantity" step="any" min="0" class="form-control form-control-sm" th:value="${product.availableQuantity}"/>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div id="pricePresentInputSubmit" class="d-none" sec:authorize="hasRole('ADMIN')">
+                        <form class="me-2" th:action="@{/admin/product/restore}" method="post">
+                          <input type="hidden" name="productId" th:value="${product.productId}"/>
+                          <button type="submit" class="btn btn-success btn-sm ms-auto">
+                            <i data-feather="save" class="fe-1x align-items-center"></i>
+                            <span th:text="#{btn.save}">Save</span>
+                          </button>
+
+                          <button type="button" class="btn btn-outline-secondary btn-sm ms-auto" onclick="togglePrices()">
+                            <i data-feather="x" class="fe-1x align-items-center"></i>
+                            <span th:text="#{btn.cancel}">Cancel</span>
+                          </button>
+                        </form>
+                      </div>
+                    </form>
                   </div>
-                  <hr/>
                   <div class="d-flex">
                     <div class="mr-auto"></div>
                     <div sec:authorize="!hasRole('ADMIN')" th:if="${product.mainImage ne null or product.status eq 3}">
@@ -108,20 +182,27 @@
                       </svg>
                     </div>
                     <form class="me-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
-                          th:if="${product.mainImage ne null and (product.approvedOn eq null or product.status eq 3)}">
+                          th:if="${product.mainImage ne null and (product.approvedOn eq null or product.status eq 1)}">
                       <input type="hidden" name="productId" th:value="${product.productId}"/>
                       <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
                         <i class="fas fa-check"></i>
                         <span th:text="#{btn.approve}">Approve</span>
                       </button>
                     </form>
-                    <form class="me-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
+                    <form class="me-2" th:action="@{/admin/product/restore}" method="post" sec:authorize="hasRole('ADMIN')"
+                          th:if="${product.mainImage ne null and product.status eq 3}">
                       <input type="hidden" name="productId" th:value="${product.productId}"/>
-                      <button type="submit" class="btn btn-primary btn-sm">
+                      <button type="submit" class="btn btn-outline-primary btn-sm ms-auto">
+                        <i data-feather="rotate-ccw" class="fe-1x align-items-center"></i>
+                        <span th:text="#{btn.restore}">Restore</span>
+                      </button>
+                    </form>
+                    <div id="pricePresentLabelsBtn" class="me-2">
+                      <button type="submit" class="btn btn-primary btn-sm" onclick="togglePrices()">
                         <i data-feather="edit" class="fe-1x align-middle"></i>
                         <span th:text="#{btn.edit.price}">Edit price</span>
                       </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -136,18 +217,29 @@
             <div class="card-body">
 
               <div class="row">
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-4 mb-3">
                   <h6 class="mb-0" th:text="#{product.addedOn}">Added on</h6>
                   <span th:text="${#dates.format(product.addedOn, #messages.msg('format.datetime2'))}"></span>
                 </div>
                 <div class="col-12 col-md-4 text-md-center">
                   <h6 class="mb-0" th:text="#{product.approvedOn}">Approved on</h6>
+                  <span th:if="${product.approvedOn eq null}" th:text="#{product.approvedOn.empty}"></span>
                   <span th:text="${#dates.format(product.approvedOn, #messages.msg('format.datetime2'))}"></span>
                 </div>
                 <div class="col-12 col-md-4 text-md-end">
                   <h6 class="mb-0" th:text="#{product.editedOn}">Edited on</h6>
                   <span th:if="${product.editedOn eq null}" th:text="#{product.editedOn.empty}"></span>
                   <span th:if="${product.editedOn ne null}" th:text="${#dates.format(product.editedOn, #messages.msg('format.datetime2'))}"></span>
+                </div>
+              </div>
+              <div class="row" th:if="${product.status eq 0}">
+                <div class="col-12">
+                  <h6 class="mb-0" th:text="#{products.item.publiclink}">Public link</h6>
+                  <!--<a href="#" th:href="@{/product(id=${product.productId})}" th:text="${#httpServletRequest.scheme} + '://' + ${#httpServletRequest.serverName} + @{/product(id=${product.productId})}" target="_blank">TEST</a>-->
+                  <a href="#" th:href="@{/product(id=${product.productId})}" target="_blank">
+                    <span th:text="#{env.product.url} + @{/product(id=${product.productId})}">Product link</span>
+                    <i data-feather="external-link" class="fe-1x align-items-center"></i>
+                  </a>
                 </div>
               </div>
               <hr/>
@@ -162,14 +254,6 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                   </svg>
                 </div>
-                <form class="me-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
-                      th:if="${product.mainImage ne null and (product.approvedOn eq null or product.status eq 3)}">
-                  <input type="hidden" name="productId" th:value="${product.productId}"/>
-                  <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
-                    <i class="fas fa-check"></i>
-                    <span th:text="#{btn.approve}">Approve</span>
-                  </button>
-                </form>
                 <form class="me-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
                   <input type="hidden" name="productId" th:value="${product.productId}"/>
                   <button type="submit" class="btn btn-outline-secondary btn-sm">
@@ -193,7 +277,13 @@
         <div class="col-12 mb-3">
           <div class="card">
             <div class="card-body">
-              <h5 th:text="#{product.description}">Description</h5>
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0" th:text="#{product.description}">Description</h5>
+                <a href="#" th:href="@{/admin/products/edit(id=${product.productId})}" class="btn btn-primary btn-sm ms-auto">
+                  <i data-feather="edit" class="fe-1x align-items-center"></i>
+                  <span th:text="#{btn.edit}">Edit</span>
+                </a>
+              </div>
               <hr/>
               <div th:utext="${product.description}"></div>
             </div>
@@ -204,10 +294,10 @@
         <div class="col-12 mb-3">
           <div class="card">
             <div class="card-body">
-              <div class="d-flex align-items-end">
+              <div class="d-flex align-items-center">
                 <h5 class="mb-0" th:text="#{product.images.count(${#numbers.formatInteger(#lists.size(images), 0, 'WHITESPACE')})}">Images</h5>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#newImageModal" class="btn btn-success btn-sm ms-auto">
-                  <i class="far fa-images"></i>
+                  <i data-feather="image" class="fe-1x align-items-center"></i>
                   <span th:text="#{product.images.add}">Add image</span>
                 </a>
               </div>
@@ -245,7 +335,7 @@
                   <label class="col-form-label" th:text="#{product.images.add.image}">Image</label>
                   <input th:field="*{file}" type="file" class="form-control" id="fileUploadInput"/>
                 </div>
-                <div class="form-check">
+                <div class="form-check" th:unless="${product.mainImage eq null}">
                   <input class="form-check-input" type="checkbox" th:field="*{isMain}"/>
                   <label class="form-check-label" th:text="#{product.images.add.makeMain}">Make main</label>
                 </div>
@@ -263,6 +353,61 @@
           </div>
         </div>
       </div>
+
+      <input id="mainPriceOriginalValue" type="hidden" th:value="${product.price - product.discount}"/>
+      <input id="discountOriginalValue" type="hidden" th:value="${product.discount}"/>
+      <input id="currentPriceOriginalValue" type="hidden" th:value="${product.price}"/>
+
+      <script type="text/javascript" th:inline="javascript">
+        function togglePrices() {
+          if ($("#pricePresentLabels").hasClass("d-none")) {
+            console.log("1");
+            $("#pricePresentLabels").removeClass("d-none");
+            $("#pricePresentLabelsBtn").removeClass("d-none");
+          } else {
+            console.log("2");
+            $("#pricePresentLabels").addClass("d-none");
+            $("#pricePresentLabelsBtn").addClass("d-none");
+          }
+
+          if ($("#pricePresentInput").hasClass("d-none")) {
+            console.log("3");
+            $("#pricePresentInput").removeClass("d-none");
+            $("#pricePresentInputSubmit").removeClass("d-none");
+          } else {
+            console.log("4");
+            $("#pricePresentInput").addClass("d-none");
+            $("#pricePresentInputSubmit").addClass("d-none");
+          }
+        }
+
+        function calcPrice() {
+          let mainPrice = parseFloat($("#mainPriceValue").val());
+          let discount = parseFloat($("#discountValue").val());
+
+          if (isNaN(mainPrice)) {
+            mainPrice = parseFloat(0.00);
+          }
+
+          if (isNaN(discount)) {
+            discount = parseFloat(0.00);
+          }
+
+          console.log("main: " + mainPrice + ", discount: " + discount);
+
+          if (discount > mainPrice) {
+            discount = mainPrice;
+            $("#discountValue").val(discount);
+          }
+
+          let currentPrice = mainPrice - discount;
+          if (currentPrice < 0) {
+            currentPrice = 0.00;
+          }
+
+          $("#currentPriceValue").text(parseFloat(currentPrice).toFixed(2));
+        }
+      </script>
     </div>
   </body>
 </html>

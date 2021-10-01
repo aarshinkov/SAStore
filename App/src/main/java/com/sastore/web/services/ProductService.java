@@ -24,8 +24,12 @@ public interface ProductService {
   boolean registerProductView(ProductEntity product);
 
   ProductEntity createProduct(ProductCreateModel pcm) throws Exception;
-
+  
+  void editProductPrice(String productId, Double mainPrice, Double discount, Integer availableQuantity) throws Exception;
+  
   void approveProduct(String productId) throws Exception;
+
+  void restoreProduct(String productId) throws Exception;
 
   void deactivateProduct(String productId) throws Exception;
 

@@ -60,20 +60,27 @@
               <div class="mb-4 pb-4 border-bottom">
                 <div class="mb-3">
                   <h2 class="mb-4 display-3 text-serif fw-normal" th:text="${product.title}">Title</h2>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
+                  <div class="d-flex">
+                    <div th:if="${product.discount ne 0}" th:remove="tag">
                       <p class="fs-5 mb-0" th:if="${product.discount ne 0}">
                         <del class="text-muted" th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">$499.00</del>
-                        <span th:text="#{price(${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>
+                        <span th:text="#{price(${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${product.discount eq product.price}">25.99</span>
+                        <span th:text="#{product.view.free}" th:if="${product.discount eq product.price}">Free</span>
                       </p>
-                      <p class="fs-5 mb-0" th:if="${product.discount eq 0}">
-                        <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>
+                      <p class="fs-5 mb-0 ms-auto" th:if="${product.discount ne 0}">
+                        <!--<span th:text="#{price(${#numbers.formatDecimal(product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>-->
+                        <span class="badge bg-success" th:text="'-' + ${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
                       </p>
                     </div>
-                    <div>
-                      <a href="#" class="text-dark fw-semibold small"><i
-                          class="bi bi-heart align-middle me-2"></i>Add to Wishlist</a>
-                    </div>
+                    <p class="fs-5 mb-0" th:if="${product.discount eq 0}">
+                      <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>
+                    </p>
+                  </div>
+                  <div>
+                    <a href="#" class="text-dark fw-semibold small">
+                      <i class="bi bi-heart align-middle me-2"></i>
+                      <span>Add to favorites</span>
+                    </a>
                   </div>
                 </div>
                 <p class="mb-0" th:text="${product.formattedDescription}" th:if="${#strings.length(product.formattedDescription)} le 300">Description</p>
