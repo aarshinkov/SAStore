@@ -223,6 +223,8 @@ public class ProductServiceImpl implements ProductService {
 
       final String updateMainImage = "UPDATE prod_images SET is_main = false WHERE product_id = ? AND image_id != ?";
       jdbcTemplate.update(updateMainImage, picm.getProductId(), file.getFullName());
+
+      product.setStatus(ProductStatuses.PENDING_APPROVAL.getStatus());
     } else {
       pi.setIsMain(picm.getIsMain());
 

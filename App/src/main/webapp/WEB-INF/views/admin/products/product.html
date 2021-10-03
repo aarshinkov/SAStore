@@ -37,13 +37,9 @@
                   </div>
                   <div class="mb-2" th:if="${product.status eq 1}">
                     <div class="badge bg-warning" th:text="#{product.status. + ${product.status}}"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle ml-2"
-                         data-toggle="tooltip" data-placement="top" title="In order for a product to be approved, it must have at least one image.">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="#{product.status.1.message}">
+                      <i data-feather="help-circle"></i>
+                    </span>
                   </div>
                   <div class="mb-2 badge" th:if="${product.status ne 1}"
                        th:classappend="${product.status eq 0} ? 'bg-success' : (${product.status eq 2} ? 'bg-secondary' : (${product.status eq 3} ? 'bg-danger'))"
@@ -154,7 +150,7 @@
                         </div>
                       </div>
                       <hr/>
-                      <div id="pricePresentInputSubmit" class="d-none" sec:authorize="hasRole('ADMIN')">
+                      <div id="pricePresentInputSubmit" class="d-none" sec:authorize="hasRole('ADMIN') or hasRole('PRODUCTS')">
                         <form class="me-2" th:action="@{/admin/product/restore}" method="post">
                           <input type="hidden" name="productId" th:value="${product.productId}"/>
                           <button type="submit" class="btn btn-success btn-sm ms-auto">
@@ -171,24 +167,6 @@
                     </form>
                   </div>
                   <div class="d-flex">
-                    <div class="mr-auto"></div>
-                    <div sec:authorize="!hasRole('ADMIN')" th:if="${product.mainImage ne null or product.status eq 3}">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle mr-3"
-                           data-toggle="tooltip" data-placement="left" title="Only administrator could approve the product.">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                      </svg>
-                    </div>
-                    <form class="me-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
-                          th:if="${product.mainImage ne null and (product.approvedOn eq null or product.status eq 1)}">
-                      <input type="hidden" name="productId" th:value="${product.productId}"/>
-                      <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
-                        <i class="fas fa-check"></i>
-                        <span th:text="#{btn.approve}">Approve</span>
-                      </button>
-                    </form>
                     <form class="me-2" th:action="@{/admin/product/restore}" method="post" sec:authorize="hasRole('ADMIN')"
                           th:if="${product.mainImage ne null and product.status eq 3}">
                       <input type="hidden" name="productId" th:value="${product.productId}"/>
@@ -197,7 +175,7 @@
                         <span th:text="#{btn.restore}">Restore</span>
                       </button>
                     </form>
-                    <div id="pricePresentLabelsBtn" class="me-2">
+                    <div id="pricePresentLabelsBtn" class="me-2" sec:authorize="hasRole('ADMIN') or hasRole('PRODUCTS')">
                       <button type="submit" class="btn btn-primary btn-sm" onclick="togglePrices()">
                         <i data-feather="edit" class="fe-1x align-middle"></i>
                         <span th:text="#{btn.edit.price}">Edit price</span>
@@ -217,16 +195,16 @@
             <div class="card-body">
 
               <div class="row">
-                <div class="col-12 col-md-4 mb-3">
+                <div class="col-12 col-md-4" th:classappend="${product.status eq 0} ? 'mb-3'">
                   <h6 class="mb-0" th:text="#{product.addedOn}">Added on</h6>
                   <span th:text="${#dates.format(product.addedOn, #messages.msg('format.datetime2'))}"></span>
                 </div>
-                <div class="col-12 col-md-4 text-md-center">
+                <div class="col-12 col-md-4 text-md-center" th:classappend="${product.status eq 0} ? 'mb-3'">
                   <h6 class="mb-0" th:text="#{product.approvedOn}">Approved on</h6>
                   <span th:if="${product.approvedOn eq null}" th:text="#{product.approvedOn.empty}"></span>
                   <span th:text="${#dates.format(product.approvedOn, #messages.msg('format.datetime2'))}"></span>
                 </div>
-                <div class="col-12 col-md-4 text-md-end">
+                <div class="col-12 col-md-4 text-md-end" th:classappend="${product.status eq 0} ? 'mb-3'">
                   <h6 class="mb-0" th:text="#{product.editedOn}">Edited on</h6>
                   <span th:if="${product.editedOn eq null}" th:text="#{product.editedOn.empty}"></span>
                   <span th:if="${product.editedOn ne null}" th:text="${#dates.format(product.editedOn, #messages.msg('format.datetime2'))}"></span>
@@ -244,17 +222,7 @@
               </div>
               <hr/>
               <div class="d-flex">
-                <div class="mr-auto"></div>
-                <div sec:authorize="!hasRole('ADMIN')" th:if="${product.mainImage ne null or product.status eq 3}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle mr-3"
-                       data-toggle="tooltip" data-placement="left" title="Only administrator could approve the product.">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
-                </div>
-                <form class="me-2" th:action="@{/admin/product/activate}" method="post" sec:authorize="hasRole('ADMIN')"
+                <form class="me-2" th:action="@{/admin/product/activate}" method="post" sec:authorize="hasRole('ADMIN') or hasRole('PRODUCTS')"
                       th:if="${product.mainImage ne null and product.status eq 2}">
                   <input type="hidden" name="productId" th:value="${product.productId}"/>
                   <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
@@ -262,6 +230,22 @@
                     <span th:text="#{btn.activate}">Activate</span>
                   </button>
                 </form>
+                <!-- USE ${#authorization.expression('hasRole(''USERS'')')} with th:if -->
+                <form class="me-2" th:action="@{/admin/product/approve}" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:if="${product.mainImage ne null and (product.approvedOn eq null or product.status eq 1)}">
+                  <input type="hidden" name="productId" th:value="${product.productId}"/>
+                  <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
+                    <i data-feather="check" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.approve}">Approve</span>
+                  </button>
+                </form>
+                <span data-bs-toggle="tooltip" data-bs-placement="right" title="" th:data-bs-original-title="#{product.approve.onlyadmin.message}">
+                  <button type="button" class="btn btn-outline-success btn-sm" sec:authorize="hasRole('PRODUCTS')" th:if="${product.mainImage ne null or product.status eq 3}"
+                          disabled="disabled">
+                    <i data-feather="check" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.approve}">Approve</span>
+                  </button>
+                </span>
                 <form class="me-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
                   <input type="hidden" name="productId" th:value="${product.productId}"/>
                   <button type="submit" class="btn btn-outline-secondary btn-sm">

@@ -87,7 +87,7 @@
                   <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.assignedrole}">Assigned role</label>
                     <select class="form-control form-control-sm" th:field="*{role}">
-                      <option value=""th:text="#{users.search.assignedrole.all}" >- All -</option>
+                      <option value="" th:text="#{users.search.assignedrole.all}" >- All -</option>
                       <option value="ADMIN" th:text="#{user.roles.ADMIN}">Administrator</option>
                       <option value="USER" th:text="#{user.roles.USER}">User</option>
                       <option value="SALES" th:text="#{user.roles.SALES}">Sales</option>
@@ -121,14 +121,14 @@
               <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
 
                 <div class="d-flex">
-                  <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
+                  <h5 class="mb-2" th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
 
                   <div class="d-flex ms-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
-                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
-                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
                     <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
                       <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
-                      <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                      <p class="mb-2" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
                     </div>
                   </div>
                 </div>

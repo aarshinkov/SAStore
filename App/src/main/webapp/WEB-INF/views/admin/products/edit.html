@@ -32,12 +32,14 @@
                 </div>
                 <input type="hidden" th:field="*{productId}"/>
                 <div class="d-flex">
-                  <div class="ml-auto">
-                    <button type="submit" class="btn btn-primary btn-sm">
-                      <i data-feather="save" class="fe-1x align-items-center"></i>
-                      <span th:text="#{btn.save}">Save</span>
-                    </button>
-                  </div>
+                  <button type="submit" class="btn btn-primary btn-sm me-2">
+                    <i data-feather="save" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.save}">Save</span>
+                  </button>
+                  <a href="#" th:href="@{/admin/products(id=${pem.productId})}" class="btn btn-outline-secondary btn-sm">
+                    <i data-feather="arrow-left" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.back}">Back</span>
+                  </a>
                 </div>
               </div>
             </div>
