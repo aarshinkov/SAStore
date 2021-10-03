@@ -88,3 +88,15 @@ CREATE TABLE addresses(
 	user_id varchar(100) references users(user_id),
 	is_default boolean not null default true
 );
+
+CREATE TABLE baskets(
+	basket_id varchar(100) not null primary key,
+	user_id varchar(100) not null references users(user_id)
+);
+
+CREATE TABLE basket_products(
+	basket_product_id varchar(100) not null primary key,
+	basket_id varchar(100) not null references baskets(basket_id),
+	product_id varchar(100) not null references products(product_id),
+	added_on timestamp not null default NOW()
+);

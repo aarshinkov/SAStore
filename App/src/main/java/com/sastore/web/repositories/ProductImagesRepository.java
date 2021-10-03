@@ -14,4 +14,10 @@ import org.springframework.stereotype.Repository;
 public interface ProductImagesRepository extends JpaRepository<ProductImageEntity, String> {
 
   List<ProductImageEntity> findAllByProductProductId(String productId);
+
+  List<ProductImageEntity> findAllByProductProductIdOrderByCreatedOnAsc(String productId);
+
+  List<ProductImageEntity> findAllByProductProductIdOrderByCreatedOnDesc(String productId);
+
+  ProductImageEntity findByImageId(String imageId);
 }

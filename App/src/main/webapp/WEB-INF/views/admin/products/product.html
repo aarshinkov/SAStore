@@ -254,6 +254,14 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                   </svg>
                 </div>
+                <form class="me-2" th:action="@{/admin/product/activate}" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:if="${product.mainImage ne null and product.status eq 2}">
+                  <input type="hidden" name="productId" th:value="${product.productId}"/>
+                  <button type="submit" class="btn btn-outline-success btn-sm ms-auto">
+                    <i data-feather="check" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.activate}">Activate</span>
+                  </button>
+                </form>
                 <form class="me-2" th:action="@{/admin/product/deactivate}" method="post" th:if="${product.status eq 0}">
                   <input type="hidden" name="productId" th:value="${product.productId}"/>
                   <button type="submit" class="btn btn-outline-secondary btn-sm">
@@ -293,7 +301,7 @@
       <div class="row gutters-sm">
         <div class="col-12 mb-3">
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" th:classappend="${product.mainImage ne null} ? 'pb-0'">
               <div class="d-flex align-items-center">
                 <h5 class="mb-0" th:text="#{product.images.count(${#numbers.formatInteger(#lists.size(images), 0, 'WHITESPACE')})}">Images</h5>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#newImageModal" class="btn btn-success btn-sm ms-auto">
@@ -304,14 +312,26 @@
               <hr/>
 
               <div class="row">
-                <div class="col-12" th:if="${product.mainImage eq null and product.approvedOn eq null}">
+                <div class="col-12" th:if="${product.mainImage eq null}">
                   <h6 th:text="#{product.images.none}">No images uploaded for this product yet.</h6>
                 </div>
-                <div class="col-12 col-lg-2 position-relative" th:if="${product.mainImage ne null}">
-                  <span class="badge bg-danger ms-2 mt-2 position-absolute rounded-pill top-0" th:text="#{product.images.mainImage}">Main image</span>
+                <div class="col-12 col-lg-2 position-relative mb-4" th:if="${product.mainImage ne null}">
+                  <span class="badge bg-danger ms-2 mt-2 position-absolute rounded-pill top-0 start-2" th:text="#{product.images.mainImage}">Main image</span>
+                  <div class="me-4 mt-2 position-absolute top-0 end-0">
+                    <button type="button" class="btn btn-outline-danger rounded-circle px-2 py-1"
+                            data-bs-toggle="modal" data-bs-target="#deleteImageModal" th:data-image-id="${product.mainImage}">
+                      <i data-feather="trash-2" class="fe-1x align-items-center"></i>
+                    </button>
+                  </div>
                   <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${product.mainImage}"/>
                 </div>
-                <div class="col-12 col-lg-2" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                <div class="col-12 col-lg-2 position-relative mb-4" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                  <div class="me-4 mt-2 position-absolute top-0 end-0">
+                    <button type="button" class="btn btn-outline-danger rounded-circle px-2 py-1"
+                            data-bs-toggle="modal" data-bs-target="#deleteImageModal" th:data-image-id="${image.imageId}">
+                      <i data-feather="trash-2" class="fe-1x align-items-center"></i>
+                    </button>
+                  </div>
                   <img class="img-thumbnail" src="#" th:src="@{~/images/products/} + ${image.imageId}"/>
                 </div>
               </div>
@@ -346,6 +366,35 @@
                   <span th:text="#{btn.upload.image}">Upload image</span>
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <span th:text="#{btn.close}">Close</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-labelledby="deleteImageModalLabel" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteImageModalLabel" th:text="#{product.images.delete.header}">Add an image</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/admin/products/image/delete}" method="post">
+              <div class="modal-body">
+                <div class="mb-2" th:text="#{product.images.delete.message}">Are your sure you want to delete the image for this product?</div>
+
+                <input id="deleteImageId" type="hidden" name="imageId"/>
+                <input type="hidden" name="productId" th:value="${product.productId}"/>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">
+                  <i data-feather="trash-2" class="fe-1x align-items-center"></i>
+                  <span th:text="#{btn.delete.image}">Delete image</span>
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <i data-feather="x" class="fe-1x align-items-center"></i>
                   <span th:text="#{btn.close}">Close</span>
                 </button>
               </div>
@@ -407,6 +456,13 @@
 
           $("#currentPriceValue").text(parseFloat(currentPrice).toFixed(2));
         }
+
+        document.getElementById('deleteImageModal').addEventListener('show.bs.modal', function (event) {
+          let modal = $(event.relatedTarget);
+          let imageId = modal.data('image-id');
+
+          $('#deleteImageId').val(imageId);
+        });
       </script>
     </div>
   </body>

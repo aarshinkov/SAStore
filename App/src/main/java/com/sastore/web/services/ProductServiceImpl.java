@@ -7,6 +7,7 @@ import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.enums.ProductStatuses;
 import com.sastore.web.filters.ProductFilter;
 import com.sastore.web.models.ProductCreateModel;
+import com.sastore.web.models.ProductEditModel;
 import com.sastore.web.models.ProductImageCreateModel;
 import com.sastore.web.repositories.ProductImagesRepository;
 import com.sastore.web.repositories.ProductsRepository;
@@ -146,10 +147,32 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public ProductEntity editProduct(ProductEditModel pem) {
+
+    ProductEntity product = productsRepository.findByProductId(pem.getProductId());
+
+    product.setTitle(pem.getTitle());
+    product.setDescription(pem.getDescription());
+    product.setEditedOn(new Timestamp(System.currentTimeMillis()));
+
+    productsRepository.save(product);
+
+    return product;
+  }
+
+  @Override
   public void approveProduct(String productId) throws Exception {
     ProductEntity product = productsRepository.findByProductId(productId);
     product.setStatus(ProductStatuses.ACTIVE.getStatus());
     product.setApprovedOn(new Timestamp(System.currentTimeMillis()));
+
+    productsRepository.save(product);
+  }
+
+  @Override
+  public void activateProduct(String productId) throws Exception {
+    ProductEntity product = productsRepository.findByProductId(productId);
+    product.setStatus(ProductStatuses.ACTIVE.getStatus());
 
     productsRepository.save(product);
   }
@@ -183,7 +206,7 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public List<ProductImageEntity> getProductAdditionalImages(String productId) {
 
-    return productImagesRepository.findAllByProductProductId(productId);
+    return productImagesRepository.findAllByProductProductIdOrderByCreatedOnAsc(productId);
   }
 
   @Override
@@ -196,6 +219,10 @@ public class ProductServiceImpl implements ProductService {
 
     if (picm.getIsMain() == null) {
       pi.setIsMain(true);
+      product.setMainImage(file.getFullName());
+
+      final String updateMainImage = "UPDATE prod_images SET is_main = false WHERE product_id = ? AND image_id != ?";
+      jdbcTemplate.update(updateMainImage, picm.getProductId(), file.getFullName());
     } else {
       pi.setIsMain(picm.getIsMain());
 
@@ -211,6 +238,54 @@ public class ProductServiceImpl implements ProductService {
 
     productImagesRepository.save(pi);
     productsRepository.save(product);
+  }
+
+  @Override
+  public boolean deleteImage(String productId, String imageId) throws Exception {
+
+    ProductImageEntity image = productImagesRepository.findByImageId(imageId);
+
+    if (image == null) {
+      return false;
+    }
+
+    ProductEntity product = productsRepository.findByProductId(productId);
+
+    if (product == null) {
+      return false;
+    }
+
+    if (image.getIsMain()) {
+      //IF the image is a main image
+      List<ProductImageEntity> images = productImagesRepository.findAllByProductProductIdOrderByCreatedOnAsc(productId);
+
+      // The image to be deleted is the only one - deactivate product
+      if (images.size() == 1) {
+        log.debug("The image to be deleted is the only one - deactivating product");
+        productImagesRepository.delete(image);
+        product.setStatus(ProductStatuses.INACTIVE.getStatus());
+        product.setMainImage(null);
+        productsRepository.save(product);
+        return true;
+      }
+
+      if (images.size() > 1) {
+
+        for (ProductImageEntity prodImage : images) {
+          if (!prodImage.getIsMain()) {
+            product.setMainImage(prodImage.getImageId());
+            ProductImageEntity newImage = productImagesRepository.findByImageId(prodImage.getImageId());
+            newImage.setIsMain(true);
+            productImagesRepository.save(newImage);
+            break;
+          }
+        }
+        productsRepository.save(product);
+      }
+    }
+
+    productImagesRepository.delete(image);
+    return true;
   }
 
   @Override

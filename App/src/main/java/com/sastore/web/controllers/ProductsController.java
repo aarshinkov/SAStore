@@ -6,6 +6,7 @@ import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.filters.ProductFilter;
 import com.sastore.web.models.ProductCreateModel;
+import com.sastore.web.models.ProductEditModel;
 import com.sastore.web.models.ProductImageCreateModel;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
@@ -232,6 +233,62 @@ public class ProductsController extends Base {
     return "redirect:/admin/products";
   }
 
+  @GetMapping("/admin/products/edit")
+  public String prepareEditProduct(@RequestParam("id") String productId, Model model) {
+
+    ProductEntity product = productService.getProductByProductId(productId);
+
+    ProductEditModel pem = new ProductEditModel();
+    pem.setProductId(productId);
+    pem.setTitle(product.getTitle());
+    pem.setDescription(product.getDescription());
+
+    model.addAttribute("pem", pem);
+
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products", null, LocaleContextHolder.getLocale()), "/admin/products"));
+    breadcrumbs.add(new Breadcrumb(product.getTitle(), "/admin/products?id=" + product.getProductId()));
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products.edit", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
+
+    model.addAttribute("pageTitle", getMessage("products.edit.header"));
+    model.addAttribute("globalMenu", "products");
+
+    return "admin/products/edit";
+  }
+
+  @PostMapping("/admin/products/edit")
+  public String editProduct(@ModelAttribute("pem") @Valid ProductEditModel pem, BindingResult bindingResult, Model model) {
+
+    if (bindingResult.hasErrors()) {
+      ProductEntity product = productService.getProductByProductId(pem.getProductId());
+
+      List<Breadcrumb> breadcrumbs = new ArrayList<>();
+      breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+      breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products", null, LocaleContextHolder.getLocale()), "/admin/products"));
+      breadcrumbs.add(new Breadcrumb(product.getTitle(), "/admin/products?id=" + product.getProductId()));
+      breadcrumbs.add(new Breadcrumb(getMessage("nav.managing.products.edit", null, LocaleContextHolder.getLocale()), null));
+      model.addAttribute("breadcrumbs", breadcrumbs);
+
+      model.addAttribute("pageTitle", getMessage("products.edit.header"));
+      model.addAttribute("globalMenu", "products");
+
+      return "admin/products/edit";
+    }
+    
+    try {
+      productService.editProduct(pem);
+
+//            redirectAttributes.addFlashAttribute("msgSuccess", getMessage("products.edit.success"));
+    } catch (Exception e) {
+      log.error("Error editing product", e);
+//            redirectAttributes.addFlashAttribute("msgError", getMessage("products.edit.error"));
+    }
+
+    return "redirect:/admin/products?id=" + pem.getProductId();
+  }
+
   @PostMapping("/admin/product/price")
   public String editProductPrice(@RequestParam("productId") String productId,
           @RequestParam(name = "mainPrice", required = false, defaultValue = "0.00") Double mainPrice,
@@ -274,6 +331,22 @@ public class ProductsController extends Base {
 //            redirectAttributes.addFlashAttribute("msgSuccess", "product.approved.success");
     } catch (Exception e) {
       log.error("Error approving a product!", e);
+//            redirectAttributes.addFlashAttribute("msgError", "product.approved.error");
+    }
+
+    return "redirect:/admin/products?id=" + productId;
+  }
+
+  @PostMapping("/admin/product/activate")
+  public String activateProduct(@RequestParam("productId") String productId,
+          RedirectAttributes redirectAttributes) {
+
+    try {
+      productService.activateProduct(productId);
+
+//            redirectAttributes.addFlashAttribute("msgSuccess", "product.approved.success");
+    } catch (Exception e) {
+      log.error("Error activating a product!", e);
 //            redirectAttributes.addFlashAttribute("msgError", "product.approved.error");
     }
 
@@ -351,5 +424,23 @@ public class ProductsController extends Base {
     }
 
     return "redirect:/admin/products?id=" + picm.getProductId();
+  }
+
+  @PostMapping("/admin/products/image/delete")
+  public String deleteImage(@RequestParam(name = "imageId") String imageId,
+          @RequestParam(name = "productId") String productId,
+          RedirectAttributes redirectAttributes) {
+
+    log.debug("Deleting image: " + imageId + " for product: " + productId);
+
+    uploader.deleteFile(imageId);
+
+    try {
+      productService.deleteImage(productId, imageId);
+    } catch (Exception e) {
+
+    }
+
+    return "redirect:/admin/products?id=" + productId;
   }
 }

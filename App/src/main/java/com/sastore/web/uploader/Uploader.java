@@ -59,6 +59,19 @@ public class Uploader {
     }
   }
 
+  public boolean deleteFile(String fileName) {
+    String rootPath = "A:\\images";
+    File dir = new File(rootPath + IMAGES_DIR + ImageFolder.PRODUCTS.getFolder());
+
+    if (!dir.exists()) {
+      return false;
+    }
+
+    final File file = new File(dir.getAbsolutePath() + File.separator + fileName);
+
+    return file.delete();
+  }
+
   /**
    * Gets a file from the file system and copies it to a destination folder with
    * an unique name generated automatically.

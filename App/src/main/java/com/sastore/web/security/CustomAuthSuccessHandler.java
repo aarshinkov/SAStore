@@ -4,6 +4,7 @@ import com.sastore.web.domain.*;
 import com.sastore.web.entities.*;
 import com.sastore.web.repositories.*;
 import java.io.IOException;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,9 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
   @Autowired
   private UsersRepository usersRepository;
 
+  @Autowired
+  private BasketsRepository basketsRepository;
+
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
@@ -46,6 +50,15 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     String email = authentication.getName();
 
     UserEntity user = usersRepository.findByEmail(email);
+    BasketEntity basket = basketsRepository.findByUserUserId(user.getUserId());
+
+    if (basket == null) {
+      BasketEntity newBasket = new BasketEntity();
+      newBasket.setBasketId(UUID.randomUUID().toString());
+      newBasket.setUser(user);
+
+      basketsRepository.save(newBasket);
+    }
 
     NameDomain names = NameDomain.builder().firstName(user.getFirstName()).lastName(user.getLastName()).build();
 

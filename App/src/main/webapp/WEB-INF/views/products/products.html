@@ -70,22 +70,27 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3" th:each="p : ${products.collection}">
-              <div class="card card-hover-expand">
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4" th:each="p : ${products.collection}">
+              <div class="card">
                 <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1"
                         type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="add to wishlist">
                   <i class="bi bi-suit-heart"></i>
                 </button>
-                <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-n2 z-index-1 btn-sm d-none d-sm-inline" style="font-size: 12px;" type="button" th:if="${p.isNew}">
+                <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-2 me-2 z-index-1 btn-sm d-none d-sm-inline" style="font-size: 12px;" type="button" th:if="${p.isNew}">
                   <span th:text="#{products.item.newItem}">New product</span>
                 </button>
-                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-5 me-n2 z-index-1 btn-sm d-none d-sm-inline" style="font-size: 12px;" type="button" th:unless="${p.discount eq null or p.discount eq 0}">
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-2 me-2 z-index-1 btn-sm d-none d-sm-inline" style="font-size: 12px;" type="button"
+                        th:if="${!p.isNew and (p.discount ne null and p.discount gt 0)}">
+                  <span th:text="#{products.item.inpromotion}">In promotion</span>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 me-2 z-index-1 btn-sm d-none d-sm-inline" style="font-size: 12px; margin-top: 2.5rem !important;" type="button"
+                        th:if="${p.isNew and (p.discount ne null and p.discount gt 0)}">
                   <span th:text="#{products.item.inpromotion}">In promotion</span>
                 </button>
                 <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${p.productId})}">
                   <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"/>
                 </a>
-                <div class="card-body pt-0 bg-white">
+                <div class="card-body py-0 bg-white">
                   <a class="text-muted d-block small pb-1" href="#!">Category</a>
                   <h3 class="fs-5">
                     <a class="text-dark" href="#" th:href="@{/product(id=${p.productId})}" th:text="${p.title}">Title</a>
