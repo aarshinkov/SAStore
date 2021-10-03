@@ -24,8 +24,7 @@
                 <i data-feather="user-check" class="fe-3x d-block"></i>
               </div>
               <div class="flex-grow-1 text-start">
-                <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${users.page.total}"
-                    data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;&quot;}" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+                <h5 class="fs-4 d-block mb-1" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
                 <p class="mb-0 text-muted" th:text="#{users.total.users}">Total users</p>
               </div>
             </div>
