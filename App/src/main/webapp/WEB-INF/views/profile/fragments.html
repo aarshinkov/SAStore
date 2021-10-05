@@ -7,8 +7,12 @@
       <div class="card bg-gradient-light h-lg-100 p-3">
         <div>
           <!--profile image-->
-          <div class="size-160 mb-3 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+          <div class="size-160 mb-3 rounded-circle shadow bg-no-repat overflow-hidden bg-contain" th:if="${session.avatar eq null}"
                th:style="'background-image: url(' + @{/resources/img/user/user_default.svg} + ');'">
+          </div>
+          <div class="avatar size-140 mb-3">
+            <img class="img-fluid rounded-pill" style="object-fit: cover; width: 100%; height: 100%;"
+                 th:src="@{~/images/users/} + ${session.avatar}" alt="..."/>
           </div>
           <h4 class="mb-2" th:text="${session.user}">John Doe</h4>
           <ul class="list-unstyled border-bottom pb-3 mb-3">

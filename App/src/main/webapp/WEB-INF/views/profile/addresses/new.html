@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title('Profile')}">Home</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row gutters-3">
+        <div class="col-12 col-md-4 col-xl-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col-12 col-md-8 col-xl-9 mt-3 mt-md-0">
+          <div class="row">
+            <div class="col-12">
+              <h4 th:text="#{profile.addresses.header}">Addresses</h4>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form th:action="@{/profile/addresses/new}" method="POST" th:object="${acm}">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label required">Person name</label>
+                    <input type="text" class="form-control" th:field="*{personName}"
+                           th:classappend="${#fields.hasErrors('personName')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{personName}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-5 mb-3">
+                    <label class="form-label required">Country</label>
+                    <select class="form-select" th:field="*{country}">
+                      <option value="bg">Bulgaria</option>
+                      <option value="gb">United kingdom</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label required">Phone</label>
+                    <input type="text" class="form-control" th:field="*{phone}"
+                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{phone}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-3 mb-3">
+                    <label class="form-label required">Postal code</label>
+                    <input type="text" class="form-control" th:field="*{postCode}"
+                           th:classappend="${#fields.hasErrors('postCode')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{postCode}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label">Province</label>
+                    <input type="text" class="form-control" th:field="*{province}"
+                           th:classappend="${#fields.hasErrors('province')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{province}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label required">City</label>
+                    <input type="text" class="form-control" th:field="*{city}"
+                           th:classappend="${#fields.hasErrors('city')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{city}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 col-sm-4 mb-3">
+                    <label class="form-label">District</label>
+                    <input type="text" class="form-control" th:field="*{district}"
+                           th:classappend="${#fields.hasErrors('district')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{district}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-8 mb-3">
+                    <label class="form-label required">Street</label>
+                    <input type="text" class="form-control" th:field="*{street}"
+                           th:classappend="${#fields.hasErrors('street')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{street}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label required">Street number</label>
+                    <input type="number" min="0" class="form-control" th:field="*{streetNo}"
+                           th:classappend="${#fields.hasErrors('streetNo')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{streetNo}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label">Enter</label>
+                    <input type="text" class="form-control" th:field="*{enter}"
+                           th:classappend="${#fields.hasErrors('enter')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{enter}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label">Floor</label>
+                    <input type="text" class="form-control" th:field="*{floor}"
+                           th:classappend="${#fields.hasErrors('floor')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{floor}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <label class="form-label">Apartment number</label>
+                    <input type="text" class="form-control" th:field="*{apartmentNo}"
+                           th:classappend="${#fields.hasErrors('apartmentNo')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{apartmentNo}">Error</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" th:field="*{isMain}"/>
+                      <label class="form-check-label">Set as main address</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 d-flex">
+                    <input type="hidden" th:field="*{userId}"/>
+                    <button type="submit" class="btn btn-primary btn-sm ms-auto">
+                      <i class="icon-Save"></i>
+                      <span>Save</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

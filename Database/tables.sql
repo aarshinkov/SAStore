@@ -75,18 +75,20 @@ CREATE TABLE prod_images(
 
 CREATE TABLE addresses(
 	address_id varchar(100) not null primary key,
-	person_first_name varchar(200) not null,
-	person_last_name varchar(200) not null,
+	person_name varchar(300) not null,
+	phone varchar(100) not null,
 	country varchar(10) not null default 'bg',
+	post_code varchar(50) not null,
+	province varchar(100) not null default 'other',
 	city varchar(100) not null,
 	district varchar(100),
 	street varchar(500) not null,
 	street_no int not null,
 	enter varchar(30),
-	floor int
-	apartment_no int
-	user_id varchar(100) references users(user_id),
-	is_default boolean not null default true
+	floor int,
+	apartment_no int,
+	user_id varchar(100) not null references users(user_id),
+	is_main boolean not null default true
 );
 
 CREATE TABLE baskets(

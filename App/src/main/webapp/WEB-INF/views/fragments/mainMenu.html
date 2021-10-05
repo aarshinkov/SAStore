@@ -96,26 +96,32 @@
                   </div>
                   <div class="dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="text-muted small" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                      <div class="avatar-min me-sm-1" th:if="${session.avatar eq null}">
+                        <img th:src="@{~/images/users/user_default.png}" class="rounded-circle rounded-circle-fit" alt=""/>
+                      </div>
+                      <div class="avatar-min me-sm-1" th:if="${session.avatar ne null}">
+                        <img th:src="@{~/images/users/} + ${session.avatar}" class="rounded-circle rounded-circle-fit" alt=""/>
+                      </div>
                       <!--<img src="assets/img/avatar/2.jpg" class="avatar xs rounded-circle me-1 align-middle" alt=""/>-->
-                      <i class="icon-Street-View"></i>
+                      <!--<i class="icon-Street-View"></i>-->
                       <span class="d-none d-md-inline-block" th:text="${session.user.fullName}">John Doe</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end mt-2">
                       <a class="dropdown-item" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'text-primary'">
-                        <i class="icon-Profile"></i>
+                        <i class="icon-Profile me-2"></i>
                         <span th:text="#{nav.profile}">Profile</span>
                       </a>
                       <a class="dropdown-item" th:href="@{/profile/orders}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'text-primary'">
-                        <i class="icon-File-ClipboardFileText"></i>
+                        <i class="icon-File-ClipboardFileText me-2"></i>
                         <span th:text="#{nav.profile.orders}">My orders</span>
                       </a>
                       <a class="dropdown-item" th:href="@{/profile/favorites}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'text-primary'">
-                        <i class="icon-Heart"></i>
+                        <i class="icon-Heart me-2"></i>
                         <span th:text="#{nav.profile.favorites}">Favorites</span>
                       </a>
                       <hr class="my-1"/>
                       <a th:href="@{/logout}" href="#" class="dropdown-item text-danger">
-                        <i class="icon-Power-3"></i>
+                        <i class="icon-Power-3 me-2"></i>
                         <span th:text="#{nav.logout}">Logout</span>
                       </a>
                     </div>

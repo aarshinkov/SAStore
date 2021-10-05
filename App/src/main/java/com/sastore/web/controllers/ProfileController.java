@@ -109,19 +109,4 @@ public class ProfileController extends Base {
 
     return "profile/favorites";
   }
-
-  @GetMapping("/profile/addresses")
-  public String addresses(Model model) {
-
-    List<Breadcrumb> breadcrumbs = new ArrayList<>();
-    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
-    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
-    breadcrumbs.add(new Breadcrumb(getMessage("nav.profile.addresses", null, LocaleContextHolder.getLocale()), null));
-    model.addAttribute("breadcrumbs", breadcrumbs);
-
-    model.addAttribute("globalMenu", "profile");
-    model.addAttribute("submenu", "addresses");
-
-    return "profile/addresses";
-  }
 }

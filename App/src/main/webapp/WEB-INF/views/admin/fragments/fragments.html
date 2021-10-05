@@ -381,16 +381,16 @@
           </li>
           <li class="nav-item dropdown ml-2" sec:authorize="isAuthenticated()">
             <a class="nav-link nav-link-faded rounded nav-link-img dropdown-toggle px-2" href="#" data-toggle="dropdown" data-display="static">
-              <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2">
-                <span class="d-none d-sm-block" th:text="${session.user.firstName}">John</span>
+              <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2"/>
+              <span class="d-none d-sm-block" th:text="${session.user.firstName}">John</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0 overflow-hidden">
               <div class="media align-items-center bg-primary text-white px-4 py-3 mb-2">
-                <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50">
-                  <div class="media-body ml-2 text-nowrap">
-                    <h6 class="mb-0" th:text="${session.user.fullName}">John Doe</h6>
-                    <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.roles.toArray()[0].rolename}}">Administrator</span>
-                  </div>
+                <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50"/>
+                <div class="media-body ml-2 text-nowrap">
+                  <h6 class="mb-0" th:text="${session.user.fullName}">John Doe</h6>
+                  <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.roles.toArray()[0].rolename}}">Administrator</span>
+                </div>
               </div>
               <a class="dropdown-item has-icon" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
                 <i class="mr-2" data-feather="user"></i>
@@ -515,7 +515,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="card overflow-hidden" id="countActiveProducts">
       <div class="card-body d-flex align-items-center justify-content-between">
         <div class="flex-shrink-0 size-60 bg-tint-primary text-primary rounded-pill me-3 d-flex align-items-center justify-content-center">
@@ -528,7 +528,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="card overflow-hidden" id="countFinishedOrders">
       <div class="card-body d-flex align-items-center justify-content-between">
         <div class="flex-shrink-0 size-60 bg-tint-success text-success rounded-pill me-3 d-flex align-items-center justify-content-center">

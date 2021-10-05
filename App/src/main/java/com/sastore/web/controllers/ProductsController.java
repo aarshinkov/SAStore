@@ -276,7 +276,7 @@ public class ProductsController extends Base {
 
       return "admin/products/edit";
     }
-    
+
     try {
       productService.editProduct(pem);
 

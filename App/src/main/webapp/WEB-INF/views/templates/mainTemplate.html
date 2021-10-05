@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" th:href="@{/resources/users/css/theme-shop.min.css}" href="../../resources/users/css/theme-shop.min.css"/>
     <link rel="stylesheet" th:href="@{/resources/users/css/theme.css}" href="../../resources/users/css/theme.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
 
@@ -69,5 +71,11 @@
     <!-- Main script -->
     <!--<script th:src="@{/resources/users/js/app.js}" src="../../resources/users/js/app.js"></script>-->
     <script th:src="@{/resources/users/js/theme.bundle.js}" src="../../resources/users/js/theme.bundle.js"></script>
+
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
   </body>
 </html>
