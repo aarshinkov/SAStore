@@ -26,7 +26,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-sm-6 mb-4" th:each="a : ${addresses}">
+            <div class="col-12">
+              <h5 th:if="${#lists.size(addresses) eq 0}">No addresses found!</h5>
+            </div>
+            <div class="col-12 col-sm-6 mb-4" th:each="a : ${addresses}" th:if="${#lists.size(addresses) gt 0}">
               <div class="card card-body p-4 position-relative" th:classappend="${a.isMain} ? 'border border-danger'">
                 <small class="badge bg-danger position-absolute top-0 end-0 mt-2 me-2" th:if="${a.isMain}"
                        style="font-size: 12px;" th:text="#{profile.addresses.main}">Default address</small>
