@@ -84,11 +84,13 @@ CREATE TABLE addresses(
 	district varchar(100),
 	street varchar(500) not null,
 	street_no int not null,
-	enter varchar(30),
+	entrance varchar(30),
 	floor int,
 	apartment_no int,
 	user_id varchar(100) not null references users(user_id),
-	is_main boolean not null default true
+	is_main boolean not null default true,
+	added_on timestamp not null default NOW(),
+	edited_on timestamp
 );
 
 CREATE TABLE baskets(

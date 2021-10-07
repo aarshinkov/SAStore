@@ -1,6 +1,7 @@
 package com.sastore.web.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,8 +62,8 @@ public class AddressEntity implements Serializable {
   @Column(name = "street_no")
   private Integer streetNo;
 
-  @Column(name = "enter")
-  private String enter;
+  @Column(name = "entrance")
+  private String entrance;
 
   @Column(name = "floor")
   private Integer floor;
@@ -76,4 +77,10 @@ public class AddressEntity implements Serializable {
 
   @Column(name = "is_main")
   private Boolean isMain;
+
+  @Column(name = "added_on")
+  private Timestamp addedOn;
+
+  @Column(name = "edited_on")
+  private Timestamp editedOn;
 }

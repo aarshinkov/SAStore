@@ -45,6 +45,6 @@ public class HomeController extends Base {
 
     model.addAttribute("globalMenu", "home");
 
-    return "home";
+    return "forward:/products";
   }
 }

@@ -14,6 +14,10 @@ import org.springframework.stereotype.Repository;
 public interface AddressesRepository extends JpaRepository<AddressEntity, String> {
 
   List<AddressEntity> findAllByUserUserId(String userId);
-  
+
+  List<AddressEntity> findAllByUserUserIdOrderByAddedOnDesc(String userId);
+
+  List<AddressEntity> findAllByUserUserIdAndIsMainTrueOrderByAddedOnDesc(String userId);
+
   AddressEntity findByAddressId(String addressId);
 }

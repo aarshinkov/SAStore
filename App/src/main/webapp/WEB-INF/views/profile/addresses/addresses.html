@@ -16,10 +16,10 @@
           <div class="row">
             <div class="col-12">
               <div class="d-flex align-items-center">
-                <h4 class="mb-0" th:text="#{profile.addresses.header}">Addresses</h4>
+                <h4 class="mb-0" th:text="#{profile.addresses.header} + ' (' + ${#lists.size(addresses)} + ')'">Addresses</h4>
                 <a href="#" th:href="@{/profile/addresses/new}" class="btn btn-success btn-sm ms-auto">
                   <i class="bi bi-pin-map"></i>
-                  <span>Add address</span>
+                  <span th:text="#{profile.addresses.add}">Add address</span>
                 </a>
               </div>
               <hr class="my-3"/>
@@ -30,7 +30,7 @@
               <h5 th:if="${#lists.size(addresses) eq 0}">No addresses found!</h5>
             </div>
             <div class="col-12 col-sm-6 mb-4" th:each="a : ${addresses}" th:if="${#lists.size(addresses) gt 0}">
-              <div class="card card-body p-4 position-relative" th:classappend="${a.isMain} ? 'border border-danger'">
+              <div class="card card-body shadow-sm p-4 position-relative" th:classappend="${a.isMain} ? 'border border-danger'">
                 <small class="badge bg-danger position-absolute top-0 end-0 mt-2 me-2" th:if="${a.isMain}"
                        style="font-size: 12px;" th:text="#{profile.addresses.main}">Default address</small>
                 <h5 class="mb-1 mt-2" th:text="${a.personName}">Person name</h5>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="mb-2">
                   <i class="icon-Home-2 me-1"></i>
-                  <span th:text="(${a.district ne null} ? (${a.district} + ', ') : '') + ${a.street} + ' ' + ${a.streetNo} + (${a.enter ne null} ? (', ' + #{profile.addresses.enter(${a.enter})}) : '')">House address</span>
+                  <span th:text="(${a.district ne null} ? (${a.district} + ', ') : '') + ${a.street} + ' ' + ${a.streetNo} + (${a.entrance ne null} ? (', ' + #{profile.addresses.entrance(${a.entrance})}) : '')">House address</span>
                 </div>
                 <div class="mb-3">
                   <i class="icon-Location-2 me-1"></i>

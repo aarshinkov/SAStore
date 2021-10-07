@@ -3,6 +3,7 @@ package com.sastore.web.security;
 import com.sastore.web.domain.*;
 import com.sastore.web.entities.*;
 import com.sastore.web.repositories.*;
+import com.sastore.web.services.AddressService;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -40,6 +41,9 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
   @Autowired
   private BasketsRepository basketsRepository;
 
+  @Autowired
+  private AddressService addressService;
+
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
@@ -68,6 +72,12 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     session.setAttribute("avatar", user.getAvatar());
     session.setAttribute("roles", user.getRoles());
     session.setAttribute("createdOn", user.getCreatedOn());
+
+    AddressEntity mainAddress = addressService.getUserMainAddress(user.getUserId());
+    if (mainAddress != null) {
+      session.setAttribute("mainAddressCountry", mainAddress.getCountry());
+      session.setAttribute("mainAddressCity", mainAddress.getCity());
+    }
 
     SavedRequest savedRequest = requestCache.getRequest(request, response);
 

@@ -20,7 +20,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AddressCreateModel implements Serializable {
+public class AddressEditModel implements Serializable {
+  
+  @NotBlank
+  private String addressId;
 
   @NotBlank
   @Size(min = 1, max = 300)
