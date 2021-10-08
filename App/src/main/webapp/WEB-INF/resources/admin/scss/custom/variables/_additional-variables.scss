@@ -1,0 +1,39 @@
+//Additional variables
+
+
+
+//typo
+$letter-spacing-base:.005rem;
+$letter-spacing-headings:.01rem;
+
+//buttons
+// $btn-text-transform:         capitalize;
+$btn-text-transform:         none;
+$btn-font-family:          null;
+$btn-font-weight:         $font-weight-normal;
+
+
+//Nav tabs
+$nav-tabs-link-margin-x: $spacer * .75;
+$nav-tabs-link-padding-y:$nav-link-padding-y * 2;
+$nav-tabs-link-active-border-width:$border-width;
+
+//Gradient background
+$bg-gradient-primary:linear-gradient(53.38deg,$primary 18.37%, $pink 140.92%);
+$bg-gradient-dark:linear-gradient(53.38deg, shade-color($primary, 80%) 18.37%, shade-color($primary, 95%) 140.92%);
+
+
+//Forms
+$form-switch-min-height:1.5rem;
+
+//Sidebar
+$page-sidebar-width:260px;
+$page-sidebar-compact-width:84px;
+$sidebar-link-font-weight:$font-weight-base;
+
+
+//Tooltip
+$tooltip-box-shadow:$popover-box-shadow;
+
+//Dropdown
+$dropdown-font-weight:$font-weight-base;

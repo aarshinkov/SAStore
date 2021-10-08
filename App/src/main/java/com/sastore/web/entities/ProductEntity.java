@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +40,9 @@ public class ProductEntity implements Serializable {
   @Column(name = "price")
   private Double price;
 
+  @Column(name = "discount")
+  private Double discount;
+
   @Column(name = "avail_quant")
   private Integer availableQuantity;
 
@@ -65,4 +66,10 @@ public class ProductEntity implements Serializable {
 
   @Column(name = "edited_on")
   private Timestamp editedOn;
+
+  @Transient
+  private String formattedDescription;
+
+  @Transient
+  private Boolean isNew;
 }

@@ -18,66 +18,64 @@
         <!--        </div>-->
 
         <div class="col-12 col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="card-title text-secondary font-size-sm" th:text="#{users.total.users}">Total users</h6>
-              <div class="d-flex align-items-center mb-1">
-                <i class="fas fa-users c-text-dark-gray c-font-size-20 mr-2"></i>
-                <h3 class="mb-0 mr-2" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">48</h3>
-                <span class="small text-danger">
-                  <span>0.3%</span>
-                  <i class="material-icons align-bottom">keyboard_arrow_down</i>
-                </span>
+          <div class="card overflow-hidden" id="usersCount">
+            <div class="card-body d-flex align-items-center justify-content-between">
+              <div class="flex-shrink-0 size-60 bg-tint-primary text-primary rounded-pill me-3 d-flex align-items-center justify-content-center">
+                <i data-feather="user-check" class="fe-3x d-block"></i>
+              </div>
+              <div class="flex-grow-1 text-start">
+                <h5 class="fs-4 d-block mb-1" th:text="${#numbers.formatDecimal(users.page.total, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+                <p class="mb-0 text-muted" th:text="#{users.total.users}">Total users</p>
               </div>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="normalUsersCountDiv" class="card"></div>
+          <div id="normalUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="adminsUsersCountDiv" class="card"></div>
+          <div id="adminsUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="salesUsersCountDiv" class="card"></div>
+          <div id="salesUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="productsUsersCountDiv" class="card"></div>
+          <div id="productsUsersCountDiv"></div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-          <div id="ordersUsersCountDiv" class="card"></div>
+          <div id="ordersUsersCountDiv"></div>
         </div>
       </div>
 
-      <div class="row gutters-sm">
+      <div class="row gutters-sm mb-4">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <h5 th:text="#{users.search.header}">Search</h5>
               <hr/>
               <form th:action="@{/admin/users}" action="#" method="GET" th:object="${filter}">
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.userid}">User ID</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
                   </div>
-                  <div class="form-group col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.email}">Email</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.firstname}">First name</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
                   </div>
-                  <div class="form-group col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3">
                     <label th:text="#{users.search.lastname}">Last name</label>
                     <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.status}">Status</label>
                     <select class="form-control form-control-sm" th:field="*{isActive}">
                       <option value="" th:text="#{users.search.status.all}">- All -</option>
@@ -85,10 +83,10 @@
                       <option value="true" th:text="#{users.search.status.active}">Active</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.assignedrole}">Assigned role</label>
                     <select class="form-control form-control-sm" th:field="*{role}">
-                      <option value=""th:text="#{users.search.assignedrole.all}" >- All -</option>
+                      <option value="" th:text="#{users.search.assignedrole.all}" >- All -</option>
                       <option value="ADMIN" th:text="#{user.roles.ADMIN}">Administrator</option>
                       <option value="USER" th:text="#{user.roles.USER}">User</option>
                       <option value="SALES" th:text="#{user.roles.SALES}">Sales</option>
@@ -96,7 +94,7 @@
                       <option value="ORDERS" th:text="#{user.roles.ORDERS}">Orders</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.usersperpage}">Users per page</label>
                     <select class="form-control form-control-sm" name="limit">
                       <option value="5" th:selected="${limit eq 5}">5</option>
@@ -104,7 +102,7 @@
                       <option value="20" th:selected="${limit eq 20}">20</option>
                     </select>
                   </div>
-                  <div class="form-group col-12 col-md-6 col-xl-3">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
                     <label th:text="#{users.search.order}">Order</label>
                     <select class="form-control form-control-sm" th:field="*{order}">
                       <option value="ASC" th:selected="${order eq 'ASCENDING'}" th:text="#{users.search.order.asc}">Ascending</option>
@@ -122,14 +120,14 @@
               <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
 
                 <div class="d-flex">
-                  <h5 th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
+                  <h5 class="mb-2" th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
 
-                  <div class="d-flex ml-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
-                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
-                    <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                  <div class="d-flex ms-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
                     <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
                       <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
-                      <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                      <p class="mb-2" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
                     </div>
                   </div>
                 </div>
@@ -150,7 +148,8 @@
                     <tbody>
                       <tr th:each="u : ${users.collection}">
                         <td>
-                          <a class="text-decoration-underline" href="#" th:href="@{/admin/users(id=${u.userId})}" th:text="${u.userId}">1</a>
+                          <a class="text-decoration-underline" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${u.userId}"
+                             th:href="@{/admin/users(id=${u.userId})}" th:text="${#strings.substring(u.userId, 0, 10)} + '...'">1</a>
                         </td>
                         <td th:text="${u.firstName}">John</td>
                         <td>
@@ -159,19 +158,23 @@
                         </td>
                         <td th:text="${u.email}">joh.doe@gmail.com</td>
                         <td>
-                          <span class="badge badge-pill" th:classappend="${u.isActive} ? 'badge-success' : 'badge-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                          <span class="badge" th:classappend="${u.isActive} ? 'bg-success' : 'bg-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
                         </td>
                         <td>
                           <div th:each="r : ${u.roles}">
-                            <span class="badge badge-pill" th:text="#{user.roles. + ${r.rolename}}"
-                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'badge-danger' :(${r.rolename eq 'SALES'} ? 'badge-warning' : (${r.rolename eq 'USER'} ? 'badge-primary' :
-                                  (${r.rolename eq 'PRODUCTS'} ? 'badge-success' : (${r.rolename eq 'ORDERS'} ? 'badge-info'))))">Rolename</span>
+                            <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
+                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'bg-danger' :(${r.rolename eq 'SALES'} ? 'bg-warning' : (${r.rolename eq 'USER'} ? 'bg-primary' :
+                                  (${r.rolename eq 'PRODUCTS'} ? 'bg-success' : (${r.rolename eq 'ORDERS'} ? 'bg-info'))))">Rolename</span>
                           </div>
                         </td>
                         <td class="text-center">
-                          <a href="#" class="btn btn-xs btn-outline-danger" th:if="${session.user.userId ne u.userId}"
-                             data-toggle="modal" data-target="#deleteModal" th:attr="data-user-id=${u.userId}">
-                            <i class="fas fa-trash-alt"></i>
+                          <a href="#" class="text-danger px-2 py-1" th:if="${session.userId ne u.userId}"
+                             data-bs-toggle="modal" data-bs-target="#deleteUserModal" th:data-user-id="${u.userId}"
+                             th:data-user-id-label="#{users.item.actions.delete.id(${u.userId})}"
+                             th:data-user-fullname-label="#{users.item.actions.delete.fullname(${u.fullName})}"
+                             th:data-user-email-label="#{users.item.actions.delete.email(${u.email})}"
+                             th:data-user-delete-msg="#{users.item.actions.delete.msg}">
+                            <i data-feather="trash-2" class="fe-1x"></i>
                           </a>
                         </td>
                       </tr>
@@ -197,13 +200,13 @@
             </div>
             <div id="editModalDiv" class="modal-body"></div>
             <div class="modal-footer">
-              <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
-                <i class="fas fa-times"></i>
-                <span th:text="#{btn.cancel}">Cancel</span>
-              </a>
               <a href="#" class="btn btn-primary">
                 <i class="fas fa-save"></i>
                 <span th:text="#{btn.save}">Save</span>
+              </a>
+              <a href="#" class="btn btn-outline-dark" data-dismiss="modal">
+                <i class="fas fa-times"></i>
+                <span th:text="#{btn.cancel}">Cancel</span>
               </a>
             </div>
           </div>
@@ -212,19 +215,30 @@
       <!-- /Edit modal -->
 
       <!-- Delete modal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+      <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" role="dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <div class="modal-header bg-danger text-white shadow-none">
-              <h6 class="modal-title" id="deleteModalLabel">Modal title</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteUserModalLabel" th:text="#{users.item.actions.delete.header}">Delete user</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-              make a type specimen book.
-            </div>
+            <form th:action="@{/admin/users/remove}" method="post">
+              <div class="modal-body">
+                <div class="mb-2" id="deleteUserMessage">Are you sure?</div>
+                <div id="deleteUserLabelId">ID</div>
+                <div id="deleteUserLabelFullname">Full name</div>
+                <div id="deleteUserLabelEmail">Email</div>
+                <input id="deleteUserId" name="userId" type="hidden"/>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <span th:text="#{btn.delete}">Delete</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                  <span th:text="#{btn.close}">Close</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -247,6 +261,7 @@
             type: 'get',
             success: function (data) {
               $("#adminsUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -260,6 +275,7 @@
             type: 'get',
             success: function (data) {
               $("#salesUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -273,6 +289,7 @@
             type: 'get',
             success: function (data) {
               $("#normalUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -286,6 +303,7 @@
             type: 'get',
             success: function (data) {
               $("#productsUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -299,6 +317,7 @@
             type: 'get',
             success: function (data) {
               $("#ordersUsersCountDiv").empty().append(data);
+              feather.replace();
             },
             error: function (xhr, status, error) {
               alert("fail");
@@ -306,11 +325,23 @@
           });
         }
 
-        $('#deleteModal').on('show.bs.modal', function (event) {
+        document.getElementById('deleteUserModal').addEventListener('show.bs.modal', function (event) {
           let modal = $(event.relatedTarget);
           let userId = modal.data('user-id');
-
-          // $('#commentDeleteId').val(commentId);
+          let email = modal.data('user-email');
+          let deleteUserMsg = modal.data('user-delete-msg');
+          
+          $('#deleteUserId').val(userId);
+          $('#deleteUserMessage').html(deleteUserMsg);
+          
+          let userIdLabel = modal.data('user-id-label');
+          $('#deleteUserLabelId').html(userIdLabel);
+          
+          let fullnameLabel = modal.data('user-fullname-label');
+          $('#deleteUserLabelFullname').html(fullnameLabel);
+          
+          let emailLabel = modal.data('user-email-label');
+          $('#deleteUserLabelEmail').html(emailLabel);
         });
 
         getAdminsUsersCount();

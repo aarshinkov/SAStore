@@ -129,6 +129,19 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public boolean removeUser(String userId) {
+
+    try {
+      UserEntity user = usersRepository.findByUserId(userId);
+      usersRepository.delete(user);
+    } catch (Exception e) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public boolean isUserExistByEmail(String email) {
 
     return usersRepository.findByEmail(email) != null;

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title('Home')}">Home</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <div class="card rounded-3 p-0 overflow-hidden shadow-sm card-body mb-4">
+            <!--:Title-->
+            <div class="d-flex p-3 border-bottom align-items-center">
+              <h6 class="me-3 mb-0">Categories</h6>
+              <div class="pt-1 flex-grow-1 bg-tint-info"></div>
+            </div>
+            <!--:Collapse categories-->
+            <div class="collapse-group px-3 py-2 collapse d-flex flex-column">
+              <div class="collapse d-block">
+                <div class="nav flex-column">
+                  <a href="#mens" class="nav-link collapsed" data-bs-toggle="collapse" aria-expanded="false">Mens</a>
+                  <div class="collapse" id="mens">
+                    <div class="nav nav-level-2 flex-column">
+                      <a href="#" class="nav-link small">Shirts</a>
+                      <a href="#" class="nav-link small">Jeans</a>
+                      <a href="#" class="nav-link small">Shoes</a>
+                      <a href="#" class="nav-link small">Trousers</a>
+                      <a href="#acc_list" data-bs-toggle="collapse" aria-expanded="false" class="nav-link small collapsed">Accessories</a>
+                      <div class="collapse" id="acc_list">
+                        <div class="nav flex-column nav-level-3">
+                          <a href="#" class="nav-link small">Belts</a>
+                          <a href="#" class="nav-link small">Watches</a>
+                          <a href="#" class="nav-link small">Sunglasses</a>
+                          <a href="#" class="nav-link small">Wallets</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#womens" class="nav-link collapsed" data-bs-toggle="collapse" aria-expanded="false">Womens</a>
+                  <div class="collapse" id="womens">
+                    <div class="nav nav-level-2 flex-column">
+                      <a href="#" class="nav-link small">T-shirts &amp; tops</a>
+                      <a href="#" class="nav-link small">Shorts</a>
+                      <a href="#" class="nav-link small">Shoes</a>
+                      <a href="#" class="nav-link small">Trousers</a>
+                      <a href="#acc_list_womens" data-bs-toggle="collapse" aria-expanded="false" class="nav-link small collapsed">Accessories</a>
+                      <div class="collapse" id="acc_list_womens">
+                        <div class="nav flex-column nav-level-3">
+                          <a href="#" class="nav-link small">Face mask</a>
+                          <a href="#" class="nav-link small">Socks</a>
+                          <a href="#" class="nav-link small">Sunglasses</a>
+                          <a href="#" class="nav-link small">Wallets</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex">
+                <h2 class="mb-0">Category name</h2>
+                <div class="d-flex ms-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                  <p class="mb--0" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                  <p class="mb--0" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                  <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
+                    <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                    <p class="mb--0" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12" th:if="${#lists.size(products.collection) eq 0}">
+              <h5>No products found</h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4" th:each="p : ${products.collection}" th:if="${#lists.size(products.collection) ne 0}">
+              <div class="card shadow">
+                <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="add to wishlist">
+                  <i class="bi bi-suit-heart"></i>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button" th:if="${p.isNew}">
+                  <span th:text="#{products.item.newItem}">New product</span>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button"
+                        th:if="${!p.isNew and (p.discount ne null and p.discount gt 0)}">
+                  <span th:text="#{products.item.inpromotion}">In promotion</span>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-5 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button"
+                        th:if="${p.isNew and (p.discount ne null and p.discount gt 0)}">
+                  <span th:text="#{products.item.inpromotion}">In promotion</span>
+                </button>
+                <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${p.productId})}">
+                  <img src="#" th:src="@{~/images/products/} + ${p.mainImage}" class="img-fluid" alt="Product"/>
+                </a>
+                <div class="card-body py-0 bg-white">
+                  <a class="text-muted d-block small pb-1" href="#!">Category</a>
+                  <h3 class="fs-5">
+                    <a class="text-dark" href="#" th:href="@{/product(id=${p.productId})}" th:text="${p.title}">Title</a>
+                  </h3>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <span class="text-dark small fw-bold d-flex align-items-center">
+                        <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${p.discount ne 0}">52.22 lv.</del>
+                        <span class="ms-2" th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${p.discount eq p.price}">85 lv.</span>
+                        <span class="ms-2" th:text="#{product.view.free}" th:if="${p.discount eq p.price}">Free</span>
+                        <button class="btn py-0 px-1 btn-success btn-sm ms-2" style="font-size: 13px;" th:if="${p.discount ne 0}"
+                                type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
+                          <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body card-body-expand">
+                  <div class="d-grid text-center">
+                    <a class="btn btn-primary mb-2 shadow-sm btn-sm" href="#!">
+                      <i class="icon-Add-Cart"></i>
+                      <span>Add to cart</span>
+                    </a>
+                    <a class="btn btn-light border shadow-sm btn-sm" href="#" th:href="@{/product(id=${p.productId})}">
+                      <i class="icon-Eye-Visible"></i>
+                      <span>View details</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

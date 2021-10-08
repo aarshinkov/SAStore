@@ -2,12 +2,14 @@ package com.sastore.web;
 
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.beans.Version;
+import com.sastore.web.security.CustomAuthSuccessHandler;
 import com.sastore.web.uploader.Uploader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -44,4 +46,8 @@ public class SaStoreApplication {
 //    public SecurityChecks securityChecks() {
 //        return new SecurityChecks();
 //    }
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new CustomAuthSuccessHandler();
+  }
 }

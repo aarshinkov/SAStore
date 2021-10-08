@@ -4,10 +4,57 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="#{app.title(#{profile.title})}">Title</title>
+    <title th:text="#{app.title(#{profile.title})}">Profile</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div class="row gutters-3">
+        <div class="col-12 col-md-4 col-xl-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col-12 col-md-8 col-xl-9 mt-3 mt-md-0">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <h4 class="mb-0" th:text="#{profile.header}">Profile</h4>
+              </div>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form th:action="@{/profile}" method="POST">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label required">First name</label>
+                    <input type="text" class="form-control" name="firstName" th:value="${session.user.firstName}"/>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label required">Last name</label>
+                    <input type="text" class="form-control" name="lastName" th:value="${session.user.lastName}"/>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label required">Email</label>
+                    <input type="text" class="form-control" name="email" th:value="${session.email}"/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                      <i class="icon-Save"></i>
+                      <span th:text="#{btn.save}">Save</span>
+                    </button>
+                  </div>
+                </div>
+                <hr class="my-3"/>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="contentDiv1">
       <div class="row gutters-3">
         <div class="col-md-4 col-lg-3">
           <div th:insert="profile/fragments :: #profileFragment"></div>
@@ -20,28 +67,28 @@
               <form class="form-style-1">
                 <div class="form-group">
                   <label>User ID</label>
-                  <div th:text="${session.user.userId}">User ID</div>
+                  <div th:text="${session.userId}">User ID</div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileFirstName">First Name</label>
-                    <input type="text" class="form-control" id="profileFirstName" th:value="${session.user.firstName}">
+                    <input type="text" class="form-control" id="profileFirstName" th:value="${session.user.firstName}"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileLastName">Last Name</label>
-                    <input type="text" class="form-control" id="profileLastName" th:value="${session.user.lastName}">
+                    <input type="text" class="form-control" id="profileLastName" th:value="${session.user.lastName}"/>
                   </div>
                   <div class="form-group col-12">
                     <label for="profileEmail">Email address</label>
-                    <input type="email" class="form-control" id="profileEmail" th:value="${session.user.email}">
+                    <input type="email" class="form-control" id="profileEmail" th:value="${session.email}"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileNewPassword">New Password</label>
-                    <input type="password" class="form-control" id="profileNewPassword">
+                    <input type="password" class="form-control" id="profileNewPassword"/>
                   </div>
                   <div class="form-group col-12 col-sm-6">
                     <label for="profileConfirmPassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="profileConfirmPassword">
+                    <input type="password" class="form-control" id="profileConfirmPassword"/>
                   </div>
                   <div class="form-group col-12">
                     <button type="button" class="btn btn-primary">Update profile</button>

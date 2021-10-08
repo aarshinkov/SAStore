@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title(#{profile.addresses.edit.title})}">Edit address</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row gutters-3">
+        <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-9 mt-3 mt-md-0">
+          <div class="row">
+            <div class="col-12">
+              <h4 th:text="#{profile.addresses.edit.header}">Edit address</h4>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form th:action="@{/profile/addresses/edit}" method="POST" th:object="${aem}">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.personname}">Person name</label>
+                    <input type="text" class="form-control" th:field="*{personName}"
+                           th:classappend="${#fields.hasErrors('personName')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{personName}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-5 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.country}">Country</label>
+                    <select class="form-select" th:field="*{country}">
+                      <option value="bg" th:text="#{country.bg}">Bulgaria</option>
+                      <option value="gb" th:text="#{country.gb}">United kingdom</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.phone}">Phone</label>
+                    <input type="text" class="form-control" th:field="*{phone}"
+                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{phone}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg6 col-xl-3 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.postcode}">Postal code</label>
+                    <input type="text" class="form-control" th:field="*{postCode}"
+                           th:classappend="${#fields.hasErrors('postCode')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{postCode}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label" th:text="#{profile.address.province}">Province</label>
+                    <input type="text" class="form-control" th:field="*{province}"
+                           th:classappend="${#fields.hasErrors('province')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{province}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.city}">City</label>
+                    <input type="text" class="form-control" th:field="*{city}"
+                           th:classappend="${#fields.hasErrors('city')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{city}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label" th:text="#{profile.address.district}">District</label>
+                    <input type="text" class="form-control" th:field="*{district}"
+                           th:classappend="${#fields.hasErrors('district')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{district}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-8 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.street}">Street</label>
+                    <input type="text" class="form-control" th:field="*{street}"
+                           th:classappend="${#fields.hasErrors('street')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{street}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label required" th:text="#{profile.address.streetno}">Street number</label>
+                    <input type="number" min="0" class="form-control" th:field="*{streetNo}"
+                           th:classappend="${#fields.hasErrors('streetNo')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{streetNo}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label" th:text="#{profile.address.entrance}">Entrance</label>
+                    <input type="text" class="form-control" th:field="*{entrance}"
+                           th:classappend="${#fields.hasErrors('entrance')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{entrance}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label" th:text="#{profile.address.floor}">Floor</label>
+                    <input type="text" class="form-control" th:field="*{floor}"
+                           th:classappend="${#fields.hasErrors('floor')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{floor}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <label class="form-label" th:text="#{profile.address.apartmentno}">Apartment number</label>
+                    <input type="text" class="form-control" th:field="*{apartmentNo}"
+                           th:classappend="${#fields.hasErrors('apartmentNo')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{apartmentNo}">Error</span>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-4 mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" th:field="*{isMain}"/>
+                      <label class="form-check-label" th:text="#{profile.addresses.edit.setmain}">Set as main address</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 d-flex">
+                    <input type="hidden" th:field="*{addressId}"/>
+                    <input type="hidden" th:field="*{userId}"/>
+                    <button type="submit" class="btn btn-primary btn-sm ms-auto">
+                      <i class="icon-Save"></i>
+                      <span th:text="#{btn.save}">Save</span>
+                    </button>
+                    <a href="#" th:href="@{/profile/addresses}" class="btn btn-outline-secondary btn-sm ms-2">
+                      <i class="bi bi-x-lg"></i>
+                      <span th:text="#{btn.cancel}">Cancel</span>
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

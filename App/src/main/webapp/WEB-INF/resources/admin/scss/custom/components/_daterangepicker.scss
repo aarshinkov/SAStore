@@ -1,0 +1,52 @@
+//Date range picker plugin style override
+.daterangepicker{
+    border-color: $border-color;
+    margin-top: 2px;
+    color: $body-color;
+    border-radius: $dropdown-border-radius;
+    font-family: $font-family-base;
+    box-shadow: $dropdown-box-shadow;
+    padding: $spacer * .5;
+    &::before,&::after{
+        display: none;
+    }
+    .ranges li{
+       border-radius: $dropdown-border-radius;
+       &:not(:last-child){
+           margin-bottom: $spacer * .125;
+       }
+    }
+    &.show-calendar .ranges {
+        margin-right: .5rem;
+    }
+}
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date{
+    color: $text-muted;
+}
+.daterangepicker td.off.today{
+    color: $white;
+    background-color: $component-active-bg;
+}
+.daterangepicker.show-ranges.ltr .drp-calendar.left{
+    border-left-color: $border-color;
+}
+.daterangepicker .drp-buttons{
+    border-top-color: $border-color;
+    .btn{
+        font-weight: $btn-font-weight;
+        &.btn-default{
+            background-color: $gray-200;
+        }
+    }
+}
+.daterangepicker .ranges li:hover,.daterangepicker td.available:hover, .daterangepicker th.available:hover,.daterangepicker td.in-range{
+    background-color: tint-color($component-active-bg,85%);
+}
+.daterangepicker td.active, .daterangepicker td.active:hover,.daterangepicker .ranges li.active,.daterangepicker td.in-range.end-date{
+    background-color: $component-active-bg;
+}
+
+.monthselect,.yearselect{
+border-color: $input-border-color;
+
+}

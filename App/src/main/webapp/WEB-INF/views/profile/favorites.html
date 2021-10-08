@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title(#{favorites.title})}">Favorites</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row gutters-3">
+        <div class="col-md-4 col-lg-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col mt-3 mt-md-0">
+          <div class="card card-style1 shadow-sm">
+            <div class="card-body">
+              <h4>My favorites</h4>
+              <ul class="list-group list-group-flush list-group-sm mt-3">
+                <li class="list-group-item px-0 d-flex align-items-center">
+                  <div class="media">
+                    <a href="shop-single.html">
+                      <img src="../../img/products/1_small.jpg" alt="product" width="75"/>
+                    </a>
+                    <div class="media-body ml-3">
+                      <a href="shop-single.html" class="card-link text-secondary">Hanes Hooded Sweatshirt</a>
+                      <div class="price"><span>$18.56</span></div>
+                      <button class="btn btn-sm btn-faded-primary mt-1 atc-demo" data-title="Hanes Hooded Sweatshirt">Add to Cart</button>
+                    </div>
+                  </div>
+                  <button class="btn btn-icon btn-sm btn-text-danger rounded-circle ml-auto" type="button"><i class="material-icons">close</i></button>
+                </li>
+                <li class="list-group-item px-0 d-flex align-items-center">
+                  <div class="media">
+                    <a href="shop-single.html">
+                      <img src="../../img/products/8_small.jpg" alt="product" width="75"/>
+                    </a>
+                    <div class="media-body ml-3">
+                      <a href="shop-single.html" class="card-link text-secondary">Slim-Fit Short-Sleeve Printed Shirt</a>
+                      <div class="price"><span>$25.00</span></div>
+                      <button class="btn btn-sm btn-faded-primary mt-1 atc-demo" data-title="Slim-Fit Short-Sleeve Printed Shirt">Add to Cart</button>
+                    </div>
+                  </div>
+                  <button class="btn btn-icon btn-sm btn-text-danger rounded-circle ml-auto" type="button"><i class="material-icons">close</i></button>
+                </li>
+              </ul>
+              <div class="custom-control custom-checkbox mt-3">
+                <input type="checkbox" class="custom-control-input" id="informCheck" checked=""/>
+                <label class="custom-control-label" for="informCheck">Inform me when item from my favorites is available</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

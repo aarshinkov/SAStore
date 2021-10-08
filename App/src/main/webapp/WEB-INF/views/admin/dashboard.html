@@ -8,9 +8,154 @@
   </head>
   <body>
     <div layout:fragment="contentDiv">
-      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-      <div>Admin dashboard</div>
+      <div class="row">
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="usersCountDiv"></div>
+        </div>
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="activeProductsCountDiv"></div>
+        </div>
+        <div class="col-12 col-xl-4 col-sm-6 mb-4">
+          <div id="finishedOrdersCountDiv"></div>
+        </div>
+      </div>
+
+      <!--row-->
+      <div class="row">
+        <div class="col-md-7 col-xl-8 mb-4">
+          <!--card-->
+          <div class="card overflow-hidden">
+            <div class="d-flex card-header border-bottom-0 justify-content-between">
+              <h5 class="me-3 card-title mb-0">Top Products</h5>
+              <a href="#!.html">View All</a>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-borderless table-nowrap table-card mb-0" style="width:100%">
+                <thead class="text-muted text-uppercase small bg-light">
+                  <tr>
+                    <th class="ps-3" style="width:190px">Product</th>
+                    <th>Change</th>
+                    <th>Price</th>
+                    <th>Sold</th>
+                    <th>Sales</th>
+                  </tr>
+                </thead>
+                <tbody class="align-middle">
+                  <tr th:each="p : ${#numbers.sequence(1, 7)}">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <a href="#!.html">
+                          <img th:src="@{~/images/products/680581a6-6c9c-4de7-b232-7cf47ce5763a.png}" class="avatar p-1 border rounded-2 me-2 align-middle" alt=""/>
+                        </a>
+                        <p class="mb-0 text-truncate">
+                          <a href="#!.html" class="text-dark">Apple white earbuds water proof</a>
+                        </p>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <span class="me-2">8%</span>
+                        <span class="small text-success">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up fe-1x align-middle ms-1"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                        </span>
+                      </div>
+                    </td>
+                    <td>$69</td>
+                    <td>9040</td>
+                    <td>$623760</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-xl-4 mb-4">
+          <div class="card"> <!-- Add .h-100 for resize card to align other card -->
+            <div class="d-flex card-header justify-content-between">
+              <h5 class="me-3 mb-0">Top Customers</h5>
+              <a href="#!.html">View All</a>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+
+                <!--List-item-->
+                <li class="list-group-item" th:classappend="${iStat.first} ? 'pt-0'" th:each="u, iStat : ${#numbers.sequence(1, 5)}">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-3">
+                      <img th:src="@{~/images/users/user_default.png}" alt="" class="avatar rounded-circle"/>
+                    </div>
+                    <div class="flex-grow-1">
+                      <h6 class="mb-0">Inara Britt</h6>
+                      <p class="mb-0 text-muted">Georgia, USA</p>
+                    </div>
+                    <div class="flex-shrink-0 text-end">
+                      <span>
+                        $927.00
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        let usersCountUrl = /*[[@{/count/users}]]*/;
+                let activeProductsCountUrl = /*[[@{/count/products/active}]]*/;
+                let finishedOrdersCountUrl = /*[[@{/count/orders/finished}]]*/;
+        /*]]>*/
+
+        function getUsersCount() {
+          $.ajax({
+            url: usersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#usersCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        function getActiveProductsCount() {
+          $.ajax({
+            url: activeProductsCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#activeProductsCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+        
+        function getFinishedOrdersCount() {
+          $.ajax({
+            url: finishedOrdersCountUrl,
+            type: 'get',
+            success: function (data) {
+              $("#finishedOrdersCountDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              alert("fail");
+            }
+          });
+        }
+
+        getUsersCount();
+        getActiveProductsCount();
+        getFinishedOrdersCount();
+      </script>
     </div>
   </body>
 </html>

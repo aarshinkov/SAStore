@@ -4,24 +4,479 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="#{app.title('Home')}">Home</title>
+    <title th:text="#{app.title(${product.title})}">Product</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
       <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-      <div class="row">
-        <div class="col-12 col-md-2">
-          Something
+      <section class="position-relative">
+        <div class="container py-7 position-relative">
+          <div class="row justify-content-between">
+            <div class="col-lg-6 col-md-8 mx-auto mx-lg-0 mb-5 mb-lg-0">
+              <div class="">
+                <div class="row justify-content-center">
+                  <div class="text-center col-2">
+                    <!--Thumbnails for main slider(just above)-->
+                    <div class="swiper-container swiper-thumbnails">
+                      <!-- Additional required wrapper -->
+                      <div class="swiper-wrapper d-flex flex-column">
+                        <!-- Slides -->
+                        <div class="swiper-slide w-100">
+                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
+                        </div>
+                        <div class="swiper-slide w-100" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                          <img th:src="@{~/images/products/} + ${image.imageId}" alt="" class="img-fluid"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-10">
+                    <!--Thumbnails main slider-->
+                    <div class="swiper-container swiper-thumbnails-main">
+                      <!-- Additional required wrapper -->
+                      <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide d-flex justify-content-center">
+                          <img th:src="@{~/images/products/} + ${product.mainImage}" alt="" class="img-fluid"/>
+                        </div>
+                        <div class="swiper-slide d-flex justify-content-center" th:unless="${#lists.isEmpty(images)}" th:each="image : ${images}" th:if="${image.imageId ne image.product.mainImage}">
+                          <img th:src="@{~/images/products/} + ${image.imageId}" alt="" class="img-fluid"/>
+                        </div>
+                      </div>
+                      <!-- Swiper Navigation buttons (Remove it if you have to) -->
+                      <div class="swiper-button-prev swiperThumb-prev text-white bg-dark">
+                      </div>
+                      <div class="swiper-button-next  swiperThumb-next text-white bg-dark">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/.col-->
+            <div class="col-md-8 mx-auto col-lg-5">
+              <!-- Product Description -->
+              <div class="mb-4 pb-4 border-bottom">
+                <div class="mb-3">
+                  <h2 class="mb-4 display-3 text-serif fw-normal" th:text="${product.title}">Title</h2>
+                  <div class="d-flex">
+                    <div th:if="${product.discount ne 0}" th:remove="tag">
+                      <p class="fs-5 mb-0" th:if="${product.discount ne 0}">
+                        <del class="text-muted" th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">$499.00</del>
+                        <span th:text="#{price(${#numbers.formatDecimal(product.price - product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${product.discount eq product.price}">25.99</span>
+                        <span th:text="#{product.view.free}" th:if="${product.discount eq product.price}">Free</span>
+                      </p>
+                      <p class="fs-5 mb-0 ms-auto" th:if="${product.discount ne 0}">
+                        <!--<span th:text="#{price(${#numbers.formatDecimal(product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>-->
+                        <span class="badge bg-success" th:text="'-' + ${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                      </p>
+                    </div>
+                    <p class="fs-5 mb-0" th:if="${product.discount eq 0}">
+                      <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>
+                    </p>
+                  </div>
+                  <div>
+                    <a href="#" class="text-dark fw-semibold small">
+                      <i class="bi bi-heart align-middle me-2"></i>
+                      <span>Add to favorites</span>
+                    </a>
+                  </div>
+                </div>
+                <p class="mb-0" th:text="${product.formattedDescription}" th:if="${#strings.length(product.formattedDescription)} le 300">Description</p>
+                <p class="mb-0" th:text="${#strings.substring(product.formattedDescription, 0, 300)} + '...'" th:if="${#strings.length(product.formattedDescription)} gt 300">Description</p>
+
+              </div>
+              <div class="mb-4 pb-4 border-bottom" th:if="${product.availableQuantity ne 0}">
+                <h6 class="mb-3">Quantity</h6>
+                <div class="quantity d-flex">
+                  <input type="number" th:max="${product.availableQuantity}" min="1" name="qty" class="form-control rounded-3 width-60 pe-1 ps-2 form-control-sm wd-40 text-center mx-1" value="1"/>
+                </div>
+              </div>
+              <div class="mb-4 pb-4 border-bottom">
+                <div class="mb-0">
+                  <div class="d-flex align-items-center mb-3 justify-content-between">
+                    <h6 class="mb-0">Size</h6>
+                    <a href="#!" class="fw-normal small">Size Guide</a>
+                  </div>
+                  <div class="d-md-flex align-items-center justify-content-between">
+                    <div class="d-flex" role="group"
+                         aria-label="Basic checkbox toggle button group">
+                      <input type="radio" name="sizeRadio" class="btn-check" id="radioSizeSM" />
+                      <label
+                        class="btn btn-outline-secondary rounded-2 center-both me-2 px-2"
+                        for="radioSizeSM">S</label>
+
+                      <input type="radio" name="sizeRadio" class="btn-check" id="radioSizeM"
+                             checked="checked"/>
+                      <label
+                        class="btn btn-outline-secondary rounded-2 center-both me-2 px-2"
+                        for="radioSizeM">M</label>
+
+                      <input type="radio" name="sizeRadio" class="btn-check" id="radioSizeL"/>
+                      <label
+                        class="btn btn-outline-secondary rounded-2 center-both me-2 px-2"
+                        for="radioSizeL">L</label>
+                      <input type="radio" name="sizeRadio" class="btn-check" id="radioSizeXL"/>
+                      <label
+                        class="btn btn-outline-secondary rounded-2 center-both me-2 px-2"
+                        for="radioSizeXL">XL</label>
+                      <input type="radio" name="sizeRadio" class="btn-check" id="radioSizeXXL"/>
+                      <label
+                        class="btn btn-outline-secondary rounded-2 center-both me-2 px-2"
+                        for="radioSizeXXL">XXL</label>
+                    </div>
+
+
+                  </div>
+                </div>
+                <!--/.size-->
+              </div>
+              <!--/.size-->
+
+              <div class="mb-4 pb-4 border-bottom">
+                <h4 class="icon-Basket-Items d-inline me-1"></h4>
+                <strong class="text-muted" th:text="#{product.instock.0}" th:if="${product.availableQuantity eq 0}">No pieces in stock.</strong>
+                <strong class="text-muted" th:text="#{product.instock.1}" th:if="${product.availableQuantity eq 1}">1 piece in stock.</strong>
+                <strong class="text-muted" th:text="#{product.instock.n(${product.availableQuantity})}" th:if="${product.availableQuantity gt 1}">3 pieces in stock.</strong>
+              </div>
+              <div class="mb-4 pb-4 border-bottom">
+                <h6 class="mb-3">Color</h6>
+                <div class="d-flex" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradiobrown"
+                         checked="checked"/>
+                  <label
+                    class="shop-product-color btn p-0 me-2 size-30 center-both rounded-3 text-white product-brown"
+                    for="btnradiobrown"></label>
+
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradiogray"/>
+                  <label
+                    class="shop-product-color btn p-0 me-2 size-30 center-both rounded-3 text-white product-gray"
+                    for="btnradiogray"></label>
+
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradioblue"/>
+                  <label
+                    class="shop-product-color btn p-0 me-2 size-30 center-both rounded-3 text-white product-blue"
+                    for="btnradioblue"></label>
+                </div>
+                <!--Radio buttons for product colors-->
+              </div>
+              <!--/.colors-->
+
+              <div class="mb-4 pb-4 border-bottom d-flex align-items-center">
+                <svg class="me-1 text-success" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zm-.5 1.5l1.96 2.5H17V9.5h2.5zM6 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2.22-3c-.55-.61-1.33-1-2.22-1s-1.67.39-2.22 1H3V6h12v9H8.22zM18 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                <h6 class="mb-0 ms-3">This item ships free *</h6>
+              </div>
+
+              <div class="d-grid">
+                <a href="#" class="btn btn-primary hover-lift" th:classappend="${product.availableQuantity eq 0} ? 'disabled'">
+                  <i class="icon-Add-Cart fs-4 me-2"></i>
+                  <span>Add to cart</span>
+                </a>
+              </div>
+              <!--/.cart-action-->
+
+            </div>
+            <!--/.col-->
+          </div>
         </div>
-        <div class="col-12 col-md-10">
-          <div class="row">
-            <div class="col-12">
-              <p>Product</p>
+      </section>
+      <section class="bg-white">
+        <div class="container py-7 py-lg-12">
+          <div class="row justify-content-center">
+            <div class="col-lg-9 mb-5">
+              <nav class="nav nav-indicator">
+                <a href="#description" class="nav-link active" data-bs-toggle="tab"
+                   aria-haspopup="false" aria-expanded="true">
+                  Description
+                </a>
+                <a href="#information" class="nav-link" data-bs-toggle="tab" aria-haspopup="false"
+                   aria-expanded="false">
+                  Information
+                </a>
+                <a href="#reviews" class="nav-link" data-bs-toggle="tab" aria-haspopup="false"
+                   aria-expanded="false">
+                  Reviews
+                </a>
+                <a href="#product-qa" class="nav-link" data-bs-toggle="tab" aria-haspopup="false"
+                   aria-expanded="false">
+                  Q&amp;A
+                </a>
+                <div class="nav-indicator-bg position-absolute bg-light rounded-pill">
+                </div>
+              </nav>
+            </div>
+            <!--/.col-->
+            <div class="col-lg-9 col-md-8">
+              <div class="tab-content">
+                <div class="tab-pane fade active show" id="description">
+                  <h5>Description</h5>
+                  <p class="mb-5" th:utext="${product.description}">Full description</p>
+                  <div class="text-end">
+                    <a href="#!" class="btn btn-outline-secondary rounded-pill">Visit
+                      Store</a>
+                  </div>
+                </div>
+                <!--Tab-pane-->
+                <div class="tab-pane fade" id="information">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent px-0 py-3">MATERIAL: 100% POLYESTER
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 py-3">Durable water repellent to protect against light drizzles</li>
+                    <li class="list-group-item bg-transparent px-0 py-3">Insulated quilted vest to protect in light winters
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 py-3">Made in Germany</li>
+                  </ul>
+                </div>
+                <!--Tab-pane-->
+                <div class="tab-pane fade" id="reviews">
+                  <div
+                    class="bg-gradient-secondary text-white rounded-3 d-flex justify-content-between align-items-center p-3 mb-5">
+                    <div>
+                      <span class="text-warning small d-block mb-2">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                      </span>
+                      <p class="mb-0"><span class="reviews small fw-normal">4.69 / 5</span>
+                        <small class="text-muted">( 4.5 K - Reviews)</small>
+                      </p>
+
+                    </div>
+                    <div>
+                      <a href="#!" class="link-underline small pb-0">View all
+                        Reviews</a>
+                    </div>
+                  </div>
+                  <h5 class="mb-4 mb-lg-5">Latest Reviews</h5>
+                  <div class="d-flex mb-4">
+                    <div>
+                      <img src="assets/img/avatar/3.jpg" alt="" class="avatar sm me-3 rounded-circle shadow"/>
+                    </div>
+                    <div class="media-body">
+                      <span class="text-warning small d-block mb-2">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-fill"></i>
+                      </span>
+                      <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed
+                        do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      <div
+                        class="d-flex border-bottom pb-4 justify-content-between align-items-center">
+                        <h6 class="mb-0">John Doe</h6>
+                        <small class="text-muted">5 July 2021</small>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Review-item-->
+                  <div class="d-flex mb-4">
+                    <div>
+                      <img src="assets/img/avatar/6.jpg" alt="" class="avatar sm me-3 rounded-circle shadow"/>
+                    </div>
+                    <div class="media-body">
+                      <span class="text-warning small d-block mb-2">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-fill"></i>
+                      </span>
+                      <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed
+                        do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      <div
+                        class="d-flex border-bottom pb-4 justify-content-between align-items-center">
+                        <h6 class="mb-0">Juan Petrick, <small
+                            class="d-inline-block text-muted">France</small></h6>
+                        <small class="text-muted">23 May 2021</small>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Review-item-->
+                  <div class="d-flex mb-4">
+                    <div>
+                      <img src="assets/img/avatar/9.jpg" alt="" class="avatar sm me-3 rounded-circle shadow"/>
+                    </div>
+                    <div class="media-body">
+                      <span class="text-warning small d-block mb-2">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                          class="bi bi-star-half"></i>
+                      </span>
+                      <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed
+                        do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      <div
+                        class="d-flex border-bottom pb-4 justify-content-between align-items-center">
+                        <h6 class="mb-0">Adam Voges, <small
+                            class="d-inline-block text-muted">Australia</small></h6>
+                        <small class="text-muted">12 June 2021</small>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Review-item-->
+                  <div class="pt-3">
+                    <div class="d-flex justify-content-end mb-3">
+                      <a href="#" data-bs-target="#review-collapse" data-bs-toggle="collapse"
+                         aria-expanded="false" aria-haspopup="false" class="h6 collapse-link mb-0 link-underline">
+                        <i class="bi bi-plus-fill align-middle me-1"></i>Add Review</a>
+                    </div>
+                    <div class="collapse" id="review-collapse">
+                      <div class="card card-body rounded-3 p-4">
+                        <form class="needs-validation" novalidate="novalidate">
+                          <div class="row">
+                            <div class="col-12 col-sm-6">
+                              <div class="mb-3">
+                                <label class="form-label" for="rating-name">Name</label>
+                                <input type="text" required="required" id="rating-name" class="form-control"/>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="mb-3">
+                                <label class="form-label" for="rating-mail">Email
+                                  Address</label>
+                                <input type="email" required="required" class="form-control" id="rating-mail"/>
+                              </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label class="form-label">Select your Rating</label>
+                                <div>
+                                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnrating1"/>
+                                    <label class="btn btn-outline-warning btn-sm" for="btnrating1"><i class="bi bi-star-fill"></i></label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnrating2"/>
+                                    <label class="btn btn-outline-warning btn-sm" for="btnrating2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnrating3"/>
+                                    <label class="btn btn-outline-warning btn-sm" for="btnrating3"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnrating4"/>
+                                    <label class="btn btn-outline-warning btn-sm" for="btnrating4"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnrating5" checked="checked"/>
+                                    <label class="btn btn-outline-warning btn-sm" for="btnrating5"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label class="form-label" for="rating-message">Review
+                                  Message <small>(Optional)</small></label>
+                                <textarea class="form-control" id="rating-message"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-end">
+                            <button type="submit"
+                                    class="btn btn-primary hover-translate-3d">
+                              Submit review
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Tab-pane-->
+                <div class="tab-pane fade" id="product-qa">
+                  <div class="card border card-body mb-2 bg-transparent">
+                    <h5><i class="bi bi-question me-2"></i>Is the item
+                      durable?</h5>
+                    <p class="mb-0 d-flex align-items-stretch">
+                      <strong class="small d-inline-block me-2 text-muted">Ans.</strong>
+                      <span class="mb-0">
+                        Durability of shoes minimum 1 year if u used on daily basis. I think
+                        this is best at this price range as compare to all other popular
+                        brands.
+                      </span>
+                    </p>
+                  </div>
+                  <div class="card border card-body mb-2 bg-transparent">
+                    <h5><i class="bi bi-question me-2"></i>Is the item
+                      durable?</h5>
+                    <p class="mb-0 d-flex align-items-stretch">
+                      <strong class="small d-inline-block me-2 text-muted">Ans.</strong>
+                      <span class="mb-0">
+                        Durability of shoes minimum 1 year if u used on daily basis. I think
+                        this is best at this price range as compare to all other popular
+                        brands.
+                      </span>
+                    </p>
+                  </div>
+                  <div class="card border card-body mb-5 bg-transparent">
+                    <h5><i class="bi bi-question me-2"></i>Is the item
+                      durable?</h5>
+                    <p class="mb-0 d-flex align-items-stretch">
+                      <strong class="small d-inline-block me-2 text-muted">Ans.</strong>
+                      <span class="mb-0">
+                        Durability of shoes minimum 1 year if u used on daily basis. I think
+                        this is best at this price range as compare to all other popular
+                        brands.
+                      </span>
+                    </p>
+                  </div>
+                  <h5 class="mb-4">Feel free to Ask questions</h5>
+                  <form class="needs-validation" novalidate="novalidate">
+                    <div class="row">
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <input type="text" required="required" class="form-control" placeholder="Enter your Name"/>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <input type="email" required="required" class="form-control" placeholder="Enter your Email"/>
+                        </div>
+                      </div>
+                      <div class="w-100"></div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <textarea required="required" class="form-control" placeholder="Type your question here"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-primary hover-translate-3d">
+                        Send question <i class="bi bi-arrow-up-right ms-1"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!--Tab-pane-->
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      <section class="border-top position-relative overflow-hidden">
+        <div class="container py-7 py-lg-9 position-relative">
+          <div class="row align-items-center">
+            <div class="col-md-4 border-md-end border-light text-center mb-7 mb-md-0">
+              <div class="mb-3">
+                <i class="icon-Bird-DeliveringLetter fs-1"></i>
+              </div>
+              <h6 class="mb-0">30 Day Returns</h6>
+            </div>
+            <div class="col-md-4 border-md-end border-light text-center mb-7 mb-md-0">
+              <div class="mb-3">
+                <i class="icon-Hanger fs-1"></i>
+              </div>
+              <h6 class="mb-0">100% Handpicked</h6>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                <i class="icon-Thumbs-UpSmiley fs-1"></i>
+              </div>
+              <h6 class="mb-0">Assured Quality</h6>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </body>
 </html>

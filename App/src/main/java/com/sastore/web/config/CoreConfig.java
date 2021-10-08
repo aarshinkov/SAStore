@@ -23,7 +23,8 @@ public class CoreConfig implements WebMvcConfigurer {
   @Bean
   public ReloadableResourceBundleMessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasenames("classpath:messages/messages");
+//    messageSource.setBasenames("classpath:messages/messages");
+    messageSource.setBasenames("classpath:messages/messages", "classpath:env");
     messageSource.setDefaultEncoding("UTF-8");
 
     return messageSource;

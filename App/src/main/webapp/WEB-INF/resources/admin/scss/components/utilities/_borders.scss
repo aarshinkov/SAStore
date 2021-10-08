@@ -1,5 +1,0 @@
-@each $color, $value in $grays {
-  .border-gray-#{$color} {
-    border-color: $value;
-  }
-}

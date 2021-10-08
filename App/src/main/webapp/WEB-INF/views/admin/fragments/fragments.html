@@ -3,7 +3,273 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <body>
+
+    <div id="topheader" th:remove="tag">
+      <!--//page-header//-->
+      <header class="navbar py-0 page-header navbar-expand navbar-light px-4">
+
+        <a href="index.html" class="navbar-brand d-block d-lg-none">
+          <div class="d-flex align-items-center flex-no-wrap text-truncate">
+            <!--Sidebar-icon-->
+            <span class="sidebar-icon bg-primary rounded-circle size-40 text-white">
+              A
+            </span>
+          </div>
+        </a>
+
+        <ul class="navbar-nav d-flex align-items-center h-100">
+          <li class="nav-item d-none d-lg-flex flex-column h-100 me-lg-2 align-items-center justify-content-center">
+            <a href="javascript:void(0)" class="sidebar-trigger hover-bg-primary nav-link rounded-circle size-35 d-flex align-items-center justify-content-center p-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left fe-1x align-middle"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+          </li>
+          <li class="nav-item d-flex flex-column me-lg-2 h-100 justify-content-center dropdown">
+            <a href="javascript:void(0)" data-bs-toggle="dropdown" class="d-flex align-items-center justify-content-center hover-bg-primary nav-link size-35 p-0 rounded-circle" data-bs-auto-close="outside" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search fe-1x align-middle"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+
+            <!--Search dropdown menu-->
+            <div class="dropdown-menu p-0 dropdown-menu-sm overflow-hidden mt-0">
+
+              <!--Search form-->
+              <form>
+                <div class="d-flex align-items-center p-1 border-bottom ps-4">
+                  <div class="text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search fe-1x align-middle"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  </div>
+                  <input type="text" autofocus="" class="form-control rounded-0 py-3 ps-2 border-0 shadow-none" placeholder="Search everything..."/>
+                </div>
+              </form>
+
+              <!--Recently searched-->
+
+
+              <h6 class="d-block dropdown-header pb-0 pt-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up fe-1x opacity-50 align-middle me-2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                Top searches</h6>
+              <div class="p-3 d-flex flex-wrap align-items-center">
+                <!--Recently searched item-->
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Campaign reports
+                </a>
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Project #4535
+                </a>
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Chat
+                </a>
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Tasks
+                </a>
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Affiliates
+                </a>
+                <a href="#" class="badge bg-tint-primary text-dark rounded-pill px-3 py-2 me-2 mb-2">
+                  Faqs
+                </a>
+                <a href="#" class="badge bg-tint-primary text-secondary rounded-pill px-3 py-2 me-2 mb-2">
+                  Inbox
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item d-none d-lg-flex flex-column h-100 me-lg-2 align-items-center justify-content-center" th:if="${@base.environment eq 'DEV' or @base.environment eq 'TEST'}">
+            <div class="alert alert-success py-0 mb-0" role="alert" >
+              <span th:text="#{env.name. + ${@base.environment}}">Enviroment</span>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto d-flex align-items-center h-100">
+
+          <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100 me-2 me-lg-4">
+            <a href="#" class="nav-link dropdown-toggle rounded-pill p-1 lh-1 pe-1 pe-md-2 hover-bg-primary d-flex align-items-center justify-content-center" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+              <div class="d-flex align-items-center">                  
+                <div class="me-sm-2 avatar xs">
+                  <i class="flag-icon flag-icon-squared rounded-circle me-1" th:classappend="'flag-icon-' + #{flag.curr}" style="object-fit: cover; width: 100%; height: 100%;"></i>
+                  <!--<img src="#" th:src="@{~/images/users/} + ${session.avatar}" class="rounded-circle" style="object-fit: cover; width: 100%; height: 100%;" alt=""/>-->
+                </div>
+                <span class="d-none d-md-inline-block" th:text="#{nav.lang. + #{lang.curr}}">English</span>
+              </div>
+            </a>
+
+            <div class="dropdown-menu mt-0 dropdown-menu-end overflow-hidden" th:with="lang=#{lang.curr}">
+              <a href="?lang=en" class="dropdown-item" th:classappend="${lang eq 'en'} ? 'active'">
+                <i class="flag-icon flag-icon-gb me-1"></i>
+                <small th:text="#{nav.lang.en}">English</small>
+              </a>
+              <a href="?lang=bg" class="dropdown-item" th:classappend="${lang eq 'bg'} ? 'active'">
+                <i class="flag-icon flag-icon-bg me-1"></i>
+                <small th:text="#{nav.lang.bg}">Bulgarian</small>
+              </a>
+              <a href="?lang=fr" class="dropdown-item" th:classappend="${lang eq 'fr'} ? 'active'">
+                <i class="flag-icon flag-icon-fr me-1"></i>
+                <small th:text="#{nav.lang.fr}">French</small>
+              </a>
+              <a href="?lang=de" class="dropdown-item" th:classappend="${lang eq 'de'} ? 'active'">
+                <i class="flag-icon flag-icon-de me-1"></i>
+                <small th:text="#{nav.lang.de}">German</small>
+              </a>
+              <a href="?lang=es" class="dropdown-item" th:classappend="${lang eq 'es'} ? 'active'">
+                <i class="flag-icon flag-icon-es me-1"></i>
+                <small th:text="#{nav.lang.es}">Spanish</small>
+              </a>
+              <a href="?lang=it" class="dropdown-item" th:classappend="${lang eq 'it'} ? 'active'">
+                <i class="flag-icon flag-icon-it me-1"></i>
+                <small th:text="#{nav.lang.it}">Italian</small>
+              </a>
+              <a href="?lang=ru" class="dropdown-item" th:classappend="${lang eq 'ru'} ? 'active'">
+                <i class="flag-icon flag-icon-ru me-1"></i>
+                <small th:text="#{nav.lang.ru}">Russian</small>
+              </a>
+              <a href="?lang=zh" class="dropdown-item" th:classappend="${lang eq 'zh'} ? 'active'">
+                <i class="flag-icon flag-icon-cn me-1"></i>
+                <small th:text="#{nav.lang.zh}">Chinese</small>
+              </a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100">
+            <a href="#" class="nav-link dropdown-toggle rounded-pill p-1 lh-1 pe-1 pe-md-2 hover-bg-primary d-flex align-items-center justify-content-center" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+              <div class="d-flex align-items-center">
+
+                <!--Avatar with status-->
+                <div class="avatar-status status-online me-sm-2 avatar xs">
+                  <img src="#" th:src="@{~/images/users/} + ${session.avatar}" class="rounded-circle" style="object-fit: cover; width: 100%; height: 100%;" alt=""/>
+                </div>
+                <span class="d-none d-md-inline-block" th:text="${session.user}">John Doe</span>
+              </div>
+            </a>
+
+            <div class="dropdown-menu mt-0 pt-0 dropdown-menu-end overflow-hidden" style="min-width: 170% !important;">
+              <!--User meta-->
+              <div class="position-relative overflow-hidden p-3 mb-3 border-bottom">
+                <h5 class="mb-1" th:text="${session.user}">John Doe</h5>
+                <p class="text-muted small mb-0 lh-1" th:text="#{user.roles. + ${session.roles.toArray()[0].rolename}}">Role</p>
+              </div>
+              <a href="#" th:href="@{/profile}" class="dropdown-item">
+                <i class="bi bi-person"></i>
+                <span th:text="#{nav.profile}">Profile</span>
+              </a>
+              <hr class="mt-3 mb-1"/>
+              <a href="#" th:href="@{/logout}" class="dropdown-item text-danger">
+                <i class="bi bi-power"></i>
+                <span th:text="#{nav.logout}">Logout</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </header>
+    </div>
+
     <div id="mainMenu" th:remove="tag">
+      <!--///////////Page sidebar begin///////////////-->
+      <aside class="page-sidebar aside-dark bg-dark">
+        <div class="h-100 flex-column d-flex" data-simplebar>
+
+          <!--Aside-logo-->
+          <div class="aside-logo p-3 position-relative">
+            <a href="#" th:href="@{/}" class="d-block px-2">
+              <div class="d-flex align-items-center flex-no-wrap text-truncate">
+                <!--Sidebar-icon-->
+                <span class="sidebar-icon fs-5 lh-1 text-white rounded-circle bg-primary fw-bold">SA</span>
+                <span class="sidebar-text">
+                  <!--Sidebar-text-->
+                  <span class="sidebar-text text-truncate fs-4 text-uppercase fw-bolder" th:text="#{app.name}">SA Store</span>
+                </span>
+              </div>
+            </a>
+          </div>
+          <!--Aside-Menu-->
+          <div class="aside-menu px-2 my-auto flex-column-fluid">
+            <nav class="flex-grow-1 h-100" id="page-navbar">
+              <!--:Sidebar nav-->
+              <ul class="nav flex-column collapse-group collapse d-flex pt-4">
+                <li class="nav-item sidebar-title text-truncate opacity-25 small">
+                  <i class="bi bi-three-dots align-middle"></i>
+                  <span th:text="#{nav.dashboard}">Dashboard</span>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'SALES', 'PRODUCTS')">
+                  <a th:href="@{/admin/dashboard}" href="#" th:classappend="${globalMenu eq 'dashboard'} ? 'active'"
+                     class="nav-link d-flex align-items-center text-truncate">
+                    <span class="sidebar-icon">
+                      <i data-feather="home" class="fe-2x"></i>
+                    </span>
+                    <span class="sidebar-text" th:text="#{nav.dashboard.general}">General</span>
+                  </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'SALES')">
+                  <a th:href="@{/admin/sales}" href="#" th:classappend="${globalMenu eq 'sales'} ? 'active'"
+                     class="nav-link d-flex align-items-center text-truncate">
+                    <span class="sidebar-icon">
+                      <i data-feather="bar-chart" class="fe-2x"></i>
+                    </span>
+                    <span class="sidebar-text" th:text="#{nav.dashboard.sales}">Sales</span>
+                  </a>
+                </li>
+
+                <li class="nav-item sidebar-title text-truncate opacity-25 small" sec:authorize="hasAnyRole('ADMIN', 'SALES', 'PRODUCTS', 'ORDERS')">
+                  <i class="bi bi-three-dots align-middle"></i>
+                  <span th:text="#{nav.managing}">Managing</span>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'ORDERS')">
+                  <a th:href="@{/admin/orders}" href="#" th:classappend="${globalMenu eq 'orders'} ? 'active'"
+                     class="nav-link d-flex align-items-center text-truncate">
+                    <span class="sidebar-icon">
+                      <i data-feather="shopping-cart" class="fe-2x"></i>
+                    </span>
+                    <span class="sidebar-text" th:text="#{nav.managing.orders}">Orders</span>
+                  </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'PRODUCTS')">
+                  <a th:href="@{/admin/products}" href="#" th:classappend="${globalMenu eq 'products'} ? 'active'"
+                     class="nav-link d-flex align-items-center text-truncate">
+                    <span class="sidebar-icon">
+                      <i data-feather="box" class="fe-2x"></i>
+                    </span>
+                    <span class="sidebar-text" th:text="#{nav.managing.products}">Products</span>
+                  </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'USERS')">
+                  <a th:href="@{/admin/users}" href="#" th:classappend="${globalMenu eq 'users'} ? 'active'"
+                     class="nav-link d-flex align-items-center text-truncate">
+                    <span class="sidebar-icon">
+                      <i data-feather="users" class="fe-2x"></i>
+                    </span>
+                    <span class="sidebar-text" th:text="#{nav.managing.users}">Users</span>
+                  </a>
+                </li>
+
+              </ul>
+            </nav>
+          </div>
+          <!--Aside-footer-->
+          <footer class="aside-footer p-3">
+            <div class="text-white text-center">
+              <span>&copy;</span>
+              <span th:text="#{app.name}">SA Store</span>
+              <span th:text="${#dates.year(#dates.createNow())}">2021</span>
+            </div>
+            <div class="text-white text-center" th:text="${@version.version}">Version</div>
+          </footer>
+        </div>
+      </aside>
+      <!--///////////Page Sidebar End///////////////-->
+
+      <!--///Sidebar close button for 991px or below devices///-->
+      <div
+        class="sidebar-close d-lg-none">
+        <a href="#"></a>
+      </div>
+      <!--///.Sidebar close end///-->
+    </div>
+
+    <div id="mainMenu3" th:remove="tag">
       <!-- Main header -->
       <div class="main-header">
         <a class="nav-link nav-link-faded rounded-circle nav-icon" href="#" data-toggle="sidebar"><i class="material-icons">menu</i></a>
@@ -115,16 +381,16 @@
           </li>
           <li class="nav-item dropdown ml-2" sec:authorize="isAuthenticated()">
             <a class="nav-link nav-link-faded rounded nav-link-img dropdown-toggle px-2" href="#" data-toggle="dropdown" data-display="static">
-              <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2">
-                <span class="d-none d-sm-block" th:text="${session.user.firstName}">John</span>
+              <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle mr-2"/>
+              <span class="d-none d-sm-block" th:text="${session.user.firstName}">John</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0 overflow-hidden">
               <div class="media align-items-center bg-primary text-white px-4 py-3 mb-2">
-                <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50">
-                  <div class="media-body ml-2 text-nowrap">
-                    <h6 class="mb-0" th:text="${session.user.fullName}">John Doe</h6>
-                    <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.user.getRoles().toArray()[0].rolename}}">Administrator</span>
-                  </div>
+                <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" alt="Admin" class="rounded-circle" width="50" height="50"/>
+                <div class="media-body ml-2 text-nowrap">
+                  <h6 class="mb-0" th:text="${session.user.fullName}">John Doe</h6>
+                  <span class="text-gray-400 font-size-sm" th:text="#{user.roles. + ${session.roles.toArray()[0].rolename}}">Administrator</span>
+                </div>
               </div>
               <a class="dropdown-item has-icon" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
                 <i class="mr-2" data-feather="user"></i>
@@ -132,7 +398,7 @@
               </a>
               <a class="dropdown-item has-icon" href="#">
                 <i class="mr-2" data-feather="settings"></i>
-                <span th:text="#{nav.settings}">Settings</span>
+                <span th:text="#{nav.profile.settings}">Settings</span>
               </a>
               <a class="dropdown-item has-icon text-danger" th:href="@{/logout}" href="#">
                 <i class="mr-2" data-feather="log-out"></i>
@@ -234,6 +500,46 @@
         <!-- /Sidebar body -->
       </div>
       <!-- /Sidebar -->
+    </div>
+
+    <!-- Counters -->
+    <div class="card overflow-hidden" id="countUsers">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-warning text-warning rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="users" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{admin.count.customers}">Customers</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card overflow-hidden" id="countActiveProducts">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-primary text-primary rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="box" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{admin.count.activeproducts}">Active products</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card overflow-hidden" id="countFinishedOrders">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="flex-shrink-0 size-60 bg-tint-success text-success rounded-pill me-3 d-flex align-items-center justify-content-center">
+          <i data-feather="file-text" class="fe-3x d-block"></i>
+        </div>
+        <div class="flex-grow-1 text-start">
+          <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+          <p class="mb-0 text-muted" th:text="#{admin.count.finishedOrders}">Finished orders</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>

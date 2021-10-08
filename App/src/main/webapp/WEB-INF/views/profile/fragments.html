@@ -4,12 +4,81 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <body>
     <div id="profileFragment" th:remove="tag">
+      <div class="card bg-gradient-light shadow-sm h-lg-100 p-3">
+        <div>
+          <!--profile image-->
+          <div class="size-160 mb-3 rounded-circle shadow bg-no-repat overflow-hidden bg-contain" th:if="${session.avatar eq null}"
+               th:style="'background-image: url(' + @{/resources/img/user/user_default.svg} + ');'">
+          </div>
+          <div class="avatar size-140 mb-3">
+            <img class="img-fluid rounded-pill" style="object-fit: cover; width: 100%; height: 100%;"
+                 th:src="@{~/images/users/} + ${session.avatar}" alt="..."/>
+          </div>
+          <h4 class="mb-2" th:text="${session.user}">John Doe</h4>
+          <ul class="list-unstyled border-bottom pb-3 mb-3">
+            <li class="d-flex align-items-stretch mb-2">
+              <i class="bi bi-envelope me-2 align-middle text-muted"></i>
+              <span class="small" th:text="${session.email}">Email</span>
+            </li>
+            <li class="d-flex align-items-stretch mb-2" th:if="${session.mainAddressCity ne null and session.mainAddressCountry ne null}">
+              <i class="bi bi-geo-alt me-2 align-middle text-muted"></i>
+              <span class="small" th:text="${session.mainAddressCity} + ', ' + #{country. + ${session.mainAddressCountry}}">Sofia, Bulgaria</span>
+            </li>
+          </ul>
+          <ul class="list-unstyled border-bottom mb-2">
+            <li class="d-flex justify-content-between align-items-center mb-3">
+              <span class="small">Completed orders</span>
+              <span class="fs-5">134</span>
+            </li>
+          </ul>
+          <ul class="nav flex-column border-bottom pb-2 mb-3">
+            <li class="nav-item">
+              <a class="nav-link pe-0" href="#" th:href="@{/profile}" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'active'">
+                <i class="icon-Profile me-1"></i>
+                <span th:text="#{nav.profile}">Profile</span>
+              </a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('USER')">
+              <a class="nav-link pe-0 d-flex align-items-center" href="#" th:href="@{/profile/orders}" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'active'">
+                <i class="icon-File-ClipboardFileText me-2"></i>
+                <span th:text="#{nav.profile.orders}">Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pe-0 d-flex align-items-center" href="#" th:href="@{/profile/favorites}" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'active'">
+                <i class="icon-Heart me-2"></i>
+                <span th:text="#{nav.profile.favorites}">Favorites</span>
+                <span class="badge bg-success ms-auto" style="font-size: 13px;">55</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pe-0 d-flex align-items-center" href="#" th:href="@{/profile/addresses}" th:classappend="${globalMenu eq 'profile' and submenu eq 'addresses'} ? 'active'">
+                <i class="icon-Location-2 me-2"></i>
+                <span th:text="#{nav.profile.addresses}">Addresses</span>
+              </a>
+            </li>
+          </ul>
+          <div class="d-grid">
+            <a class="btn btn-light border shadow-sm mb-2 py-1" href="#" th:href="@{/profile/edit}">
+              <i class="icon-Edit fs-6 align-middle lh-1"></i>
+              <span>Edit profile</span>
+            </a>
+            <a class="btn btn-danger shadow-sm py-1" href="#" th:href="@{/logout}">
+              <i class="icon-Power-3 fs-6 align-middle lh-1"></i>
+              <span th:text="#{nav.logout}">Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="profileFragment3" th:remove="tag">
       <div class="card card-style1">
         <div class="card-body text-center">
           <img th:src="@{/resources/img/user/user_default.svg}" src="../../resources/img/user/user_default.svg" width="100" height="100" alt="User" class="rounded-circle mb-3"/>
           <h5 class="mb-0" th:text="${session.user.fullName}">John Thor</h5>
           <!--                    <small class="text-muted" th:text="${session.user.createdOn}">Joined Dec 31, 2017</small>-->
-          <small class="text-muted" th:text="#{user.createdon(${#dates.format(session.user.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</small>
+          <small class="text-muted" th:text="#{user.createdon(${#dates.format(session.createdOn, #messages.msg('format.datetime3'))})}">Joined Dec 31, 2017</small>
           <hr/>
           <div class="font-condensed d-flex align-items-center justify-content-center" sec:authorize="hasRole('USER')"
                data-toggle="tooltip" title="" data-original-title="You currently have 9,386 Points to spend.">
@@ -26,9 +95,9 @@
             <i class="material-icons mr-3">shopping_cart</i>
             <span>Orders</span>
           </a>
-          <a th:href="@{/profile/wishlist}" href="#" class="list-group-item list-group-item-action d-flex align-items-center" th:classappend="${globalMenu eq 'profile' and submenu eq 'wishlist'} ? 'active'">
+          <a th:href="@{/profile/favorites}" href="#" class="list-group-item list-group-item-action d-flex align-items-center" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'active'">
             <i class="material-icons mr-3">favorite_border</i>
-            <span>Wishlist</span>
+            <span>Favorites</span>
             <span class="badge badge-danger badge-pill ml-auto">3</span>
           </a>
           <a th:href="@{/profile/addresses}" href="#" class="list-group-item list-group-item-action d-flex" th:classappend="${globalMenu eq 'profile' and submenu eq 'addresses'} ? 'active'">

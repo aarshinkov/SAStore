@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+  <head>
+    <title th:text="#{app.title(#{roles.title})}">User roles</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row h-100">
+        <div class="col-lg-3">
+          <div th:insert="admin/profile/fragments :: #submenu"></div>
+        </div>
+        <div class="col-lg-9">
+          <!--Card-->
+          <div class="card mb-4">
+            <div class="card-body">
+              <p>Roles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -18,9 +18,14 @@ import lombok.ToString;
 @ToString
 public class ProductFilter implements Serializable {
 
-  private Long productId;
+  private String productId;
   private String title;
 //    private Double price;
+
+  public boolean isFilterEmpty() {
+
+    return !(productId != null || title != null);
+  }
 
   public String getPagingParams() {
     String result = "";
