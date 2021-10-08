@@ -1,0 +1,34 @@
+// Bootstrap functions
+@import '../../../../../../../node_modules/bootstrap/scss/functions';
+// theme functions
+@import './custom/functions/functions';
+//Import bootstrap overrides variables - theme variables
+@import "./custom/variables/variables";
+//Import bootstrap scss
+@import "../../../../../../../node_modules/bootstrap/scss/bootstrap.scss";
+//Swiper carousel css
+@import "../../../../../../../node_modules/swiper/modules/a11y/a11y.scss";
+@import "../../../../../../../node_modules/swiper/modules/zoom/zoom.scss";
+@import "../../../../../../../node_modules/swiper/modules/thumbs/thumbs.scss";
+@import "../../../../../../../node_modules/swiper/modules/lazy/lazy.scss";
+@import "../../../../../../../node_modules/swiper/modules/effect-coverflow/effect-coverflow.scss";
+@import "../../../../../../../node_modules/swiper/modules/effect-flip/effect-flip.scss";
+@import "../../../../../../../node_modules/swiper/modules/effect-cube/effect-cube.scss";
+@import "../../../../../../../node_modules/swiper/modules/effect-fade/effect-fade.scss";
+@import "../../../../../../../node_modules/swiper/modules/controller/controller.scss";
+@import "../../../../../../../node_modules/swiper/modules/navigation/navigation.scss";
+@import "../../../../../../../node_modules/swiper/modules/pagination/pagination.scss";
+@import "../../../../../../../node_modules/swiper/modules/thumbs/thumbs.scss";
+@import "../../../../../../../node_modules/swiper/modules/scrollbar/scrollbar.scss";
+@import "../../../../../../../node_modules/swiper/swiper.scss";
+//Aos Plugin Scss
+@import "../../../../../../../node_modules/aos/src/sass/aos.scss";
+//Choices Plugin Scss
+@import "../../../../../../../node_modules/choices.js/src/styles/choices.scss";
+//Theme core style import
+//mixins
+@import "./custom/utilities/utilities";
+@import "./custom/mixins/buttons";
+@import "./custom/mixins/transition";
+@import "./custom/webfonts/webfonts";
+@import "./custom/components/components";

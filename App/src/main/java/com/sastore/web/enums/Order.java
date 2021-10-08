@@ -5,17 +5,17 @@ package com.sastore.web.enums;
  * @since 1.0.0
  */
 public enum Order {
-    
-    ASCENDING("ASC"),
-    DESCENDING("DESC");
 
-    private final String order;
+  ASCENDING("ASC"),
+  DESCENDING("DESC");
 
-    Order(String order) {
-        this.order = order;
-    }
+  private final String order;
 
-    public String getOrder() {
-        return order;
-    }
+  Order(String order) {
+    this.order = order;
+  }
+
+  public String getOrder() {
+    return order;
+  }
 }

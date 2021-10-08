@@ -3,30 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
-    <head>
-        <title th:text="#{app.title('Home')}">Home</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title('Home')}">Home</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <div class="row">
-                <div class="col-12 col-md-2">
-                    <p>Filter</p>
-                </div>
-                <div class="col-12 col-md-10">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-3" th:each="p : ${products.collection}">
-                            <div class="card">
-                                <img th:src="@{~/images/products/} + ${p.mainImage}" src="#" class="card-img-top" alt="..."/>
-                                <div class="card-body">
-                                    <p th:text="${p.title}"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+      <div>Home</div>
+    </div>
+  </body>
 </html>

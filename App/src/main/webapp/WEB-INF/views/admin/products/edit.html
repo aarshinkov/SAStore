@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+  <head>
+    <title th:text="#{app.title(#{products.edit.title})}">Edit product</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+      <form th:action="@{/admin/products/edit}" method="post" th:object="${pem}">
+        <div class="row gutters-sm mb-3">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label th:text="#{products.edit.form.title}">Title</label>
+                    <input type="text" class="form-control" th:field="*{title}"
+                           th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{title}">Error</span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label th:text="#{products.edit.form.description}">Description</label>
+                  <textarea class="form-control md-textarea" style="min-height: 400px;" th:field="*{description}"
+                            th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"></textarea>
+                  <span class="invalid-feedback" th:errors="*{description}">Error</span>
+                </div>
+                <input type="hidden" th:field="*{productId}"/>
+                <div class="d-flex">
+                  <button type="submit" class="btn btn-primary btn-sm me-2">
+                    <i data-feather="save" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.save}">Save</span>
+                  </button>
+                  <a href="#" th:href="@{/admin/products(id=${pem.productId})}" class="btn btn-outline-secondary btn-sm">
+                    <i data-feather="arrow-left" class="fe-1x align-items-center"></i>
+                    <span th:text="#{btn.back}">Back</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <script>
+        tinymce.init({
+          selector: 'textarea',
+          min_height: 600
+        });
+      </script>
+    </div>
+  </body>
+</html>

@@ -6,19 +6,19 @@ package com.sastore.web.enums;
  */
 public enum Roles {
 
-    ADMIN("ADMIN"),
-    SALES("SALES"),
-    USER("USER"),
-    PRODUCTS("PRODUCTS"),
-    ORDERS("ORDERS");
+  ADMIN("ADMIN"),
+  SALES("SALES"),
+  USER("USER"),
+  PRODUCTS("PRODUCTS"),
+  ORDERS("ORDERS");
 
-    private final String role;
+  private final String role;
 
-    Roles(String role) {
-        this.role = role;
-    }
+  Roles(String role) {
+    this.role = role;
+  }
 
-    public String getRole() {
-        return role;
-    }
+  public String getRole() {
+    return role;
+  }
 }

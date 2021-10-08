@@ -7,16 +7,16 @@ package com.sastore.web.uploader.domain;
  */
 public enum ImageFolder {
 
-    PRODUCTS("products"),
-    USERS("users");
+  PRODUCTS("products"),
+  USERS("users");
 
-    private final String folder;
+  private final String folder;
 
-    private ImageFolder(String folder) {
-        this.folder = folder;
-    }
+  private ImageFolder(String folder) {
+    this.folder = folder;
+  }
 
-    public String getFolder() {
-        return folder;
-    }
+  public String getFolder() {
+    return folder;
+  }
 }

@@ -19,32 +19,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private ProductService productService;
+  @Autowired
+  private ProductService productService;
 
-    @GetMapping({"/", "/home"})
-    public String home(Model model) {
+  @GetMapping({"/", "/home"})
+  public String home(Model model) {
 
-        if (hasSpecialRole()) {
-            return "redirect:/admin/dashboard";
-        }
+    if (hasSpecialRole()) {
+      return "redirect:/admin/dashboard";
+    }
 
-        ObjCollection<ProductEntity> products = productService.getProducts(1, 10, new ProductFilter());
+    ObjCollection<ProductEntity> products = productService.getProducts(1, 10, new ProductFilter());
 
-        model.addAttribute("products", products);
+    model.addAttribute("products", products);
 
-        String otherParams = "";
+    String otherParams = "";
 
 //        otherParams = "&limit=" + limit;
-        model.addAttribute("otherParameters", otherParams);
+    model.addAttribute("otherParameters", otherParams);
 
-        model.addAttribute("pageWrapper", products.getPage());
-        model.addAttribute("maxPagesPerView", 3);
+    model.addAttribute("pageWrapper", products.getPage());
+    model.addAttribute("maxPagesPerView", 3);
 
-        model.addAttribute("globalMenu", "home");
+    model.addAttribute("globalMenu", "home");
 
-        return "home";
-    }
+//    return "forward:/products";
+    return "home";
+  }
 }

@@ -13,21 +13,21 @@ import lombok.ToString;
 @ToString
 public abstract class Page {
 
-    protected Integer currentPage;
-    protected Long noPagedTotal;
-    protected Long pagedTotal;
-    protected Long total;
-    protected Integer maxElementsPerPage;
-    protected Integer startPage;
-    protected Integer endPage;
+  protected Integer currentPage;
+  protected Long noPagedTotal;
+  protected Long pagedTotal;
+  protected Long total;
+  protected Integer maxElementsPerPage;
+  protected Integer startPage;
+  protected Integer endPage;
 
-    protected abstract Long getTotalPages();
+  protected abstract Long getTotalPages();
 
-    protected abstract boolean isFirst();
+  protected abstract boolean isFirst();
 
-    protected abstract boolean isLast();
+  protected abstract boolean isLast();
 
-    protected abstract boolean hasNext(Integer currentPage);
+  protected abstract boolean hasNext(Integer currentPage);
 
-    protected abstract boolean hasPrevious(Integer currentPage);
+  protected abstract boolean hasPrevious(Integer currentPage);
 }

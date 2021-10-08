@@ -14,38 +14,38 @@ import org.springframework.stereotype.*;
 @Component
 public class SecurityChecks {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public Boolean hasRole(String role) {
-        role = role.toUpperCase();
+  public Boolean hasRole(String role) {
+    role = role.toUpperCase();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null) {
-            return false;
-        }
-
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals("ROLE_" + role)) {
-                return true;
-            }
-        }
-        return false;
+    if (authentication == null) {
+      return false;
     }
 
-    public Boolean isLoggedIn() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            return false;
-        }
-
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals("ROLE_ANONYMOUS")) {
-                return false;
-            }
-        }
-
+    for (GrantedAuthority authority : authentication.getAuthorities()) {
+      if (authority.getAuthority().equals("ROLE_" + role)) {
         return true;
+      }
     }
+    return false;
+  }
+
+  public Boolean isLoggedIn() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication == null) {
+      return false;
+    }
+
+    for (GrantedAuthority authority : authentication.getAuthorities()) {
+      if (authority.getAuthority().equals("ROLE_ANONYMOUS")) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

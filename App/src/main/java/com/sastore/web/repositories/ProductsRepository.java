@@ -11,10 +11,10 @@ import java.util.List;
  * @since 1.0.0
  */
 @Repository
-public interface ProductsRepository extends JpaRepository<ProductEntity, Long> {
+public interface ProductsRepository extends JpaRepository<ProductEntity, String> {
 
-    @Override
-    List<ProductEntity> findAll();
+  @Override
+  List<ProductEntity> findAll();
 
-    ProductEntity findByProductId(Long productId);
+  ProductEntity findByProductId(String productId);
 }

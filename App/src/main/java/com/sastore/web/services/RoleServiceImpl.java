@@ -16,13 +16,13 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private RolesRepository rolesRepository;
+  @Autowired
+  private RolesRepository rolesRepository;
 
-    @Override
-    public List<RoleEntity> getRoles() {
-        return rolesRepository.findAll();
-    }
+  @Override
+  public List<RoleEntity> getRoles() {
+    return rolesRepository.findAll();
+  }
 }

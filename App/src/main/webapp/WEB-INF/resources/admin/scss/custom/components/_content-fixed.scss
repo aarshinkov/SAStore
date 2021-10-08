@@ -1,0 +1,54 @@
+//
+//Overflow-content - For chat app
+.content-fixed {
+    @each $breakpoint in map-keys($grid-breakpoints) {
+      $next: breakpoint-next($breakpoint, $grid-breakpoints);
+      $infix: breakpoint-infix($next, $grid-breakpoints);
+  
+      // stylelint-disable-next-line scss/selector-no-union-class-name
+      &#{$infix} {
+        @include media-breakpoint-up($next) {
+            overflow: hidden;
+            position: relative;
+            .content-fixed-body{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                [class~="col-"],[class*="col-"]{
+                    height: 100%;
+                }
+                .content-fixed-main .card-body{
+                    display: flex;
+                    flex-direction: column-reverse;
+                }
+                .scroll{
+                    overflow-y: auto;
+                }
+            }
+        }
+    }
+}
+}
+
+.content-fixed {
+    @each $breakpoint in map-keys($grid-breakpoints) {
+      $next: breakpoint-next($breakpoint, $grid-breakpoints);
+      $infix: breakpoint-infix($next, $grid-breakpoints);
+  
+      // stylelint-disable-next-line scss/selector-no-union-class-name
+      &#{$infix} {
+        @include media-breakpoint-down($next) {
+            .card-body.scroll{
+                overflow-y: scroll;
+                max-height:410px;
+            }
+            .content-fixed-main .card-body{
+                display: flex;
+                flex-direction: column-reverse;
+            }
+        }
+    }
+}
+}

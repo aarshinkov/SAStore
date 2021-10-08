@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface RolesRepository extends JpaRepository<RoleEntity, String> {
 
-    RoleEntity findByRolename(String rolename);
+  RoleEntity findByRolename(String rolename);
 
-    @Override
-    List<RoleEntity> findAll();
+  @Override
+  List<RoleEntity> findAll();
 }

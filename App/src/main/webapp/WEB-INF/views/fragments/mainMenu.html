@@ -2,286 +2,583 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <body>
-        <div id="mainMenu" th:remove="tag">
-            <!-- TOP BAR -->
-            <div class="topbar">
-                <div class="container-fluid d-flex align-items-center">
-
-                    <nav class="nav mr-1 d-none d-md-flex">
-                        <a class="nav-link nav-link-sm has-icon bg-white pl-0" href="tel:+359891524851">
-                            <i class="material-icons mr-1">phone</i>
-                            <span>+359 89 152 4851</span>
-                        </a>
-                        <a class="nav-link nav-link-sm has-icon bg-white" href="mailto:support@sastore.com">
-                            <i class="material-icons mr-1">mail_outline</i>
-                            <span>support@sastore.com</span>
-                        </a>
-                    </nav>
-
-                    <nav class="nav nav-gap-x-1 ml-auto mr-1">
-                        <div class="nav-item nav-pills dropdown">
-                            <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="langDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <span class="flag-icon icon-width-2" th:classappend="'flag-icon-' + #{flag.curr}"></span>
-                                <!--                        <span>Language</span>-->
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="langDropdown" th:with="lang=#{lang.curr}">
-                                <a class="dropdown-item" href="?lang=en" th:classappend="${lang eq 'en'} ? 'active'">
-                                    <span class="flag-icon flag-icon-gb icon-width-2"></span>
-                                    <span th:text="#{nav.lang.en}">English</span>
-                                </a>
-                                <a class="dropdown-item" href="?lang=bg" th:classappend="${lang eq 'bg'} ? 'active'">
-                                    <span class="flag-icon flag-icon-bg icon-width-2"></span>
-                                    <span th:text="#{nav.lang.bg}">Bulgarian</span>
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <nav class="nav" sec:authorize="isAuthenticated()">
-                        <div class="nav-item nav-pills dropdown dropdown-hover">
-                            <a class="nav-link nav-link-sm dropdown-toggle has-icon hover" href="#" id="userDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="material-icons mr-1">person</i>
-                                <span th:text="${session.user.fullName}">Hi, John</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="userDropdown">
-                                <a class="dropdown-item has-icon pr-5" th:href="@{/account}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'account'} ? 'active'">
-                                    <i class="material-icons mr-2">person</i>
-                                    <span>My account</span>
-                                </a>
-                                <a class="dropdown-item has-icon pr-5" th:href="@{/account/orders}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'orders'} ? 'active'">
-                                    <i class="material-icons mr-2">shopping_cart</i>
-                                    <span>My orders</span>
-                                </a>
-                                <a class="dropdown-item has-icon pr-5" th:href="@{/account/wishlist}" href="#" th:classappend="${globalMenu eq 'account' and submenu eq 'wishlist'} ? 'active'">
-                                    <i class="material-icons mr-2">favorite_border</i>
-                                    <span>Wishlist</span>
-                                </a>
-                                <!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/account/settings}" href="#">-->
-                                <!--                            <i class="material-icons mr-2">settings</i>-->
-                                <!--                            <span>Settings</span>-->
-                                <!--                        </a>-->
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item has-icon pr-5 text-danger" th:href="@{/logout}" href="#">
-                                    <i class="material-icons mr-2">exit_to_app</i>
-                                    <span>Logout</span>
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <div sec:authorize="!isAuthenticated()" th:remove="tag">
-                        <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
-                            <i class="material-icons mr-1">login</i>
-                            <span>Login</span>
-                        </a>
-                        <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
-                            <i class="material-icons mr-1">person_add</i>
-                            <span>Signup</span>
-                        </a>
+  <body>
+    <div id="mainMenu" th:remove="tag">
+      <header class="z-index-fixed shadow" th:classappend="${breadcrumbs eq null} ? 'mb-5' : 'mb-3'">
+        <div class="border-bottom bg-light border-dashed">
+          <div class="container py-1">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-6 d-none d-md-flex">
+                <div class="small text-muted text-truncate">Get 25% off on first order, Use code <badge class="badge badge-pill bg-primary">FIRST25</badge></div>
+              </div>
+              <div class="col-12 col-md-6 ms-auto text-end">
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="dropdown me-4" th:with="lang=#{lang.curr}">
+                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="flag-icon me-1" th:classappend="'flag-icon-' + #{flag.curr}"></i>
+                      <span th:text="#{nav.lang. + #{lang.curr}}">English</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end mt-1">
+                      <a href="?lang=en" class="dropdown-item" th:classappend="${lang eq 'en'} ? 'active'">
+                        <i class="flag-icon flag-icon-gb me-1"></i>
+                        <small th:text="#{nav.lang.en}">English</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'en'}"></i>
+                      </a>
+                      <a href="?lang=bg" class="dropdown-item" th:classappend="${lang eq 'bg'} ? 'active'">
+                        <i class="flag-icon flag-icon-bg me-1"></i>
+                        <small th:text="#{nav.lang.bg}">Bulgarian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'bg'}"></i>
+                      </a>
+                      <a href="?lang=fr" class="dropdown-item" th:classappend="${lang eq 'fr'} ? 'active'">
+                        <i class="flag-icon flag-icon-fr me-1"></i>
+                        <small th:text="#{nav.lang.fr}">French</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'fr'}"></i>
+                      </a>
+                      <a href="?lang=de" class="dropdown-item" th:classappend="${lang eq 'de'} ? 'active'">
+                        <i class="flag-icon flag-icon-de me-1"></i>
+                        <small th:text="#{nav.lang.de}">German</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'de'}"></i>
+                      </a>
+                      <a href="?lang=es" class="dropdown-item" th:classappend="${lang eq 'es'} ? 'active'">
+                        <i class="flag-icon flag-icon-es me-1"></i>
+                        <small th:text="#{nav.lang.es}">Spanish</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'es'}"></i>
+                      </a>
+                      <a href="?lang=it" class="dropdown-item" th:classappend="${lang eq 'it'} ? 'active'">
+                        <i class="flag-icon flag-icon-it me-1"></i>
+                        <small th:text="#{nav.lang.it}">Italian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'it'}"></i>
+                      </a>
+                      <a href="?lang=ru" class="dropdown-item" th:classappend="${lang eq 'ru'} ? 'active'">
+                        <i class="flag-icon flag-icon-ru me-1"></i>
+                        <small th:text="#{nav.lang.ru}">Russian</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'ru'}"></i>
+                      </a>
+                      <a href="?lang=zh" class="dropdown-item" th:classappend="${lang eq 'zh'} ? 'active'">
+                        <i class="flag-icon flag-icon-cn me-1"></i>
+                        <small th:text="#{nav.lang.zh}">Chinese</small>
+                        <i class="bi bi-check fs-5 lh-1 align-middle" th:if="${lang eq 'zh'}"></i>
+                      </a>
                     </div>
-                </div>
-            </div>
-            <!-- /TOP BAR -->
-
-            <!-- HEADER -->
-            <header>
-                <div class="container-fluid">
-                    <nav class="nav nav-circle d-flex d-lg-none">
-                        <a href="#menuModal" data-toggle="modal" class="nav-link nav-icon">
-                            <i class="material-icons">menu</i>
-                        </a>
-                    </nav>
-                    <nav class="nav ml-3 ml-lg-0">
-                        <a th:href="@{/}" href="#" class="nav-link has-icon p-0 bg-white">
-                            <!-- CALLING METHOD TWICE WHY? -->
-                            <!--                    <img src="#"/>-->
-                        </a>
-                    </nav>
-
-                    <nav class="nav nav-main nav-gap-x-1 nav-pills ml-3 d-none d-lg-flex">
-                        <a class="nav-item nav-link" th:href="@{/}" href="#">
-                            <span th:text="#{nav.home}">Home</span>
-                        </a>
-                        <div class="nav-item dropdown dropdown-hover dropdown-mega">
-                            <a class="nav-link dropdown-toggle no-caret" href="#" id="megaDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                Mega Menu
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="megaDropdown">
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="list-group list-group-flush list-group-no-border list-group-sm">
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <strong>CLOTHING</strong>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 border-left">
-                                        <div class="list-group list-group-flush list-group-no-border list-group-sm">
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action"><strong>FOOTWEAR</strong></a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Sports
-                                                Shoes</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Sneakers</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Casual
-                                                Shoes</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Loafers</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Formal
-                                                Shoes</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Boots</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Outdoor
-                                                &amp; Hiking</a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">Floaters</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 border-left">
-                                        <div class="img img-zoom-in w-100 h-100">
-                                            <div data-cover="../../img/test.jpg"></div>
-                                            <div class="overlay overlay-show bg-dark"></div>
-                                            <div class="overlay-content overlay-show flex-column text-white">
-                                                <h4 class="card-title text-center">New Men's Fashion</h4>
-                                                <h6>See what's new</h6>
-                                                <a href="shop-grid.html" class="btn btn-primary rounded-pill">Shop Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 border-left">
-                                        <div class="img img-zoom-in w-100 h-100">
-                                            <div data-cover="../../img/test.jpg"></div>
-                                            <div class="overlay overlay-show bg-dark"></div>
-                                            <div class="overlay-content overlay-show flex-column text-white">
-                                                <h4 class="card-title text-center">New Women's Fashion</h4>
-                                                <h6>See what's new</h6>
-                                                <a href="shop-grid.html" class="btn btn-danger rounded-pill">Shop Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown dropdown-hover dropdown-mega">
-                            <a class="nav-link dropdown-toggle no-caret" href="#" id="jewelryDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                Jewelry
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="megaDropdown">
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="list-group list-group-flush list-group-no-border list-group-sm">
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <strong>For her</strong>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Necklaces</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Bracelets</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Earrings</span>
-                                                <!--                                        <span class="badge badge-danger">NEW</span>-->
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="list-group list-group-flush list-group-no-border list-group-sm">
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <strong>For him</strong>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                            <a href="shop-grid.html" class="list-group-item list-group-item-action">
-                                                <span>Polos &amp; Tees</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="nav-item nav-link" href="components.html">
-                            Components
-                        </a>
-                    </nav>
-
-                    <nav class="nav nav-circle nav-gap-x-1 ml-auto">
-                        <a class="nav-link nav-icon" data-toggle="modal" href="#searchModal">
-                            <i class="material-icons">search</i>
-                        </a>
-                        <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/account/wishlist}" href="#">
-                            <i class="material-icons">favorite_border</i>
-                            <span class="badge badge-pill badge-danger">3</span>
-                        </a>
-                        <a class="nav-link nav-icon has-badge" data-toggle="modal" href="#cartModal">
-                            <i class="material-icons">shopping_cart</i>
-                            <span class="badge badge-pill badge-danger">4</span>
-                        </a>
-                    </nav>
-                </div>
-            </header>
-            <!-- /HEADER -->
-
-            <!-- MENU MODAL -->
-            <div class="modal fade modal-content-left" id="menuModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header align-items-center border-bottom shadow-sm z-index-1">
-                            <!--                    <a href="#">-->
-                            <!--                        <img src="#" alt="Logo" height="40">-->
-                            <!--                    </a>-->
-                            <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button" data-dismiss="modal">
-                                <i class="material-icons">close</i>
-                            </button>
-                        </div>
-                        <div class="modal-body px-0 scrollbar-width-thin">
-                            <ul class="menu" id="menu">
-                                <li th:classappend="${globalMenu eq 'home'} ? 'mm-active'">
-                                    <a th:href="@{/}" href="#">
-                                        <i class="material-icons">home</i>
-                                        <span>Home</span>
-                                    </a>
-                                </li>
-
-                                <!--                        <li class="mm-active">-->
-                                <!--                            <a href="#" class="has-arrow"><i class="material-icons">rss_feed</i> Blog</a>-->
-                                <!--                            <ul>-->
-                                <!--                                <li><a href="blog-grid.html">Post Grid</a></li>-->
-                                <!--                                <li><a href="blog-list.html">Post List</a></li>-->
-                                <!--                                <li><a href="blog-single.html">Single Post</a></li>-->
-                                <!--                            </ul>-->
-                                <!--                        </li>-->
-                                <li>
-                                    <a href="components.html">
-                                        <i class="material-icons">check_box_outline_blank</i>
-                                        <span>Components</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                  </div>
+                  <div class="dropdown me-4">
+                    <a href="#" class="text-muted small" data-bs-toggle="dropdown" aria-expanded="false">Usd</a>
+                    <div class="dropdown-menu dropdown-menu-xxs dropdown-menu-end mt-1">
+                      <a href="#" class="dropdown-item active">
+                        <small>Usd <i class="bi bi-check fs-5 lh-1 align-middle"></i></small>
+                      </a>
+                      <a href="#" class="dropdown-item">
+                        <small>Euro</small>
+                      </a>
                     </div>
+                  </div>
+                  <a href="#" class="text-muted d-none d-md-block small me-4">
+                    <i class="bi bi-telephone me-1 d-none d-md-inline-block"></i>
+                    <span>01 123 4567 890</span>
+                  </a>
+                  <div class="nav-item me-3 me-lg-0" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" href="#" class="btn btn-primary btn-sm">
+                      <i class="icon-Door"></i>
+                      <span th:text="#{nav.login}">Login</span>
+                    </a>
+                    <a th:href="@{/signup}" href="#" class="btn btn-success btn-sm">
+                      <i class="icon-Add-User"></i>
+                      <span th:text="#{nav.signup}">Signup</span>
+                    </a>
+                    <!--                    <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
+                                          <i class="material-icons mr-1">login</i>
+                                          <span th:text="#{nav.login}">Login</span>
+                                        </a>
+                                        <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
+                                          <i class="material-icons mr-1">person_add</i>
+                                          <span th:text="#{nav.signup}">Signup</span>
+                                        </a>-->
+                  </div>
+                  <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <a href="#" class="text-muted small" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                      <div class="avatar-min me-sm-1" th:if="${session.avatar eq null}">
+                        <img th:src="@{~/images/users/user_default.png}" class="rounded-circle rounded-circle-fit" alt=""/>
+                      </div>
+                      <div class="avatar-min me-sm-1" th:if="${session.avatar ne null}">
+                        <img th:src="@{~/images/users/} + ${session.avatar}" class="rounded-circle rounded-circle-fit" alt=""/>
+                      </div>
+                      <!--<img src="assets/img/avatar/2.jpg" class="avatar xs rounded-circle me-1 align-middle" alt=""/>-->
+                      <!--<i class="icon-Street-View"></i>-->
+                      <span class="d-none d-md-inline-block" th:text="${session.user.fullName}">John Doe</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end mt-2">
+                      <a class="dropdown-item" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'text-primary'">
+                        <i class="icon-Profile me-2"></i>
+                        <span th:text="#{nav.profile}">Profile</span>
+                      </a>
+                      <a class="dropdown-item" th:href="@{/profile/orders}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'text-primary'">
+                        <i class="icon-File-ClipboardFileText me-2"></i>
+                        <span th:text="#{nav.profile.orders}">My orders</span>
+                      </a>
+                      <a class="dropdown-item" th:href="@{/profile/favorites}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'text-primary'">
+                        <i class="icon-Heart me-2"></i>
+                        <span th:text="#{nav.profile.favorites}">Favorites</span>
+                      </a>
+                      <hr class="my-1"/>
+                      <a th:href="@{/logout}" href="#" class="dropdown-item text-danger">
+                        <i class="icon-Power-3 me-2"></i>
+                        <span th:text="#{nav.logout}">Logout</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <!-- /MENU MODAL -->
+          </div>
         </div>
-    </body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <div class="container position-relative">
+            <a class="navbar-brand" href="#" th:href="@{/}">
+              <!--<img src="assets/img/logo/logo-shop.svg" alt="" class="img-fluid"/>-->
+              <span th:text="#{app.name}">SA Store</span>
+            </a>
+            <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
+              <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarTheme" aria-controls="mainNavbarTheme" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                  <i></i>
+                </span>
+              </button>
+              <div class="nav-item">
+                <a href="#" th:href="@{/cart}" class="nav-link lh-1 position-relative">
+                  <i class="icon-Full-Cart" style="font-size: 28px;"></i>
+                  <!--<span class="cart-number position-absolute end-0 top-0 me-n2 mt-n1 lh-1 fw-semibold small size-20 bg-primary shadow-sm rounded-circle center-both text-light ms-1">5</span>-->
+                </a>
+              </div>
+            </div>
+            <div class="collapse navbar-collapse" id="mainNavbarTheme">
+              <!-- Add .mx-auto to line below to center navigation -->
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" th:href="@{/}" th:classappend="${globalMenu eq 'home'} ? 'active'">
+                    <span th:text="#{nav.home}">Home</span>
+                  </a>
+                </li>
+
+                <li class="nav-item nav-item dropdown position-static-lg me-lg-3">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Men
+                    <!--Dropdown menu arrow svg icon-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 9" class="dropdown-arrow">
+                      <path fill="currentColor" d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
+                      </path>
+                    </svg>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-fw py-lg-0 overflow-hidden">
+                    <div class="row mx-0">
+
+                      <div class="col-lg-4 pe-lg-0 order-lg-4 pe-lg-0 ms-lg-auto d-none d-lg-flex">
+                        <div class="d-flex bg-dark flex-column h-100 w-100 py-4 py-md-5 position-relative">
+                          <img alt="" src="#" class="bg-image opacity-80"/>
+                          <div class="position-absolute text-center d-flex flex-column justify-content-center align-items-center text-white left-0 top-0 w-100 h-100 p-4">
+                            <div>
+                              <div class="d-md-flex mb-2 justify-content-center align-items-center">
+                                <span style="height: 1px" class="d-none d-md-block bg-light width-60"></span>
+                                <h5 class="mb-0 mx-3 text-white">
+                                  Limited Discount
+                                </h5>
+                                <span style="height: 1px" class="d-none d-md-block bg-light width-60"></span>
+                              </div>
+                              <h3 class="display-3 text-serif fw-normal">New Arrivals
+                              </h3>
+                              <p class="mb-4">Order over $100 and get 30% Off</p>
+                              <a href="#!" class="btn btn-outline-white btn-hover-arrow">
+                                <span>Shop Now</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-3 py-lg-5 mb-lg-0 mb-4">
+                        <div class="d-flex flex-column mb-3">
+                          <h5 class="dropdown-header mb-2">Topwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            T-shirts
+                            <span class="badge badge-pill bg-success py-0 small d-inline-block ms-1">New</span>
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Casual Shirts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Formal Shirts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sweatshirts
+
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Jackets
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Blazers &amp; Coats
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sweaters
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-3 py-lg-5 mb-lg-0 mb-4">
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Bottomwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            Jeans
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Trousers &amp; Pants
+                            <span class="badge badge-pill bg-success py-0 small d-inline-block ms-1">-20%</span>
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Shorts &amp; Track Pants
+                          </a>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Footwear</h5>
+
+                          <a class="dropdown-item" href="#!">
+                            Shoes
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sandals &amp; Floaters
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Flip Flops &amp; Socks
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                      <div class="col-lg-2 py-lg-5">
+                        <div class="d-flex flex-column">
+                          <h5 class="dropdown-header mb-2">Accessories</h5>
+                          <a class="dropdown-item" href="#!">
+                            Face mask
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Wallets &amp; Belts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Backpacks
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Headphones
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Sunglasses
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Belts
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Socks
+                          </a>
+                          <a class="dropdown-item" href="#!">
+                            Watches
+                          </a>
+                        </div>
+                      </div>
+                      <!--/.col-->
+                    </div>
+                    <!--/.row-->
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div id="mainMenu2" th:remove="tag">
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="container-fluid d-flex align-items-center">
+
+          <nav class="nav mr-1 d-none d-md-flex">
+            <a class="nav-link nav-link-sm has-icon bg-white pl-0" href="tel:+359891524851">
+              <i class="material-icons mr-1">phone</i>
+              <span>+359 89 152 4851</span>
+            </a>
+            <a class="nav-link nav-link-sm has-icon bg-white" href="mailto:support@sastore.com">
+              <i class="material-icons mr-1">mail_outline</i>
+              <span>support@sastore.com</span>
+            </a>
+          </nav>
+
+          <nav class="nav nav-gap-x-1 ml-auto mr-1">
+            <div class="nav-item nav-pills dropdown">
+              <a class="nav-link nav-link-sm dropdown-toggle no-caret" href="#" id="langDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                <span class="flag-icon icon-width-2" th:classappend="'flag-icon-' + #{flag.curr}"></span>
+                <!--                        <span>Language</span>-->
+              </a>
+              <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="langDropdown" th:with="lang=#{lang.curr}">
+                <a class="dropdown-item" href="?lang=en" th:classappend="${lang eq 'en'} ? 'active'">
+                  <span class="flag-icon flag-icon-gb icon-width-2"></span>
+                  <span th:text="#{nav.lang.en}">English</span>
+                </a>
+                <a class="dropdown-item" href="?lang=bg" th:classappend="${lang eq 'bg'} ? 'active'">
+                  <span class="flag-icon flag-icon-bg icon-width-2"></span>
+                  <span th:text="#{nav.lang.bg}">Bulgarian</span>
+                </a>
+                <a class="dropdown-item" href="?lang=zh" th:classappend="${lang eq 'zh'} ? 'active'">
+                  <span class="flag-icon flag-icon-zh icon-width-2"></span>
+                  <span th:text="#{nav.lang.zh}">Chinese</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+
+          <nav class="nav" sec:authorize="isAuthenticated()">
+            <div class="nav-item nav-pills dropdown dropdown-hover">
+              <a class="nav-link nav-link-sm dropdown-toggle has-icon hover" href="#" id="userDropdown"
+                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                <i class="material-icons mr-1">person</i>
+                <span th:text="${session.user.fullName}">Hi, John</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right font-size-sm" aria-labelledby="userDropdown">
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'profile'} ? 'active'">
+                  <i class="material-icons mr-2">person</i>
+                  <span>My profile</span>
+                </a>
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/orders}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'orders'} ? 'active'">
+                  <i class="material-icons mr-2">shopping_cart</i>
+                  <span>My orders</span>
+                </a>
+                <a class="dropdown-item has-icon pr-5" th:href="@{/profile/favorites}" href="#" th:classappend="${globalMenu eq 'profile' and submenu eq 'favorites'} ? 'active'">
+                  <i class="material-icons mr-2">favorite_border</i>
+                  <span>Favorites</span>
+                </a>
+                <!--                        <a class="dropdown-item has-icon pr-5" th:href="@{/profile/settings}" href="#">-->
+                <!--                            <i class="material-icons mr-2">settings</i>-->
+                <!--                            <span>Settings</span>-->
+                <!--                        </a>-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item has-icon pr-5 text-danger" th:href="@{/logout}" href="#">
+                  <i class="material-icons mr-2">exit_to_app</i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+
+          <div sec:authorize="!isAuthenticated()" th:remove="tag">
+            <a th:href="@{/login}" href="#" class="btn btn-faded-primary has-icon btn-sm">
+              <i class="material-icons mr-1">login</i>
+              <span th:text="#{nav.login}">Login</span>
+            </a>
+            <a th:href="@{/signup}" href="#" class="btn btn-faded-success has-icon btn-sm ml-3">
+              <i class="material-icons mr-1">person_add</i>
+              <span th:text="#{nav.signup}">Signup</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- /TOP BAR -->
+
+      <!-- HEADER -->
+      <header>
+        <div class="container-fluid">
+          <nav class="nav nav-circle d-flex d-lg-none">
+            <a href="#menuModal" data-toggle="modal" class="nav-link nav-icon">
+              <i class="material-icons">menu</i>
+            </a>
+          </nav>
+          <nav class="nav ml-3 ml-lg-0">
+            <a th:href="@{/}" href="#" class="nav-link has-icon p-0 bg-white">
+              <!-- CALLING METHOD TWICE WHY? -->
+              <!--                    <img src="#"/>-->
+            </a>
+          </nav>
+
+          <nav class="nav nav-main nav-gap-x-1 nav-pills ml-3 d-none d-lg-flex">
+            <a class="nav-item nav-link" th:href="@{/}" href="#">
+              <span th:text="#{nav.home}">Home</span>
+            </a>
+            <div class="nav-item dropdown dropdown-hover dropdown-mega">
+              <a class="nav-link dropdown-toggle no-caret" href="#" id="megaDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                Mega Menu
+              </a>
+              <div class="dropdown-menu" aria-labelledby="megaDropdown">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="list-group list-group-flush list-group-no-border list-group-sm">
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <strong>CLOTHING</strong>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 border-left">
+                    <div class="list-group list-group-flush list-group-no-border list-group-sm">
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action"><strong>FOOTWEAR</strong></a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Sports
+                        Shoes</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Sneakers</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Casual
+                        Shoes</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Loafers</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Formal
+                        Shoes</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Boots</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Outdoor
+                        &amp; Hiking</a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">Floaters</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 border-left">
+                    <div class="img img-zoom-in w-100 h-100">
+                      <div data-cover="../../img/test.jpg"></div>
+                      <div class="overlay overlay-show bg-dark"></div>
+                      <div class="overlay-content overlay-show flex-column text-white">
+                        <h4 class="card-title text-center">New Men's Fashion</h4>
+                        <h6>See what's new</h6>
+                        <a href="shop-grid.html" class="btn btn-primary rounded-pill">Shop Now</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 border-left">
+                    <div class="img img-zoom-in w-100 h-100">
+                      <div data-cover="../../img/test.jpg"></div>
+                      <div class="overlay overlay-show bg-dark"></div>
+                      <div class="overlay-content overlay-show flex-column text-white">
+                        <h4 class="card-title text-center">New Women's Fashion</h4>
+                        <h6>See what's new</h6>
+                        <a href="shop-grid.html" class="btn btn-danger rounded-pill">Shop Now</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="nav-item dropdown dropdown-hover dropdown-mega">
+              <a class="nav-link dropdown-toggle no-caret" href="#" id="jewelryDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                Jewelry
+              </a>
+              <div class="dropdown-menu" aria-labelledby="megaDropdown">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="list-group list-group-flush list-group-no-border list-group-sm">
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <strong>For her</strong>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Necklaces</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Bracelets</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Earrings</span>
+                        <!--                                        <span class="badge badge-danger">NEW</span>-->
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="list-group list-group-flush list-group-no-border list-group-sm">
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <strong>For him</strong>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                      <a href="shop-grid.html" class="list-group-item list-group-item-action">
+                        <span>Polos &amp; Tees</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="nav-item nav-link" href="components.html">
+              Components
+            </a>
+          </nav>
+
+          <nav class="nav nav-circle nav-gap-x-1 ml-auto">
+            <a class="nav-link nav-icon" data-toggle="modal" href="#searchModal">
+              <i class="material-icons">search</i>
+            </a>
+            <a sec:authorize="isAuthenticated()" class="nav-link nav-icon has-badge d-none d-sm-flex" th:href="@{/profile/favorites}" href="#">
+              <i class="material-icons">favorite_border</i>
+              <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <a class="nav-link nav-icon has-badge" data-toggle="modal" href="#cartModal">
+              <i class="material-icons">shopping_cart</i>
+              <span class="badge badge-pill badge-danger">4</span>
+            </a>
+          </nav>
+        </div>
+      </header>
+      <!-- /HEADER -->
+
+      <!-- MENU MODAL -->
+      <div class="modal fade modal-content-left" id="menuModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header align-items-center border-bottom shadow-sm z-index-1">
+              <!--                    <a href="#">-->
+              <!--                        <img src="#" alt="Logo" height="40">-->
+              <!--                    </a>-->
+              <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button" data-dismiss="modal">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div class="modal-body px-0 scrollbar-width-thin">
+              <ul class="menu" id="menu">
+                <li th:classappend="${globalMenu eq 'home'} ? 'mm-active'">
+                  <a th:href="@{/}" href="#">
+                    <i class="material-icons">home</i>
+                    <span>Home</span>
+                  </a>
+                </li>
+
+                <!--                        <li class="mm-active">-->
+                <!--                            <a href="#" class="has-arrow"><i class="material-icons">rss_feed</i> Blog</a>-->
+                <!--                            <ul>-->
+                <!--                                <li><a href="blog-grid.html">Post Grid</a></li>-->
+                <!--                                <li><a href="blog-list.html">Post List</a></li>-->
+                <!--                                <li><a href="blog-single.html">Single Post</a></li>-->
+                <!--                            </ul>-->
+                <!--                        </li>-->
+                <li>
+                  <a href="components.html">
+                    <i class="material-icons">check_box_outline_blank</i>
+                    <span>Components</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /MENU MODAL -->
+    </div>
+  </body>
 </html>

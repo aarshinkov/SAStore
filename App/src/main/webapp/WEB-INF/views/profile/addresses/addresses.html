@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="#{app.title(#{profile.addresses.title})}">Addresses</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row gutters-3">
+        <div class="col-12 col-md-4 col-xl-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col-12 col-md-8 col-xl-9 mt-3 mt-md-0">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <h4 class="mb-0" th:text="#{profile.addresses.header} + ' (' + ${#lists.size(addresses)} + ')'">Addresses</h4>
+                <a href="#" th:href="@{/profile/addresses/new}" class="btn btn-success btn-sm ms-auto">
+                  <i class="bi bi-pin-map"></i>
+                  <span th:text="#{profile.addresses.add}">Add address</span>
+                </a>
+              </div>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <h5 th:if="${#lists.size(addresses) eq 0}">No addresses found!</h5>
+            </div>
+            <div class="col-12 col-sm-6 mb-4" th:each="a : ${addresses}" th:if="${#lists.size(addresses) gt 0}">
+              <div class="card card-body shadow-sm p-4 position-relative" th:classappend="${a.isMain} ? 'border border-danger'">
+                <small class="badge bg-danger position-absolute top-0 end-0 mt-2 me-2" th:if="${a.isMain}"
+                       style="font-size: 12px;" th:text="#{profile.addresses.main}">Default address</small>
+                <h5 class="mb-1 mt-2" th:text="${a.personName}">Person name</h5>
+                <small class="mb-3 text-muted" th:text="${a.phone}">Phone</small>
+                <div class="mb-2" th:if="${a.floor ne null or a.apartmentNo ne null}">
+                  <i class="icon-Door me-1"></i>
+                  <span th:text="(${a.floor ne null} ? (#{profile.addresses.floor(${a.floor})} + ', ') : '') + (${a.apartmentNo ne null} ? (#{profile.addresses.apartmentNo(${a.apartmentNo})}) : '')">Door address</span>
+                </div>
+                <div class="mb-2">
+                  <i class="icon-Home-2 me-1"></i>
+                  <span th:text="(${a.district ne null} ? (${a.district} + ', ') : '') + ${a.street} + ' ' + ${a.streetNo} + (${a.entrance ne null} ? (', ' + #{profile.addresses.entrance(${a.entrance})}) : '')">House address</span>
+                </div>
+                <div class="mb-3">
+                  <i class="icon-Location-2 me-1"></i>
+                  <span th:text="${a.city} + ', ' + ${a.province} + ', ' + ${a.postCode} + ', ' + (#{country. + ${a.country}})">City address</span>
+                </div>
+                <div>
+                  <!--                  <a href="#" class="fw-semibold text-success link-underline" data-toggle="tooltip"
+                                       data-placement="right" th:title="#{profile.addresses.view}">
+                                      <span th:text="#{profile.addresses.view}">View</span>
+                                      <i class="bi bi-eye"></i>
+                                    </a>-->
+                  <a href="#" th:href="@{/profile/addresses/edit(id=${a.addressId})}" class="fw-semibold text-primary link-underline">
+                    <i class="bi bi-pencil-square"></i>
+                    <span th:text="#{profile.addresses.edit}">Edit</span>
+                  </a>
+                  <a href="#" class="fw-semibold text-danger link-underline ms-3" 
+                     data-bs-toggle="modal" data-bs-target="#removeAddressModal" th:data-address-id="${a.addressId}">
+                    <i class="bi bi-trash"></i>
+                    <span th:text="#{profile.addresses.delete}">Delete</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remove address modal -->
+      <div class="modal fade" id="removeAddressModal" tabindex="-1" aria-labelledby="removeAddressModalLabel" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="removeAddressModalLabel">Remove address</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/profile/addresses/delete}" method="post">
+              <div class="modal-body">
+                <span>Are you sure you want to delete this address?</span>
+              </div>
+              <div class="modal-footer">
+                <input id="removeAddressId" type="hidden" name="addressId"/>
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash"></i>
+                  <span th:text="#{btn.delete}">Delete</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                  <i class="bi bi-x-lg"></i>
+                  <span th:text="#{btn.cancel}">Cancel</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /Add role modal -->
+
+      <script type="text/javascript" th:inline="javascript">
+        document.getElementById('removeAddressModal').addEventListener('show.bs.modal', function (event) {
+          let modal = $(event.relatedTarget);
+          let addressId = modal.data('address-id');
+
+          $('#removeAddressId').val(addressId);
+        });
+      </script>
+    </div>
+  </body>
+</html>

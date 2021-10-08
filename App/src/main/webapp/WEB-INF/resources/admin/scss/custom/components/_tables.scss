@@ -1,0 +1,34 @@
+//Tables
+
+table {
+    th{
+        font-weight: $font-weight-bold;
+    }
+    &.table{
+        
+    td,th{
+        border-top: 1px solid $border-color;
+        border-bottom: 0;
+    }
+    &.table-dark{
+        td,th{
+            border-top: 1px solid $secondary;
+        }
+    }
+    }
+    &.table-card{
+        th,td{
+            &:first-child{
+                padding-left: $card-spacer-x!important;
+            }
+            &:last-child{
+                padding-right: $card-spacer-x!important;
+            }
+        }
+    }
+    &.table-nowrap{
+       td,th{
+        white-space: nowrap;
+       }
+    }
+}

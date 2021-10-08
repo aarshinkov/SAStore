@@ -12,9 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class SaStoreApplicationTests {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Test
-    public void contextLoads() {
-    }
+  @Test
+  public void contextLoads() {
+  }
 }

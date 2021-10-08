@@ -3,98 +3,98 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
-    <head>
-        <title>Signup</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title(#{signup.title})}">Signup</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8 m-auto">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <h3 class="modal-title">Signup</h3>
-                                <em>Create your account and start shopping</em>
-                                <hr/>
-                            </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 m-auto">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="text-center">
+                <h3 class="modal-title" th:text="#{signup.header}">Signup</h3>
+                <em th:text="#{signup.subheader}">Create your account and start shopping.</em>
+                <hr/>
+              </div>
 
-                            <form th:action="@{/signup}" method="post" th:object="${signupModel}">
-                                <div class="form-row">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label>First name</label>
-                                            <div class="input-icon">
-                                                <i class="material-icons">person_outline</i>
-                                                <input type="text" class="form-control" th:field="*{firstName}" placeholder="ex. John"
-                                                       th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
-                                                <span class="invalid-feedback" th:errors="*{firstName}">Error</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label>Last name</label>
-                                            <div class="input-icon">
-                                                <i class="material-icons">person_outline</i>
-                                                <input type="text" class="form-control" th:field="*{lastName}" placeholder="ex. Doe"
-                                                       th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
-                                                <span class="invalid-feedback" th:errors="*{lastName}">Error</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <div class="input-icon">
-                                        <i class="material-icons">mail_outline</i>
-                                        <input type="email" class="form-control" th:field="*{email}" placeholder="john.doe@gmail.com"
-                                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
-                                        <span class="invalid-feedback" th:errors="*{email}">Error</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <div class="input-icon">
-                                                <i class="material-icons">lock_open</i>
-                                                <input type="password" class="form-control" th:field="*{password}" placeholder=""
-                                                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
-                                                <span class="invalid-feedback" th:errors="*{password}">Error</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label>Confirm password</label>
-                                            <div class="input-icon">
-                                                <i class="material-icons">lock</i>
-                                                <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder=""
-                                                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"/>
-                                                <span class="invalid-feedback" th:errors="*{confirmPassword}">Error</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-success">
-                                    <span>Signup</span>
-                                </button>
-                            </form>
-                            <hr/>
-                            <p class="font-italic">
-                                <span>Already have an account?</span>
-                                <u>
-                                    <a th:href="@{/login}" href="#">Login</a>
-                                </u>
-                            </p>
-                        </div>
+              <form th:action="@{/signup}" method="post" th:object="${signupModel}">
+                <div class="form-row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label th:text="#{signup.firstname}">First name</label>
+                      <div class="input-icon">
+                        <i class="material-icons">person_outline</i>
+                        <input type="text" class="form-control" th:field="*{firstName}" th:placeholder="#{signup.firstname.ex}"
+                               th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
+                        <span class="invalid-feedback" th:errors="*{firstName}">Error</span>
+                      </div>
                     </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label th:text="#{signup.lastname}">Last name</label>
+                      <div class="input-icon">
+                        <i class="material-icons">person_outline</i>
+                        <input type="text" class="form-control" th:field="*{lastName}" th:placeholder="#{signup.lastname.ex}"
+                               th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
+                        <span class="invalid-feedback" th:errors="*{lastName}">Error</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="form-group">
+                  <label th:text="#{signup.email}">Email</label>
+                  <div class="input-icon">
+                    <i class="material-icons">mail_outline</i>
+                    <input type="email" class="form-control" th:field="*{email}" th:placeholder="#{signup.email.ex}"
+                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+                    <span class="invalid-feedback" th:errors="*{email}">Error</span>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label th:text="#{signup.password}">Password</label>
+                      <div class="input-icon">
+                        <i class="material-icons">lock_open</i>
+                        <input type="password" class="form-control" th:field="*{password}" placeholder=""
+                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+                        <span class="invalid-feedback" th:errors="*{password}">Error</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label th:text="#{signup.confirmpassword}">Confirm password</label>
+                      <div class="input-icon">
+                        <i class="material-icons">lock</i>
+                        <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder=""
+                               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"/>
+                        <span class="invalid-feedback" th:errors="*{confirmPassword}">Error</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success">
+                  <span th:text="#{signup.btn}">Signup</span>
+                </button>
+              </form>
+              <hr/>
+              <p class="font-italic">
+                <span th:text="#{signup.alreadysignup}">Already have an account?</span>
+                <u>
+                  <a th:href="@{/login}" href="#" th:text="#{signup.login}">Login</a>
+                </u>
+              </p>
             </div>
+          </div>
         </div>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>

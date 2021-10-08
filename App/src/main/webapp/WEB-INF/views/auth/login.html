@@ -3,60 +3,147 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        <div layout:fragment="contentDiv">
-            <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+  <head>
+    <title th:text="#{app.title(#{login.title})}">Login</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row align-items-center justify-content-center">
+        <div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
 
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 m-auto">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
+          <div class="alert alert-success" role="alert" th:if="${@base.environment eq 'DEV' or @base.environment eq 'TEST'}">
+            <span th:text="#{env.name. + ${@base.environment}}">Enviroment</span>
+          </div>
 
-                            <div class="text-center">
-                                <h3 class="modal-title">Login</h3>
-                                <em>to your account</em>
-                                <hr/>
-                            </div>
+          <h2 class="mb-1 display-6">
+            <span th:text="#{login.header}">Login</span>
+          </h2>
+          <p class="mb-4 text-muted">
+            <span th:text="#{login.subheader}">to your user profile</span>
+          </p>
 
-                            <div th:if="${badCredentials}" class="alert alert-danger">Invalid email/password!</div>
-                            <div th:if="${invalidEmail}" class="alert alert-danger">There is no user registered with this email!</div>
+          <div th:if="${badCredentials}" class="alert alert-danger" th:text="#{login.invalidcredentials}">Invalid email/password!</div>
+          <div th:if="${invalidEmail}" class="alert alert-danger" th:text="#{login.nouser}">There is no user registered with this email!</div>
 
-                            <form action="authentication" method="post">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="material-icons">mail_outline</i>
-                                        <input type="email" class="form-control" name="email" placeholder="Email" required="required"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="material-icons">lock_open</i>
-                                        <input type="password" class="form-control" name="password" placeholder="Password" required="required"/>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex justify-content-end">
-                                    <u>
-                                        <a th:href="@{/forgotPassword}" href="#" class="text-primary small">Forgot password?</a>
-                                    </u>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    <span>Login</span>
-                                </button>
-                            </form>
-                            <hr>
-                                <p class="font-italic">
-                                    <span>Don't have an account ?</span>
-                                    <u>
-                                        <a th:href="@{/signup}" href="#">Signup</a>
-                                    </u>
-                                </p>
-                        </div>
-                    </div>
+          <div class="position-relative">
+            <div>
+              <form action="authentication" method="post">
+                <div class="input-icon-group mb-3">
+                  <span class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"></path>
+                    </svg>
+                  </span>
+                  <input type="email" class="form-control" name="email" th:placeholder="#{login.email}" required="required" autofocus="autofocus"/>
                 </div>
+                <div class="input-icon-group mb-3">
+                  <span class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                      <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"></path>
+                      <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                    </svg>
+                  </span>
+                  <input type="password" class="form-control" name="password" th:placeholder="#{login.password}" required="required"/>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                  <div></div>
+                  <div>
+                    <label class="text-end d-block small mb-0">
+                      <a href="#" th:href="@{/forgottenPassword}" class="text-muted link-decoration" th:text="#{login.forgotpassword}">Forget Password?</a>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-hover-arrow" type="submit">
+                    <span th:text="#{login.btn}">Sign in</span>
+                  </button>
+                </div>
+              </form>
+
+              <!--  -->
+              <p class="pt-4 small text-muted">
+                <span th:text="#{login.noaccount}">Don’t have an account yet?</span>
+                <a href="#" th:href="@{/signup}" class="ms-2 text-dark fw-semibold link-underline" th:text="#{login.signup}">Signup</a>
+              </p>
+              <!--Divider-->
+              <!--              <div class="d-flex align-items-center py-3">
+                              <span class="flex-grow-1 border-bottom pt-1"></span>
+                              <span class="d-inline-flex center-both lh-1 size-30 rounded-circle bg-white text-mono">or</span>
+                              <span class="flex-grow-1 border-bottom pt-1"></span>
+                            </div>
+                            <div class="d-grid">
+                              <a href="#!" class="d-flex hover-lift btn-outline-secondary mb-2 btn position-relative center-both">
+                                Main Icon
+                                <div class="position-relative d-flex align-items-center">
+                                  <img src="assets/img/brands/google.svg" alt="" class="width-20 me-2"/>
+                                  <span>sign in with google</span>
+                                </div>
+                              </a> 
+                              <a href="#!" class="d-flex hover-lift btn-outline-secondary btn position-relative center-both">
+                                Main Icon
+                                <div class="position-relative d-flex align-items-center">
+                                  <img src="assets/img/brands/Facebook.svg" alt="" class="width-20 me-2"/>
+                                  <span>sign in with facebook</span>
+                                </div>
+                              </a> 
+                            </div>-->
             </div>
+          </div>
         </div>
-    </body>
+      </div>
+
+    </div>
+    <div layout:fragment="contentDiv1">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 m-auto">
+          <div class="card shadow-sm">
+            <div class="card-body">
+
+              <div class="text-center">
+                <h3 class="modal-title" th:text="#{login.header}">Login</h3>
+                <em th:text="#{login.subheader}">to your account</em>
+                <hr/>
+              </div>
+
+              <div th:if="${badCredentials}" class="alert alert-danger" th:text="#{login.invalidcredentials}">Invalid email/password!</div>
+              <div th:if="${invalidEmail}" class="alert alert-danger" th:text="#{login.nouser}">There is no user registered with this email!</div>
+
+              <form action="authentication" method="post">
+                <div class="form-group">
+                  <div class="input-icon">
+                    <i class="material-icons">mail_outline</i>
+                    <input type="email" class="form-control" name="email" th:placeholder="#{login.email}" required="required"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-icon">
+                    <i class="material-icons">lock_open</i>
+                    <input type="password" class="form-control" name="password" th:placeholder="#{login.password}" required="required"/>
+                  </div>
+                </div>
+                <div class="form-group d-flex justify-content-end">
+                  <u>
+                    <a th:href="@{/forgotPassword}" href="#" class="text-primary small" th:text="#{login.forgotpassword}">Forgot password?</a>
+                  </u>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  <span th:text="#{login.btn}">Login</span>
+                </button>
+              </form>
+              <hr/>
+              <p class="font-italic">
+                <span th:text="#{login.noaccount}">Don't have an account ?</span>
+                <u>
+                  <a th:href="@{/signup}" href="#" th:text="#{login.signup}">Signup</a>
+                </u>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

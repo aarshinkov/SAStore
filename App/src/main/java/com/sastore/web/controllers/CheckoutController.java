@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CheckoutController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/checkout")
-    public String checkoutShipping(Model model) {
-        return "checkout/checkout";
-    }
+  @GetMapping("/checkout")
+  public String checkoutShipping(Model model) {
+    return "checkout/checkout";
+  }
 
-    @GetMapping("/checkout/review")
-    public String checkoutReview(Model model) {
-        return "checkout/review";
-    }
+  @GetMapping("/checkout/review")
+  public String checkoutReview(Model model) {
+    return "checkout/review";
+  }
 }

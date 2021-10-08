@@ -18,6 +18,6 @@ import lombok.ToString;
 @ToString
 public class Breadcrumb implements Serializable {
 
-    private String label;
-    private String url;
+  private String label;
+  private String url;
 }

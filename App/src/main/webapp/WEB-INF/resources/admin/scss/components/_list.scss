@@ -1,9 +1,0 @@
-.list-with-gap {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: -($list-inline-padding / 2);
-  > * {
-    margin: ($list-inline-padding / 2);
-  }
-}

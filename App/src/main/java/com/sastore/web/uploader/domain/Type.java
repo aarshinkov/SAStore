@@ -6,12 +6,12 @@ package com.sastore.web.uploader.domain;
  * @since 1.0.0
  */
 public enum Type {
-    JPG,
-    PNG,
-    TXT,
-    XML,
-    PDF,
-    ZIP,
-    RAR,
-    JSON
+  JPG,
+  PNG,
+  TXT,
+  XML,
+  PDF,
+  ZIP,
+  RAR,
+  JSON
 }

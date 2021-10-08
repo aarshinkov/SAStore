@@ -83,13 +83,13 @@
 
     <div id="copyright" th:remove="tag">
       <div class="copyright">
-        <span th:text="#{app.name}">SA Store</span>
         <span>&copy;</span>
+        <span th:text="#{app.name}">SA Store</span>
         <span th:text="${#dates.year(#dates.createNow())}">2021</span>
       </div>
-<!--      <div>
-        <span th:text="${@version.version}">Version</span>
-      </div>-->
+      <!--      <div>
+              <span th:text="${@version.version}">Version</span>
+            </div>-->
     </div>
   </body>
 </html>

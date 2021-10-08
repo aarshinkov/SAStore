@@ -31,17 +31,17 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 public class ProductImageEntity implements Serializable {
 
-    @Id
-    @Column(name = "image_id")
-    private String imageId;
+  @Id
+  @Column(name = "image_id")
+  private String imageId;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "product_id")
+  private ProductEntity product;
 
-    @Column(name = "is_main")
-    private Boolean isMain;
+  @Column(name = "is_main")
+  private Boolean isMain;
 
-    @Column(name = "created_on")
-    private Timestamp createdOn;
+  @Column(name = "created_on")
+  private Timestamp createdOn;
 }

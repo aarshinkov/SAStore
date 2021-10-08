@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface RoleService {
 
-    List<RoleEntity> getRoles();
+  List<RoleEntity> getRoles();
 }

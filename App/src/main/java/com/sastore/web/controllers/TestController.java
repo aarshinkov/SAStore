@@ -23,30 +23,30 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class TestController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private Uploader uploader;
+  @Autowired
+  private Uploader uploader;
 
-    @GetMapping("/test/image")
-    public String testImage(Model model) {
-        return "test/image";
+  @GetMapping("/test/image")
+  public String testImage(Model model) {
+    return "test/image";
+  }
+
+  @PostMapping("/test/image")
+  public String testUploadImage(@RequestParam("file") MultipartFile file) {
+
+    log.debug("Uploading image");
+
+    FileName name = null;
+
+    try {
+      name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.USERS);
+
+    } catch (IOException e) {
+      log.error("Error uploading a file!", e);
     }
 
-    @PostMapping("/test/image")
-    public String testUploadImage(@RequestParam("file") MultipartFile file) {
-
-        log.debug("Uploading image");
-
-        FileName name = null;
-
-        try {
-            name = uploader.uploadFile(file.getBytes(), file.getOriginalFilename(), ImageFolder.USERS);
-
-        } catch (IOException e) {
-            log.error("Error uploading a file!", e);
-        }
-
-        return "redirect:/test/image";
-    }
+    return "redirect:/test/image";
+  }
 }

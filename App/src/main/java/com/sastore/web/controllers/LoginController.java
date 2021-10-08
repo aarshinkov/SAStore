@@ -37,106 +37,106 @@ import javax.validation.Valid;
 @Controller
 public class LoginController extends Base {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Autowired
-    private PasswordValidator passwordValidator;
+  @Autowired
+  private PasswordValidator passwordValidator;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private WebSecurityConfig webSecurityConfig;
+  @Autowired
+  private WebSecurityConfig webSecurityConfig;
 
-    @GetMapping("/login")
-    public String prepareLogin(HttpServletRequest request, Model model) {
+  @GetMapping("/login")
+  public String prepareLogin(HttpServletRequest request, Model model) {
 
-        return "auth/login";
-    }
+    return "auth/login";
+  }
 
-    @PostMapping("/authentication")
-    public String login(@RequestParam("email") String email,
-            @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+  @PostMapping("/authentication")
+  public String login(@RequestParam("email") String email,
+          @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
 
-        log.debug("Email: " + email);
-        UserEntity user = userService.getUserByEmail(email);
+    log.debug("Email: " + email);
+    UserEntity user = userService.getUserByEmail(email);
 
-        if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                // Password is right
-                // Authentication successful
-                session.setAttribute("user", user);
+    if (user != null) {
+      if (passwordEncoder.matches(password, user.getPassword())) {
+        // Password is right
+        // Authentication successful
+        session.setAttribute("user", user);
 
-                try {
-                    UserDetails userDetails = webSecurityConfig.userDetailsServiceBean().loadUserByUsername(user.getEmail());
+        try {
+          UserDetails userDetails = webSecurityConfig.userDetailsServiceBean().loadUserByUsername(user.getEmail());
 
-                    if (userDetails != null) {
-                        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+          if (userDetails != null) {
+            Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
 
-                        SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
-                        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
-                        HttpSession http = attrs.getRequest().getSession(true);
-                        http.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+            HttpSession http = attrs.getRequest().getSession(true);
+            http.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-                        return "redirect:/";
-                    }
+            return "redirect:/";
+          }
 
-                    return null;
-                } catch (UsernameNotFoundException e) {
+          return null;
+        } catch (UsernameNotFoundException e) {
 //                    throw new CustomException(404, "Not found", "User with email " + email + " not found", HttpStatus.NOT_FOUND);
-                    log.debug("Username not found");
-                } catch (Exception e) {
-                    log.error("Error!", e);
-                }
-            }
-            // Bad credentials
-            log.debug("Bad credentials");
-            redirectAttributes.addFlashAttribute("badCredentials", true);
-            return "redirect:/login";
+          log.debug("Username not found");
+        } catch (Exception e) {
+          log.error("Error!", e);
         }
-        // Invalid email
-        log.debug("Invalid email");
-        redirectAttributes.addFlashAttribute("invalidEmail", true);
+      }
+      // Bad credentials
+      log.debug("Bad credentials");
+      redirectAttributes.addFlashAttribute("badCredentials", true);
+      return "redirect:/login";
+    }
+    // Invalid email
+    log.debug("Invalid email");
+    redirectAttributes.addFlashAttribute("invalidEmail", true);
 
-        return "redirect:/login";
+    return "redirect:/login";
+  }
+
+  @GetMapping("/signup")
+  public String prepareSignup(Model model) {
+
+    model.addAttribute("signupModel", new SignupModel());
+
+    return "auth/signup";
+  }
+
+  @PostMapping("/signup")
+  public String signup(@ModelAttribute("signupModel") @Valid SignupModel signupModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+    if (userService.isUserExistByEmail(signupModel.getEmail())) {
+      bindingResult.rejectValue("email", "signup.email.exist");
     }
 
-    @GetMapping("/signup")
-    public String prepareSignup(Model model) {
-
-        model.addAttribute("signupModel", new SignupModel());
-
-        return "auth/signup";
+    if (!signupModel.getPassword().equals(signupModel.getConfirmPassword())) {
+      bindingResult.rejectValue("password", "signup.password.nomatch");
+      bindingResult.rejectValue("confirmPassword", "signup.password.nomatch");
     }
 
-    @PostMapping("/signup")
-    public String signup(@ModelAttribute("signupModel") @Valid SignupModel signupModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-
-        if (userService.isUserExistByEmail(signupModel.getEmail())) {
-            bindingResult.rejectValue("email", "signup.email.exist");
-        }
-
-        if (!signupModel.getPassword().equals(signupModel.getConfirmPassword())) {
-            bindingResult.rejectValue("password", "signup.password.nomatch");
-            bindingResult.rejectValue("confirmPassword", "signup.password.nomatch");
-        }
-
-        if (!passwordValidator.isPasswordValid(signupModel.getPassword())) {
-            bindingResult.rejectValue("password", "signup.password.requirements");
-            bindingResult.rejectValue("confirmPassword", "signup.password.requirements");
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "auth/signup";
-        }
-
-        UserEntity createdUser = userService.createUser(signupModel);
-
-        return "redirect:/login";
+    if (!passwordValidator.isPasswordValid(signupModel.getPassword())) {
+      bindingResult.rejectValue("password", "signup.password.requirements");
+      bindingResult.rejectValue("confirmPassword", "signup.password.requirements");
     }
+
+    if (bindingResult.hasErrors()) {
+      return "auth/signup";
+    }
+
+    UserEntity createdUser = userService.createUser(signupModel);
+
+    return "redirect:/login";
+  }
 }
