@@ -1,7 +1,7 @@
 package com.sastore.web.beans;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public class PasswordValidatorTests {
 
   private PasswordValidator passwordValidator;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     passwordValidator = new PasswordValidator();
   }
