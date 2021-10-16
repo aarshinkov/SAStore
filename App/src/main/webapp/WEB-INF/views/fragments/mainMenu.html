@@ -5,7 +5,7 @@
   <body>
     <div id="mainMenu" th:remove="tag">
       <header class="z-index-fixed shadow" th:classappend="${breadcrumbs eq null} ? 'mb-5' : 'mb-3'">
-        <div class="border-bottom bg-light border-dashed">
+        <div class="bg-light">
           <div class="container py-1">
             <div class="row g-3 align-items-center">
               <div class="col-md-6 d-none d-md-flex">
@@ -170,10 +170,10 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-fw py-lg-0 overflow-hidden">
                     <div class="row mx-0">
-
                       <div class="col-lg-4 pe-lg-0 order-lg-4 pe-lg-0 ms-lg-auto d-none d-lg-flex">
                         <div class="d-flex bg-dark flex-column h-100 w-100 py-4 py-md-5 position-relative">
-                          <img alt="" src="#" class="bg-image opacity-80"/>
+                          <!-- CALLING METHOD TWICE -->
+                          <!--<img alt="" src="#" class="bg-image opacity-80"/>-->
                           <div class="position-absolute text-center d-flex flex-column justify-content-center align-items-center text-white left-0 top-0 w-100 h-100 p-4">
                             <div>
                               <div class="d-md-flex mb-2 justify-content-center align-items-center">
