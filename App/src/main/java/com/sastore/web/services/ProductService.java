@@ -4,9 +4,9 @@ import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.filters.ProductFilter;
-import com.sastore.web.models.ProductCreateModel;
-import com.sastore.web.models.ProductEditModel;
-import com.sastore.web.models.ProductImageCreateModel;
+import com.sastore.web.models.products.ProductCreateModel;
+import com.sastore.web.models.products.ProductEditModel;
+import com.sastore.web.models.products.ProductImageCreateModel;
 import com.sastore.web.uploader.domain.FileName;
 import java.util.List;
 

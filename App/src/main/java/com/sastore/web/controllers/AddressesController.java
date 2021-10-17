@@ -2,8 +2,8 @@ package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
 import com.sastore.web.entities.AddressEntity;
-import com.sastore.web.models.AddressCreateModel;
-import com.sastore.web.models.AddressEditModel;
+import com.sastore.web.models.addresses.AddressCreateModel;
+import com.sastore.web.models.addresses.AddressEditModel;
 import com.sastore.web.services.AddressService;
 import com.sastore.web.utils.Breadcrumb;
 import java.util.ArrayList;

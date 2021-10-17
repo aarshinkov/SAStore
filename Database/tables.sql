@@ -95,7 +95,11 @@ CREATE TABLE addresses(
 
 CREATE TABLE baskets(
 	basket_id varchar(100) not null primary key,
-	user_id varchar(100) not null references users(user_id)
+	user_id varchar(100) references users(user_id),
+	session_id varchar(300),
+	created_on timestamp not null default NOW(),
+	expires_on timestamp,
+	is_active boolean not null default true
 );
 
 CREATE TABLE basket_products(

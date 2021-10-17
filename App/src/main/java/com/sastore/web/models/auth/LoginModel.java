@@ -1,7 +1,9 @@
-package com.sastore.web.models;
+package com.sastore.web.models.auth;
 
 import java.io.Serializable;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,21 +13,20 @@ import lombok.ToString;
 /**
  *
  * @author Atanas Yordanov Arshinkov
- * @since 1.0.0
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProductEditModel implements Serializable {
+public class LoginModel implements Serializable {
 
   @NotBlank
-  private String productId;
+  @Email
+  @Size(max = 200)
+  private String email;
 
   @NotBlank
-  private String title;
-
-  @NotBlank
-  private String description;
+  @Size(min = 2, max = 100)
+  private String password;
 }

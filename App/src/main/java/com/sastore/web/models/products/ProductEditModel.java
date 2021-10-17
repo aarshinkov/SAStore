@@ -1,9 +1,7 @@
-package com.sastore.web.models;
+package com.sastore.web.models.products;
 
 import java.io.Serializable;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,17 +18,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProductCreateModel implements Serializable {
+public class ProductEditModel implements Serializable {
+
+  @NotBlank
+  private String productId;
 
   @NotBlank
   private String title;
-
-  @NotNull
-  private Double price;
-
-  @NotNull
-  @Min(0)
-  private Integer availableQuantity;
 
   @NotBlank
   private String description;

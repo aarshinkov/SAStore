@@ -82,7 +82,8 @@
                     <tbody>
                       <tr th:each="p : ${products.collection}">
                         <td>
-                          <a class="text-decoration-underline" href="#" th:href="@{/admin/products(id=${p.productId})}" th:text="${p.productId}">1</a>
+                          <a class="text-decoration-underline" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${p.productId}"
+                             th:href="@{/admin/products(id=${p.productId})}" th:text="${#strings.substring(p.productId, 0, 10)} + '...'">1</a>
                         </td>
                         <td th:text="${p.title}">Product 1</td>
                         <td>

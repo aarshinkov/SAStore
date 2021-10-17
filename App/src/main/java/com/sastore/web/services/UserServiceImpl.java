@@ -6,7 +6,7 @@ import com.sastore.web.entities.RoleEntity;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
-import com.sastore.web.models.SignupModel;
+import com.sastore.web.models.auth.SignupModel;
 import com.sastore.web.repositories.RolesRepository;
 import com.sastore.web.repositories.UsersRepository;
 import org.slf4j.Logger;

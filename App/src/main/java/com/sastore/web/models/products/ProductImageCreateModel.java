@@ -1,4 +1,4 @@
-package com.sastore.web.models;
+package com.sastore.web.models.products;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

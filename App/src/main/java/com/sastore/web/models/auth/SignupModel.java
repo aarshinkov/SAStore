@@ -1,8 +1,8 @@
-package com.sastore.web.models;
+package com.sastore.web.models.auth;
 
 import java.io.Serializable;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,22 +21,23 @@ import lombok.ToString;
 @ToString
 public class SignupModel implements Serializable {
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 2, max = 100)
   private String firstName;
 
   private String lastName;
 
-  @NotEmpty
+  @NotBlank
+
   @Email
   @Size(max = 200)
   private String email;
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 2, max = 100)
   private String password;
 
-  @NotEmpty
+  @NotBlank
   @Size(min = 2, max = 100)
   private String confirmPassword;
 }
