@@ -53,4 +53,9 @@ public class Base {
   public String getEnvironment() {
     return getMessage("env");
   }
+
+  protected String getEcontApiUrl() {
+    // Excluding '/' 
+    return getMessage("env.econt.base");
+  }
 }

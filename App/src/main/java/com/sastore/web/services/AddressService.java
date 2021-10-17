@@ -1,8 +1,8 @@
 package com.sastore.web.services;
 
 import com.sastore.web.entities.AddressEntity;
-import com.sastore.web.models.AddressCreateModel;
-import com.sastore.web.models.AddressEditModel;
+import com.sastore.web.models.addresses.AddressCreateModel;
+import com.sastore.web.models.addresses.AddressEditModel;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 

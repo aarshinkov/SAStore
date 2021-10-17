@@ -3,12 +3,14 @@ package com.sastore.web.security;
 import com.sastore.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
@@ -21,6 +23,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
+  private AuthenticationProvider authProvider;
+
+  @Autowired
   private UserService userService;
 
   @Autowired
@@ -29,10 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthenticationSuccessHandler authenticationSuccessHandler;
 
+  @Autowired
+  private AccessDeniedHandler accessDeniedHandler;
+
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    super.configure(auth);
-    auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+//    super.configure(auth);
+//    auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+    auth.authenticationProvider(authProvider);
   }
 
   @Override
@@ -53,12 +62,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin/**").hasRole("ADMIN")
             .antMatchers("/**").permitAll()
             .and()
-            .formLogin()
-            .loginProcessingUrl("/authentication")
-            .loginPage("/login")
-            .usernameParameter("email")
-            .passwordParameter("password")
-            .successHandler(authenticationSuccessHandler)
+            //            .formLogin()
+            //            .loginProcessingUrl("/authentication")
+            //            .loginPage("/login")
+            //            .usernameParameter("email")
+            //            .passwordParameter("password")
+            //            .successHandler(authenticationSuccessHandler)
+            //            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
             .and()
             .logout()
             .logoutUrl("/logout")
