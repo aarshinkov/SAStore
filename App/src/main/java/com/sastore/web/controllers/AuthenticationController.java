@@ -76,7 +76,7 @@ public class AuthenticationController extends Base {
     return "auth/login";
   }
 
-  @PostMapping("/authenticate")
+  @PostMapping("/login")
   public String login(@ModelAttribute("login") @Valid LoginModel login, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse res, RedirectAttributes redirectAttributes, Model model) throws IOException, ServletException {
 
     log.debug("Email: " + login.getEmail());
@@ -110,7 +110,9 @@ public class AuthenticationController extends Base {
 
     AuthSuccessResponse authResponse = authenticationService.onAuthSuccess(req, res, authentication);
 
-    return "redirect:/";
+    log.debug("authResponse: " + authResponse.getRedirectUrl());
+
+    return "redirect:" + authResponse.getRedirectUrl();
   }
 
   @PostMapping("/authentication2")

@@ -7,7 +7,96 @@
     <title th:text="#{app.title(#{signup.title})}">Signup</title>
   </head>
   <body>
+
     <div layout:fragment="contentDiv">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12 col-md-8 z-index-2">
+          <div class="text-center">
+            <h2 class="mb-1 display-6">
+              <span th:text="#{signup.header}">Signup</span>
+            </h2>
+            <p class="mb-4 text-muted">
+              <span th:text="#{signup.subheader}">Create your account and start shopping.</span>
+            </p>
+          </div>
+
+          <form th:action="@{/signup}" method="post" th:object="${signupModel}">
+            <div class="row">
+              <div class="col-12 col-xl-6 mb-3">
+                <label class="form-label required" th:text="#{signup.firstname}">First name</label>
+                <div class="input-icon-group" th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'">
+                  <span class="input-icon">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <input type="text" class="form-control" th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
+                         th:field="*{firstName}" th:placeholder="#{signup.firstname.ex}" autofocus="autofocus"/>
+                </div>
+                <span class="invalid-feedback" th:errors="*{firstName}">Error</span>
+              </div>
+              <div class="col-12 col-xl-6 mb-3">
+                <label class="form-label" th:text="#{signup.lastname}">Last name</label>
+                <div class="input-icon-group" th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'">
+                  <span class="input-icon">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <input type="text" class="form-control" th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
+                         th:field="*{lastName}" th:placeholder="#{signup.lastname.ex}"/>
+                </div>
+                <span class="invalid-feedback" th:errors="*{lastName}">Error</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label class="form-label required" th:text="#{signup.email}">Email</label>
+                <div class="input-icon-group" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                  <span class="input-icon">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input type="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                         th:field="*{email}" th:placeholder="#{signup.email.ex}"/>
+                </div>
+                <span class="invalid-feedback" th:errors="*{email}">Error</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-xl-6 mb-3">
+                <label class="form-label required" th:text="#{signup.password}">Password</label>
+                <div class="input-icon-group" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                  <span class="input-icon">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input type="password" class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                         th:field="*{password}"/>
+                </div>
+                <span class="invalid-feedback" th:errors="*{password}">Error</span>
+              </div>
+              <div class="col-12 col-xl-6 mb-3">
+                <label class="form-label required" th:text="#{signup.confirmpassword}">Confirm password</label>
+                <div class="input-icon-group" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'">
+                  <span class="input-icon">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input type="password" class="form-control" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                         th:field="*{confirmPassword}"/>
+                </div>
+                <span class="invalid-feedback" th:errors="*{confirmPassword}">Error</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+              <span th:text="#{signup.btn}">Signup</span>
+            </button>
+          </form>
+          <hr class="my-3"/>
+          <div class="small text-muted" th:utext="#{fields.mandatory}">Fields marked with <span class="required"></span> are mandatory.</div>
+          <p class="small text-muted">
+            <span th:text="#{signup.alreadysignup}">Already have an account?</span>
+            <a href="#" th:href="@{/login}" class="ms-2 text-dark fw-semibold link-underline" th:text="#{signup.login}">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="contentDiv1">
       <!--    <div th:replace="fragments/messages :: #notify"></div>-->
 
       <div class="row justify-content-center">

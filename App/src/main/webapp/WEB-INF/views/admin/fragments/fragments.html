@@ -78,6 +78,9 @@
               <span th:text="#{env.name. + ${@base.environment}}">Enviroment</span>
             </div>
           </li>
+          <li class="nav-item d-none d-lg-flex flex-column h-100 me-lg-2 align-items-center justify-content-center" sec:authorize="hasRole('USER')">
+            <a href="#" th:href="@{/products}" class="btn btn-xs btn-outline-primary py-0">Switch to USER view</a>
+          </li>
         </ul>
 
         <ul class="navbar-nav ms-auto d-flex align-items-center h-100">
@@ -510,7 +513,7 @@
         </div>
         <div class="flex-grow-1 text-start">
           <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
-              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
           <p class="mb-0 text-muted" th:text="#{admin.count.customers}">Customers</p>
         </div>
       </div>
@@ -523,7 +526,7 @@
         </div>
         <div class="flex-grow-1 text-start">
           <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
-              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
           <p class="mb-0 text-muted" th:text="#{admin.count.activeproducts}">Active products</p>
         </div>
       </div>
@@ -536,7 +539,7 @@
         </div>
         <div class="flex-grow-1 text-start">
           <h5 class="fs-4 d-block mb-1 aos-init aos-animate" data-aos="" data-aos-id="countup:in" th:data-to="${count}"
-              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;+&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
+              data-countup="{&quot;startVal&quot;:&quot;0&quot;,&quot;prefix&quot;:&quot;&quot;}" th:text="${#numbers.formatDecimal(count, 1, 'WHITESPACE', 0, 'DEFAULT')}">475</h5>
           <p class="mb-0 text-muted" th:text="#{admin.count.finishedOrders}">Finished orders</p>
         </div>
       </div>
