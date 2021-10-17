@@ -55,15 +55,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     UserEntity foundUser = usersRepository.findByEmail(username);
 
     if (foundUser == null) {
-      return null;
+      response.setResponse(AuthenticationResponses.USER_INVALID);
+      return response;
     }
 
     // Password does NOT match
     if (!passwordEncoder.matches(password, foundUser.getPassword())) {
-      return null;
+      response.setResponse(AuthenticationResponses.BAD_CREDENTIALS);
+      return response;
     }
 
-    
     response.setResponse(AuthenticationResponses.OK);
 
     return response;

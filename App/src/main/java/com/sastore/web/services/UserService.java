@@ -4,7 +4,7 @@ import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.enums.Roles;
 import com.sastore.web.filters.UserFilter;
-import com.sastore.web.models.SignupModel;
+import com.sastore.web.models.auth.SignupModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**

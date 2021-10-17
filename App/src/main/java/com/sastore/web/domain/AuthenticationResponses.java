@@ -7,7 +7,8 @@ package com.sastore.web.domain;
 public enum AuthenticationResponses {
 
   OK(0, "The authentication is successful"),
-  BAD_CREDENTIALS(1, "The user has entered invalid username/password");
+  USER_INVALID(1, "The user does not exist"),
+  BAD_CREDENTIALS(2, "The user has entered invalid username/password");
 
   private final Integer response;
   private final String description;

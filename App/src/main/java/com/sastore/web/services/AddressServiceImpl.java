@@ -2,8 +2,8 @@ package com.sastore.web.services;
 
 import com.sastore.web.entities.AddressEntity;
 import com.sastore.web.entities.UserEntity;
-import com.sastore.web.models.AddressCreateModel;
-import com.sastore.web.models.AddressEditModel;
+import com.sastore.web.models.addresses.AddressCreateModel;
+import com.sastore.web.models.addresses.AddressEditModel;
 import com.sastore.web.repositories.AddressesRepository;
 import com.sastore.web.repositories.UsersRepository;
 import java.sql.Timestamp;

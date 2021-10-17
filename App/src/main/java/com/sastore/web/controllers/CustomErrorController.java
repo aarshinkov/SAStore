@@ -27,12 +27,20 @@ public class CustomErrorController extends Base implements ErrorController {
     if (status != null) {
       int statusCode = Integer.parseInt(status.toString());
 
-      if (statusCode == HttpStatus.FORBIDDEN.value()) {
+      log.debug("Status code: " + statusCode);
+
+      if (statusCode == HttpStatus.FORBIDDEN.value() || statusCode == HttpStatus.UNAUTHORIZED.value()) {
         log.debug("Not allowed!");
-        return "redirect:/403";
+        if (isLoggedIn()) {
+          return "redirect:/403";
+        }
+        return "redirect:/login";
       } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
         log.debug("Page not found!");
         return "redirect:/404";
+      } else if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
+        log.debug("Method not allowed");
+        return "redirect:/";
       } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
         log.debug("Internal server error!");
         return "redirect:/500";

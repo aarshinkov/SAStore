@@ -4,8 +4,10 @@ import com.sastore.web.base.Base;
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.domain.AuthSuccessResponse;
 import com.sastore.web.domain.AuthenticationResponse;
+import com.sastore.web.domain.AuthenticationResponses;
+import com.sastore.web.models.auth.LoginModel;
 import com.sastore.web.entities.UserEntity;
-import com.sastore.web.models.SignupModel;
+import com.sastore.web.models.auth.SignupModel;
 import com.sastore.web.security.WebSecurityConfig;
 import com.sastore.web.services.AuthenticationService;
 import com.sastore.web.services.UserService;
@@ -35,7 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.context.SecurityContext;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -70,40 +71,46 @@ public class AuthenticationController extends Base {
   @GetMapping("/login")
   public String prepareLogin(HttpServletRequest request, Model model) {
 
+    model.addAttribute("login", new LoginModel());
+
     return "auth/login";
   }
 
   @PostMapping("/authenticate")
-  public String login(@RequestParam("email") String email,
-          @RequestParam("password") String password, HttpServletRequest req, HttpServletResponse res, RedirectAttributes redirectAttributes, Model model) throws IOException, ServletException {
+  public String login(@ModelAttribute("login") @Valid LoginModel login, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse res, RedirectAttributes redirectAttributes, Model model) throws IOException, ServletException {
 
-    log.debug("Email: " + email);
-    UserEntity user = userService.getUserByEmail(email);
+    log.debug("Email: " + login.getEmail());
 
-    if (user != null) {
-      if (passwordEncoder.matches(password, user.getPassword())) {
-
-        AuthenticationResponse response = authenticationService.authenticate(email, password);
-
-        if (!response.hasErrors()) {
-
-          // VALIDATE RESPONSE ABOVE
-          UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(email, password);
-          Authentication authentication = authProvider.authenticate(authReq);
-
-          SecurityContext sc = SecurityContextHolder.getContext();
-          sc.setAuthentication(authentication);
-          HttpSession session = req.getSession(true);
-          session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-
-          AuthSuccessResponse authResponse = authenticationService.onAuthSuccess(req, res, authentication);
-
-          return "redirect:/";
-        }
-      }
+    if (bindingResult.hasErrors()) {
+      return "auth/login";
     }
 
-    return "redirect:/login";
+    AuthenticationResponse response = authenticationService.authenticate(login.getEmail(), login.getPassword());
+
+    if (response.hasErrors()) {
+
+      if (response.getCode().equals(AuthenticationResponses.USER_INVALID.getResponse())) {
+        model.addAttribute("error", getMessage("login.nouser"));
+      }
+
+      if (response.getCode().equals(AuthenticationResponses.BAD_CREDENTIALS.getResponse())) {
+        model.addAttribute("error", getMessage("login.invalidcredentials"));
+      }
+
+      return "auth/login";
+    }
+
+    UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
+    Authentication authentication = authProvider.authenticate(authReq);
+
+    SecurityContext sc = SecurityContextHolder.getContext();
+    sc.setAuthentication(authentication);
+    HttpSession session = req.getSession(true);
+    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+
+    AuthSuccessResponse authResponse = authenticationService.onAuthSuccess(req, res, authentication);
+
+    return "redirect:/";
   }
 
   @PostMapping("/authentication2")
