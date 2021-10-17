@@ -1,6 +1,6 @@
 package com.sastore.web.repositories;
 
-import com.sastore.web.entities.BasketEntity;
+import com.sastore.web.entities.CartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
  * @since 1.0.0
  */
 @Repository
-public interface BasketsRepository extends JpaRepository<BasketEntity, String> {
+public interface CartsRepository extends JpaRepository<CartEntity, String> {
 
-  BasketEntity findByUserUserId(String userId);
+  CartEntity findByCartId(String cartId);
+
+  CartEntity findByUserUserId(String userId);
 }

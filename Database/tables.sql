@@ -93,18 +93,18 @@ CREATE TABLE addresses(
 	edited_on timestamp
 );
 
-CREATE TABLE baskets(
-	basket_id varchar(100) not null primary key,
+CREATE TABLE carts(
+	cart_id varchar(100) not null primary key,
 	user_id varchar(100) references users(user_id),
 	session_id varchar(300),
 	created_on timestamp not null default NOW(),
-	expires_on timestamp,
+	--expires_on timestamp not null default (NOW() + interval '7 days'),
 	is_active boolean not null default true
 );
 
-CREATE TABLE basket_products(
-	basket_product_id varchar(100) not null primary key,
-	basket_id varchar(100) not null references baskets(basket_id),
+CREATE TABLE cart_products(
+	cart_product_id varchar(100) not null primary key,
+	cart_id varchar(100) not null references carts(cart_id),
 	product_id varchar(100) not null references products(product_id),
 	added_on timestamp not null default NOW()
 );
