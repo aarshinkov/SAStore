@@ -110,7 +110,9 @@ public class AuthenticationController extends Base {
 
     AuthSuccessResponse authResponse = authenticationService.onAuthSuccess(req, res, authentication);
 
-    return "redirect:/";
+    log.debug("authResponse: " + authResponse.getRedirectUrl());
+
+    return "redirect:" + authResponse.getRedirectUrl();
   }
 
   @PostMapping("/authentication2")
