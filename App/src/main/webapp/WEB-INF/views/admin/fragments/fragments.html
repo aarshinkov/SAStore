@@ -544,5 +544,11 @@
         </div>
       </div>
     </div>
+
+    <div id="onlineUsersList">
+      <div th:each="u : ${onlineUsers}">
+        <p th:text="${u}"></p>
+      </div>
+    </div>
   </body>
 </html>

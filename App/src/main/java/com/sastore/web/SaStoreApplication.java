@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -65,8 +67,13 @@ public class SaStoreApplication {
     return new EcontApi();
   }
 
+//  @Bean
+//  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+//    return new CustomAuthSuccessHandler();
+//  }
+
   @Bean
-  public AuthenticationSuccessHandler authenticationSuccessHandler() {
-    return new CustomAuthSuccessHandler();
+  public SessionRegistry sessionRegistry() {
+    return new SessionRegistryImpl();
   }
 }

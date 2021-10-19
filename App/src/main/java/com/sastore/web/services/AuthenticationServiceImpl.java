@@ -8,6 +8,7 @@ import com.sastore.web.entities.AddressEntity;
 import com.sastore.web.entities.CartEntity;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.repositories.UsersRepository;
+import com.sastore.web.security.LoggedUser;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 import com.sastore.web.repositories.CartsRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -76,6 +78,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     log.debug("Authentication successful.");
 
     HttpSession session = request.getSession();
+    
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
 
     String email = authentication.getName();
 
