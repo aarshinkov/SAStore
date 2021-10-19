@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     log.debug("Authentication successful.");
 
     HttpSession session = request.getSession();
-    
+
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
 

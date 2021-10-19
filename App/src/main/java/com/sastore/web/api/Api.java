@@ -71,7 +71,6 @@ public abstract class Api extends Base {
 //  protected String getAuthorizationToken(HttpServletRequest request) {
 //    return (String) systemService.getSessionAttribute(request, AppConstants.SESSION_AUTHORIZATION);
 //  }
-
   /**
    * Gets the user public ID stored in the session
    *

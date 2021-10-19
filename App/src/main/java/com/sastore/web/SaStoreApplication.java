@@ -71,7 +71,6 @@ public class SaStoreApplication {
 //  public AuthenticationSuccessHandler authenticationSuccessHandler() {
 //    return new CustomAuthSuccessHandler();
 //  }
-
   @Bean
   public SessionRegistry sessionRegistry() {
     return new SessionRegistryImpl();

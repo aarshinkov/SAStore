@@ -21,7 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class AddressEditModel implements Serializable {
-  
+
   @NotBlank
   private String addressId;
 

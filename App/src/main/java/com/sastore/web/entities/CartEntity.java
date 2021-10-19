@@ -44,10 +44,9 @@ public class CartEntity implements Serializable {
 
   @Column(name = "created_on")
   private Timestamp createdOn;
-  
+
 //  @Column(name = "expires_on")
 //  private Timestamp expiresOn;
-
   @Column(name = "is_active")
   private Boolean isActive;
 }

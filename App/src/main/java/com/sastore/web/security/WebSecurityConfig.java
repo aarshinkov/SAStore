@@ -27,7 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //  @Autowired
 //  private AuthenticationProvider authProvider;
-
   @Autowired
   private UserService userService;
 
@@ -36,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //  @Autowired
 //  private AuthenticationSuccessHandler authenticationSuccessHandler;
-
   @Autowired
   private AccessDeniedHandler accessDeniedHandler;
 

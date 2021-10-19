@@ -9,7 +9,7 @@ import java.util.List;
  * @author Atanas Yordanov Arshinkov
  */
 public class EcontCitiesResponse implements Serializable {
-  
+
   private List<EcontCity> cities;
 
   public EcontCitiesResponse() {
