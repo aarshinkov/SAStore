@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 public class LoggedUser extends User {
 
   private String userId;
+  private String email;
   private String firstName;
   private String lastName;
   private String avatar;
@@ -33,12 +34,17 @@ public class LoggedUser extends User {
 
     super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     this.userId = userId;
+    this.email = username;
     this.firstName = firstName;
     this.lastName = lastName;
     this.avatar = avatar;
     this.isActive = isActive;
     this.createdOn = createdOn;
     this.editedOn = editedOn;
+  }
+
+  public String getFullName() {
+    return (lastName != null) ? firstName + ' ' + lastName : firstName;
   }
 
   @Override

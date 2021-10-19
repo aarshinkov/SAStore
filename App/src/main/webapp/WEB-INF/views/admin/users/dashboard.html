@@ -168,7 +168,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <a href="#" class="text-danger px-2 py-1" th:if="${session.userId ne u.userId}"
+                          <a href="#" class="text-danger px-2 py-1" th:if="${session.loggedUser.userId ne u.userId}"
                              data-bs-toggle="modal" data-bs-target="#deleteUserModal" th:data-user-id="${u.userId}"
                              th:data-user-id-label="#{users.item.actions.delete.id(${u.userId})}"
                              th:data-user-fullname-label="#{users.item.actions.delete.fullname(${u.fullName})}"

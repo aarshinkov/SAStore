@@ -1,6 +1,7 @@
 package com.sastore.web.base;
 
 import com.sastore.web.enums.Roles;
+import com.sastore.web.security.LoggedUser;
 import com.sastore.web.security.SecurityChecks;
 import com.sastore.web.services.SystemService;
 import com.sastore.web.utils.AppConstants;
@@ -31,7 +32,8 @@ public class Base {
   private SystemService systemService;
 
   protected String getLoggedUserId(HttpServletRequest request) {
-    return (String) systemService.getSessionAttribute(request, AppConstants.SESSION_USER_ID);
+    LoggedUser loggedUser = (LoggedUser) systemService.getSessionAttribute(request, AppConstants.SESSION_LOGGED_USER);
+    return loggedUser.getUserId();
   }
 
   protected Boolean hasSpecialRole() {
