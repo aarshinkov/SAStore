@@ -3,21 +3,16 @@ package com.sastore.web;
 import com.sastore.web.api.EcontApi;
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.beans.Version;
-import com.sastore.web.security.CustomAuthSuccessHandler;
-import com.sastore.web.security.CustomAuthenticationProvider;
 import com.sastore.web.uploader.Uploader;
 import java.nio.charset.StandardCharsets;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.client.RestTemplate;
 
 /**

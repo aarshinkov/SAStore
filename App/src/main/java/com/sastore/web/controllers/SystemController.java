@@ -1,7 +1,7 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
-import com.sastore.web.utils.LoggedUserComparator;
+import com.sastore.web.comparators.LoggedUserComparator;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

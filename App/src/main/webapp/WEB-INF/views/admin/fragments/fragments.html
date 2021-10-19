@@ -545,10 +545,51 @@
       </div>
     </div>
 
-    <div id="onlineUsersList">
-      <div th:each="u : ${onlineUsers}">
-        <p th:text="${u}"></p>
+    <div id="onlineUsersList" class="row gutters-sm mb-4">
+      <h3>Logged users (<span th:text="${#lists.size(onlineUsers)}"></span>)</h3>
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3" th:each="u : ${onlineUsers}">
+        <div class="card">
+          <div class="card-body">
+            <!--            <h4 th:text="${u.fullName}"></h4>
+                        <h5 th:text="${u.email}"></h5>-->
+            <div class="position-relative">
+              <!--<div class="d-flex align-items-center mb-4">-->
+              <div class="d-flex align-items-center">
+                <div class="position-relative overflow-hidden center-both size-60 rounded-circle bg-tint-primary shadow-sm" style="border: 1px solid #d5d5d5;">
+                  <img th:src="@{~/images/users/} + ${u.avatar}" alt="" class="w-100 h-auto"/>
+                </div>
+                <div class="ms-3">
+                  <a href="#" class="h5 d-block mb-0 fw-semibold text-dark" th:text="${u.fullName}"></a>
+                  <span class="d-block mb-0 fw-semibold text-muted" th:text="${u.email}"></span>
+                </div>
+              </div>
+              <div>
+                <!--<span class="small d-block text-muted mb-2">Business</span>-->
+                <!--                <a href="#" class="d-block h5 fw-semibold text-dark mb-3" th:text="${u.fullName}"></a>-->
+                <!--                <ul class="list-inline text-muted list-inline-divided">
+                                  <li class="list-inline-item">
+                                    <span class="fw-semibold small">
+                                      24 Lessions
+                                    </span>
+                                  </li>
+                                  <li class="list-inline-item">
+                                    <span class="fw-semibold small">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill me-1 text-warning" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                      </svg> <span class="d-inline-block align-middle"> 4.8</span>
+                                    </span>
+                                  </li>
+                                </ul>-->
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!--    <div id="onlineUsersList">
+          <div th:each="u : ${onlineUsers}">
+            <p th:text="${u}"></p>
+          </div>
+        </div>-->
   </body>
 </html>

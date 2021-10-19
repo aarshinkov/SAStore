@@ -64,6 +64,7 @@ public class LoggedUser extends User {
 
   @Override
   public boolean isEnabled() {
-    return this.isActive;
+//    return this.isActive;
+    return true;
   }
 }
