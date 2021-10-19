@@ -100,11 +100,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     NameDomain names = NameDomain.builder().firstName(user.getFirstName()).lastName(user.getLastName()).build();
 
     session.setAttribute("user", names);
-    session.setAttribute("userId", user.getUserId());
-    session.setAttribute("email", email);
-    session.setAttribute("avatar", user.getAvatar());
+    session.setAttribute("loggedUser", loggedUser);
+//    session.setAttribute("userId", user.getUserId());
+//    session.setAttribute("email", email);
+//    session.setAttribute("avatar", user.getAvatar());
     session.setAttribute("roles", user.getRoles());
-    session.setAttribute("createdOn", user.getCreatedOn());
+//    session.setAttribute("createdOn", user.getCreatedOn());
 
     AddressEntity mainAddress = addressService.getUserMainAddress(user.getUserId());
     if (mainAddress != null) {
