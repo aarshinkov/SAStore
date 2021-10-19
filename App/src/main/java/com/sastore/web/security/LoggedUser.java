@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
  */
 @Getter
 @Setter
+@ToString
 public class LoggedUser extends User {
 
   private String userId;
@@ -22,6 +24,7 @@ public class LoggedUser extends User {
   private Boolean isActive;
   private Timestamp createdOn;
   private Timestamp editedOn;
+  private Timestamp loggedOn;
 
   public LoggedUser(String username, String password, boolean enabled,
           boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,

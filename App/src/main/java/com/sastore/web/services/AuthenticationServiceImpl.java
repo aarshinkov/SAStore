@@ -25,6 +25,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 import com.sastore.web.repositories.CartsRepository;
+import java.sql.Timestamp;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -80,7 +81,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     HttpSession session = request.getSession();
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
+    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
+    loggedUser.setLoggedOn(new Timestamp(System.currentTimeMillis()));
 
     String email = authentication.getName();
 

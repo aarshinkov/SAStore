@@ -1,6 +1,8 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
+import com.sastore.web.utils.LoggedUserComparator;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionRegistry;
@@ -23,7 +25,8 @@ public class SystemController extends Base {
 
     List<Object> principals = sessionRegistry.getAllPrincipals();
 
-//    Collections.sort(principals, null);
+    Collections.sort(principals, new LoggedUserComparator(LoggedUserComparator.LOGGED_ON));
+
     model.addAttribute("onlineUsers", principals);
 
     return "admin/fragments/fragments :: #onlineUsersList";
