@@ -73,6 +73,16 @@ CREATE TABLE prod_images(
 	created_on timestamp not null default NOW()
 );
 
+CREATE TABLE product_variations(
+	product_variation_id varchar(100) not null primary key,
+	product_id varchar(100) not null references products(product_id),
+	variation varchar(400) not null,
+	is_color boolean not null default false,
+	is_dimension boolean not null default false,
+	assosiated_image varchar(500) references prod_images(image_id),
+	created_on timestamp not null default NOW()
+);
+
 CREATE TABLE addresses(
 	address_id varchar(100) not null primary key,
 	person_name varchar(300) not null,
@@ -105,6 +115,13 @@ CREATE TABLE carts(
 CREATE TABLE cart_products(
 	cart_product_id varchar(100) not null primary key,
 	cart_id varchar(100) not null references carts(cart_id),
+	product_id varchar(100) not null references products(product_id),
+	added_on timestamp not null default NOW()
+);
+
+CREATE TABLE favorites(
+	favorite_id varchar(100) not null primary key,
+	user_id varchar(100) references users(user_id),
 	product_id varchar(100) not null references products(product_id),
 	added_on timestamp not null default NOW()
 );
