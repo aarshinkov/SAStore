@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author Atanas Yordanov Arshinkov
  */
 public class EcontGeoLocation implements Serializable {
-  
+
   private Double latitude;
   private Double longitude;
   private Integer confidence;

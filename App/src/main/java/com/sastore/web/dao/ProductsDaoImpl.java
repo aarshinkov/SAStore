@@ -172,7 +172,7 @@ public class ProductsDaoImpl implements ProductsDao {
         product.setEditedOn(rset.getTimestamp("edited_on"));
         product.setApprovedOn(rset.getTimestamp("approved_on"));
         product.setIsNew(false);
-        
+
         if (product.getApprovedOn() != null) {
 
           Calendar cal = Calendar.getInstance();

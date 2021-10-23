@@ -9,6 +9,7 @@ import com.sastore.web.filters.UserFilter;
 import com.sastore.web.models.auth.SignupModel;
 import com.sastore.web.repositories.RolesRepository;
 import com.sastore.web.repositories.UsersRepository;
+import com.sastore.web.security.LoggedUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -157,12 +159,23 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
     UserEntity user = usersRepository.findByEmail(email);
 
     if (user == null) {
       throw new UsernameNotFoundException(email);
     }
 
-    return user;
+    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+    user.getRoles().forEach((role) -> {
+      //      authorities.add(new SimpleGrantedAuthority("ROLE_" + rs.getString("rolename")));
+      authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
+    });
+
+    return new LoggedUser(email, user.getPassword(),
+            true, true, true, true,
+            authorities, user.getUserId(), user.getFirstName(), user.getLastName(),
+            user.getAvatar(), user.getIsActive(), user.getCreatedOn(), user.getEditedOn());
   }
 }

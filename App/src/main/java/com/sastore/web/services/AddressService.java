@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 public interface AddressService {
 
   List<AddressEntity> getUserAddresses(String userId);
-  
+
   AddressEntity getUserMainAddress(String userId);
 
   AddressEntity getUserAddress(String addressId);
 
   AddressEntity createAddress(AddressCreateModel acm);
-  
+
   AddressEntity editAddress(AddressEditModel aem, HttpServletRequest request) throws Exception;
 
   boolean deleteAddress(String addressId);

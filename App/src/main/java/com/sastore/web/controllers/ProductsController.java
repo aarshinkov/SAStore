@@ -5,11 +5,13 @@ import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.entities.ProductImageEntity;
+import com.sastore.web.entities.ProductVariationEntity;
 import com.sastore.web.filters.ProductFilter;
 import com.sastore.web.integration.econt.nomenclatures.EcontCity;
 import com.sastore.web.models.products.ProductCreateModel;
 import com.sastore.web.models.products.ProductEditModel;
 import com.sastore.web.models.products.ProductImageCreateModel;
+import com.sastore.web.repositories.ProductVariationsRepository;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
 import com.sastore.web.uploader.domain.FileName;
@@ -39,6 +41,9 @@ public class ProductsController extends Base {
 
   @Autowired
   private ProductService productService;
+
+  @Autowired
+  private ProductVariationsRepository productVariationsRepository;
 
   @Autowired
   private Uploader uploader;
@@ -103,6 +108,13 @@ public class ProductsController extends Base {
     List<ProductImageEntity> images = productService.getProductAdditionalImages(productId);
 
     model.addAttribute("images", images);
+
+//    List<ProductVariationEntity> variations = productVariationsRepository.findAllByProductProductId(productId);
+    List<ProductVariationEntity> colorVariations = productVariationsRepository.findAllByProductProductIdAndIsColorTrue(productId);
+    model.addAttribute("colorVariations", colorVariations);
+    
+    List<ProductVariationEntity> dimensionVariations = productVariationsRepository.findAllByProductProductIdAndIsDimensionTrue(productId);
+    model.addAttribute("dimensionVariations", dimensionVariations);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));

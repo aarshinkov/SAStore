@@ -13,4 +13,3 @@ public interface SystemService {
 
   Object getSessionAttribute(HttpServletRequest request, String attributeName);
 }
-

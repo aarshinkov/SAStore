@@ -1,6 +1,5 @@
 package com.sastore.web.security;
 
-import com.sastore.web.entities.UserEntity;
 import com.sastore.web.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +28,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     log.debug("Authenticating...");
     final String email = authentication.getName();
-    final String password = authentication.getCredentials().toString();
+//    final String password = authentication.getCredentials().toString();
 
-    UserEntity user = userService.getUserByEmail(email);
+    UserDetails userDetails = userService.loadUserByUsername(email);
 
-    return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), user.getAuthorities());
+    return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
   }
 
   @Override

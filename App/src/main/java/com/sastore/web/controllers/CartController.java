@@ -4,6 +4,7 @@ import com.sastore.web.base.Base;
 import com.sastore.web.utils.Breadcrumb;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,7 +22,9 @@ public class CartController extends Base {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @GetMapping("/cart")
-  public String cart(Model model) {
+  public String cart(HttpServletRequest request, Model model) {
+
+    log.debug("request.session: " + request.getSession(true).getId());
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));

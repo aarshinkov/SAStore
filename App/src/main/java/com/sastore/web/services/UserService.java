@@ -26,7 +26,7 @@ public interface UserService extends UserDetailsService {
   UserEntity addRole(String userId, Roles role) throws Exception;
 
   UserEntity removeRole(String userId, Roles role) throws Exception;
-  
+
   boolean removeUser(String userId);
 
   boolean isUserExistByEmail(String email);

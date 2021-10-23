@@ -25,7 +25,7 @@
                       <!-- Avatar -->
                       <div class="position-relative">
                         <div class="avatar size-140">
-                          <img class="img-fluid rounded-pill" style="object-fit: cover; width: 100%; height: 100%;" src="#" th:src="@{~/images/users/} + ${session.avatar}" alt="..."/>
+                          <img class="img-fluid rounded-pill" style="object-fit: cover; width: 100%; height: 100%;" src="#" th:src="@{~/images/users/} + ${session.loggedUser.avatar}" alt="..."/>
                         </div>
                         <!--Upload Button -->
                         <div class="position-absolute end-0 bottom-0 w-auto h-auto p-1 rounded-circle bg-white">
@@ -42,7 +42,7 @@
                     <div class="col">
                       <h5 class="mb-1" th:text="${session.user}">John Doe</h5>
                       <small class="text-muted d-block" th:text="#{user.roles. + ${session.roles.toArray()[0].rolename}}">Email</small>
-                      <small class="text-muted d-block" th:text="${session.email}">Email</small>
+                      <small class="text-muted d-block" th:text="${session.loggedUser.email}">Email</small>
                     </div>
                   </div> <!-- / .row -->
                 </div>
@@ -53,7 +53,7 @@
               <div class="row">
                 <div class="col-12 col-md- mb-3">
                   <h6>User ID</h6>
-                  <span th:text="${session.userId}"></span>
+                  <span th:text="${session.loggedUser.userId}"></span>
                 </div>
               </div>
 
@@ -65,7 +65,7 @@
                       <!-- Label -->
                       <label class="form-label" for="firstName">First name</label>
                       <!-- Input -->
-                      <input type="text" th:value="${session.user.firstName}" class="form-control" id="firstName"/>
+                      <input type="text" th:value="${session.loggedUser.firstName}" class="form-control" id="firstName"/>
                     </div>
                   </div>
                   <div class="col-12 col-md-6 mb-3">
@@ -74,7 +74,7 @@
                       <!-- Label -->
                       <label class="form-label" for="lastName">Last name</label>
                       <!-- Input -->
-                      <input type="text" th:value="${session.user.lastName}" class="form-control" id="lastName"/>
+                      <input type="text" th:value="${session.loggedUser.lastName}" class="form-control" id="lastName"/>
                     </div>
                   </div>
                   <div class="col-12 mb-3">
@@ -83,7 +83,7 @@
                       <!-- Label -->
                       <label class="form-label" for="email">Email</label>
                       <!-- Input -->
-                      <input type="email" th:value="${session.email}" class="form-control" id="email"/>
+                      <input type="email" th:value="${session.loggedUser.email}" class="form-control" id="email"/>
                     </div>
                   </div>
                 </div>

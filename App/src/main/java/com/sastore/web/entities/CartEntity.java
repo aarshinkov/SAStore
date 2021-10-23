@@ -1,6 +1,7 @@
 package com.sastore.web.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,15 +27,26 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "baskets")
+@Table(name = "carts")
 @DynamicInsert
-public class BasketEntity implements Serializable {
+public class CartEntity implements Serializable {
 
   @Id
-  @Column(name = "basket_id")
-  private String basketId;
+  @Column(name = "cart_id")
+  private String cartId;
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private UserEntity user;
+
+  @Column(name = "session_id")
+  private String sessionId;
+
+  @Column(name = "created_on")
+  private Timestamp createdOn;
+
+//  @Column(name = "expires_on")
+//  private Timestamp expiresOn;
+  @Column(name = "is_active")
+  private Boolean isActive;
 }

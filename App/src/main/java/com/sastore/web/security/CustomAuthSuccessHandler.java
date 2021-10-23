@@ -39,7 +39,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
   private UsersRepository usersRepository;
 
   @Autowired
-  private BasketsRepository basketsRepository;
+  private CartsRepository cartsRepository;
 
   @Autowired
   private AddressService addressService;
@@ -54,14 +54,14 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     String email = authentication.getName();
 
     UserEntity user = usersRepository.findByEmail(email);
-    BasketEntity basket = basketsRepository.findByUserUserId(user.getUserId());
+    CartEntity cart = cartsRepository.findByUserUserId(user.getUserId());
 
-    if (basket == null) {
-      BasketEntity newBasket = new BasketEntity();
-      newBasket.setBasketId(UUID.randomUUID().toString());
-      newBasket.setUser(user);
+    if (cart == null) {
+      CartEntity newCart = new CartEntity();
+      newCart.setCartId(UUID.randomUUID().toString());
+      newCart.setUser(user);
 
-      basketsRepository.save(newBasket);
+      cartsRepository.save(newCart);
     }
 
     NameDomain names = NameDomain.builder().firstName(user.getFirstName()).lastName(user.getLastName()).build();

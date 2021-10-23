@@ -26,17 +26,17 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "basket_products")
+@Table(name = "cart_products")
 @DynamicInsert
-public class BasketProductEntity implements Serializable {
+public class CartProductEntity implements Serializable {
 
   @Id
-  @Column(name = "basket_product_id")
-  private String basketProductId;
+  @Column(name = "cart_product_id")
+  private String cartProductId;
 
   @ManyToOne
-  @JoinColumn(name = "basket_id")
-  private BasketEntity basket;
+  @JoinColumn(name = "cart_id")
+  private CartEntity cart;
 
   @ManyToOne
   @JoinColumn(name = "product_id")

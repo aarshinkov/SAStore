@@ -168,7 +168,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <a href="#" class="text-danger px-2 py-1" th:if="${session.userId ne u.userId}"
+                          <a href="#" class="text-danger px-2 py-1" th:if="${session.loggedUser.userId ne u.userId}"
                              data-bs-toggle="modal" data-bs-target="#deleteUserModal" th:data-user-id="${u.userId}"
                              th:data-user-id-label="#{users.item.actions.delete.id(${u.userId})}"
                              th:data-user-fullname-label="#{users.item.actions.delete.fullname(${u.fullName})}"
@@ -187,6 +187,8 @@
           </div>
         </div>
       </div>
+
+      <div id="onlineUsersListDiv"></div>
 
       <!-- Edit modal -->
       <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -252,7 +254,7 @@
                 let normalUsersCountUrl = /*[[@{/admin/users/count/users}]]*/;
                 let productsUsersCountUrl = /*[[@{/admin/users/count/products}]]*/;
                 let ordersUsersCountUrl = /*[[@{/admin/users/count/orders}]]*/;
-
+                let onlineUsersListUrl = /*[[@{/system/onlineUsersList}]]*/;
         /*]]>*/
 
         function getAdminsUsersCount() {
@@ -264,7 +266,7 @@
               feather.replace();
             },
             error: function (xhr, status, error) {
-              alert("fail");
+              console.log("fail");
             }
           });
         }
@@ -278,7 +280,7 @@
               feather.replace();
             },
             error: function (xhr, status, error) {
-              alert("fail");
+              console.log("fail");
             }
           });
         }
@@ -292,7 +294,7 @@
               feather.replace();
             },
             error: function (xhr, status, error) {
-              alert("fail");
+              console.log("fail");
             }
           });
         }
@@ -306,7 +308,7 @@
               feather.replace();
             },
             error: function (xhr, status, error) {
-              alert("fail");
+              console.log("fail");
             }
           });
         }
@@ -320,7 +322,29 @@
               feather.replace();
             },
             error: function (xhr, status, error) {
-              alert("fail");
+              console.log("fail");
+            }
+          });
+        }
+        
+        var interval;
+
+        function startTick() {
+          interval = setInterval(function () {
+            getOnlineUsersList();
+          }, 5000);
+        }
+
+        function getOnlineUsersList() {
+          $.ajax({
+            url: onlineUsersListUrl,
+            type: 'get',
+            success: function (data) {
+              $("#onlineUsersListDiv").empty().append(data);
+              feather.replace();
+            },
+            error: function (xhr, status, error) {
+              console.log("fail");
             }
           });
         }
@@ -330,16 +354,16 @@
           let userId = modal.data('user-id');
           let email = modal.data('user-email');
           let deleteUserMsg = modal.data('user-delete-msg');
-          
+
           $('#deleteUserId').val(userId);
           $('#deleteUserMessage').html(deleteUserMsg);
-          
+
           let userIdLabel = modal.data('user-id-label');
           $('#deleteUserLabelId').html(userIdLabel);
-          
+
           let fullnameLabel = modal.data('user-fullname-label');
           $('#deleteUserLabelFullname').html(fullnameLabel);
-          
+
           let emailLabel = modal.data('user-email-label');
           $('#deleteUserLabelEmail').html(emailLabel);
         });
@@ -349,6 +373,8 @@
         getNormalUsersCount();
         getProductsUsersCount();
         getOrdersUsersCount();
+        startTick();
+        getOnlineUsersList();
       </script>
     </div>
   </body>

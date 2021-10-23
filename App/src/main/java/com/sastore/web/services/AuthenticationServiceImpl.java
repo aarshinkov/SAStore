@@ -5,10 +5,10 @@ import com.sastore.web.domain.AuthenticationResponse;
 import com.sastore.web.domain.AuthenticationResponses;
 import com.sastore.web.domain.NameDomain;
 import com.sastore.web.entities.AddressEntity;
-import com.sastore.web.entities.BasketEntity;
+import com.sastore.web.entities.CartEntity;
 import com.sastore.web.entities.UserEntity;
-import com.sastore.web.repositories.BasketsRepository;
 import com.sastore.web.repositories.UsersRepository;
+import com.sastore.web.security.LoggedUser;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -24,6 +24,9 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
+import com.sastore.web.repositories.CartsRepository;
+import java.sql.Timestamp;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -40,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private UsersRepository usersRepository;
 
   @Autowired
-  private BasketsRepository basketsRepository;
+  private CartsRepository cartsRepository;
 
   @Autowired
   private AddressService addressService;
@@ -77,27 +80,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     HttpSession session = request.getSession();
 
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
+    loggedUser.setLoggedOn(new Timestamp(System.currentTimeMillis()));
+
     String email = authentication.getName();
 
     UserEntity user = usersRepository.findByEmail(email);
-    BasketEntity basket = basketsRepository.findByUserUserId(user.getUserId());
+    CartEntity cart = cartsRepository.findByUserUserId(user.getUserId());
 
-    if (basket == null) {
-      BasketEntity newBasket = new BasketEntity();
-      newBasket.setBasketId(UUID.randomUUID().toString());
-      newBasket.setUser(user);
+    if (cart == null) {
+      CartEntity newCart = new CartEntity();
+      newCart.setCartId(UUID.randomUUID().toString());
+      newCart.setUser(user);
 
-      basketsRepository.save(newBasket);
+      cartsRepository.save(newCart);
     }
 
     NameDomain names = NameDomain.builder().firstName(user.getFirstName()).lastName(user.getLastName()).build();
 
     session.setAttribute("user", names);
-    session.setAttribute("userId", user.getUserId());
-    session.setAttribute("email", email);
-    session.setAttribute("avatar", user.getAvatar());
+    session.setAttribute("loggedUser", loggedUser);
+//    session.setAttribute("userId", user.getUserId());
+//    session.setAttribute("email", email);
+//    session.setAttribute("avatar", user.getAvatar());
     session.setAttribute("roles", user.getRoles());
-    session.setAttribute("createdOn", user.getCreatedOn());
+//    session.setAttribute("createdOn", user.getCreatedOn());
 
     AddressEntity mainAddress = addressService.getUserMainAddress(user.getUserId());
     if (mainAddress != null) {
@@ -107,22 +115,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-    if (savedRequest == null) {
+    AuthSuccessResponse authResponse = new AuthSuccessResponse();
+    authResponse.setRedirectUrl("/");
 
-      return null;
+    if (savedRequest == null) {
+      log.debug("Redirecting to url: " + authResponse.getRedirectUrl());
+      return authResponse;
     }
 
     // Use the DefaultSavedRequest URL
-    String targetUrl = "/";
-
     if (savedRequest.getRedirectUrl() != null) {
       if (!savedRequest.getRedirectUrl().trim().isEmpty()) {
-        targetUrl = savedRequest.getRedirectUrl();
+        authResponse.setRedirectUrl(savedRequest.getRedirectUrl());
       }
     }
-    log.debug("Redirecting to url: " + targetUrl);
-    AuthSuccessResponse authResponse = new AuthSuccessResponse();
-    authResponse.setRedirectUrl(targetUrl);
+
     return authResponse;
   }
 }

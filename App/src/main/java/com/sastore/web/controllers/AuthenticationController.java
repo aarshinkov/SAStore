@@ -37,8 +37,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 /**
@@ -60,13 +62,16 @@ public class AuthenticationController extends Base {
   private PasswordEncoder passwordEncoder;
 
   @Autowired
+  private SessionRegistry sessionRegistry;
+
+  @Autowired
   private WebSecurityConfig webSecurityConfig;
 
   @Autowired
   private AuthenticationService authenticationService;
 
   @Autowired
-  private AuthenticationProvider authProvider;
+  private AuthenticationManager authenticationManager;
 
   @GetMapping("/login")
   public String prepareLogin(HttpServletRequest request, Model model) {
@@ -77,7 +82,7 @@ public class AuthenticationController extends Base {
   }
 
   @PostMapping("/login")
-  public String login(@ModelAttribute("login") @Valid LoginModel login, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse res, RedirectAttributes redirectAttributes, Model model) throws IOException, ServletException {
+  public String login(@ModelAttribute("login") @Valid LoginModel login, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse res, RedirectAttributes redirectAttributes, Model model) throws IOException, ServletException, Exception {
 
     log.debug("Email: " + login.getEmail());
 
@@ -100,12 +105,18 @@ public class AuthenticationController extends Base {
       return "auth/login";
     }
 
+    // VALIDATION ENDS HERE
+    HttpSession session = req.getSession(true);
+
     UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
-    Authentication authentication = authProvider.authenticate(authReq);
+    WebAuthenticationDetails details = new WebAuthenticationDetails(req);
+    authReq.setDetails(details);
+    Authentication authentication = authenticationManager.authenticate(authReq);
+
+    sessionRegistry.registerNewSession(session.getId(), authentication.getPrincipal());
 
     SecurityContext sc = SecurityContextHolder.getContext();
     sc.setAuthentication(authentication);
-    HttpSession session = req.getSession(true);
     session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
 
     AuthSuccessResponse authResponse = authenticationService.onAuthSuccess(req, res, authentication);

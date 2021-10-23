@@ -16,11 +16,11 @@ public class EcontConstants {
 
   // Shipments
   public static String buildURL(String... urlPart) {
-    
+
     if (urlPart == null) {
       return "";
     }
-    
+
     if (urlPart[0].equals("")) {
       return "";
     }
