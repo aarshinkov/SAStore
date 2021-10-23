@@ -546,7 +546,10 @@
     </div>
 
     <div id="onlineUsersList" class="row gutters-sm mb-4">
-      <h3>Logged users (<span th:text="${#lists.size(onlineUsers)}"></span>)</h3>
+      <div class="d-flex align-items-center mb-4">
+        <h3 class="mb-0" th:text="#{users.online.header(${#lists.size(onlineUsers)})}">Users online</h3>
+        <i data-feather="refresh-cw" class="ms-auto" style="cursor: pointer;" onclick="getOnlineUsersList()"></i>
+      </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3" th:each="u : ${onlineUsers}">
         <div class="card">
           <div class="card-body">
@@ -586,10 +589,5 @@
         </div>
       </div>
     </div>
-    <!--    <div id="onlineUsersList">
-          <div th:each="u : ${onlineUsers}">
-            <p th:text="${u}"></p>
-          </div>
-        </div>-->
   </body>
 </html>

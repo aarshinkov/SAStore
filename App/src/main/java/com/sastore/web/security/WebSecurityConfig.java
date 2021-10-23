@@ -10,9 +10,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -86,6 +88,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .httpBasic();
 
-    http.sessionManagement().maximumSessions(5).sessionRegistry(sessionRegistry);
+    http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .invalidSessionUrl("/login")
+            .enableSessionUrlRewriting(false)
+            .maximumSessions(5).sessionRegistry(sessionRegistry);
+  }
+
+  /**
+   * When this bean is registered the logged users list is updated.
+   * <br><br>
+   * You could see documentation for session registry.
+   * <br><br>
+   * I also updated the http.sessionManagement()... lines.
+   *
+   * @return new HttpSessionEventPublisher instance
+   */
+  @Bean
+  public HttpSessionEventPublisher httpSessionEventPublisher() {
+    return new HttpSessionEventPublisher();
   }
 }
