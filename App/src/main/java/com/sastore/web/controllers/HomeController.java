@@ -5,6 +5,7 @@ import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.filters.ProductFilter;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,13 @@ public class HomeController extends Base {
   private ProductService productService;
 
   @GetMapping({"/", "/home"})
-  public String home(Model model) {
+  public String home(HttpServletRequest request, Model model) {
 
     if (hasSpecialRole()) {
       return "redirect:/admin/dashboard";
     }
 
-    ObjCollection<ProductEntity> products = productService.getProducts(1, 10, new ProductFilter());
+    ObjCollection<ProductEntity> products = productService.getProducts(1, 10, new ProductFilter(), request);
 
     model.addAttribute("products", products);
 

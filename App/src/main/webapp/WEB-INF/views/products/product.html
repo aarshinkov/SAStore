@@ -76,10 +76,11 @@
                       <span th:text="#{price(${#numbers.formatDecimal(product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">25.99</span>
                     </p>
                   </div>
-                  <div>
+                  <div sec:authorize="isAuthenticated()">
                     <a href="#" class="text-dark fw-semibold small">
-                      <i class="bi bi-heart align-middle me-2"></i>
-                      <span>Add to favorites</span>
+                      <i class="bi align-middle me-1" th:classappend="${isFavorite} ? 'bi-heart-fill text-danger' : 'bi-heart'"></i>
+                      <span th:text="#{product.favorite.add}" th:if="${!isFavorite}">Add to favorites</span>
+                      <span th:text="#{product.favorite.remove}" th:if="${isFavorite}">Remove from favorites</span>
                     </a>
                   </div>
                 </div>
@@ -93,7 +94,7 @@
                   <input type="number" th:max="${product.availableQuantity}" min="1" name="qty" class="form-control rounded-3 width-60 pe-1 ps-2 form-control-sm wd-40 text-center mx-1" value="1"/>
                 </div>
               </div>
-              <div class="mb-4 pb-4 border-bottom">
+              <div class="mb-4 pb-4 border-bottom" th:if="${#lists.size(dimensionVariations)}">
                 <div class="mb-0">
                   <div class="d-flex align-items-center mb-3 justify-content-between">
                     <h6 class="mb-0">Size</h6>
@@ -103,8 +104,8 @@
                     <div class="d-flex" role="group"
                          aria-label="Basic checkbox toggle button group">
 
-                      <div th:remove="tag" th:each="d : ${dimensionVariations}">
-                        <input type="radio" name="sizeRadio" class="btn-check" th:id="'size-' + ${d.variation}"/>
+                      <div th:remove="tag" th:each="d, iStat : ${dimensionVariations}">
+                        <input type="radio" name="sizeRadio" class="btn-check" th:checked="${iStat.first}" th:id="'size-' + ${d.variation}"/>
                         <label class="btn btn-outline-secondary rounded-2 center-both me-2 px-2" th:text="${d.variation}" th:for="'size-' + ${d.variation}"></label>
                       </div>
                     </div>
@@ -142,14 +143,14 @@
                               Radio buttons for product colors
                             </div>-->
 
-              <div class="mb-4 pb-4 border-bottom">
+              <div class="mb-4 pb-4 border-bottom" th:if="${#lists.size(colorVariations)}">
                 <h6 class="mb-3">Color</h6>
                 <div class="d-flex" role="group" aria-label="Basic radio toggle button group">
                   <input type="radio" class="btn-check" name="btnradio" id="btnradiobrown"
                          checked="checked"/>
 
-                  <div th:remove="tag" th:each="c : ${colorVariations}">
-                    <input type="radio" class="btn-check" name="btnradio" th:id="'color-' + ${c.variation}"/>
+                  <div th:remove="tag" th:each="c, iStat : ${colorVariations}">
+                    <input type="radio" class="btn-check" name="btnradio" th:checked="${iStat.first}" th:id="'color-' + ${c.variation}"/>
                     <label class="shop-product-color btn p-0 me-2 size-30 center-both rounded-3 text-white" th:classappend="'product-' + ${c.variation}"
                            th:for="'color-' + ${c.variation}"></label>
                   </div>

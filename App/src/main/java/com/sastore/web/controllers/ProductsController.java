@@ -11,6 +11,7 @@ import com.sastore.web.integration.econt.nomenclatures.EcontCity;
 import com.sastore.web.models.products.ProductCreateModel;
 import com.sastore.web.models.products.ProductEditModel;
 import com.sastore.web.models.products.ProductImageCreateModel;
+import com.sastore.web.repositories.FavoritesRepository;
 import com.sastore.web.repositories.ProductVariationsRepository;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.uploader.Uploader;
@@ -19,6 +20,7 @@ import com.sastore.web.uploader.domain.ImageFolder;
 import com.sastore.web.utils.Breadcrumb;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,9 @@ public class ProductsController extends Base {
   private ProductVariationsRepository productVariationsRepository;
 
   @Autowired
+  private FavoritesRepository favoritesRepository;
+
+  @Autowired
   private Uploader uploader;
 
   @Autowired
@@ -54,7 +59,8 @@ public class ProductsController extends Base {
   @GetMapping(value = "/products")
   public String getProducts(@ModelAttribute("filter") ProductFilter filter,
           @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-          @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit, Model model) {
+          @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+          HttpServletRequest request, Model model) {
 
     if (page <= 0) {
       return "redirect:/products?page=1" + filter.getPagingParams();
@@ -64,7 +70,7 @@ public class ProductsController extends Base {
       return "redirect:/products?limit=10" + filter.getPagingParams();
     }
 
-    ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter);
+    ObjCollection<ProductEntity> products = productService.getProducts(page, limit, filter, request);
 
     model.addAttribute("products", products);
 
@@ -88,14 +94,14 @@ public class ProductsController extends Base {
     model.addAttribute("globalMenu", "products");
     model.addAttribute("submenu", "products");
 
-    List<EcontCity> cities = econtApi.getCities("BGR");
-    model.addAttribute("econtCities", cities);
+//    List<EcontCity> cities = econtApi.getCities("BGR");
+//    model.addAttribute("econtCities", cities);
 
     return "products/products";
   }
 
   @GetMapping(value = "/product")
-  public String getProduct(@RequestParam("id") String productId, Model model) {
+  public String getProduct(@RequestParam("id") String productId, HttpServletRequest request, Model model) {
 
     ProductEntity product = productService.getProductByProductId(productId);
 
@@ -109,12 +115,17 @@ public class ProductsController extends Base {
 
     model.addAttribute("images", images);
 
-//    List<ProductVariationEntity> variations = productVariationsRepository.findAllByProductProductId(productId);
     List<ProductVariationEntity> colorVariations = productVariationsRepository.findAllByProductProductIdAndIsColorTrue(productId);
     model.addAttribute("colorVariations", colorVariations);
-    
+
     List<ProductVariationEntity> dimensionVariations = productVariationsRepository.findAllByProductProductIdAndIsDimensionTrue(productId);
     model.addAttribute("dimensionVariations", dimensionVariations);
+
+    if (isLoggedIn()) {
+      boolean isFavorite = favoritesRepository.existsFavoriteEntityByUserUserIdAndProductProductId(getLoggedUserId(request), productId);
+
+      model.addAttribute("isFavorite", isFavorite);
+    }
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));

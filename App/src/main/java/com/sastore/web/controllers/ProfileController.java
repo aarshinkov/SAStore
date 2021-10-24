@@ -1,7 +1,9 @@
 package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
+import com.sastore.web.entities.FavoriteEntity;
 import com.sastore.web.entities.UserEntity;
+import com.sastore.web.services.FavoriteService;
 import com.sastore.web.services.UserService;
 import com.sastore.web.utils.Breadcrumb;
 import org.slf4j.Logger;
@@ -28,6 +30,9 @@ public class ProfileController extends Base {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private FavoriteService favoriteService;
 
   @GetMapping("/profile")
   public String profile(HttpServletRequest request, Model model) {
@@ -96,7 +101,11 @@ public class ProfileController extends Base {
   }
 
   @GetMapping("/profile/favorites")
-  public String favorites(Model model) {
+  public String favorites(HttpServletRequest request, Model model) {
+
+    List<FavoriteEntity> favorites = favoriteService.getUserFavorites(getLoggedUserId(request));
+    
+    model.addAttribute("favorites", favorites);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));

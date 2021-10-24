@@ -72,4 +72,7 @@ public class ProductEntity implements Serializable {
 
   @Transient
   private Boolean isNew;
+
+  @Transient
+  private Boolean isFavorite;
 }

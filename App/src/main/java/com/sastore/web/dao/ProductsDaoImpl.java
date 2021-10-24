@@ -1,9 +1,11 @@
 package com.sastore.web.dao;
 
+import com.sastore.web.base.Base;
 import com.sastore.web.collections.ObjCollection;
 import com.sastore.web.collections.ProductsCollection;
 import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.filters.ProductFilter;
+import com.sastore.web.repositories.FavoritesRepository;
 import com.sastore.web.utils.Page;
 import com.sastore.web.utils.PageImpl;
 import org.slf4j.Logger;
@@ -16,26 +18,29 @@ import org.thymeleaf.util.StringUtils;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Atanas Yordanov Arshinkov
  * @since 1.0.0
  */
 @Repository
-public class ProductsDaoImpl implements ProductsDao {
+public class ProductsDaoImpl extends Base implements ProductsDao {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
+  @Autowired
+  private FavoritesRepository favoritesRepository;
+
   @Override
-  public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter) {
+  public ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter, HttpServletRequest request) {
     try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
             CallableStatement cstmt = conn.prepareCall("{? = call get_products(?, ?, ?, ?, ?, ?)}")) {
 
@@ -92,6 +97,13 @@ public class ProductsDaoImpl implements ProductsDao {
           product.setIsNew(true);
         } else {
           product.setIsNew(false);
+        }
+
+        if (!isLoggedIn()) {
+          product.setIsFavorite(false);
+        } else {
+          //TODO could be made in the database function
+          product.setIsFavorite(favoritesRepository.existsFavoriteEntityByUserUserIdAndProductProductId(getLoggedUserId(request), product.getProductId()));
         }
 
         collection.getCollection().add(product);

@@ -9,6 +9,7 @@ import com.sastore.web.models.products.ProductEditModel;
 import com.sastore.web.models.products.ProductImageCreateModel;
 import com.sastore.web.uploader.domain.FileName;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface ProductService {
 
-  ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter);
+  ObjCollection<ProductEntity> getProducts(Integer page, Integer limit, ProductFilter filter, HttpServletRequest request);
 
   ObjCollection<ProductEntity> getAdminProducts(Integer page, Integer limit, ProductFilter filter);
 

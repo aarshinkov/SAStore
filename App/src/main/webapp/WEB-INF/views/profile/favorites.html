@@ -9,6 +9,78 @@
   <body>
     <div layout:fragment="contentDiv">
       <div class="row gutters-3">
+        <div class="col-12 col-md-4 col-xl-3">
+          <div th:insert="profile/fragments :: #profileFragment"></div>
+        </div>
+        <div class="col-12 col-md-8 col-xl-9 mt-3 mt-md-0">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <h4 class="mb-0" th:text="#{favorites.header}">Favorites</h4>
+              </div>
+              <hr class="my-3"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4" th:each="f : ${favorites}" th:if="${#lists.size(favorites) ne 0}">
+              <div class="card shadow">
+                <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button" th:if="${f.product.isNew}">
+                  <span th:text="#{products.item.newItem}">New product</span>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button"
+                        th:if="${!f.product.isNew and (f.product.discount ne null and f.product.discount gt 0)}">
+                  <span th:text="#{products.item.inpromotion}">In promotion</span>
+                </button>
+                <button class="btn py-1 px-1 center-both btn-warning position-absolute end-0 top-0 mt-5 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button"
+                        th:if="${f.product.isNew and (f.product.discount ne null and f.product.discount gt 0)}">
+                  <span th:text="#{products.item.inpromotion}">In promotion</span>
+                </button>
+                <a class="card-img-top d-block overflow-hidden mb-2" href="#" th:href="@{/product(id=${f.product.productId})}">
+                  <img src="#" th:src="@{~/images/products/} + ${f.product.mainImage}" class="img-fluid" alt="Product"/>
+                </a>
+                <div class="card-body py-0 bg-white">
+                  <a class="text-muted d-block small pb-1" href="#!">Category</a>
+                  <h3 class="fs-5">
+                    <a class="text-dark" href="#" th:href="@{/product(id=${f.product.productId})}" th:text="${f.product.title}">Title</a>
+                  </h3>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <span class="text-dark small fw-bold d-flex align-items-center">
+                        <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(f.product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${f.product.discount ne 0}">52.22 lv.</del>
+                        <span th:classappend="${f.product.discount ne 0} ? 'ms-2'" th:text="#{price(${#numbers.formatDecimal(f.product.price - f.product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${f.product.discount eq f.product.price}">85 lv.</span>
+                        <span th:classappend="${f.product.discount ne 0} ? 'ms-2'" th:text="#{product.view.free}" th:if="${f.product.discount eq f.product.price}">Free</span>
+                        <button class="btn py-0 px-1 btn-success btn-sm ms-2" style="font-size: 13px;" th:if="${f.product.discount ne 0}"
+                                type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${#numbers.formatDecimal((f.product.discount) / f.product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
+                          <span th:text="'-' + ${#numbers.formatDecimal((f.product.discount) / f.product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body card-body-expand">
+                  <div class="d-grid text-center">
+                    <a class="btn btn-primary shadow-sm btn-sm mb-2" href="#!">
+                      <i class="icon-Add-Cart"></i>
+                      <span>Add to cart</span>
+                    </a>
+                    <a class="btn btn-light border shadow-sm btn-sm mb-2" href="#" th:href="@{/product(id=${f.product.productId})}">
+                      <i class="icon-Eye-Visible"></i>
+                      <span>View product</span>
+                    </a>
+                    <a class="btn btn-danger border shadow-sm btn-sm" href="#" th:href="@{/product(id=${f.product.productId})}">
+                      <i class="icon-Heart"></i>
+                      <span th:text="#{product.favorite.remove}">Remove from favorites</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div layout:fragment="contentDiv1">
+      <div class="row gutters-3">
         <div class="col-md-4 col-lg-3">
           <div th:insert="profile/fragments :: #profileFragment"></div>
         </div>
@@ -17,7 +89,7 @@
             <div class="card-body">
               <h4>My favorites</h4>
               <ul class="list-group list-group-flush list-group-sm mt-3">
-                <li class="list-group-item px-0 d-flex align-items-center">
+                <li class="list-group-item px-0 d-flex align-items-center" th:each="f : ${favorites}">
                   <div class="media">
                     <a href="shop-single.html">
                       <img src="../../img/products/1_small.jpg" alt="product" width="75"/>
@@ -26,19 +98,6 @@
                       <a href="shop-single.html" class="card-link text-secondary">Hanes Hooded Sweatshirt</a>
                       <div class="price"><span>$18.56</span></div>
                       <button class="btn btn-sm btn-faded-primary mt-1 atc-demo" data-title="Hanes Hooded Sweatshirt">Add to Cart</button>
-                    </div>
-                  </div>
-                  <button class="btn btn-icon btn-sm btn-text-danger rounded-circle ml-auto" type="button"><i class="material-icons">close</i></button>
-                </li>
-                <li class="list-group-item px-0 d-flex align-items-center">
-                  <div class="media">
-                    <a href="shop-single.html">
-                      <img src="../../img/products/8_small.jpg" alt="product" width="75"/>
-                    </a>
-                    <div class="media-body ml-3">
-                      <a href="shop-single.html" class="card-link text-secondary">Slim-Fit Short-Sleeve Printed Shirt</a>
-                      <div class="price"><span>$25.00</span></div>
-                      <button class="btn btn-sm btn-faded-primary mt-1 atc-demo" data-title="Slim-Fit Short-Sleeve Printed Shirt">Add to Cart</button>
                     </div>
                   </div>
                   <button class="btn btn-icon btn-sm btn-text-danger rounded-circle ml-auto" type="button"><i class="material-icons">close</i></button>

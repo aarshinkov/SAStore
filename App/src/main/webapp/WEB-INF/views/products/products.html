@@ -86,9 +86,9 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4 mb-4" th:each="p : ${products.collection}" th:if="${#lists.size(products.collection) ne 0}">
               <div class="card shadow">
-                <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1"
-                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="add to wishlist">
-                  <i class="bi bi-suit-heart"></i>
+                <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1" sec:authorize="isAuthenticated()"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" th:data-bs-original-title="${p.isFavorite} ? #{product.favorite.remove} : #{product.favorite.add}">
+                  <i class="bi" th:classappend="${p.isFavorite} ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart'"></i>
                 </button>
                 <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button" th:if="${p.isNew}">
                   <span th:text="#{products.item.newItem}">New product</span>
@@ -113,8 +113,8 @@
                     <div>
                       <span class="text-dark small fw-bold d-flex align-items-center">
                         <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(p.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${p.discount ne 0}">52.22 lv.</del>
-                        <span class="ms-2" th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${p.discount eq p.price}">85 lv.</span>
-                        <span class="ms-2" th:text="#{product.view.free}" th:if="${p.discount eq p.price}">Free</span>
+                        <span th:classappend="${p.discount ne 0} ? 'ms-2'" th:text="#{price(${#numbers.formatDecimal(p.price - p.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:unless="${p.discount eq p.price}">85 lv.</span>
+                        <span th:classappend="${p.discount ne 0} ? 'ms-2'" th:text="#{product.view.free}" th:if="${p.discount eq p.price}">Free</span>
                         <button class="btn py-0 px-1 btn-success btn-sm ms-2" style="font-size: 13px;" th:if="${p.discount ne 0}"
                                 type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '% off'">
                           <span th:text="'-' + ${#numbers.formatDecimal((p.discount) / p.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">-20%</span>
@@ -138,7 +138,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+<!--          <div class="row">
             <div class="col-12">
               <form>
                 <div class="mb-3">
@@ -148,7 +148,7 @@
                 </div>
               </form>
             </div>
-          </div>
+          </div>-->
           <!--          <div class="row">
                       <div class="col-12 col-md-6 col-lg-4" th:each="c : ${econtCities}">
                         <p th:text="${c.name}">City name</p>
