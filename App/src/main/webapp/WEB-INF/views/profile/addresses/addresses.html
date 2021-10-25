@@ -16,7 +16,8 @@
           <div class="row">
             <div class="col-12">
               <div class="d-flex align-items-center">
-                <h4 class="mb-0" th:text="#{profile.addresses.header} + ' (' + ${#lists.size(addresses)} + ')'">Addresses</h4>
+                <h4 class="mb-0" th:text="#{profile.addresses.header} + ' (' + ${#lists.size(addresses)} + ')'" th:if="${#lists.size(addresses) gt 0}">Addresses</h4>
+                <h4 class="mb-0" th:text="#{profile.addresses.header}" th:if="${#lists.size(addresses) eq 0}">Addresses</h4>
                 <a href="#" th:href="@{/profile/addresses/new}" class="btn btn-success btn-sm ms-auto">
                   <i class="bi bi-pin-map"></i>
                   <span th:text="#{profile.addresses.add}">Add address</span>

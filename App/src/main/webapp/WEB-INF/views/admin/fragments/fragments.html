@@ -213,7 +213,7 @@
                   </a>
                 </li>
 
-                <li class="nav-item sidebar-title text-truncate opacity-25 small" sec:authorize="hasAnyRole('ADMIN', 'SALES', 'PRODUCTS', 'ORDERS')">
+                <li class="nav-item sidebar-title text-truncate opacity-25 small" sec:authorize="hasAnyRole('ADMIN', 'PRODUCTS', 'ORDERS')">
                   <i class="bi bi-three-dots align-middle"></i>
                   <span th:text="#{nav.managing}">Managing</span>
                 </li>
@@ -558,8 +558,11 @@
             <div class="position-relative">
               <!--<div class="d-flex align-items-center mb-4">-->
               <div class="d-flex align-items-center mb-2">
-                <div class="position-relative overflow-hidden center-both size-60 rounded-circle bg-tint-primary shadow-sm" style="border: 1px solid #d5d5d5;">
-                  <img th:src="@{~/images/users/} + ${u.avatar}" alt="" class="w-100 h-auto"/>
+                <!--                <div class="position-relative overflow-hidden center-both size-60 rounded-circle bg-tint-primary shadow-sm" style="border: 1px solid #d5d5d5;">
+                                  <img th:src="@{~/images/users/} + ${u.avatar}" alt="" class="w-100 h-auto"/>
+                                </div>-->
+                <div class="flex-shrink-0">
+                  <img src="#" th:src="@{~/images/users/} + ${u.avatar}" alt="" class="avatar rounded-circle size-60 bg-tint-primary shadow-sm" style="object-fit: cover; border: 1px solid #d5d5d5;">
                 </div>
                 <div class="ms-3">
                   <a href="#" th:href="@{/admin/users(id=${u.userId})}" target="_blank" class="h5 d-block mb-0 fw-semibold text-dark" th:text="${u.fullName}"></a>
@@ -586,9 +589,9 @@
 
                 <strong class="d-block" th:text="#{user.loggedOn}">Logged on</strong>
                 <span class="small d-block text-muted mb-2" th:text="${#dates.format(u.loggedOn, #messages.msg('format.datetime5'))}">Logged on</span>
-                
+
                 <strong class="d-block" th:text="#{user.device}">Device information</strong>
-                <span class="small d-block text-muted mb-2" th:text="${u.userAgent}">User agent</span>
+                <span class="small d-block text-muted mb-2" th:with="agent=${u.userAgent}" th:text="${agent.operatingSystem.deviceType.name} + ', ' + ${agent.operatingSystem.name} + ', ' + ${agent.browser.name} + ', ' + ${agent.browser.manufacturer.name} + ', ' + ${agent.browser.renderingEngine.name}">User agent</span>
 
                 <!--<a href="#" class="d-block h5 fw-semibold text-dark mb-3" th:text="${u.fullName}"></a>-->
                 <!--                <ul class="list-inline text-muted list-inline-divided">

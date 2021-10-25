@@ -22,6 +22,9 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-12">
+              <h5 th:if="${#lists.size(favorites) eq 0}">No favorites found!</h5>
+            </div>
             <div class="col-12 col-md-6 col-lg-4 mb-4" th:each="f : ${favorites}" th:if="${#lists.size(favorites) ne 0}">
               <div class="card shadow">
                 <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button" th:if="${f.product.isNew}">

@@ -1,5 +1,6 @@
 package com.sastore.web.security;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import java.sql.Timestamp;
 import java.util.Collection;
 import lombok.Getter;
@@ -26,7 +27,8 @@ public class LoggedUser extends User {
   private Timestamp createdOn;
   private Timestamp editedOn;
   private Timestamp loggedOn;
-  private String userAgent;
+//  private String userAgent;
+  private UserAgent userAgent;
 
   public LoggedUser(String username, String password, boolean enabled,
           boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,

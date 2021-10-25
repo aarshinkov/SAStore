@@ -25,6 +25,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 import com.sastore.web.repositories.CartsRepository;
+import eu.bitwalker.useragentutils.UserAgent;
 import java.sql.Timestamp;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -83,7 +84,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
     loggedUser.setLoggedOn(new Timestamp(System.currentTimeMillis()));
-    loggedUser.setUserAgent(request.getHeader("User-Agent")); 
+//    loggedUser.setUserAgent(request.getHeader("User-Agent"));
+    UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+    loggedUser.setUserAgent(userAgent);
+    
 
     String email = authentication.getName();
 
