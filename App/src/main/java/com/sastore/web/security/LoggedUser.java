@@ -26,6 +26,7 @@ public class LoggedUser extends User {
   private Timestamp createdOn;
   private Timestamp editedOn;
   private Timestamp loggedOn;
+  private String userAgent;
 
   public LoggedUser(String username, String password, boolean enabled,
           boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,

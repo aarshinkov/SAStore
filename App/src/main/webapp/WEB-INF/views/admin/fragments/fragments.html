@@ -8,7 +8,7 @@
       <!--//page-header//-->
       <header class="navbar py-0 page-header navbar-expand navbar-light px-4">
 
-        <a href="index.html" class="navbar-brand d-block d-lg-none">
+        <a href="#" class="navbar-brand d-block d-lg-none">
           <div class="d-flex align-items-center flex-no-wrap text-truncate">
             <!--Sidebar-icon-->
             <span class="sidebar-icon bg-primary rounded-circle size-40 text-white">
@@ -547,7 +547,7 @@
 
     <div id="onlineUsersList" class="row gutters-sm mb-4">
       <div class="d-flex align-items-center mb-4">
-        <h3 class="mb-0" th:text="#{users.online.header(${#lists.size(onlineUsers)})}">Users online</h3>
+        <h3 class="mb-0" th:text="#{users.online.header(${#numbers.formatInteger(#lists.size(onlineUsers), 0, 'WHITESPACE')})}">Users online</h3>
         <i data-feather="refresh-cw" class="ms-auto" style="cursor: pointer;" onclick="getOnlineUsersList()"></i>
       </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3" th:each="u : ${onlineUsers}">
@@ -557,18 +557,40 @@
                         <h5 th:text="${u.email}"></h5>-->
             <div class="position-relative">
               <!--<div class="d-flex align-items-center mb-4">-->
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center mb-2">
                 <div class="position-relative overflow-hidden center-both size-60 rounded-circle bg-tint-primary shadow-sm" style="border: 1px solid #d5d5d5;">
                   <img th:src="@{~/images/users/} + ${u.avatar}" alt="" class="w-100 h-auto"/>
                 </div>
                 <div class="ms-3">
-                  <a href="#" class="h5 d-block mb-0 fw-semibold text-dark" th:text="${u.fullName}"></a>
+                  <a href="#" th:href="@{/admin/users(id=${u.userId})}" target="_blank" class="h5 d-block mb-0 fw-semibold text-dark" th:text="${u.fullName}"></a>
                   <span class="d-block mb-0 fw-semibold text-muted" th:text="${u.email}"></span>
                 </div>
               </div>
               <div>
-                <!--<span class="small d-block text-muted mb-2">Business</span>-->
-                <!--                <a href="#" class="d-block h5 fw-semibold text-dark mb-3" th:text="${u.fullName}"></a>-->
+                <strong class="d-block" th:text="#{user.userid}">User ID</strong>
+                <a href="#" th:href="@{/admin/users(id=${u.userId})}" target="_blank" class="small d-block mb-2" th:text="${u.userId}">User ID</a>
+
+                <strong class="d-block" th:text="#{user.status}">Status</strong>
+                <div class="mb-2">
+                  <span class="alert alert-success py-0 small" th:if="${u.isActive}" th:text="#{user.active}">Active</span>
+                  <span class="alert alert-danger py-0 small" th:if="${!u.isActive}" th:text="#{user.inactive}">Inactive</span>
+                </div>
+
+                <strong class="d-block" th:text="#{user.roles}">Roles</strong>
+                <div class="mb-2">
+                  <span class="badge me-2 small" th:with="role=${#strings.substringAfter(r.authority, '_')}" th:text="#{user.roles. + ${role}}" th:each="r : ${u.authorities}"
+                        th:classappend="${role eq 'ADMIN'} ? 'bg-danger' :(${role eq 'SALES'} ? 'bg-warning' : (${role eq 'USER'} ? 'bg-primary' :
+                        (${role eq 'PRODUCTS'} ? 'bg-success' : (${role eq 'ORDERS'} ? 'bg-info'))))">Active</span>
+                  <!--<span class="alert alert-danger py-0 small" th:text="#{user.inactive}">Inactive</span>-->
+                </div>
+
+                <strong class="d-block" th:text="#{user.loggedOn}">Logged on</strong>
+                <span class="small d-block text-muted mb-2" th:text="${#dates.format(u.loggedOn, #messages.msg('format.datetime5'))}">Logged on</span>
+                
+                <strong class="d-block" th:text="#{user.device}">Device information</strong>
+                <span class="small d-block text-muted mb-2" th:text="${u.userAgent}">User agent</span>
+
+                <!--<a href="#" class="d-block h5 fw-semibold text-dark mb-3" th:text="${u.fullName}"></a>-->
                 <!--                <ul class="list-inline text-muted list-inline-divided">
                                   <li class="list-inline-item">
                                     <span class="fw-semibold small">

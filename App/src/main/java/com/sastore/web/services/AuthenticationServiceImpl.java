@@ -83,6 +83,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
     loggedUser.setLoggedOn(new Timestamp(System.currentTimeMillis()));
+    loggedUser.setUserAgent(request.getHeader("User-Agent")); 
 
     String email = authentication.getName();
 
