@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/adminTemplate}">
+  <head>
+    <title th:text="#{app.title(#{orders.title})}">Orders</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <!--    <div th:replace="fragments/messages :: #notify"></div>-->
+
+      <div class="row gutters-sm">
+        <div class="col-12 col-md-4 mb-3">
+          <div id="normalUsersCountDiv"></div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="adminsUsersCountDiv"></div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="salesUsersCountDiv"></div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="productsUsersCountDiv"></div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <div id="ordersUsersCountDiv"></div>
+        </div>
+      </div>
+
+      <div class="row gutters-sm mb-4">
+        <div class="col-12">
+<!--          <div class="card">
+            <div class="card-body">
+              <h5 th:text="#{users.search.header}">Search</h5>
+              <hr/>
+              <form th:action="@{/admin/users}" action="#" method="GET" th:object="${filter}">
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label th:text="#{users.search.userid}">User ID</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{userId}" autofocus="autofocus"/>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label th:text="#{users.search.email}">Email</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label th:text="#{users.search.firstname}">First name</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label th:text="#{users.search.lastname}">Last name</label>
+                    <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
+                    <label th:text="#{users.search.status}">Status</label>
+                    <select class="form-control form-control-sm" th:field="*{isActive}">
+                      <option value="" th:text="#{users.search.status.all}">- All -</option>
+                      <option value="false" th:text="#{users.search.status.inactive}">Inactive</option>
+                      <option value="true" th:text="#{users.search.status.active}">Active</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
+                    <label th:text="#{users.search.assignedrole}">Assigned role</label>
+                    <select class="form-control form-control-sm" th:field="*{role}">
+                      <option value="" th:text="#{users.search.assignedrole.all}" >- All -</option>
+                      <option value="ADMIN" th:text="#{user.roles.ADMIN}">Administrator</option>
+                      <option value="USER" th:text="#{user.roles.USER}">User</option>
+                      <option value="SALES" th:text="#{user.roles.SALES}">Sales</option>
+                      <option value="PRODUCTS" th:text="#{user.roles.PRODUCTS}">Products</option>
+                      <option value="ORDERS" th:text="#{user.roles.ORDERS}">Orders</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
+                    <label th:text="#{users.search.usersperpage}">Users per page</label>
+                    <select class="form-control form-control-sm" name="limit">
+                      <option value="5" th:selected="${limit eq 5}">5</option>
+                      <option value="10" th:selected="${limit eq 10}">10</option>
+                      <option value="20" th:selected="${limit eq 20}">20</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-3 mb-3">
+                    <label th:text="#{users.search.order}">Order</label>
+                    <select class="form-control form-control-sm" th:field="*{order}">
+                      <option value="ASC" th:selected="${order eq 'ASCENDING'}" th:text="#{users.search.order.asc}">Ascending</option>
+                      <option value="DESC" th:selected="${order eq 'DESCENDING'}" th:text="#{users.search.order.desc}">Descending</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" th:text="#{btn.search}">Search</button>
+                <a th:href="@{/admin/users}" href="#" th:if="${isSearched}" th:text="#{btn.clear}" class="btn btn-outline-dark btn-sm">Clear</a>
+              </form>
+              <hr/>
+
+              <h5 th:text="#{users.search.nofound}" th:if="${#lists.size(users.collection) eq 0}">No users found</h5>
+
+              <div th:remove="tag" th:if="${#lists.size(users.collection) ne 0}">
+
+                <div class="d-flex">
+                  <h5 class="mb-2" th:text="#{users.search.count(${#numbers.formatDecimal(#lists.size(users.collection), 1, 'WHITESPACE', 0, 'DEFAULT')})}">Users</h5>
+
+                  <div class="d-flex ms-auto mb--0" th:if="${pageWrapper.noPagedTotal ne 0}">
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal gt 1}" th:utext="#{page.found(${pageWrapper.noPagedTotal})}">Found 2</p>
+                    <p class="mb-2" th:if="${pageWrapper.noPagedTotal eq 1}" th:utext="#{page.found.1}">Found 1</p>
+                    <div th:remove="tag" th:if="${pageWrapper.noPagedTotal ne 1}">
+                      <span style="font-size: 18px;">&nbsp;&#8729;&nbsp;</span>
+                      <p class="mb-2" th:utext="#{page.showing(${pageWrapper.startPage}, ${pageWrapper.endPage})}">Showing 1/10</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col" th:text="#{users.item.id}">ID</th>
+                        <th scope="col" th:text="#{users.item.firstname}">First name</th>
+                        <th scope="col" th:text="#{users.item.lastname}">Last name</th>
+                        <th scope="col" th:text="#{users.item.email}">Email</th>
+                        <th scope="col" th:text="#{users.item.status}">Status</th>
+                        <th scope="col" th:text="#{users.item.roles}">Roles</th>
+                        <th scope="col" th:text="#{users.item.actions}">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="u : ${users.collection}">
+                        <td>
+                          <a class="text-decoration-underline" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" th:data-bs-original-title="${u.userId}"
+                             th:href="@{/admin/users(id=${u.userId})}" th:text="${#strings.substring(u.userId, 0, 10)} + '...'">1</a>
+                        </td>
+                        <td th:text="${u.firstName}">John</td>
+                        <td>
+                          <span th:if="${u.lastName ne null}" th:text="${u.lastName}">Doe</span>
+                          <i th:if="${u.lastName eq null}" th:text="#{user.lastName.empty}">No last name</i>
+                        </td>
+                        <td th:text="${u.email}">joh.doe@gmail.com</td>
+                        <td>
+                          <span class="badge" th:classappend="${u.isActive} ? 'bg-success' : 'bg-danger'" th:text="${u.isActive} ? #{user.active} : #{user.inactive}">Active/Inactive</span>
+                        </td>
+                        <td>
+                          <div th:each="r : ${u.roles}">
+                            <span class="badge" th:text="#{user.roles. + ${r.rolename}}"
+                                  th:classappend="${r.rolename eq 'ADMIN'} ? 'bg-danger' :(${r.rolename eq 'SALES'} ? 'bg-warning' : (${r.rolename eq 'USER'} ? 'bg-primary' :
+                                  (${r.rolename eq 'PRODUCTS'} ? 'bg-success' : (${r.rolename eq 'ORDERS'} ? 'bg-info'))))">Rolename</span>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <a href="#" class="text-danger px-2 py-1" th:if="${session.loggedUser.userId ne u.userId}"
+                             data-bs-toggle="modal" data-bs-target="#deleteUserModal" th:data-user-id="${u.userId}"
+                             th:data-user-id-label="#{users.item.actions.delete.id(${u.userId})}"
+                             th:data-user-fullname-label="#{users.item.actions.delete.fullname(${u.fullName})}"
+                             th:data-user-email-label="#{users.item.actions.delete.email(${u.email})}"
+                             th:data-user-delete-msg="#{users.item.actions.delete.msg}">
+                            <i data-feather="trash-2" class="fe-1x"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters} + ${filter.pagingParams})"></div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

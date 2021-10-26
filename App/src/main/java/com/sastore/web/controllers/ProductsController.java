@@ -7,7 +7,6 @@ import com.sastore.web.entities.ProductEntity;
 import com.sastore.web.entities.ProductImageEntity;
 import com.sastore.web.entities.ProductVariationEntity;
 import com.sastore.web.filters.ProductFilter;
-import com.sastore.web.integration.econt.nomenclatures.EcontCity;
 import com.sastore.web.models.products.ProductCreateModel;
 import com.sastore.web.models.products.ProductEditModel;
 import com.sastore.web.models.products.ProductImageCreateModel;

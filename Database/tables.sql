@@ -125,3 +125,53 @@ CREATE TABLE favorites(
 	product_id varchar(100) not null references products(product_id),
 	added_on timestamp not null default NOW()
 );
+
+CREATE TABLE order_addresses(
+	order_address_id varchar(100) not null primary key,
+	person_name varchar(300) not null,
+	phone varchar(100) not null,
+	country varchar(10) not null default 'bg',
+	post_code varchar(50) not null,
+	province varchar(100) not null default 'other',
+	city varchar(100) not null,
+	district varchar(100),
+	street varchar(500) not null,
+	street_no int not null,
+	entrance varchar(30),
+	floor int,
+	apartment_no int
+);
+
+-- 0 - Cash on delivery; 1 - Credit/Debit card; 2 - PayPal
+-- Currently only 0 works
+CREATE TABLE payment_types(
+	payment_type_id int not null primary key,
+	payment_type_descr varchar(100) not null,
+	is_active boolean not null default false
+);
+
+INSERT INTO payment_types VALUES (0, 'Cash on delivery', true);
+INSERT INTO payment_types VALUES (1, 'Credit/Debit card', false);
+INSERT INTO payment_types VALUES (2, 'PayPal', false);
+
+CREATE TABLE couriers(
+	courier_id int not null primary key,
+	courier_name varchar(100) not null,
+	is_active boolean not null default false
+);
+
+INSERT INTO couriers VALUES (1, 'Econt Express', true);
+INSERT INTO couriers VALUES (2, 'Speedy', true);
+INSERT INTO couriers VALUES (3, 'Interlogistica', false);
+INSERT INTO couriers VALUES (4, 'DHL', false);
+
+CREATE TABLE orders(
+	order_id varchar(100) not null primary key,
+	user_id varchar(100) references users(user_id) on delete set null,
+	delivery_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
+	bill_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
+	payment_type_id int not null references payment_types(payment_type_id) on delete restrict,
+	courier_id int not null references couriers(courier_id) on delete restrict,
+	created_on timestamp not null default NOW()
+);
+
