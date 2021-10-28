@@ -142,6 +142,15 @@ CREATE TABLE order_addresses(
 	apartment_no int
 );
 
+CREATE TABLE order_product_variations(
+	order_product_variation_id varchar(100) not null primary key,
+	product_id varchar(100) not null references products(product_id),
+	variation varchar(400) not null,
+	is_color boolean not null default false,
+	is_dimension boolean not null default false,
+	assosiated_image varchar(500) references prod_images(image_id)
+);
+
 -- 0 - Cash on delivery; 1 - Credit/Debit card; 2 - PayPal
 -- Currently only 0 works
 CREATE TABLE payment_types(
@@ -175,3 +184,11 @@ CREATE TABLE orders(
 	created_on timestamp not null default NOW()
 );
 
+CREATE TABLE order_products(
+	order_product_id varchar(100) not null primary key,
+	order_id varchar(100) not null references orders(order_id) on delete cascade,
+	product_id varchar(100) not null references products(product_id) on delete cascade,
+	order_product_variation_id varchar(100) not null references order_product_variations(order_product_variation_id) on delete restrict,
+	quantity int not null default 1,
+	price_per_unit numeric not null
+);
