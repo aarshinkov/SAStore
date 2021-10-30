@@ -2,12 +2,14 @@ package com.sastore.web.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +34,9 @@ public class OrderEntity implements Serializable {
 
   @Id
   @Column(name = "order_id")
-  private String orderId;
+  private Integer orderId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private UserEntity user;
 
@@ -53,7 +55,14 @@ public class OrderEntity implements Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "courier_id")
   private CourierEntity courier;
+  
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "status")
+  private OrderStatusEntity status;
 
   @Column(name = "created_on")
   private Timestamp createdOn;
+
+  @OneToMany(mappedBy = "order")
+  private List<OrderProducts> orderProducts;
 }

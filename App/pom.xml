@@ -282,7 +282,7 @@
             </manifestEntries>
           </archive>
 
-          <warName>${warname}##${project.version}</warName>
+          <warName>${warname}-${build.profile}##${project.version}</warName>
           <!-- ZA ROOT NA SURVER-A -->
           <!--<warName>ROOT##${project.version}</warName>-->
 

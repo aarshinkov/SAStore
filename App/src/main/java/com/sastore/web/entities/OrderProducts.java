@@ -33,7 +33,7 @@ public class OrderProducts implements Serializable {
   @Column(name = "order_product_id")
   private String orderProductId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "order_id")
   private OrderEntity order;
 

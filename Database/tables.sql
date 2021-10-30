@@ -174,19 +174,38 @@ INSERT INTO couriers VALUES (2, 'Speedy', true);
 INSERT INTO couriers VALUES (3, 'Interlogistica', false);
 INSERT INTO couriers VALUES (4, 'DHL', false);
 
+CREATE TABLE order_statuses(
+	order_status_id int not null primary key,
+	order_status_descr varchar(100) not null
+);
+
+INSERT INTO order_statuses VALUES (1, 'Pending process');
+INSERT INTO order_statuses VALUES (2, 'Processing');
+INSERT INTO order_statuses VALUES (3, 'In courier');
+INSERT INTO order_statuses VALUES (4, 'Finished');
+INSERT INTO order_statuses VALUES (5, 'Canceled');
+
+CREATE SEQUENCE public.s_orders
+	INCREMENT 1
+	START 1;
+	
+ALTER SEQUENCE public.s_orders
+	OWNER TO sastore_user;
+
 CREATE TABLE orders(
-	order_id varchar(100) not null primary key,
+	order_id int not null primary key default nextval('s_orders'),
 	user_id varchar(100) references users(user_id) on delete set null,
 	delivery_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
 	bill_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
 	payment_type_id int not null references payment_types(payment_type_id) on delete restrict,
 	courier_id int not null references couriers(courier_id) on delete restrict,
+	status int not null default 1 references order_statuses(order_status_id) on delete restrict,
 	created_on timestamp not null default NOW()
 );
 
 CREATE TABLE order_products(
 	order_product_id varchar(100) not null primary key,
-	order_id varchar(100) not null references orders(order_id) on delete cascade,
+	order_id int not null references orders(order_id) on delete cascade,
 	product_id varchar(100) not null references products(product_id) on delete cascade,
 	order_product_variation_id varchar(100) not null references order_product_variations(order_product_variation_id) on delete restrict,
 	quantity int not null default 1,
