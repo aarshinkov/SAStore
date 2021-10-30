@@ -13,140 +13,92 @@
           <div th:insert="profile/fragments :: #profileFragment"></div>
         </div>
         <div class="col mt-3 mt-md-0">
-          <div class="card card-style1 shadow-sm">
+          <div class="card card-style1 shadow-sm" th:with="s=${order.status.orderStatusId}"
+               th:classappend="${s eq 1} ? '' : (${s eq 2} ? 'border-warning' : (${s eq 3} ? 'border-primary' : (${s eq 4} ? 'border-success' : (${s eq 5} ? 'border-danger'))))">
             <div class="card-body">
-              <h4>ORD556789</h4>
-              <hr/>
+              <div class="d-flex align-items-center">
+                <h4 class="mb-0 me-3" th:text="${order.orderId}">ORD556789</h4>
+                <span class="badge" th:text="#{order.status. + ${s}}"
+                      th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
+              </div>
+              <hr class="mt-3 mb-0"/>
 
-              <nav class="steps">
-                <a href="javascript:void(0)" data-step="1" class="done">Processing</a>
-                <a href="javascript:void(0)" data-step="2" class="done">Sending</a>
-                <a href="javascript:void(0)" data-step="3">Delivered</a>
-                <a href="javascript:void(0)" data-step="4">Finished</a>
-              </nav>
+              <ul class="list-group list-group-flush list-group-sm">
+                <li class="list-group-item px-0 d-flex align-items-center py-3" th:each="op : ${order.orderProducts}">
 
-              <ul class="list-group list-group-flush list-group-sm mt-4">
-                <li class="list-group-item px-0">
-                  <div class="media">
-                    <a href="shop-single.html">
-                      <img src="../../img/products/1_small.jpg" alt="product" width="75"/>
-                    </a>
-                    <div class="media-body ml-3">
-                      <a href="shop-single.html" class="card-link text-secondary">Hanes Hooded Sweatshirt</a>
-                      <div class="font-size-sm"><span class="text-muted">Size:</span> small</div>
-                      <div class="price">
-                        <span class="text-success">$18.56</span>
-                        <span class="ml-3 text-secondary font-weight-normal">x 1</span>
-                        <span class="ml-3">$18.56</span>
-                      </div>
-                    </div>
+                  <a href="#" th:href="@{/product(id=${op.product.productId})}" target="_blank" class="me-4">
+                    <img src="#" th:src="@{~/images/products/} + ${op.product.mainImage}" alt="product" width="75" class="rounded-circle"/>
+                  </a>
+                  <div class="media-body">
+                    <a href="#" th:href="@{/product(id=${op.product.productId})}" class="h6" th:text="${op.product.title}">Product title</a>
+                    <small class="d-block text-muted" th:text="${op.orderProductVariation.variation}">Yellow</small>
                   </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="media">
-                    <a href="shop-single.html">
-                      <img src="../../img/products/2_small.jpg" alt="product" width="75"/>
-                    </a>
-                    <div class="media-body ml-3">
-                      <a href="shop-single.html" class="card-link text-secondary">The Flash Logo T-Shirt</a>
-                      <div class="font-size-sm"><span class="text-muted">Size:</span> medium</div>
-                      <div class="price">
-                        <span class="text-success">$16.64</span>
-                        <span class="ml-3 text-secondary font-weight-normal">x 2</span>
-                        <span class="ml-3">$33.28</span>
-                      </div>
+                  <div class="ms-auto">
+                    <div class="">
+                      <span class="text-success" th:text="#{cart.price(${#numbers.formatDecimal(op.pricePerUnit, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">$18.56</span>
+                      <span class="ml-3 text-secondary font-weight-normal" th:text="' x ' + ${#numbers.formatDecimal(op.quantity, 1, 'WHITESPACE', 0, 'POINT')}">x 3</span>
                     </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="media">
-                    <a href="shop-single.html">
-                      <img src="../../img/products/3_small.jpg" alt="product" width="75"/>
-                    </a>
-                    <div class="media-body ml-3">
-                      <a href="shop-single.html" class="card-link text-secondary">Open Front Cropped Cardigans</a>
-                      <div class="font-size-sm"><span class="text-muted">Size:</span> large</div>
-                      <div class="price">
-                        <span class="text-success">$15.20</span>
-                        <span class="ml-3 text-secondary font-weight-normal">x 1</span>
-                        <span class="ml-3">$15.20</span>
-                      </div>
-                    </div>
+                    <div class="text-end fw-bold" th:text="#{cart.price(${#numbers.formatDecimal(op.quantity * op.pricePerUnit, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">$18.56</div>
                   </div>
                 </li>
               </ul>
 
-              <div class="mt-3 font-condensed">
-                <div class="d-flex">
-                  <div class="text-muted">Bag Total</div>
-                  <div class="ml-auto font-weight-bold">$67.04</div>
+              <hr class="mt-0 mb-3"/>
+              <div th:remove="tag" th:if="${discount gt 0}">              
+
+                <div class="row">
+                  <div class="col-12 text-end">
+                    <div class="text-muted">Subtotal</div>
+                    <h6 th:text="#{cart.price(${#numbers.formatDecimal(subtotal, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">43</h6>
+                  </div>
                 </div>
-                <div class="d-flex">
-                  <div class="text-muted">Bag Discount</div>
-                  <div class="ml-auto font-weight-bold">$2.04</div>
+
+                <div class="row">
+                  <div class="col-12 text-end">
+                    <div class="text-muted">Discount</div>
+                    <h6 th:text="#{cart.price(${#numbers.formatDecimal(discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}"
+                        th:if="${discount eq 0}">43</h6>
+
+                    <h6 class="text-success" th:text="'-' + #{cart.price(${#numbers.formatDecimal(discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}"
+                        th:if="${discount gt 0}">43</h6>
+                  </div>
                 </div>
-                <hr class="my-1"/>
-                <div class="d-flex">
-                  <div class="text-muted">Coupon Discount</div>
-                  <div class="ml-auto font-weight-bold">-</div>
-                </div>
-                <div class="d-flex">
-                  <div class="text-muted">Shipping Cost</div>
-                  <div class="ml-auto font-weight-bold">Express ($10.00)</div>
-                </div>
-                <hr/>
-                <div class="d-flex">
-                  <div class="text-muted">Order Total</div>
-                  <div class="ml-auto font-weight-bold text-primary h4 mb-0">$75.00</div>
-                </div>
-                <hr/>
+
+                <hr class="my-3"/>
               </div>
 
               <div class="row">
-                <div class="col-lg-6">
-                  <h5><u>Shipping Address :</u></h5>
-                  <strong>John Thor</strong><br/>
-                  john.thor@example.com<br/>
-                  1-787-376-1552<br/>
-                  2114 Jadewood Farms<br/>
-                  Piscataway, New Jersey<br/>
-                  08854<br/>
-                  United States
-                </div>
-                <div class="col-lg-6 mt-4 mt-lg-0">
-                  <h5><u>Payment Method :</u></h5>
-                  <strong>Credit card</strong>
-                  <table class="table table-borderless table-sm">
-                    <tbody>
-                      <tr>
-                        <td>Number <span class="float-right">:</span></td>
-                        <td>4567 8912 3456 7891 234</td>
-                      </tr>
-                      <tr>
-                        <td>Full Name <span class="float-right">:</span></td>
-                        <td>John Thor</td>
-                      </tr>
-                      <tr>
-                        <td>Expiry Date <span class="float-right">:</span></td>
-                        <td>01 / 2020</td>
-                      </tr>
-                      <tr>
-                        <td>CVC Code <span class="float-right">:</span></td>
-                        <td>1234</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="col-12 text-end">
+                  <h5 class="text-muted">Total</h5>
+                  <h5 class="font-weight-bold h4"
+                      th:text="#{cart.price(${#numbers.formatDecimal(subtotal - discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">43</h5>
                 </div>
               </div>
-              <div class="d-flex justify-content-between mt-3">
-                <a th:href="@{/profile/orders}" href="#" class="btn btn-outline-primary btn-sm has-icon">
-                  <i class="material-icons">chevron_left</i>
-                  <span>Back</span>
-                </a>
-                <button type="button" class="btn btn-primary btn-sm has-icon">
-                  <i class="material-icons mr-2">print</i>
-                  <span>Print</span>
-                </button>
+
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <hr class="mt-3 mb-2"/>
+                  <h5 class="my-0">Delivery address</h5>
+                  <hr class="mt-2 mb-3"/>
+                  <div class="" th:text="${order.deliveryAddress.personName}">Address</div>
+                  <div class="" th:text="${order.deliveryAddress.street} + ' ' + ${order.deliveryAddress.streetNo}">Address</div>
+                  <div class="" th:text="#{country. + ${order.deliveryAddress.country}} + ', ' + ${order.deliveryAddress.city} + ', ' + ${order.deliveryAddress.postCode}">Address</div>
+                  <div class="" th:text="${order.deliveryAddress.phone}"></div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <hr class="mt-3 mb-2"/>
+                  <h5 class="my-0">Delivery</h5>
+                  <hr class="mt-2 mb-3"/>
+                  <div class="" th:text="${order.courier.courierName}">Courier</div>
+                </div>
+
+                <div class="col-12">
+                  <hr class="mt-3 mb-2"/>
+                  <h5 class="my-0">Payment</h5>
+                  <hr class="mt-2 mb-3"/>
+                  <div class="" th:text="${order.paymentType.paymentTypeDescr}">Payment</div>
+                </div>
               </div>
             </div>
           </div>

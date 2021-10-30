@@ -104,10 +104,10 @@
                     <table class="table table-borderless mb-4 table-striped table-hover">
                       <thead class="small">
                         <tr>
-                          <th>Product</th>
-                          <th class="text-center">Quantity</th>
-                          <th class="text-center">Price per unit</th>
-                          <th class="text-end">Total</th>
+                          <th th:text="#{order.product.title}">Product</th>
+                          <th th:text="#{order.product.quantity}" class="text-center">Quantity</th>
+                          <th th:text="#{order.product.unitprice}" class="text-center">Price per unit</th>
+                          <th class="text-end" th:text="#{order.product.total}">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -127,15 +127,15 @@
                     <table class="table table-borderless">
                       <tbody>
                         <tr class="align-middle">
-                          <td>Subtotal</td>
+                          <td th:text="#{order.subtotal}">Subtotal</td>
                           <td class="text-end fw-bold text-muted" th:text="${#numbers.formatDecimal(subtotal, 1, 'WHITESPACE', 2, 'POINT')}">562.00</td>
                         </tr>
                         <tr class="align-middle">
-                          <td>Discount</td>
+                          <td th:text="#{order.discount}">Discount</td>
                           <td class="text-end fw-bold text-success" th:text="'- ' + ${#numbers.formatDecimal(discount, 1, 'WHITESPACE', 2, 'POINT')}">62.00</td>
                         </tr>
                         <tr class="align-middle">
-                          <td>Total</td>
+                          <td th:text="#{order.total}">Total</td>
                           <td class="text-end fw-bold text-dark h4" th:text="${#numbers.formatDecimal(subtotal - discount, 1, 'WHITESPACE', 2, 'POINT')}">500.00</td>
                         </tr>
                       </tbody>
@@ -149,22 +149,34 @@
                 <div class="col-12">
                   <div class="d-flex">
                     <div class="ms-auto" th:with="s=${order.status.orderStatusId}">
-                      <a href="#" class="btn btn-primary" th:if="${s eq 1}">
-                        <i class="bi bi-play"></i>
-                        <span th:text="#{order.process}">Mark order as "Processing"</span>
-                      </a>
-                      <a href="#" class="btn btn-warning" th:if="${s eq 2}">
-                        <i class="bi bi-truck"></i>
-                        <span th:text="#{order.courier}">Hand order to courier</span>
-                      </a>
-                      <a href="#" class="btn btn-success" th:if="${s eq 3}">
-                        <i class="bi bi-check"></i>
-                        <span th:text="#{order.finish}">Finish order</span>
-                      </a>
-                      <a href="#" class="btn btn-danger" th:if="${s eq 1 or s eq 2}">
-                        <i class="bi bi-x"></i>
-                        <span th:text="#{order.cancel}">Cancel order</span>
-                      </a>
+                      <form th:action="@{/admin/orders/process}" method="post" class="d-inline" th:if="${s eq 1}">
+                        <input type="hidden" name="id" th:value="${order.orderId}"/>
+                        <button type="submit" class="btn btn-primary">
+                          <i class="bi bi-play"></i>
+                          <span th:text="#{order.process}">Mark order as "Processing"</span>
+                        </button>
+                      </form>
+                      <form th:action="@{/admin/orders/courier}" method="post" class="d-inline" th:if="${s eq 2}">
+                        <input type="hidden" name="id" th:value="${order.orderId}"/>
+                        <button type="submit" class="btn btn-warning">
+                          <i class="bi bi-truck"></i>
+                          <span th:text="#{order.courier}">Hand order to courier</span>
+                        </button>
+                      </form>
+                      <form th:action="@{/admin/orders/finish}" method="post" class="d-inline" th:if="${s eq 3}">
+                        <input type="hidden" name="id" th:value="${order.orderId}"/>
+                        <button type="submit" class="btn btn-success">
+                          <i class="bi bi-check"></i>
+                          <span th:text="#{order.finish}">Finish order</span>
+                        </button>
+                      </form>
+                      <form th:action="@{/admin/orders/cancel}" method="post" class="d-inline" th:if="${s eq 1 or s eq 2}">
+                        <input type="hidden" name="id" th:value="${order.orderId}"/>
+                        <button type="submit" class="btn btn-danger">
+                          <i class="bi bi-x"></i>
+                          <span th:text="#{order.cancel}">Cancel order</span>
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>

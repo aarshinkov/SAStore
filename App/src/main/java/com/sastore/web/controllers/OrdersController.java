@@ -3,7 +3,7 @@ package com.sastore.web.controllers;
 import com.sastore.web.base.Base;
 import com.sastore.web.entities.OrderEntity;
 import com.sastore.web.entities.OrderProducts;
-import com.sastore.web.repositories.OrdersRepository;
+import com.sastore.web.services.OrderService;
 import com.sastore.web.utils.Breadcrumb;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -27,13 +28,13 @@ public class OrdersController extends Base {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private OrdersRepository ordersRepository;
+  private OrderService orderService;
 
   //ORDERS
   @GetMapping("/admin/orders")
   public String getAdminOrders(HttpServletRequest request, Model model) {
 
-    List<OrderEntity> orders = ordersRepository.findAll();
+    List<OrderEntity> orders = orderService.getOrders();
     model.addAttribute("orders", orders);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
@@ -49,9 +50,9 @@ public class OrdersController extends Base {
   }
 
   @GetMapping(value = "/admin/orders", params = {"id"})
-  public String getAdminOrder(@RequestParam("id") Integer orderId, HttpServletRequest request, Model model) {
+  public String getAdminOrder(@RequestParam("id") String orderId, HttpServletRequest request, Model model) {
 
-    OrderEntity order = ordersRepository.findByOrderId(orderId);
+    OrderEntity order = orderService.getOrder(orderId);
     model.addAttribute("order", order);
 
     Double subtotal = 0.00;
@@ -76,5 +77,37 @@ public class OrdersController extends Base {
     model.addAttribute("submenu", "orders");
 
     return "admin/orders/order";
+  }
+
+  @PostMapping("/admin/orders/process")
+  public String processOrder(@RequestParam("id") String orderId, HttpServletRequest request, Model model) {
+
+    boolean result = orderService.processOrder(orderId);
+
+    return "redirect:/admin/orders?id=" + orderId;
+  }
+
+  @PostMapping("/admin/orders/courier")
+  public String handOrderToCourier(@RequestParam("id") String orderId, HttpServletRequest request, Model model) {
+
+    boolean result = orderService.handToCourierOrder(orderId);
+
+    return "redirect:/admin/orders?id=" + orderId;
+  }
+
+  @PostMapping("/admin/orders/finish")
+  public String finishOrder(@RequestParam("id") String orderId, HttpServletRequest request, Model model) {
+
+    boolean result = orderService.finishOrder(orderId);
+
+    return "redirect:/admin/orders?id=" + orderId;
+  }
+
+  @PostMapping("/admin/orders/cancel")
+  public String cancelOrder(@RequestParam("id") String orderId, HttpServletRequest request, Model model) {
+
+    boolean result = orderService.cancelOrder(orderId);
+
+    return "redirect:/admin/orders?id=" + orderId;
   }
 }

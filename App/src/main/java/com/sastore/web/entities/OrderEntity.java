@@ -34,7 +34,7 @@ public class OrderEntity implements Serializable {
 
   @Id
   @Column(name = "order_id")
-  private Integer orderId;
+  private String orderId;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")

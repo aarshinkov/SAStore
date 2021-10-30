@@ -2,8 +2,11 @@ package com.sastore.web.controllers;
 
 import com.sastore.web.base.Base;
 import com.sastore.web.entities.FavoriteEntity;
+import com.sastore.web.entities.OrderEntity;
+import com.sastore.web.entities.OrderProducts;
 import com.sastore.web.entities.UserEntity;
 import com.sastore.web.services.FavoriteService;
+import com.sastore.web.services.OrderService;
 import com.sastore.web.services.UserService;
 import com.sastore.web.utils.Breadcrumb;
 import org.slf4j.Logger;
@@ -34,6 +37,9 @@ public class ProfileController extends Base {
   @Autowired
   private FavoriteService favoriteService;
 
+  @Autowired
+  private OrderService orderService;
+
   @GetMapping("/profile")
   public String profile(HttpServletRequest request, Model model) {
 
@@ -52,6 +58,9 @@ public class ProfileController extends Base {
       model.addAttribute("pageTitle", user.getFullName());
       return "admin/profile/profile";
     }
+
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
 
     return "profile/profile";
   }
@@ -77,7 +86,13 @@ public class ProfileController extends Base {
   }
 
   @GetMapping("/profile/orders")
-  public String orders(Model model) {
+  public String orders(HttpServletRequest request, Model model) {
+
+    List<OrderEntity> orders = orderService.getUserOrders(getLoggedUserId(request));
+    model.addAttribute("orders", orders);
+
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
@@ -91,8 +106,22 @@ public class ProfileController extends Base {
     return "profile/orders";
   }
 
-  @GetMapping("/profile/order")
-  public String orderDetails(@RequestParam("orderId") String orderId, Model model) {
+  @GetMapping(value = "/profile/orders", params = {"id"})
+  public String orderDetails(@RequestParam("id") String orderId, Model model) {
+
+    OrderEntity order = orderService.getOrder(orderId);
+    model.addAttribute("order", order);
+
+    Double subtotal = 0.00;
+
+    for (OrderProducts op : order.getOrderProducts()) {
+      subtotal += (op.getQuantity() * op.getPricePerUnit());
+    }
+
+    Double discount = 0.00;
+
+    model.addAttribute("subtotal", subtotal);
+    model.addAttribute("discount", discount);
 
     model.addAttribute("globalMenu", "profile");
     model.addAttribute("submenu", "orders");
@@ -104,8 +133,10 @@ public class ProfileController extends Base {
   public String favorites(HttpServletRequest request, Model model) {
 
     List<FavoriteEntity> favorites = favoriteService.getUserFavorites(getLoggedUserId(request));
-    
     model.addAttribute("favorites", favorites);
+
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));

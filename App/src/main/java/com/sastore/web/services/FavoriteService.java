@@ -10,4 +10,6 @@ import java.util.List;
 public interface FavoriteService {
 
   List<FavoriteEntity> getUserFavorites(String userId);
+  
+  Long getUserFavoritesCount(String userId);
 }

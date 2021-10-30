@@ -17,4 +17,6 @@ public interface FavoritesRepository extends JpaRepository<FavoriteEntity, Strin
   FavoriteEntity findByUserUserIdAndProductProductId(String userId, String productId);
   
   boolean existsFavoriteEntityByUserUserIdAndProductProductId(String userId, String productId);
+  
+  Long countByUserUserId(String userId);
 }

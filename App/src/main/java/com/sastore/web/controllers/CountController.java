@@ -2,6 +2,7 @@ package com.sastore.web.controllers;
 
 import com.sastore.web.enums.ProductStatuses;
 import com.sastore.web.enums.Roles;
+import com.sastore.web.services.OrderService;
 import com.sastore.web.services.ProductService;
 import com.sastore.web.services.UserService;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ public class CountController {
 
   @Autowired
   private ProductService productService;
+  
+  @Autowired
+  private OrderService orderService;
 
   @GetMapping("/count/users")
   public String getNormalUsersCount(Model model) {
@@ -45,8 +49,9 @@ public class CountController {
   @GetMapping("/count/orders/finished")
   public String getFinishedOrdersCount(Model model) {
 
-    // TODO implement
-    model.addAttribute("count", 54);
+    Long finishedOrdersCount = orderService.getFinishedOrdersCount();
+    
+    model.addAttribute("count", finishedOrdersCount);
 
     return "admin/fragments/fragments :: #countFinishedOrders";
   }

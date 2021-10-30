@@ -5,6 +5,7 @@ import com.sastore.web.entities.AddressEntity;
 import com.sastore.web.models.addresses.AddressCreateModel;
 import com.sastore.web.models.addresses.AddressEditModel;
 import com.sastore.web.services.AddressService;
+import com.sastore.web.services.OrderService;
 import com.sastore.web.utils.Breadcrumb;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +36,19 @@ public class AddressesController extends Base {
   @Autowired
   private AddressService addressService;
 
+  @Autowired
+  private OrderService orderService;
+
   @GetMapping("/profile/addresses")
   public String getUserAddresses(HttpServletRequest request, Model model) {
 
     final String userId = getLoggedUserId(request);
 
     List<AddressEntity> addresses = addressService.getUserAddresses(userId);
-
     model.addAttribute("addresses", addresses);
+
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
 
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
@@ -64,6 +70,9 @@ public class AddressesController extends Base {
     acm.setIsMain(false);
     model.addAttribute("acm", acm);
 
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
+
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
     breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
@@ -78,11 +87,14 @@ public class AddressesController extends Base {
   }
 
   @PostMapping("/profile/addresses/new")
-  public String createAddress(@ModelAttribute("acm") @Valid AddressCreateModel acm, BindingResult bindingResult, Model model) {
+  public String createAddress(@ModelAttribute("acm") @Valid AddressCreateModel acm, BindingResult bindingResult, HttpServletRequest request, Model model) {
 
     log.debug(acm.toString());
 
     if (bindingResult.hasErrors()) {
+
+      Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+      model.addAttribute("finishedOrders", finishedOrders);
 
       List<Breadcrumb> breadcrumbs = new ArrayList<>();
       breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
@@ -125,6 +137,9 @@ public class AddressesController extends Base {
     aem.setIsMain(address.getIsMain());
     model.addAttribute("aem", aem);
 
+    Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+    model.addAttribute("finishedOrders", finishedOrders);
+
     List<Breadcrumb> breadcrumbs = new ArrayList<>();
     breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
     breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
@@ -142,6 +157,10 @@ public class AddressesController extends Base {
   public String editAddress(@ModelAttribute("aem") @Valid AddressEditModel aem, BindingResult bindingResult, HttpServletRequest request, Model model) {
 
     if (bindingResult.hasErrors()) {
+
+      Long finishedOrders = orderService.getUserFinishedOrdersCount(getLoggedUserId(request));
+      model.addAttribute("finishedOrders", finishedOrders);
+
       List<Breadcrumb> breadcrumbs = new ArrayList<>();
       breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
       breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));

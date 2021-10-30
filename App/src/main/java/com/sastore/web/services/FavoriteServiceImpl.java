@@ -42,4 +42,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     return favorites;
   }
+
+  @Override
+  public Long getUserFavoritesCount(String userId) {
+    return favoritesRepository.countByUserUserId(userId);
+  }
 }

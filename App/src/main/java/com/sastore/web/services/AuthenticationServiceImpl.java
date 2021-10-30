@@ -44,6 +44,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private UsersRepository usersRepository;
 
   @Autowired
+  private FavoriteService favoriteService;
+
+  @Autowired
   private CartsRepository cartsRepository;
 
   @Autowired
@@ -87,7 +90,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //    loggedUser.setUserAgent(request.getHeader("User-Agent"));
     UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
     loggedUser.setUserAgent(userAgent);
-    
 
     String email = authentication.getName();
 
@@ -111,6 +113,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //    session.setAttribute("avatar", user.getAvatar());
     session.setAttribute("roles", user.getRoles());
 //    session.setAttribute("createdOn", user.getCreatedOn());
+
+    session.setAttribute("favoritesCount", favoriteService.getUserFavoritesCount(loggedUser.getUserId()));
 
     AddressEntity mainAddress = addressService.getUserMainAddress(user.getUserId());
     if (mainAddress != null) {

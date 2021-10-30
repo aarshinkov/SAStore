@@ -193,7 +193,7 @@ ALTER SEQUENCE public.s_orders
 	OWNER TO sastore_user;
 
 CREATE TABLE orders(
-	order_id int not null primary key default nextval('s_orders'),
+	order_id varchar(100) not null primary key default ('ORD' || nextval('s_orders')),
 	user_id varchar(100) references users(user_id) on delete set null,
 	delivery_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
 	bill_address varchar(100) not null references order_addresses(order_address_id) on delete restrict,
@@ -205,7 +205,7 @@ CREATE TABLE orders(
 
 CREATE TABLE order_products(
 	order_product_id varchar(100) not null primary key,
-	order_id int not null references orders(order_id) on delete cascade,
+	order_id varchar(100) not null references orders(order_id) on delete cascade,
 	product_id varchar(100) not null references products(product_id) on delete cascade,
 	order_product_variation_id varchar(100) not null references order_product_variations(order_product_variation_id) on delete restrict,
 	quantity int not null default 1,

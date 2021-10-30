@@ -22,38 +22,25 @@
                   <thead class="thead-light">
                     <tr>
                       <th scope="col">Order ID</th>
+                      <th scope="col">Deliver to</th>
                       <th scope="col">Date</th>
                       <th scope="col" class="text-right">Total</th>
                       <th scope="col" class="text-center">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr th:each="o : ${orders}">
                       <th scope="row">
-                        <a th:href="@{/profile/order(orderId=2)}" href="#">ORD556789</a>
+                        <a th:href="@{/profile/orders(id=${o.orderId})}" href="#" th:text="${o.orderId}">ORD556789</a>
                       </th>
-                      <td>Dec 19, 2017</td>
+                      <td th:text="${o.user}">John Doe</td>
+                      <td th:text="${#dates.format(o.createdOn, #messages.msg('format.datetime2'))}">Dec 19, 2017</td>
                       <td class="text-right">$74.00</td>
                       <td class="text-center">
-                        <span class="badge badge-warning rounded">In Progress</span>
+                        <span class="badge" th:with="s=${o.status.orderStatusId}" th:text="#{order.status. + ${s}}"
+                              th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
                       </td>
                     </tr>
-                    <tr>
-                      <th scope="row">
-                        <a th:href="@{/profile/order(orderId=3)}" href="#">ORD456789</a>
-                      </th>
-                      <td>Dec 10, 2017</td>
-                      <td class="text-right">$100.00</td>
-                      <td class="text-center">
-                        <span class="badge badge-danger rounded">Canceled</span>
-                      </td>
-                    </tr>
-                    <!--                            <tr>-->
-                    <!--                                <th scope="row"><a href="account-order-detail.html">ORD156789</a></th>-->
-                    <!--                                <td>Nov 10, 2017</td>-->
-                    <!--                                <td class="text-right">$100.00</td>-->
-                    <!--                                <td class="text-center"><span class="badge badge-success rounded">Finished</span></td>-->
-                    <!--                            </tr>-->
                   </tbody>
                 </table>
               </div>

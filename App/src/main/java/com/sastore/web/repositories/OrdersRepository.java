@@ -10,10 +10,16 @@ import org.springframework.stereotype.Repository;
  * @author Atanas Yordanov Arshinkov
  */
 @Repository
-public interface OrdersRepository extends JpaRepository<OrderEntity, Integer> {
+public interface OrdersRepository extends JpaRepository<OrderEntity, String> {
 
   @Override
   List<OrderEntity> findAll();
-  
-  OrderEntity findByOrderId(Integer orderId);
+
+  List<OrderEntity> findByUserUserId(String userId);
+
+  OrderEntity findByOrderId(String orderId);
+
+  Long countByStatusOrderStatusId(Integer orderStatusId);
+
+  Long countByStatusOrderStatusIdAndUserUserId(Integer orderStatusId, String userId);
 }
