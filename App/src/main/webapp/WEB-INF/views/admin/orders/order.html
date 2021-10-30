@@ -14,13 +14,17 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <div class="d-flex justify-content-sm-between flex-column flex-sm-row mb-5">
-                <div class="mb-4 mb-sm-0">
-                  <div class="mb-3 d-flex align-items-center">
-                    <h3 class="mb-0 d-inline">Order</h3>
-                    <span class="ms-4 badge" th:with="s=${order.status.orderStatusId}" th:text="#{order.status. + ${s}}"
-                          th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
-                  </div>                  
+
+              <div class="row">
+                <div class="col-12 mb-4">
+                  <h3 class="mb-0 d-inline">Order</h3>
+                  <span class="ms-4 badge" th:with="s=${order.status.orderStatusId}" th:text="#{order.status. + ${s}}"
+                        th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-12 col-xl-4 mb-5">
                   <ul class="list-unstyled d-table mb-0">
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
                       <span class="pe-5 small">Order ID:</span>
@@ -36,21 +40,43 @@
                     </li>
                   </ul>
                 </div>
-                <div class="ms-sm-auto text-sm-end">
-                  <img src="assets/media/brand-logos/zendesk-2.svg" class="width-120 mb-2 h-auto" alt=""/>
-                  <p class="mb-0">orders@sastore.com</p>
-
-                  <hr/>
-                  <small class="text-muted">Bill to</small>
-                  <p class="mb-0 text-dark">
-                    <span th:text="${order.billAddress.personName}"></span>
-                    <br/>
-                    <span th:text="${order.billAddress.street} + ' ' + ${order.billAddress.streetNo}"></span>
-                    <br/>
-                    <span th:text="#{country. + ${order.billAddress.country}} + ', ' + ${order.billAddress.city} + ', ' + ${order.billAddress.postCode}"></span>
-                    <br/>
-                    <span th:text="${order.billAddress.phone}">Phone</span>
-                  </p>
+                <div class="col-12 col-xl-4 mb-5">
+                  <ul class="list-unstyled d-table mx-auto mb-0">
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="pe-5 small text-muted">Deliver to</span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="${order.deliveryAddress.personName}"></span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="${order.deliveryAddress.street} + ' ' + ${order.deliveryAddress.streetNo}"></span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="#{country. + ${order.deliveryAddress.country}} + ', ' + ${order.deliveryAddress.city} + ', ' + ${order.deliveryAddress.postCode}"></span>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <a class="mb-0 flex-grow-1" href="#" th:href="'tel:' + ${order.deliveryAddress.phone}" th:text="${order.deliveryAddress.phone}"></a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-12 col-xl-4 text-end mb-5">
+                  <ul class="list-unstyled d-table ms-auto mb-0">
+                    <li class="border-bottom border-dashed pb-1 mb-1 text-end">
+                      <span class="small text-muted">Bill to</span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="${order.billAddress.personName}"></span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="${order.billAddress.street} + ' ' + ${order.billAddress.streetNo}"></span>
+                    </li>
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="mb-0 flex-grow-1" th:text="#{country. + ${order.billAddress.country}} + ', ' + ${order.billAddress.city} + ', ' + ${order.billAddress.postCode}"></span>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <a class="mb-0 flex-grow-1" href="#" th:href="'tel:' + ${order.billAddress.phone}" th:text="${order.billAddress.phone}"></a>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
