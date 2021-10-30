@@ -71,7 +71,7 @@ public class OrdersController extends Base {
     breadcrumbs.add(new Breadcrumb("Order #" + order.getOrderId(), null));
     model.addAttribute("breadcrumbs", breadcrumbs);
 
-    model.addAttribute("pageTitle", getMessage("orders.title"));
+    model.addAttribute("pageTitle", getMessage("order.title"));
     model.addAttribute("globalMenu", "orders");
     model.addAttribute("submenu", "orders");
 

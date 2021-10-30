@@ -545,7 +545,7 @@
       </div>
     </div>
 
-    <div id="onlineUsersList" class="row gutters-sm mb-4">
+    <div id="onlineUsersList" class="row gutters-sm">
       <div class="d-flex align-items-center mb-4">
         <h3 class="mb-0" th:text="#{users.online.header(${#numbers.formatInteger(#lists.size(onlineUsers), 0, 'WHITESPACE')})}">Users online</h3>
         <i data-feather="refresh-cw" class="ms-auto" style="cursor: pointer;" onclick="getOnlineUsersList()"></i>

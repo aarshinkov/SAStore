@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/adminTemplate}">
   <head>
-    <title th:text="#{app.title(#{orders.title})}">Orders</title>
+    <title th:text="#{app.title(#{order.title})}">Order</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
@@ -17,33 +17,49 @@
 
               <div class="row">
                 <div class="col-12 mb-4">
-                  <h3 class="mb-0 d-inline">Order</h3>
+                  <h3 class="mb-0 d-inline" th:text="#{order.header}">Order</h3>
                   <span class="ms-4 badge" th:with="s=${order.status.orderStatusId}" th:text="#{order.status. + ${s}}"
                         th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
                 </div>
               </div>
 
-              <div class="row mb-4">
-                <div class="col-12 col-xl-4 mb-5">
+              <div class="row">
+                <div class="col-12 col-md-6 mb-5">
                   <ul class="list-unstyled d-table mb-0">
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
-                      <span class="pe-5 small">Order ID:</span>
+                      <span class="pe-5 small" th:text="#{order.header.id}">Order ID:</span>
                       <span class="mb-0 flex-grow-1 fw-bold text-end" th:text="${order.orderId}"></span>
                     </li>
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
-                      <span class="pe-5 small">Invoice Date:</span>
+                      <span class="pe-5 small" th:text="#{order.header.date}">Date of ordering:</span>
                       <span class="mb-0 fw-bold flex-grow-1 text-end" th:text="${#dates.format(order.createdOn, #messages.msg('format.datetime2'))}"></span>
                     </li>
                     <li class="d-flex align-items-center">
-                      <span class="pe-5 small">Total:</span>
+                      <span class="pe-5 small" th:text="#{order.header.total}">Total:</span>
                       <span class="mb-0 fw-bold flex-grow-1 text-end" th:text="${#numbers.formatDecimal(subtotal - discount, 1, 'WHITESPACE', 2, 'POINT')}">584</span>
                     </li>
                   </ul>
                 </div>
-                <div class="col-12 col-xl-4 mb-5">
-                  <ul class="list-unstyled d-table mx-auto mb-0">
+                <div class="col-12 col-md-6 text-end mb-5" th:with="u=${order.user}">
+                  <ul class="list-unstyled d-table ms-auto mb-0">
+                    <li class="border-bottom border-dashed pb-1 mb-1 text-end">
+                      <span class="small text-muted">Customer information</span>
+                    </li>
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
-                      <span class="pe-5 small text-muted">Deliver to</span>
+                      <span class="mb-0 flex-grow-1" th:text="${u}"></span>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <span class="mb-0 flex-grow-1" th:text="${u.email}"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <hr class="mt-0"/>
+              <div class="row">
+                <div class="col-12 col-md-6 mb-5">
+                  <ul class="list-unstyled d-table mb-0">
+                    <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
+                      <span class="pe-5 small text-muted" th:text="#{order.delivery.header}">Deliver to</span>
                     </li>
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
                       <span class="mb-0 flex-grow-1" th:text="${order.deliveryAddress.personName}"></span>
@@ -59,10 +75,10 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-12 col-xl-4 text-end mb-5">
+                <div class="col-12 col-md-6 text-end mb-5">
                   <ul class="list-unstyled d-table ms-auto mb-0">
                     <li class="border-bottom border-dashed pb-1 mb-1 text-end">
-                      <span class="small text-muted">Bill to</span>
+                      <span class="small text-muted" th:text="#{order.bill.header}">Bill to</span>
                     </li>
                     <li class="d-flex align-items-center border-bottom border-dashed pb-1 mb-1">
                       <span class="mb-0 flex-grow-1" th:text="${order.billAddress.personName}"></span>
@@ -135,19 +151,19 @@
                     <div class="ms-auto" th:with="s=${order.status.orderStatusId}">
                       <a href="#" class="btn btn-primary" th:if="${s eq 1}">
                         <i class="bi bi-play"></i>
-                        <span>Mark order as "Processing"</span>
+                        <span th:text="#{order.process}">Mark order as "Processing"</span>
                       </a>
                       <a href="#" class="btn btn-warning" th:if="${s eq 2}">
                         <i class="bi bi-truck"></i>
-                        <span>Hand order to courier</span>
+                        <span th:text="#{order.courier}">Hand order to courier</span>
                       </a>
                       <a href="#" class="btn btn-success" th:if="${s eq 3}">
                         <i class="bi bi-check"></i>
-                        <span>Finish order</span>
+                        <span th:text="#{order.finish}">Finish order</span>
                       </a>
                       <a href="#" class="btn btn-danger" th:if="${s eq 1 or s eq 2}">
                         <i class="bi bi-x"></i>
-                        <span>Cancel order</span>
+                        <span th:text="#{order.cancel}">Cancel order</span>
                       </a>
                     </div>
                   </div>
