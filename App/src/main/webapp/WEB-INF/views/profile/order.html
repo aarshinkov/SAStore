@@ -17,7 +17,7 @@
                th:classappend="${s eq 1} ? '' : (${s eq 2} ? 'border-warning' : (${s eq 3} ? 'border-primary' : (${s eq 4} ? 'border-success' : (${s eq 5} ? 'border-danger'))))">
             <div class="card-body">
               <div class="d-flex align-items-center">
-                <h4 class="mb-0 me-3" th:text="${order.orderId}">ORD556789</h4>
+                <h4 class="mb-0 me-3" th:text="#{order.header}">Order</h4>
                 <span class="badge" th:text="#{order.status. + ${s}}"
                       th:classappend="${s eq 1} ? 'bg-secondary' : (${s eq 2} ? 'bg-warning' : (${s eq 3} ? 'bg-primary' : (${s eq 4} ? 'bg-success' : (${s eq 5} ? 'bg-danger'))))"></span>
               </div>

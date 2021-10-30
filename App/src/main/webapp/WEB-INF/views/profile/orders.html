@@ -34,7 +34,7 @@
                         <a th:href="@{/profile/orders(id=${o.orderId})}" href="#" th:text="${o.orderId}">ORD556789</a>
                       </th>
                       <td th:text="${o.user}">John Doe</td>
-                      <td th:text="${#dates.format(o.createdOn, #messages.msg('format.datetime2'))}">Dec 19, 2017</td>
+                      <td th:text="${#dates.format(o.createdOn, #messages.msg('format.datetime4'))}">Dec 19, 2017</td>
                       <td class="text-right">$74.00</td>
                       <td class="text-center">
                         <span class="badge" th:with="s=${o.status.orderStatusId}" th:text="#{order.status. + ${s}}"
