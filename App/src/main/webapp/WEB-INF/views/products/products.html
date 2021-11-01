@@ -86,9 +86,15 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4 mb-4" th:each="p : ${products.collection}" th:if="${#lists.size(products.collection) ne 0}">
               <div class="card shadow">
-                <button class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1" sec:authorize="isAuthenticated()"
-                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" th:data-bs-original-title="${p.isFavorite} ? #{product.favorite.remove} : #{product.favorite.add}">
-                  <i class="bi" th:classappend="${p.isFavorite} ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart'"></i>
+                <button th:id="'favRemove-' + ${p.productId}" class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1" sec:authorize="isAuthenticated()"
+                        th:attr="onclick=${'removeFromFavorites(''' + p.productId + ''')'}" th:classappend="${!p.isFavorite} ? 'd-none'"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" th:data-bs-original-title="#{product.favorite.remove}">
+                  <i class="bi bi-suit-heart-fill text-danger"></i>
+                </button>
+                <button th:id="'favAdd-' + ${p.productId}" class="btn p-0 rounded-circle size-30 center-both btn-white position-absolute start-0 top-0 mt-3 ms-3 z-index-1" sec:authorize="isAuthenticated()"
+                        th:attr="onclick=${'addToFavorites(''' + p.productId + ''')'}" th:classappend="${p.isFavorite} ? 'd-none'"
+                        type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="" th:data-bs-original-title="#{product.favorite.add}">
+                  <i class="bi bi-suit-heart"></i>
                 </button>
                 <button class="btn py-1 px-1 center-both btn-danger position-absolute end-0 top-0 mt-3 me-3 z-index-1 btn-sm" style="font-size: 12px;" type="button" th:if="${p.isNew}">
                   <span th:text="#{products.item.newItem}">New product</span>
@@ -138,17 +144,17 @@
               </div>
             </div>
           </div>
-<!--          <div class="row">
-            <div class="col-12">
-              <form>
-                <div class="mb-3">
-                  <select class="form-control custom-select">
-                    <option th:each="c : ${econtCities}" th:value="${c.id}" th:text="${c.name} + ', ' + ${c.regionName}">Test 1</option>
-                  </select>
-                </div>
-              </form>
-            </div>
-          </div>-->
+          <!--          <div class="row">
+                      <div class="col-12">
+                        <form>
+                          <div class="mb-3">
+                            <select class="form-control custom-select">
+                              <option th:each="c : ${econtCities}" th:value="${c.id}" th:text="${c.name} + ', ' + ${c.regionName}">Test 1</option>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                    </div>-->
           <!--          <div class="row">
                       <div class="col-12 col-md-6 col-lg-4" th:each="c : ${econtCities}">
                         <p th:text="${c.name}">City name</p>
@@ -156,6 +162,47 @@
                     </div>-->
         </div>
       </div>
+
+      <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        let addToFavoritesUrl = /*[[@{/profile/favorites/create}]]*/;
+                let removeFromFavoritesUrl = /*[[@{/profile/favorites/remove}]]*/;
+
+        /*]]>*/
+
+        function addToFavorites(productId) {
+          $.ajax({
+            url: addToFavoritesUrl,
+            type: 'post',
+            data: {productId: productId},
+            success: function (data) {
+//              console.log(data);
+              $("#favAdd-" + productId).addClass("d-none");
+              $("#favRemove-" + productId).removeClass("d-none");
+            },
+            error: function (xhr, status, error) {
+              console.log("fail");
+            }
+          });
+        }
+
+        function removeFromFavorites(productId) {
+          $.ajax({
+            url: removeFromFavoritesUrl,
+            type: 'post',
+            data: {productId: productId},
+            success: function (data) {
+//              console.log(data);
+              $("#favAdd-" + productId).removeClass("d-none");
+              $("#favRemove-" + productId).addClass("d-none");
+            },
+            error: function (xhr, status, error) {
+              console.log("fail");
+            }
+          });
+        }
+      </script>
     </div>
   </body>
 </html>

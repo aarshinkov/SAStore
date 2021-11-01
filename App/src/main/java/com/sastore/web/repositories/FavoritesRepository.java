@@ -14,7 +14,11 @@ public interface FavoritesRepository extends JpaRepository<FavoriteEntity, Strin
 
   List<FavoriteEntity> findAllByUserUserId(String userId);
   
+  List<FavoriteEntity> findAllByUserUserIdOrderByAddedOnDesc(String userId);
+  
   FavoriteEntity findByUserUserIdAndProductProductId(String userId, String productId);
+  
+  FavoriteEntity findByFavoriteId(String favoriteId);
   
   boolean existsFavoriteEntityByUserUserIdAndProductProductId(String userId, String productId);
   

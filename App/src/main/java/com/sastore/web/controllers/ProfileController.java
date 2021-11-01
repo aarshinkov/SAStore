@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -148,5 +150,33 @@ public class ProfileController extends Base {
     model.addAttribute("submenu", "favorites");
 
     return "profile/favorites";
+  }
+
+  @PostMapping(value = "/profile/favorites/create")
+  public String createFavorite(@RequestParam("productId") String productId, HttpServletRequest request, Model model) {
+
+    log.debug("Adding product with ID " + productId + " to favorites");
+
+    FavoriteEntity favorite = favoriteService.createFavorite(getLoggedUserId(request), productId);
+    request.getSession().setAttribute("favoritesCount", favoriteService.getUserFavoritesCount(getLoggedUserId(request)));
+    return "fragments/fragments :: #success";
+  }
+
+  @PostMapping(value = "/profile/favorites/delete")
+  public String deleteFavorite(@RequestParam("favoriteId") String favoriteId, HttpServletRequest request, Model model) {
+
+    FavoriteEntity deletedFavorite = favoriteService.deleteFavorite(favoriteId);
+    request.getSession().setAttribute("favoritesCount", favoriteService.getUserFavoritesCount(getLoggedUserId(request)));
+    return "redirect:/profile/favorites";
+  }
+
+  @PostMapping(value = "/profile/favorites/remove")
+  public String removeFavorite(@RequestParam("productId") String productId, HttpServletRequest request, Model model) {
+
+    log.debug("Removing product with ID " + productId + " fromfavorites");
+
+    FavoriteEntity favorite = favoriteService.removeFavorite(getLoggedUserId(request), productId);
+    request.getSession().setAttribute("favoritesCount", favoriteService.getUserFavoritesCount(getLoggedUserId(request)));
+    return "fragments/fragments :: #success";
   }
 }

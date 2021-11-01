@@ -46,7 +46,7 @@
                   <h3 class="fs-5">
                     <a class="text-dark" href="#" th:href="@{/product(id=${f.product.productId})}" th:text="${f.product.title}">Title</a>
                   </h3>
-                  <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-between mb-2">
                     <div>
                       <span class="text-dark small fw-bold d-flex align-items-center">
                         <del class="fw-normal text-danger" th:text="#{price(${#numbers.formatDecimal(f.product.price, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}" th:if="${f.product.discount ne 0}">52.22 lv.</del>
@@ -59,6 +59,8 @@
                       </span>
                     </div>
                   </div>
+                  <div class="small text-muted">Favorite since</div>
+                  <div th:text="${#dates.format(f.addedOn, #messages.msg('format.datetime3'))}"></div>
                 </div>
                 <div class="card-body card-body-expand">
                   <div class="d-grid text-center">
@@ -70,10 +72,13 @@
                       <i class="icon-Eye-Visible"></i>
                       <span>View product</span>
                     </a>
-                    <a class="btn btn-danger border shadow-sm btn-sm" href="#" th:href="@{/product(id=${f.product.productId})}">
-                      <i class="icon-Heart"></i>
-                      <span th:text="#{product.favorite.remove}">Remove from favorites</span>
-                    </a>
+                    <form th:action="@{/profile/favorites/delete}" method="post" class="d-flex flex-column">
+                      <input type="hidden" name="favoriteId" th:value="${f.favoriteId}"/>
+                      <button type="submit" class="btn btn-danger border shadow-sm btn-sm">
+                        <i class="icon-Heart"></i>
+                        <span th:text="#{product.favorite.remove}">Remove from favorites</span>
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
