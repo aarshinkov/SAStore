@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.4.2</version>
+    <version>2.6.1</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.sastore.web</groupId>
@@ -28,6 +28,102 @@
     <warname>SAStore</warname>
     <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
   </properties>
+  
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <properties>
+        <build.profile>DEV</build.profile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <phase>compile</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <echo>PACKAGING FOR DEVELOPMENT ENV...</echo>
+                    <copy file="src/main/resources/application_DEV.properties" tofile="${project.build.outputDirectory}/application.properties"/>
+                    <copy file="src/main/resources/env.dev.properties" tofile="${project.build.outputDirectory}/env.properties"/>
+                    <copy file="src/main/resources/logback-DEV.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>test</id>
+      <properties>
+        <build.profile>TEST</build.profile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <phase>compile</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <echo>PACKAGING FOR TEST ENV...</echo>
+                    <copy file="src/main/resources/application_TEST.properties" tofile="${project.build.outputDirectory}/application.properties"/>
+                    <copy file="src/main/resources/env.test.properties" tofile="${project.build.outputDirectory}/env.properties"/>
+                    <copy file="src/main/resources/logback-TEST.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <build.profile>PROD</build.profile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <phase>compile</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <echo>PACKAGING FOR PROD ENV...</echo>
+                    <copy file="src/main/resources/application_PROD.properties" tofile="${project.build.outputDirectory}/application.properties"/>
+                    <copy file="src/main/resources/env.prod.properties" tofile="${project.build.outputDirectory}/env.properties"/>
+                    <copy file="src/main/resources/logback-PROD.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -37,10 +133,12 @@
     <dependency>
       <groupId>nz.net.ultraq.thymeleaf</groupId>
       <artifactId>thymeleaf-layout-dialect</artifactId>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+      <version>3.0.4.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -86,7 +184,7 @@
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>
-        
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-io</artifactId>
@@ -106,13 +204,19 @@
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>eu.bitwalker</groupId>
       <artifactId>UserAgentUtils</artifactId>
       <version>1.21</version>
     </dependency>
-    
+
+    <dependency>
+      <groupId>io.github.aarshinkov</groupId>
+      <artifactId>randomy</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -125,102 +229,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
-  <profiles>
-    <profile>
-      <id>dev</id>
-      <properties>
-        <build.profile>DEV</build.profile>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
-            <executions>
-              <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <echo>PACKAGING FOR DEVELOPMENT ENV...</echo>
-                    <copy file="src/main/resources/application_DEV.properties" tofile="${project.build.outputDirectory}/application.properties"/>
-                    <copy file="src/main/resources/env.dev.properties" tofile="${project.build.outputDirectory}/env.properties"/>
-                    <copy file="src/main/resources/logback-DEV.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>test</id>
-      <properties>
-        <build.profile>TEST</build.profile>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
-            <executions>
-              <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <echo>PACKAGING FOR TEST ENV...</echo>
-                    <copy file="src/main/resources/application_TEST.properties" tofile="${project.build.outputDirectory}/application.properties"/>
-                    <copy file="src/main/resources/env.test.properties" tofile="${project.build.outputDirectory}/env.properties"/>
-                    <copy file="src/main/resources/logback-TEST.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>prod</id>
-      <properties>
-        <build.profile>PROD</build.profile>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
-            <executions>
-              <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <echo>PACKAGING FOR PROD ENV...</echo>
-                    <copy file="src/main/resources/application_PROD.properties" tofile="${project.build.outputDirectory}/application.properties"/>
-                    <copy file="src/main/resources/env.prod.properties" tofile="${project.build.outputDirectory}/env.properties"/>
-                    <copy file="src/main/resources/logback-PROD.xml" tofile="${project.build.outputDirectory}/logback.xml"/>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 
   <build>
     <plugins>
@@ -296,11 +304,11 @@
       </plugin>
       <plugin>
         <artifactId>maven-install-plugin</artifactId>
-        <version>2.5.2</version>
+        <version>3.0.0-M1</version>
       </plugin>
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version>
+        <version>3.0.0-M1</version>
       </plugin>
       <plugin>
         <groupId>org.asciidoctor</groupId>

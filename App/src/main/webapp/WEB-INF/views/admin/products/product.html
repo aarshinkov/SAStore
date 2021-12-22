@@ -394,21 +394,17 @@
       <script type="text/javascript" th:inline="javascript">
         function togglePrices() {
           if ($("#pricePresentLabels").hasClass("d-none")) {
-            console.log("1");
             $("#pricePresentLabels").removeClass("d-none");
             $("#pricePresentLabelsBtn").removeClass("d-none");
           } else {
-            console.log("2");
             $("#pricePresentLabels").addClass("d-none");
             $("#pricePresentLabelsBtn").addClass("d-none");
           }
 
           if ($("#pricePresentInput").hasClass("d-none")) {
-            console.log("3");
             $("#pricePresentInput").removeClass("d-none");
             $("#pricePresentInputSubmit").removeClass("d-none");
           } else {
-            console.log("4");
             $("#pricePresentInput").addClass("d-none");
             $("#pricePresentInputSubmit").addClass("d-none");
           }

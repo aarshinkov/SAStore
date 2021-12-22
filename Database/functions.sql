@@ -121,7 +121,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Get products
-CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar,op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
+CREATE OR REPLACE FUNCTION get_products(ip_page_number IN int, ip_product_count IN int, ip_product_id IN varchar, ip_title IN varchar, op_all_products OUT bigint, op_all_rows OUT bigint, saCursor OUT refcursor) AS $$
 BEGIN
 	SELECT COUNT(*)
 	INTO op_all_rows

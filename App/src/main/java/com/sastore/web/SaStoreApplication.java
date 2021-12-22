@@ -1,10 +1,13 @@
 package com.sastore.web;
 
+import com.aarshinkov.random.Randomy;
 import com.sastore.web.api.EcontApi;
 import com.sastore.web.beans.PasswordValidator;
 import com.sastore.web.beans.Version;
 import com.sastore.web.uploader.Uploader;
+
 import java.nio.charset.StandardCharsets;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +56,12 @@ public class SaStoreApplication {
     return new Uploader();
   }
 
-//    @Bean
+  @Bean
+  public Randomy randomy() {
+    return Randomy.Builder.build();
+  }
+
+  //    @Bean
 //    public SecurityChecks securityChecks() {
 //        return new SecurityChecks();
 //    }
@@ -62,7 +70,7 @@ public class SaStoreApplication {
     return new EcontApi();
   }
 
-//  @Bean
+  //  @Bean
 //  public AuthenticationSuccessHandler authenticationSuccessHandler() {
 //    return new CustomAuthSuccessHandler();
 //  }

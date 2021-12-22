@@ -131,7 +131,7 @@
                 </div>
                 <div class="card-body card-body-expand">
                   <div class="d-grid text-center">
-                    <a class="btn btn-primary mb-2 shadow-sm btn-sm" href="#!">
+                    <a class="btn btn-primary mb-2 shadow-sm btn-sm" href="#" th:attr="onclick=|addToCart('${p.productId}')|">
                       <i class="icon-Add-Cart"></i>
                       <span>Add to cart</span>
                     </a>
@@ -168,7 +168,6 @@
         /*<![CDATA[*/
         let addToFavoritesUrl = /*[[@{/profile/favorites/create}]]*/;
                 let removeFromFavoritesUrl = /*[[@{/profile/favorites/remove}]]*/;
-
         /*]]>*/
 
         function addToFavorites(productId) {
@@ -177,7 +176,6 @@
             type: 'post',
             data: {productId: productId},
             success: function (data) {
-//              console.log(data);
               $("#favAdd-" + productId).addClass("d-none");
               $("#favRemove-" + productId).removeClass("d-none");
             },
@@ -201,6 +199,15 @@
               console.log("fail");
             }
           });
+        }
+
+        function addToCart(id) {
+//          for (var i = 0; i < localStorage.length; i++) {
+//            var key = localStorage.key(i);
+//            var value = localStorage.getItem(key);
+//            console.log('Key: ' + key + ', Value: ' + value);
+//          }
+          Cookies.set("product_" + id, id);
         }
       </script>
     </div>

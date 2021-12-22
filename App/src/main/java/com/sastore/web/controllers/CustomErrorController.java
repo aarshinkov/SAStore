@@ -86,8 +86,8 @@ public class CustomErrorController extends Base implements ErrorController {
     return "errors/error";
   }
 
-  @Override
-  public String getErrorPath() {
-    return null;
-  }
+//  @Override
+//  public String getErrorPath() {
+//    return null;
+//  }
 }
