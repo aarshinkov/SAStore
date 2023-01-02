@@ -29,8 +29,6 @@ import org.hibernate.annotations.DynamicInsert;
 public class ProductEntity implements Serializable {
 
   @Id
-//  @SequenceGenerator(name = "seq_gen_product", sequenceName = "s_products", allocationSize = 1)
-//  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_product")
   @Column(name = "product_id")
   private String productId;
 

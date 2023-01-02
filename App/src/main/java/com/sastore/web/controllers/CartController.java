@@ -36,43 +36,43 @@ public class CartController extends Base {
   @GetMapping("/cart")
   public String cart(HttpServletRequest request, Model model) {
 
-	log.debug("Session ID: " + request.getSession(true).getId());
+    log.debug("Session ID: " + request.getSession(true).getId());
 
-	List<String> cartProducts = new ArrayList<>();
-	List<ProductEntity> products = new ArrayList<>();
+    List<String> cartProducts = new ArrayList<>();
+    List<ProductEntity> products = new ArrayList<>();
 
-	Double totalPrice = 0.00;
-	Double totalDiscount = 0.00;
+    Double totalPrice = 0.00;
+    Double totalDiscount = 0.00;
 
-	for (Cookie cookie : request.getCookies()) {
-	  if (cookie.getName().contains("product_")) {
-		log.debug("Product ID: " + cookie.getValue());
-		ProductEntity product = productService.getProductByProductId(cookie.getValue());
-		totalPrice += product.getPrice();
-		totalDiscount += product.getDiscount();
-		products.add(product);
-	  }
-	}
+    for (Cookie cookie : request.getCookies()) {
+      if (cookie.getName().contains("product_")) {
+        log.debug("Product ID: " + cookie.getValue());
+        ProductEntity product = productService.getProductByProductId(cookie.getValue());
+        totalPrice += product.getPrice();
+        totalDiscount += product.getDiscount();
+        products.add(product);
+      }
+    }
 
-	model.addAttribute("products", products);
-	model.addAttribute("totalPrice", totalPrice);
+    model.addAttribute("products", products);
+    model.addAttribute("totalPrice", totalPrice);
 
-	if (totalPrice - totalDiscount >= SHIPPING_FREE_AFTER) {
-	  model.addAttribute("shipping", FREE_SHIPPING);
-	} else {
-	  model.addAttribute("shipping", SHIPPING);
-	}
+    if (totalPrice - totalDiscount >= SHIPPING_FREE_AFTER) {
+      model.addAttribute("shipping", FREE_SHIPPING);
+    } else {
+      model.addAttribute("shipping", SHIPPING);
+    }
 
-	model.addAttribute("totalDiscount", totalDiscount);
+    model.addAttribute("totalDiscount", totalDiscount);
 
-	List<Breadcrumb> breadcrumbs = new ArrayList<>();
-	breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
-	if (isLoggedIn()) {
-	  breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
-	}
-	breadcrumbs.add(new Breadcrumb(getMessage("nav.cart", null, LocaleContextHolder.getLocale()), null));
-	model.addAttribute("breadcrumbs", breadcrumbs);
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.home", null, LocaleContextHolder.getLocale()), "/"));
+    if (isLoggedIn()) {
+      breadcrumbs.add(new Breadcrumb(getMessage("nav.profile", null, LocaleContextHolder.getLocale()), "/profile"));
+    }
+    breadcrumbs.add(new Breadcrumb(getMessage("nav.cart", null, LocaleContextHolder.getLocale()), null));
+    model.addAttribute("breadcrumbs", breadcrumbs);
 
-	return "cart";
+    return "cart";
   }
 }

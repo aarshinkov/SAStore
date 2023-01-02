@@ -1,26 +1,19 @@
 package com.sastore.web.api;
 
 import com.sastore.web.utils.LogRequest;
-import static com.sastore.web.utils.Methods.DELETE;
-import static com.sastore.web.utils.Methods.GET;
 import static com.sastore.web.utils.Methods.POST;
-import static com.sastore.web.utils.Methods.PUT;
 import com.google.gson.Gson;
 import com.sastore.web.integration.econt.EcontConstants;
 import com.sastore.web.integration.econt.nomenclatures.EcontCity;
 import com.sastore.web.integration.econt.nomenclatures.requests.EcontCountryCodeRequest;
 import com.sastore.web.integration.econt.nomenclatures.responses.EcontCitiesResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;

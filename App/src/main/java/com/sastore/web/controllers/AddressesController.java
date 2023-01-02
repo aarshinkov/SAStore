@@ -1,5 +1,6 @@
 package com.sastore.web.controllers;
 
+import com.aarshinkov.random.Randomy;
 import com.sastore.web.base.Base;
 import com.sastore.web.entities.AddressEntity;
 import com.sastore.web.models.addresses.AddressCreateModel;
@@ -38,6 +39,9 @@ public class AddressesController extends Base {
 
   @Autowired
   private OrderService orderService;
+
+  @Autowired
+  private Randomy randomy;
 
   @GetMapping("/profile/addresses")
   public String getUserAddresses(HttpServletRequest request, Model model) {

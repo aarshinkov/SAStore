@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-12 col-sm-8 col-md-7 col-lg-8 col-xl-9 text-secondary">
                           <span th:text="#{price(${#numbers.formatDecimal(product.discount, 1, 'WHITESPACE', 2, 'POINT')}, #{currency.bgn})}">23.60</span>
-                          <span class="badge bg-success" th:text="'-' + ${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')} + '%'">23.60</span>
+                          <span class="badge bg-success" th:text="#{discount(${#numbers.formatDecimal((product.discount) / product.price * 100, 1, 'WHITESPACE', 0, 'POINT')})}">23.60</span>
                         </div>
                       </div>
                       <hr/>

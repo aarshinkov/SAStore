@@ -173,7 +173,7 @@ public class ProfileController extends Base {
   @PostMapping(value = "/profile/favorites/remove")
   public String removeFavorite(@RequestParam("productId") String productId, HttpServletRequest request, Model model) {
 
-    log.debug("Removing product with ID " + productId + " fromfavorites");
+    log.debug("Removing product with ID " + productId + " from favorites");
 
     FavoriteEntity favorite = favoriteService.removeFavorite(getLoggedUserId(request), productId);
     request.getSession().setAttribute("favoritesCount", favoriteService.getUserFavoritesCount(getLoggedUserId(request)));

@@ -1,1 +1,1 @@
-sass --watch src/main/webapp/WEB-INF/resources/admin/scss/style.scss src/main/webapp/WEB-INF/resources/admin/css/style.css
+sass --watch src/main/webapp/WEB-INF/resources/scss/style.scss src/main/webapp/WEB-INF/resources/css/style.css
